@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"snd_energy_surge",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":0,
+  "conversionMode":0,
+  "duration":2.147854,
+  "name":"snd_energy_surge",
+  "parent":{
+    "name":"Sounds",
+    "path":"folders/Sounds.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_energy_surge.ogg",
+  "type":0,
+  "volume":1.0,
+}
