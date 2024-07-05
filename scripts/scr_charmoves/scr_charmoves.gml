@@ -1,27 +1,6 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
-enum attacktype {
-	light,
-	
-	medium,
-	antiair,
-	unblockable,
-	beam,
-	
-	heavy,
-	launcher,
-	hard_knockdown,
-	smash,
-	slide_knockdown,
-	wall_splat,
-	wall_bounce,
-	ground_bounce,
-	
-	hit_grab,
-	grab,
-}
-
 function add_move(_move,_input) {
 	if movelist[0][0] == noone {
 		movelist[0][0] = _move;

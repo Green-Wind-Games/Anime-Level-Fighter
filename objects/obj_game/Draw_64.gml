@@ -13,8 +13,6 @@ switch(game_state) {
 	case gamestates.story_select:
 	case gamestates.versus_select:
 	case gamestates.training_select:
-	
-	draw_portraits();
 	draw_charselect();
 	break;
 	

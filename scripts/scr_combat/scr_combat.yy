@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_charselect",
+  "%Name":"scr_combat",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_charselect",
+  "name":"scr_combat",
   "parent":{
-    "name":"anime level fighter",
-    "path":"anime level fighter.yyp",
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

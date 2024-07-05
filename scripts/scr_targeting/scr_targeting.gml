@@ -2,6 +2,7 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function chars_update_targeting() {
 	with(obj_char) {
+		target_closest_enemy();
 		if target_exists() {
 			target_x = target.x;
 			target_y = target.y;
@@ -32,4 +33,20 @@ function face_target() {
 			facing = -1;
 		}
 	}
+}
+
+function target_closest_enemy() {
+	var me = id;
+	var dist = room_width+room_height;
+	target = noone;
+	with(obj_char) {
+		if team == me.team continue;
+		if dead continue;
+		
+		var mydist = point_distance(x,y,other.x,other.y);
+		if mydist > dist continue;
+		
+		me.target = id;
+	}
+	return target;
 }
