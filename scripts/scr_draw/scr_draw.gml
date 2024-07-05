@@ -16,110 +16,28 @@ function draw_playerindicators() {
 	draw_set_valign(fa_bottom);
 	draw_set_font(fnt_playerindicator);
 	var border = string_height("[]");
-	with(obj_char) {
-		var draw = false;
-		if instance_number(object_index) > 1 {
-			with(object_index) {
-				if team == other.team {
-					if (id == p1_active_character) draw = true;
-					if (id == p2_active_character) draw = true;
-				}
-				else {
-					draw = true;
-				}
-			}
-		}
-		if draw {
+	for(var i = 0; i < array_length(player); i++) {
+		with(player[i]) {
 			var indicator_x = x;
 			
 			var indicator_y = y - 2;
-			var _height = (sprite_get_bbox_bottom(sprite) - sprite_get_bbox_top(sprite));
-			indicator_y -= _height * yscale * ystretch;
+			//var _height = (sprite_get_bbox_bottom(sprite) - sprite_get_bbox_top(sprite));
+			indicator_y -= height * yscale * ystretch;
 			indicator_y = clamp(
 				indicator_y,
 				camera_get_view_y(view)+border,
 				camera_get_view_y(view)+camera_get_view_height(view)
 			);
 			
-			var text = "[P"+string(team)+"]";
+			var text = "[P"+string(i+1)+"]";
 			draw_set_color(c_black);
 			draw_text(indicator_x+1,indicator_y,text);
 			draw_text(indicator_x-1,indicator_y,text);
 			draw_text(indicator_x,indicator_y-1,text);
 			draw_text(indicator_x,indicator_y+1,text);
-			if team == 1 {
-				draw_set_color(p1_color);
-			}
-			else {
-				draw_set_color(p2_color);
-			}
+			draw_set_color(p1_color);
 			draw_text(indicator_x,indicator_y,text);
 		}
-	}	
-}
-
-function draw_player_outlines() {
-	var outline_alpha = 0.5;
-	with(obj_char) {
-		if team == 1 {
-			gpu_set_fog(true,p1_color,0,0);
-		}
-		else {
-			gpu_set_fog(true,p2_color,0,0);
-		}
-		
-		var _x = x + (xoffset*facing) + screen_shake_x;
-		var _y = y + yoffset + screen_shake_y;
-
-		draw_sprite_ext(
-			sprite,
-			frame,
-			_x-1,
-			_y,
-			xscale*xstretch*facing,
-			yscale*ystretch,
-			rotation*facing,
-			color,
-			alpha * outline_alpha
-		);
-		draw_sprite_ext(
-			sprite,
-			frame,
-			_x+1,
-			_y,
-			xscale*xstretch*facing,
-			yscale*ystretch,
-			rotation*facing,
-			color,
-			alpha * outline_alpha
-		);
-		draw_sprite_ext(
-			sprite,
-			frame,
-			_x,
-			_y-1,
-			xscale*xstretch*facing,
-			yscale*ystretch,
-			rotation*facing,
-			color,
-			alpha * outline_alpha
-		);
-		
-		if is_airborne {
-			draw_sprite_ext(
-				sprite,
-				frame,
-				_x,
-				_y+1,
-				xscale*xstretch*facing,
-				yscale*ystretch,
-				rotation*facing,
-				color,
-				alpha * outline_alpha
-			);
-		}
-
-		gpu_set_fog(false,c_white,0,0);
 	}
 }
 
@@ -287,71 +205,55 @@ function draw_hud() {
 	var text_width = string_width(text_max);
 	var text_height = string_height(text_max);
 	
-	var hp_bar_width = _w2 - _spacing - icon_size - 2;
+	var active_players = 0;
+	for(var i = 0; i < array_length(player_slot); i++) {
+		if player_slot[i] != noone {
+			active_players++;
+		}
+	}
+	
+	var hp_bar_width = (_w / active_players) - _spacing - icon_size;
 	var hp_bar_height = icon_size;
-	var mp_bar_width = 10;
-	var mp_bar_height = 50;
-	var tp_bar_width = mp_bar_width;
-	var tp_bar_height = mp_bar_height;
-	var sp_bar_width = tp_bar_width;
-	var sp_bar_height = tp_bar_height;
+	var other_bar_width = 10;
+	var other_bar_height = 50;
 	
-	var hp1_x1 = _spacing + icon_size;
-	var hp1_x2 = hp1_x1 + hp_bar_width;
-	var hp2_x1 = _w - _spacing - hp_bar_width - icon_size;
-	var hp2_x2 = hp2_x1 + hp_bar_width;
 	var hp_y1 = _spacing;
-	var hp_y2 = hp_y1 + (hp_bar_height * max_team_size);
+	var hp_y2 = hp_y1 + hp_bar_height
 	
-	var icon_x1 = (icon_size / 2) + _spacing;
-	var icon_x2 = _w - (icon_size / 2) - _spacing;
 	var icon_y = hp_y1 + (hp_bar_height/2);
 	
-	var mp1_x1 = _spacing;
-	var mp1_x2 = mp1_x1 + mp_bar_width;
-	var mp2_x1 = _w - _spacing - mp_bar_width;
-	var mp2_x2 = mp2_x1 + mp_bar_width;
 	var mp_y1 = _h - _spacing - mp_bar_height;
 	var mp_y2 = mp_y1 + mp_bar_height;
 	
-	var tp1_x1 = mp1_x2 + _spacing;
-	var tp1_x2 = tp1_x1 + tp_bar_width;
-	var tp2_x1 = mp2_x1 - tp_bar_width - _spacing;
-	var tp2_x2 = tp2_x1 + tp_bar_width;
 	var tp_y1 = _h - _spacing - tp_bar_height;
 	var tp_y2 = tp_y1 + tp_bar_height;
 	
-	var sp1_x1 = tp1_x2 + _spacing;
-	var sp1_x2 = sp1_x1 + sp_bar_width;
-	var sp2_x1 = tp2_x1 - sp_bar_width - _spacing;
-	var sp2_x2 = sp2_x1 + sp_bar_width;
 	var sp_y1 = _h - _spacing - sp_bar_height;
 	var sp_y2 = sp_y1 + sp_bar_height;
 	
-	var hp_active_color = make_color_rgb(0,255,0);
-	var hp_inactive_color = make_color_rgb(0,128,0);
-	var hp_dmg_color = make_color_rgb(255,0,0);
+	var hp_color = make_color_rgb(0,255,0);
+	var dmg_color = make_color_rgb(255,0,0);
 	var mp_color = make_color_rgb(64,192,255);
 	var tp_color = make_color_rgb(255,255,255);
 	var sp_color = make_color_rgb(255,255,0);
 		
-	for(var i = 0; i < max_team_size; i++) {
-		var _y1 = hp_y1 + (hp_bar_height * i);
-		var _y2 = _y1 + hp_bar_height - 1;
+	for(var i = 0; i < array_length(player); i++) {
+		var hp_x1 = _spacing + icon_size + (hp_bar_width * i);
+		var hp_x2 = _x1 + hp_bar_width;
+		var hp_y1 = hp_y1;
+		var hp_y2 = _y1 + hp_bar_height;
 		
-		var _color1 = hp_inactive_color;
-		if p1_active_character == p1_char[i] {
-			_color1 = hp_active_color;
-		}
+		var mp_x1 = hp_x1;
+		var mp_x2 = mp_x1 + other_bar_width;
 		
-		with(p1_char[i]) {
+		with(player[i]) {
 			draw_set_color(c_black);
 			draw_set_alpha(1);
-			draw_rectangle(hp1_x1,_y1,hp1_x2,_y2,false);
+			draw_rectangle(_x1,_y1,_x2,_y2,false);
 		
 			if hp_percent > 0 {
 				var _hp_x = map_value(hp_percent,0,100,hp1_x1+1,hp1_x2-1);
-				draw_set_color(_color1);
+				draw_set_color(hp_color);
 				draw_set_alpha(1);
 				draw_rectangle(
 					hp1_x1+1,
@@ -363,7 +265,7 @@ function draw_hud() {
 			
 				if combo_damage_taken > 0 {
 					var _dmg_x = map_value(hp+combo_damage_taken,0,max_hp,hp1_x1+1,hp1_x2-1);
-					draw_set_color(hp_dmg_color);
+					draw_set_color(dmg_color);
 					draw_set_alpha(1);
 					draw_rectangle(
 						_hp_x+1,
@@ -374,45 +276,7 @@ function draw_hud() {
 					);
 				}
 			}
-			draw_sprite_ext(icon,0,icon_x1,icon_y+(hp_bar_height * i),icon_scale,icon_scale,0,c_white,1);
-		}
-		
-		var _color2 = hp_inactive_color;
-		if p2_active_character == p2_char[i] {
-			_color2 = hp_active_color;
-		}
-		
-		with(p2_char[i]) {
-			draw_set_color(c_black);
-			draw_set_alpha(1);
-			draw_rectangle(hp2_x1,_y1,hp2_x2,_y2,false);
-		
-			if hp_percent > 0 {
-				var _hp_x = map_value(hp_percent,0,100,hp2_x2-1,hp2_x1+1);
-				draw_set_color(_color2);
-				draw_set_alpha(1);
-				draw_rectangle(
-					_hp_x,
-					_y1+1,
-					hp2_x2-1,
-					_y2-1,
-					false
-				);
-			
-				if combo_damage_taken > 0 {
-					var _dmg_x = map_value(hp+combo_damage_taken,0,max_hp,hp2_x2-1,hp2_x1+1);
-					draw_set_color(hp_dmg_color);
-					draw_set_alpha(1);
-					draw_rectangle(
-						_dmg_x,
-						_y1+1,
-						_hp_x-1,
-						_y2-1,
-						false
-					);
-				}
-			}
-			draw_sprite_ext(icon,0,icon_x2,icon_y+(hp_bar_height * i),-icon_scale,icon_scale,0,c_white,1);
+			draw_sprite_ext(icon,0,_x1 - icon_size,icon_y,icon_scale,icon_scale,0,c_white,1);
 		}
 	}
 	
@@ -434,15 +298,6 @@ function draw_hud() {
 	draw_rectangle(text_x1,text_y1,text_x2,text_y2,false);
 	draw_set_color(c_white);
 	draw_text(text_x,text_y,text);
-	
-	draw_healthbar(mp1_x1,mp_y1,mp1_x2,mp_y2,p1_mp_percent,c_black,mp_color,mp_color,3,true,true);
-	draw_healthbar(mp2_x1,mp_y1,mp2_x2,mp_y2,p2_mp_percent,c_black,mp_color,mp_color,3,true,true);
-	
-	draw_healthbar(tp1_x1,tp_y1,tp1_x2,tp_y2,p1_tp_percent,c_black,tp_color,tp_color,3,true,true);
-	draw_healthbar(tp2_x1,tp_y1,tp2_x2,tp_y2,p2_tp_percent,c_black,tp_color,tp_color,3,true,true);
-	
-	draw_healthbar(sp1_x1,sp_y1,sp1_x2,sp_y2,p1_sp_percent,c_black,sp_color,sp_color,3,true,true);
-	draw_healthbar(sp2_x1,sp_y1,sp2_x2,sp_y2,p2_sp_percent,c_black,sp_color,sp_color,3,true,true);
 	
 	var hp_segments = 4;
 	for(var i = 0; i < hp_segments - 1; i++) {
