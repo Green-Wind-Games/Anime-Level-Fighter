@@ -560,13 +560,20 @@ max_air_moves = 3;
 max_kiblasts = 7;
 kiblast_count = 0;
 setup_autocombo();
-add_move(kiblast,"B");
-add_move(kamehameha,"236B");
+add_move(kiblast,"C");
+
 add_move(meteor_combo,"236A");
 add_move(meteor_combo,"214A");
-add_move(kaioken,"D");
-add_move(super_kamehameha,"41236B");
-add_move(genkidama,"63214B");
+
+add_move(kaioken,"252A");
+
+add_move(kamehameha,"236B");
+add_move(kamehameha,"214B");
+
+add_move(super_kamehameha,"236C");
+add_move(super_kamehameha,"214C");
+
+add_move(genkidama,"252C");
 
 ai_script = function() {
 	ai_input_move(kaioken,1);

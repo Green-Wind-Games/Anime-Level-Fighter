@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Default",
-    "path":"texturegroups/Default",
+    "name":"GokuSSJ1",
+    "path":"texturegroups/GokuSSJ1",
   },
   "type":0,
   "VTile":false,

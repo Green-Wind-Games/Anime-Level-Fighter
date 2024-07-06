@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_charselect",
   "parent":{
-    "name":"anime level fighter",
-    "path":"anime level fighter.yyp",
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

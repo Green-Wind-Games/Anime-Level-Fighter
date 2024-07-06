@@ -93,8 +93,8 @@
   "swatchColours":null,
   "swfPrecision":2.525,
   "textureGroupId":{
-    "name":"Default",
-    "path":"texturegroups/Default",
+    "name":"GokuBase",
+    "path":"texturegroups/GokuBase",
   },
   "type":0,
   "VTile":false,

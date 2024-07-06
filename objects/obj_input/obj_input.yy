@@ -9,8 +9,8 @@
   "name":"obj_input",
   "overriddenProperties":[],
   "parent":{
-    "name":"anime level fighter",
-    "path":"anime level fighter.yyp",
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":true,
