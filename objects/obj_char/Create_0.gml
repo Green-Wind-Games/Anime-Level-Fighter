@@ -71,6 +71,8 @@ max_air_moves = 1;
 
 ygravity_mod = 1;
 
+level = 1;
+
 attack_power = 1;
 defense = 1;
 
@@ -81,9 +83,8 @@ weapon_sprite = spr_sword_blue;
 weapon_enabled = false;
 
 init_physics();
-init_charsprites("enker");
+init_charsprites("goku");
 init_charstates();
-
 init_charaudio();
 
 ai_enabled = false;
