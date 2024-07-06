@@ -4,7 +4,7 @@ event_inherited();
 
 init_charsprites("goku");
 
-theme = mus_goku;
+theme = mus_dbfz_goku;
 
 kamehameha_cooldown = 0;
 kamehameha_cooldown_duration = 100;

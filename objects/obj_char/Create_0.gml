@@ -16,18 +16,6 @@ target_distance_x = 0;
 target_distance_y = 0;
 target_direction = 0;
 
-input_up = false;
-input_down = false;
-input_left = false;
-input_right = false;
-input_forward = false;
-input_back = false;
-
-input_a = false;
-input_b = false;
-input_c = false;
-input_d = false;
-
 hurtbox = noone;
 hitbox = noone;
 

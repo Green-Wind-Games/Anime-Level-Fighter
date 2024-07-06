@@ -6,7 +6,7 @@ init_charsprites("naruto");
 
 walk_speed *= 1.5;
 
-theme = mus_naruto;
+theme = mus_naruto_strongandstrike;
 
 char_script = function() {
 	

@@ -4,7 +4,7 @@ event_inherited();
 
 init_charsprites("genos");
 
-theme = mus_genos;
+theme = mus_opm_genos;
 
 dropkick_cooldown = 0;
 dropkick_cooldown_duration = 100;

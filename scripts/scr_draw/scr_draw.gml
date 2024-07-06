@@ -16,7 +16,7 @@ function draw_playerindicators() {
 	draw_set_valign(fa_bottom);
 	draw_set_font(fnt_playerindicator);
 	var border = string_height("[]");
-	for(var i = 0; i < array_length(player); i++) {
+	for(var i = 0; i < array_length(player_slot); i++) {
 		with(player[i]) {
 			var indicator_x = x;
 			
@@ -237,7 +237,7 @@ function draw_hud() {
 	var tp_color = make_color_rgb(255,255,255);
 	var sp_color = make_color_rgb(255,255,0);
 		
-	for(var i = 0; i < array_length(player); i++) {
+	for(var i = 0; i < array_length(player_slot); i++) {
 		var hp_x1 = _spacing + icon_size + (hp_bar_width * i);
 		var hp_x2 = _x1 + hp_bar_width;
 		var hp_y1 = hp_y1;

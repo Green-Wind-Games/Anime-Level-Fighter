@@ -80,42 +80,6 @@ function update_fight() {
 	}
 }
 
-function update_charinputs() {
-	with(obj_char) {
-		var _buffer = input_buffer;
-		
-		input.forward = sign(input.right - input.left) == (facing);
-		input.back = sign(input.right - input.left) == (-facing);
-	
-		var hor = sign(input.forward - input.back);
-		var ver = sign(input.up - input.down);
-		var dir = string(5 + hor + (ver * 3));
-	
-		if !string_ends_with(string_digits(input_buffer),dir) {
-			input_buffer += dir;
-		}
-		
-		var command = "";
-		if input.button1 { command += "A"; }
-		if input.button2 { command += "B"; }
-		if input.button3 { command += "C"; }
-		if input.button4 { command += "D"; }
-		
-		input_buffer += command;
-	
-		if input_buffer != _buffer {
-			input_buffer_timer = 10;
-		}
-		else {
-			input_buffer_timer -= (!hitstop);
-			if input_buffer_timer <= 0 {
-				input_buffer = "";
-				input_buffer_timer = 0;
-			}
-		}
-	}
-}
-
 function run_charstates() {
 	with(obj_char) {
 		if (!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)) {
