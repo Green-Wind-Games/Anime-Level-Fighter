@@ -54,7 +54,7 @@ globalvar	player, player_char, player_input,
 			stage,
 			
 			superfreeze_active, superfreeze_timer, superfreeze_activator,
-			player_super_active, p2_super_active,
+			player_super_active,
 			
 			screen_shake_x, screen_shake_y, screen_shake_intensity, screen_shake_timer,
 			screen_flash_color, screen_flash_timer,

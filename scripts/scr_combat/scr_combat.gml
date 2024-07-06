@@ -182,16 +182,6 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _hit
 			
 			combo_hits_taken++;
 			combo_damage_taken += dmg;
-			if team == 1 {
-				p2_combo_hits++;
-				p2_combo_damage += dmg;
-				p2_combo_timer = hitstun + 10;
-			}
-			else {
-				p1_combo_hits++;
-				p1_combo_damage += dmg;
-				p1_combo_timer = hitstun + 10;
-			}
 			
 			if _attacker.object_index == obj_shot or object_is_ancestor(_attacker.object_index,obj_shot) {
 				with(_attacker.owner) {
@@ -210,7 +200,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _hit
 				if (hp > 0) {
 					var _heavyattack_speed = 10;
 					var is_heavyattack = ((abs(xspeed) >= _heavyattack_speed) or (abs(yspeed) >= _heavyattack_speed));
-					if on_ground and (yspeed > -10) {
+					if on_ground and (yspeed > -_heavyattack_speed) {
 						is_heavyattack = false;
 					}
 					if is_heavyattack {
@@ -235,21 +225,24 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _hit
 		}
 	}
 	var mp_gain = _damage;
-	var attack_mp_multiplier = 2;
-	var defend_mp_multiplier = 1;
-	if block_valid {
-		mp_gain *= 0.5;
-	}
-	if team == 1 {
-		p1_mp += mp_gain * defend_mp_multiplier;
-		if !p2_super_active {
-			p2_mp += mp_gain * attack_mp_multiplier;
+	var attack_mp_multiplier = 3;
+	var defend_mp_multiplier = 2;
+	//if block_valid {
+	//	mp_gain *= 0.5;
+	//}
+	mp += mp_gain * defend_mp_multiplier;
+	if _attacker.object_index == obj_shot or object_is_ancestor(_attacker.object_index,obj_shot) {
+		with(_attacker.owner) {
+			if !super_active {
+				mp += mp_gain * attack_mp_multiplier;
+			}
 		}
 	}
 	else {
-		p2_mp += mp_gain * defend_mp_multiplier;
-		if !p1_super_active {
-			p1_mp += mp_gain * attack_mp_multiplier;
+		with(_attacker) {
+			if !super_active {
+				mp += mp_gain * attack_mp_multiplier;
+			}
 		}
 	}
 	
@@ -258,10 +251,6 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _hit
 	_attacker.hitstop = hitstop;
 	_attacker.can_cancel = true;
 	create_hitspark(x-width_half,y-(height*0.75),x+width_half,y-(height*0.25),_attacktype,_hiteffect,block_valid && blocking);
-}
-
-function init_clash(_char1, _char2) {
-	
 }
 
 function take_damage(_attacker,_amount,_kill) {
@@ -296,4 +285,8 @@ function reset_combo() {
 	combo_damage = 0;
 	combo_hits_taken = 0;
 	combo_damage_taken = 0;
+}
+
+function init_clash(_char1, _char2) {
+	
 }

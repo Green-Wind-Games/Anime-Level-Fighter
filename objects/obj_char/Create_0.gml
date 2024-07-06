@@ -60,9 +60,10 @@ max_air_moves = 1;
 ygravity_mod = 1;
 
 level = 1;
-
 attack_power = 1;
 defense = 1;
+
+next_form = noone;
 
 char_script = function() {};
 draw_script = function() {};
