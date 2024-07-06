@@ -267,29 +267,24 @@ function init_clash(_char1, _char2) {
 function take_damage(_attacker,_amount,_kill) {
 	var dmg = round(_amount);
 	
-	if object_is_ancestor(_attacker.object_index,obj_char) {
-		dmg *= _attacker.attack_power;
+	var true_attacker = _attacker;
+	if !object_is_ancestor(_attacker.object_index,obj_char) {
+		true_attacker = _attacker.owner;
 	}
-	else {
-		dmg *= _attacker.owner.attack_power;
-	}
+	var defender = id;
 	
-	dmg /= defense;
+	dmg *= true_attacker.attack_power;
 	
-	var scaling = map_value(combo_damage_taken,0,max_hp*0.25,1,0);
-	if id != p1_active_character
-	and id != p2_active_character {
-		scaling *= 2;
-	}
+	dmg /= defender.defense;
+	
+	var scaling = map_value(hp + combo_damage_taken,max_hp,0,1,0);
 	scaling = clamp(scaling,0.1,1);
 	dmg *= scaling;
 	
-	dmg *= map_value(max_team_size,1,3,0.25,1);
+	dmg *= true_attacker.level * level_scaling;
 	
 	dmg = max(ceil(dmg),1);
-	
 	hp -= dmg;
-	
 	if !_kill {
 		hp = max(hp,1);
 	}
