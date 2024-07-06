@@ -49,7 +49,6 @@ globalvar	player, player_char, player_input,
 			max_tp, max_tp_stocks, tp_stock_size,
 			max_sp, max_sp_stocks, sp_stock_size,
 			
-			max_level,
 			game_state, game_state_previous, game_state_timer, game_state_duration,
 			round_state, round_timer, round_state_timer, round_timer_max, round_countdown_duration, round_is_infinite,
 			stage,
