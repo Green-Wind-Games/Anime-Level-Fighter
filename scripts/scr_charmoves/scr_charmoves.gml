@@ -131,13 +131,13 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 
 function fire_beam_attack(_x, _y, _damage, beam_sprite, _attacktype, _hiteffect) {
 	var split = 1;
-    var beam_speed = sprite_get_width(beam_sprite) / split;
+	var beam_speed = sprite_get_width(beam_sprite) / split;
 	if (state_timer mod split == 0) {
-        with(create_shot(_x, _y, beam_speed, 0, beam_sprite, _damage, _attacktype, _hiteffect)) {
-            blend = true;
-            hit_limit = -1;
-        }
-    }
+		with(create_shot(_x, _y, beam_speed, 0, beam_sprite, _damage, _attacktype, _hiteffect)) {
+			blend = true;
+			hit_limit = -1;
+		}
+	}
 }
 
 function superfreeze(_duration = 30) {

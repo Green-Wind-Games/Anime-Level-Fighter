@@ -3,10 +3,10 @@
 
 function draw_ground() {
 	if sprite_exists(ground_sprite) {
-		var ground_x = (-room_width/2)+screen_shake_x;
+		var ground_w = room_width * 1.5;
+		var ground_h = (room_height-ground_height)*1.5;
+		var ground_x = (-ground_w/2)+screen_shake_x;
 		var ground_y = ground_height-sprite_get_yoffset(ground_sprite)+screen_shake_y;
-		var ground_w = room_width * 2;
-		var ground_h = (room_height-ground_height)*1.25;
 		draw_sprite_stretched(ground_sprite,0,ground_x,ground_y,ground_w,ground_h);
 	}
 }
@@ -206,77 +206,135 @@ function draw_hud() {
 	var text_height = string_height(text_max);
 	
 	var active_players = 0;
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for (var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
 			active_players++;
 		}
 	}
-	
+
 	var hp_bar_width = (_w / active_players) - _spacing - icon_size;
-	var hp_bar_height = icon_size;
-	var other_bar_width = 10;
-	var other_bar_height = 50;
-	
-	var hp_y1 = _spacing;
-	var hp_y2 = hp_y1 + hp_bar_height
-	
-	var icon_y = hp_y1 + (hp_bar_height/2);
-	
-	var mp_y1 = _h - _spacing - mp_bar_height;
-	var mp_y2 = mp_y1 + mp_bar_height;
-	
-	var tp_y1 = _h - _spacing - tp_bar_height;
-	var tp_y2 = tp_y1 + tp_bar_height;
-	
-	var sp_y1 = _h - _spacing - sp_bar_height;
-	var sp_y2 = sp_y1 + sp_bar_height;
-	
-	var hp_color = make_color_rgb(0,255,0);
-	var dmg_color = make_color_rgb(255,0,0);
-	var mp_color = make_color_rgb(64,192,255);
-	var tp_color = make_color_rgb(255,255,255);
-	var sp_color = make_color_rgb(255,255,0);
-		
-	for(var i = 0; i < array_length(player_slot); i++) {
-		var hp_x1 = _spacing + icon_size + (hp_bar_width * i);
-		var hp_x2 = _x1 + hp_bar_width;
-		var hp_y1 = hp_y1;
-		var hp_y2 = _y1 + hp_bar_height;
-		
-		var mp_x1 = hp_x1;
-		var mp_x2 = mp_x1 + other_bar_width;
-		
-		with(player[i]) {
+	var hp_bar_height = 8;
+	var mp_bar_width = hp_bar_width * 0.75;
+	var mp_bar_height = hp_bar_height * 0.5;
+	var tp_bar_width = mp_bar_width * 0.75;
+	var tp_bar_height = mp_bar_height;
+
+	var hud_y = _spacing + hp_bar_height + (other_bar_height * 2);
+
+	var hp_color = make_color_rgb(0, 255, 0);
+	var dmg_color = make_color_rgb(255, 0, 0);
+	var mp_color = make_color_rgb(0, 192, 255);
+	var tp_color = make_color_rgb(255, 192, 0);
+
+	for (var i = 0; i < array_length(player_slot); i++) {
+		var _right = i >= active_players / 2;
+		var hp_x1, hp_x2, hp_y1, hp_y2;
+		var mp_x1, mp_x2, mp_y1, mp_y2;
+		var tp_x1, tp_x2, tp_y1, tp_y2;
+
+		if (!_right) {
+			hp_x1 = _spacing + icon_size + (hp_bar_width * i);
+			hp_x2 = hp_x1 + hp_bar_width;
+		} 
+		else {
+			hp_x2 = _w - _spacing - icon_size - (hp_bar_width * (i - active_players / 2));
+			hp_x1 = hp_x2 - hp_bar_width;
+		}
+
+		hp_y1 = hud_y;
+		hp_y2 = hp_y1 + hp_bar_height;
+
+		mp_x1 = hp_x1;
+		mp_x2 = hp_x1 + mp_bar_width;
+		mp_y1 = hp_y2 + 1;
+		mp_y2 = mp_y1 + mp_bar_height;
+
+		tp_x1 = mp_x1;
+		tp_x2 = mp_x1 + tp_bar_width;
+		tp_y1 = mp_y2 + 1;
+		tp_y2 = tp_y1 + tp_bar_height;
+
+		with (player_slot[i]) {
 			draw_set_color(c_black);
 			draw_set_alpha(1);
-			draw_rectangle(_x1,_y1,_x2,_y2,false);
-		
-			if hp_percent > 0 {
-				var _hp_x = map_value(hp_percent,0,100,hp1_x1+1,hp1_x2-1);
-				draw_set_color(hp_color);
-				draw_set_alpha(1);
-				draw_rectangle(
-					hp1_x1+1,
-					_y1+1,
-					_hp_x,
-					_y2-1,
-					false
-				);
-			
-				if combo_damage_taken > 0 {
-					var _dmg_x = map_value(hp+combo_damage_taken,0,max_hp,hp1_x1+1,hp1_x2-1);
-					draw_set_color(dmg_color);
-					draw_set_alpha(1);
-					draw_rectangle(
-						_hp_x+1,
-						_y1+1,
-						_dmg_x,
-						_y2-1,
-						false
-					);
+			draw_rectangle(hp_x1, hp_y1, hp_x2, hp_y2, false);
+			draw_rectangle(mp_x1, mp_y1, mp_x2, mp_y2, false);
+			draw_rectangle(tp_x1, tp_y1, tp_x2, tp_y2, false);
+
+			if (!_right) {
+				if (hp_percent > 0) {
+					draw_set_color(hp_color);
+					var _hp_x = map_value(hp_percent, 0, 100, hp_x1 + 1, hp_x2 - 1);
+					draw_rectangle(hp_x1 + 1, hp_y1 + 1, _hp_x, hp_y2 - 1, false);
+
+					if (combo_damage_taken > 0) {
+						var _dmg_x = map_value(hp + combo_damage_taken, 0, max_hp, hp_x1 + 1, hp_x2 - 1);
+						draw_set_color(dmg_color);
+						draw_set_alpha(1);
+						draw_rectangle(_hp_x + 1, hp_y1 + 1, _dmg_x, hp_y2 - 1, false);
+					}
+				}
+
+				if (mp_percent > 0) {
+					draw_set_color(mp_color);
+					var _mp_x = map_value(mp_percent, 0, 100, mp_x1 + 1, mp_x2 - 1);
+					draw_rectangle(mp_x1 + 1, mp_y1 + 1, _mp_x, mp_y2 - 1, false);
+				}
+				
+				if (tp_percent > 0) {
+					draw_set_color(tp_color);
+					var _tp_x = map_value(tp_percent, 0, 100, tp_x1 + 1, tp_x2 - 1);
+					draw_rectangle(tp_x1 + 1, tp_y1 + 1, _tp_x, tp_y2 - 1, false);
 				}
 			}
-			draw_sprite_ext(icon,0,_x1 - icon_size,icon_y,icon_scale,icon_scale,0,c_white,1);
+			else {
+				if (hp_percent > 0) {
+					draw_set_color(hp_color);
+					var _hp_x = map_value(hp_percent, 0, 100, hp_x2 - 1, hp_x1 + 1);
+					draw_rectangle(_hp_x, hp_y1 + 1, hp_x2 - 1, hp_y2 - 1, false);
+
+					if (combo_damage_taken > 0) {
+						var _dmg_x = map_value(hp + combo_damage_taken, 0, max_hp, hp_x2 - 1, hp_x1 + 1);
+						draw_set_color(dmg_color);
+						draw_set_alpha(1);
+						draw_rectangle(_dmg_x, hp_y1 + 1, _hp_x - 1, hp_y2 - 1, false);
+					}
+				}
+
+				if (mp_percent > 0) {
+					draw_set_color(mp_color);
+					var _mp_x = map_value(mp_percent, 0, 100, mp_x2 - 1, mp_x1 + 1);
+					draw_rectangle(_mp_x, mp_y1 + 1, mp_x2 - 1, mp_y2 - 1, false);
+				}
+				
+				if (tp_percent > 0) {
+					draw_set_color(tp_color);
+					var _tp_x = map_value(tp_percent, 0, 100, tp_x2 - 1, tp_x1 + 1);
+					draw_rectangle(_tp_x, tp_y1 + 1, tp_x2 - 1, tp_y2 - 1, false);
+				}
+			}
+
+			
+			draw_set_color(c_black);
+			var hp_segments = 4;
+			for(var i = 0; i < hp_segments - 1; i++) {
+				var _x = map_value(i,-1,hp_segments-1,hp_x1,hp_x2);
+				var _y1 = hp_y1;
+				var _y2 = hp_y2-1;
+				draw_line(_x,_y1,_x,_y2);
+			}
+			for(var i = 0; i < max_mp_stocks - 1; i++) {
+				var _x = map_value(i,-1,max_mp_stocks-1,mp_x1,mp_x2);
+				var _y1 = mp_y1;
+				var _y2 = mp_y2-1;
+				draw_line(_x,_y1,_x,_y2);
+			}
+			for(var i = 0; i < max_tp_stocks - 1; i++) {
+				var _x = map_value(i,-1,max_tp_stocks-1,tp_x1,tp_x2);
+				var _y1 = tp_y1;
+				var _y2 = tp_y2-1;
+				draw_line(_x,_y1,_x,_y2);
+			}
 		}
 	}
 	
@@ -299,34 +357,6 @@ function draw_hud() {
 	draw_set_color(c_white);
 	draw_text(text_x,text_y,text);
 	
-	var hp_segments = 4;
-	for(var i = 0; i < hp_segments - 1; i++) {
-		var _x1 = map_value(i,-1,hp_segments-1,hp1_x1,hp1_x2);
-		var _x2 = map_value(i,-1,hp_segments-1,hp2_x1,hp2_x2);
-		var _y1 = hp_y1;
-		var _y2 = hp_y2-1;
-		draw_set_color(c_black);
-		draw_line(_x1,_y1,_x1,_y2);
-		draw_line(_x2,_y1,_x2,_y2);
-	}
-	for(var i = 0; i < max_mp_stocks - 1; i++) {
-		var _y = map_value(i,-1,max_mp_stocks - 1,mp_y1,mp_y2)-1;
-		draw_set_color(c_black);
-		draw_line(mp1_x1-1,_y,mp1_x2,_y);
-		draw_line(mp2_x1-1,_y,mp2_x2,_y);
-	}
-	for(var i = 0; i < max_sp_stocks - 1; i++) {
-		var _y = map_value(i,-1,max_sp_stocks - 1,sp_y1,sp_y2)-1;
-		draw_set_color(c_black);
-		draw_line(sp1_x1-1,_y,sp1_x2,_y);
-		draw_line(sp2_x1-1,_y,sp2_x2,_y);
-	}
-	for(var i = 0; i < max_tp_stocks - 1; i++) {
-		var _y = map_value(i,-1,max_tp_stocks - 1,tp_y1,tp_y2)-1;
-		draw_set_color(c_black);
-		draw_line(tp1_x1-1,_y,tp1_x2,_y);
-		draw_line(tp2_x1-1,_y,tp2_x2,_y);
-	}
 	
 	if p1_combo_timer > 0 {
 		draw_set_font(fnt_combo);

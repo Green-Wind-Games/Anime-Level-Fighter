@@ -61,6 +61,8 @@ function update_fight() {
 	run_charphysics();
 	run_charstates();
 	
+	chars_update_stats();
+	
 	chars_update_targeting();
 		
 	update_hitboxes();
@@ -80,48 +82,26 @@ function update_fight() {
 	}
 }
 
+function chars_update_stats() {
+	with(obj_char) {
+		hp = clamp(round(hp),0,max_hp);
+		mp = clamp(round(mp),0,max_mp);
+		tp = clamp(round(tp)+1,0,max_tp);
+		
+		hp_percent = (hp/max_hp)*100;
+		mp_percent = (mp/max_mp)*100;
+		tp_percent = (tp/max_tp)*100;
+		
+		mp_stocks = floor(mp/mp_stock_size);
+		tp_stocks = floor(tp/tp_stock_size);
+	}
+}
+
 function run_charstates() {
 	with(obj_char) {
 		if (!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)) {
 			if (!hitstop) {
 				run_state();
-				if id != p1_active_character
-				and id != p2_active_character {
-					if active_state == idle_state {
-						change_state(tag_out_state);
-					}
-				}
-				else {
-					if round_state == roundstates.victory {
-						if active_state == idle_state {
-							var p1_sum = 0;
-							var p2_sum = 0;
-							for(var i = 0; i < max_team_size; i++) {
-								p1_sum += p1_char_hp_percent[i];
-								p2_sum += p2_char_hp_percent[i];
-							}
-							if p1_sum > p2_sum {
-								if team == 1 {
-									change_state(victory_state);
-								}
-								else {
-									change_state(defeat_state);
-								}
-							}
-							else if p1_sum < p2_sum {
-								if team == 1 {
-									change_state(defeat_state);
-								}
-								else {
-									change_state(victory_state);
-								}
-							}
-							else {
-								change_state(defeat_state);
-							}
-						}
-					}
-				}
 			}
 			else {
 				hitstop -= 1;
@@ -139,8 +119,20 @@ function run_charstates() {
 
 function run_charphysics() {
 	var border = 16;
-	battle_x = mean(p1_active_character.x,p2_active_character.x);
-	battle_y = mean(p1_active_character.y,p2_active_character.y);
+	var _x1 = room_width;
+	var _y1 = room_height;
+	var _x2 = 0;
+	var _y2 = 0;
+	with(obj_char) {
+		if !dead {
+			_x1 = min(_x1,x);
+			_y1 = min(_y1,y);
+			_x2 = max(_x2,x);
+			_y2 = max(_y2,y);
+		}
+	}
+	battle_x = mean(_x1,_x2);
+	battle_y = mean(_y1,_y2);
 	var battle_size = game_width * 1.25;
 	left_wall = clamp(battle_x - (battle_size / 2),0,room_width-game_width) + border;
 	right_wall = clamp(battle_x + (battle_size / 2),game_width,room_width) - border;
@@ -152,33 +144,30 @@ function run_charphysics() {
 				gravitate(ygravity_mod);
 			}
 		}
-		if id == p1_active_character
-		or id == p2_active_character {
-	        x = clamp(x, left_wall, right_wall);
-		}
+		x = clamp(x, left_wall, right_wall);
 		y = min(y,ground_height);
 		
 		//x = round(x);
 		//y = round(y);
-
+		
 		with(obj_char) {
-			if grabbed continue;
-			if other.grabbed continue;
-			if dead  continue;
-			if other.dead continue;
-			if active_state == tag_out_state continue;
-			if other.active_state == tag_out_state continue;
+			if grabbed or other.grabbed continue;
+			if dead or other.dead continue;
 			if team == other.team continue;
-			if !place_meeting(x, y, other) continue;
+			var _dist = abs(x-other.x);
+			_dist -= width_half;
+			_dist -= other.width_half;
+			if _dist >= 0 continue;
 			
 			var _push = -sign(x-other.x);
-			if _push == 0 then _push = sign(on_left_wall - on_right_wall) * sign(y - other.y);
+			//if _push == 0 then _push = sign(on_left_wall - on_right_wall) * sign(y - other.y);
 			if _push == 0 then _push = facing;
-			var i = 0;
-			while(place_meeting(x, y, other)) {
+			if _push == 0 then _push = 1;
+			_push *= 0.5;
+			while(_dist < 0) {
 				x = clamp(x-_push, left_wall, right_wall);
 				other.x = clamp(other.x+_push, left_wall, right_wall);
-				if i++ > 10 break;
+				_dist += abs(_push*2);
 			}
 		}
 	}
@@ -409,64 +398,64 @@ function check_assists() {
 }
 
 //function check_assists() {
-//    var assist_y = ground_height - 30;
-//    var ai_assist_odds = 500;
-//    var ai_tagout_odds = 50;
+//	var assist_y = ground_height - 30;
+//	var ai_assist_odds = 500;
+//	var ai_tagout_odds = 50;
 
-//    var assists = [
-//        { call: [p1_button5, p1_button6], back: sign(p1_right - p1_left) == -p1_active_character.facing, ai: p1_active_character.ai_enabled, is_hit: p1_is_hit, is_blocking: p1_is_blocking, char: p1_char, char_assist_timer: p1_char_assist_timer, char_hp: p1_char_hp, char_assist_type: p1_char_assist_type, change_active_char: change_p1_active_char },
-//        { call: [p2_button5, p2_button6], back: sign(p2_right - p2_left) == -p2_active_character.facing, ai: p2_active_character.ai_enabled, is_hit: p2_is_hit, is_blocking: p2_is_blocking, char: p2_char, char_assist_timer: p2_char_assist_timer, char_hp: p2_char_hp, char_assist_type: p2_char_assist_type, change_active_char: change_p2_active_char }
-//    ];
+//	var assists = [
+//		{ call: [p1_button5, p1_button6], back: sign(p1_right - p1_left) == -p1_active_character.facing, ai: p1_active_character.ai_enabled, is_hit: p1_is_hit, is_blocking: p1_is_blocking, char: p1_char, char_assist_timer: p1_char_assist_timer, char_hp: p1_char_hp, char_assist_type: p1_char_assist_type, change_active_char: change_p1_active_char },
+//		{ call: [p2_button5, p2_button6], back: sign(p2_right - p2_left) == -p2_active_character.facing, ai: p2_active_character.ai_enabled, is_hit: p2_is_hit, is_blocking: p2_is_blocking, char: p2_char, char_assist_timer: p2_char_assist_timer, char_hp: p2_char_hp, char_assist_type: p2_char_assist_type, change_active_char: change_p2_active_char }
+//	];
 
-//    if (round_state != roundstates.fight || superfreeze_active || p1_grabbed || p2_grabbed) {
-//        for (var i = 0; i < array_length(assists); i++) {
-//            assists[i].call[0] = false;
-//            assists[i].call[1] = false;
-//        }
-//    } else {
-//        for (var i = 0; i < array_length(assists); i++) {
-//            if (assists[i].ai) {
-//                assists[i].call[0] = irandom(ai_assist_odds) == 1;
-//                assists[i].call[1] = irandom(ai_assist_odds) == 1;
-//                assists[i].back = irandom(ai_tagout_odds) > assists[i].char[0].hp_percent;
-//            }
+//	if (round_state != roundstates.fight || superfreeze_active || p1_grabbed || p2_grabbed) {
+//		for (var i = 0; i < array_length(assists); i++) {
+//			assists[i].call[0] = false;
+//			assists[i].call[1] = false;
+//		}
+//	} else {
+//		for (var i = 0; i < array_length(assists); i++) {
+//			if (assists[i].ai) {
+//				assists[i].call[0] = irandom(ai_assist_odds) == 1;
+//				assists[i].call[1] = irandom(ai_assist_odds) == 1;
+//				assists[i].back = irandom(ai_tagout_odds) > assists[i].char[0].hp_percent;
+//			}
 
-//            for (var j = 0; j < 2; j++) {
-//                if (assists[i].call[j] && !assists[i].is_hit && !assists[i].is_blocking) {
-//                    var called_number = j + 1;
-//                    var called_char = assists[i].char[called_number];
-//                    if (assists[i].char[0] == called_char) {
-//                        called_char = assists[i].char[0];
-//                        called_number = 0;
-//                    }
-//                    if (assists[i].char_assist_timer[called_number] <= 0 && assists[i].char_hp[called_number] > 0) {
-//                        with (called_char) {
-//                            x = assists[i].char[0].x;
-//                            y = assist_y;
-//                            xspeed = 0;
-//                            yspeed = 0;
-//                            change_sprite(air_down_sprite, 6, false);
-//                            face_target();
-//                            if (assists[i].back) {
-//                                assists[i].char_assist_timer[0] = assist_a_cooldown;
-//                                assists[i].char_assist_timer[called_number] = assist_a_cooldown;
-//                                assists[i].change_active_char(called_char);
-//                            } else if (assists[i].char_assist_type[called_number] == assist_type.a) {
-//                                assists[i].char_assist_timer[called_number] = assist_a_cooldown;
-//                                change_state(assist_a_state);
-//                            } else if (assists[i].char_assist_type[called_number] == assist_type.b) {
-//                                assists[i].char_assist_timer[called_number] = assist_b_cooldown;
-//                                change_state(assist_b_state);
-//                            } else {
-//                                assists[i].char_assist_timer[called_number] = assist_c_cooldown;
-//                                change_state(assist_c_state);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+//			for (var j = 0; j < 2; j++) {
+//				if (assists[i].call[j] && !assists[i].is_hit && !assists[i].is_blocking) {
+//					var called_number = j + 1;
+//					var called_char = assists[i].char[called_number];
+//					if (assists[i].char[0] == called_char) {
+//						called_char = assists[i].char[0];
+//						called_number = 0;
+//					}
+//					if (assists[i].char_assist_timer[called_number] <= 0 && assists[i].char_hp[called_number] > 0) {
+//						with (called_char) {
+//							x = assists[i].char[0].x;
+//							y = assist_y;
+//							xspeed = 0;
+//							yspeed = 0;
+//							change_sprite(air_down_sprite, 6, false);
+//							face_target();
+//							if (assists[i].back) {
+//								assists[i].char_assist_timer[0] = assist_a_cooldown;
+//								assists[i].char_assist_timer[called_number] = assist_a_cooldown;
+//								assists[i].change_active_char(called_char);
+//							} else if (assists[i].char_assist_type[called_number] == assist_type.a) {
+//								assists[i].char_assist_timer[called_number] = assist_a_cooldown;
+//								change_state(assist_a_state);
+//							} else if (assists[i].char_assist_type[called_number] == assist_type.b) {
+//								assists[i].char_assist_timer[called_number] = assist_b_cooldown;
+//								change_state(assist_b_state);
+//							} else {
+//								assists[i].char_assist_timer[called_number] = assist_c_cooldown;
+//								change_state(assist_c_state);
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 //}
 
 //function check_deaths() {
@@ -554,11 +543,11 @@ function check_deaths() {
 		}
 	}
 	if alldead {
-        if round_state != roundstates.knockout && round_state != roundstates.victory {
-            round_state = roundstates.knockout;
-            play_sound(snd_knockout);
-        }
-    }
+		if round_state != roundstates.knockout && round_state != roundstates.victory {
+			round_state = roundstates.knockout;
+			play_sound(snd_knockout);
+		}
+	}
 }
 
 function update_shots() {

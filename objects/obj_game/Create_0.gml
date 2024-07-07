@@ -13,8 +13,6 @@ enum gamestates {
 	options,
 	
 	story_select,
-	story_map,
-	story_status,
 	story_cutscene,
 	story_battle,
 	story_results,
@@ -68,7 +66,7 @@ globalvar	player, player_char, player_input,
 			
 			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha;
 
-game_state = gamestates.main_menu;
+game_state = gamestates.versus_select;
 game_state_previous = -1;
 game_state_duration = -1;
 game_state_timer = -1;
