@@ -108,11 +108,11 @@ function create_hitspark(_x1,_y1,_x2,_y2,_attacktype,_hiteffect,_guard) {
 		if !_guard {
 			switch(_hiteffect) {
 				default:
-				if _attacktype < attacktype.medium {
+				if _attacktype < attackstrength.medium {
 					_sound = choose(snd_punch_hit_light,snd_punch_hit_light2);
 					create_particles(_x1,_y1,_x2,_y2,hitspark_light);
 				}
-				else if _attacktype < attacktype.heavy {
+				else if _attacktype < attackstrength.heavy {
 					_sound = choose(snd_punch_hit_medium,snd_punch_hit_medium2);
 					create_particles(_x1,_y1,_x2,_y2,hitspark_medium);
 				}
@@ -124,10 +124,10 @@ function create_hitspark(_x1,_y1,_x2,_y2,_attacktype,_hiteffect,_guard) {
 				
 				case hiteffects.slash:
 				create_particles(_x1,_y1,_x2,_y2,slashspark);
-				if _attacktype < attacktype.medium {
+				if _attacktype < attackstrength.medium {
 					_sound = snd_slash_hit_light;
 				}
-				else if _attacktype < attacktype.heavy {
+				else if _attacktype < attackstrength.heavy {
 					_sound = snd_slash_hit_medium;
 				}
 				else {

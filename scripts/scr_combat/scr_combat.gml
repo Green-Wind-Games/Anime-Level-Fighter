@@ -51,13 +51,12 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _hit
 	xspeed = _xknockback * _attacker.facing;
 	yspeed = _yknockback;
 	switch(_attacktype) {
-		case attacktype.light:
+		default:
 		hitstun = 15;
 		blockstun = 12;
 		hitstop = 8;
 		break;
 		
-		case attacktype.medium:
 		case attacktype.antiair:
 		case attacktype.unblockable:
 		hitstun = 20;
@@ -65,17 +64,14 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _hit
 		hitstop = 10;
 		break;
 		
-		case attacktype.heavy:
 		case attacktype.hard_knockdown:
-		hitstun = 25;
+		hitstun = 30;
 		blockstun = 20;
 		hitstop = 12;
 		break
 		
 		case attacktype.ground_bounce:
-		case attacktype.launcher:
 		case attacktype.slide_knockdown:
-		case attacktype.smash:
 		case attacktype.wall_bounce:
 		case attacktype.wall_splat:
 		hitstun = 60;
@@ -146,8 +142,6 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _hit
 				break;
 									
 				case attacktype.hard_knockdown:
-				case attacktype.wall_splat:
-				case attacktype.smash:
 				change_state(hard_knockdown_state);
 				break;
 									
@@ -156,7 +150,6 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _hit
 				break;
 									
 				case attacktype.grab:
-				case attacktype.hit_grab:
 				with(_attacker) {
 					init_grab(id,other);
 				}

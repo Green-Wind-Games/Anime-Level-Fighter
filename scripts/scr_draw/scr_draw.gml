@@ -35,7 +35,7 @@ function draw_playerindicators() {
 			draw_text(indicator_x-1,indicator_y,text);
 			draw_text(indicator_x,indicator_y-1,text);
 			draw_text(indicator_x,indicator_y+1,text);
-			draw_set_color(p1_color);
+			draw_set_color(player_color[i]);
 			draw_text(indicator_x,indicator_y,text);
 		}
 	}
@@ -57,26 +57,6 @@ function draw_chars() {
 		
 			if flash {
 				gpu_set_fog(true,flash_color,0,0);
-			}
-			
-			if weapon_enabled {
-				if sprite == swing_sprite
-				or sprite == thrust_sprite
-				or sprite == shoot_sprite {
-					var weapon_x = _x + lengthdir_x(32,rotation+90);
-					var weapon_y = _y + lengthdir_y(32,rotation+90);
-					draw_sprite_ext(
-						weapon_sprite,
-						frame,
-						weapon_x,
-						weapon_y,
-						xscale*xstretch*facing,
-						yscale*ystretch,
-						rotation*facing*sign(xscale)*sign(xstretch),
-						color,
-						alpha
-					);
-				}
 			}
 
 			draw_sprite_ext(
@@ -104,7 +84,7 @@ function draw_chars() {
 }
 
 function draw_char_shadows() {
-	var shadow_scale = 0.2;
+	var shadow_scale = -0.1;
 	var shadow_alpha = 0.5;
 	with(obj_char) {
 		var _x = x + (xoffset*facing) + screen_shake_x;
@@ -200,11 +180,6 @@ function draw_hud() {
 	var icon_size = 24;
 	var icon_scale = 0.5;
 	
-	draw_set_font(fnt_timer);
-	var text_max = string(round(round_timer_max / 60)*10);
-	var text_width = string_width(text_max);
-	var text_height = string_height(text_max);
-	
 	var active_players = 0;
 	for (var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
@@ -219,7 +194,7 @@ function draw_hud() {
 	var tp_bar_width = mp_bar_width * 0.75;
 	var tp_bar_height = mp_bar_height;
 
-	var hud_y = _spacing + hp_bar_height + (other_bar_height * 2);
+	var hud_y = _spacing;
 
 	var hp_color = make_color_rgb(0, 255, 0);
 	var dmg_color = make_color_rgb(255, 0, 0);
@@ -233,11 +208,11 @@ function draw_hud() {
 		var tp_x1, tp_x2, tp_y1, tp_y2;
 
 		if (!_right) {
-			hp_x1 = _spacing + icon_size + (hp_bar_width * i);
+			hp_x1 = (_spacing * (i + 1)) + (hp_bar_width * i);
 			hp_x2 = hp_x1 + hp_bar_width;
 		} 
 		else {
-			hp_x2 = _w - _spacing - icon_size - (hp_bar_width * (i - active_players / 2));
+			hp_x2 = _w - (_spacing * (i + 1)) - (hp_bar_width * i);
 			hp_x1 = hp_x2 - hp_bar_width;
 		}
 
@@ -335,75 +310,54 @@ function draw_hud() {
 				var _y2 = tp_y2-1;
 				draw_line(_x,_y1,_x,_y2);
 			}
+			
+			//if p1_combo_timer > 0 {
+			//	draw_set_font(fnt_combo);
+			//	draw_set_halign(fa_left);
+			//	draw_set_valign(fa_top);
+			//	var text_x = _w * 0.1;
+			//	var text_y = hp_y2 + 16;
+			//	var text = string(p1_combo_hits) + " Acerto";
+			//	if p1_combo_hits > 1 {
+			//		text += "s";
+			//	}
+			//	text += "!";
+			//	text += "\n" + string(p1_combo_damage) + " de dano!";
+			//	text_x += random(p2_active_character.hitstop);
+			//	text_y += random(p2_active_character.hitstop);
+			//	draw_set_alpha(0.5);
+			//	draw_set_color(c_black);
+			//	draw_text(text_x + 3, text_y + 5,text);
+			//	draw_set_alpha(1);
+			//	draw_set_color(p1_color);
+			//	draw_text(text_x + 2, text_y + 2,text);
+			//	draw_set_color(c_white);
+			//	draw_text(text_x, text_y,text);
+			//}
 		}
 	}
 	
 	draw_set_font(fnt_timer);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
-	var text = string(ceil(clamp(round_timer,0,round_timer_max) / 60));
-	var text_x = _w2;
-	var text_y = hp_y2 + (text_height/2);
-	if _w - (hp_bar_width * 2) - (_spacing * 2) - (icon_size * 2) > text_width {
-		text_y = mean(hp_y1,hp_y2);
-	}
+	var clock_text_max = string(round(round_timer_max / 60)*10);
+	var clock_text_width = string_width(clock_text_max);
+	var clock_text_height = string_height(clock_text_max);
+	var clock_text = string(ceil(round_timer / 60));
+	var clock_x = _w2;
+	var clock_y = _spacing + hp_bar_height + mp_bar_height + tp_bar_height + (clock_text_height * 2);
+	//if _w - (hp_bar_width * 2) - (_spacing * 2) - (icon_size * 2) > text_width {
+	//	text_y = mean(hp_y1,hp_y2);
+	//}
 	
-	var text_x1 = text_x - (text_width / 2) + 1;
-	var text_x2 = text_x + (text_width / 2) - 1;
-	var text_y1 = text_y - (text_height / 2);
-	var text_y2 = text_y + (text_height / 2);
+	var clock_x1 = clock_x - (clock_text_width / 2) + 1;
+	var clock_x2 = clock_x + (clock_text_width / 2) - 1;
+	var clock_y1 = clock_y - (clock_text_height / 2);
+	var clock_y2 = clock_y + (clock_text_height / 2);
 	draw_set_color(c_black);
-	draw_rectangle(text_x1,text_y1,text_x2,text_y2,false);
+	draw_rectangle(clock_x1,clock_y1,clock_x2,clock_y2,false);
 	draw_set_color(c_white);
-	draw_text(text_x,text_y,text);
-	
-	
-	if p1_combo_timer > 0 {
-		draw_set_font(fnt_combo);
-		draw_set_halign(fa_left);
-		draw_set_valign(fa_top);
-		var text_x = _w * 0.1;
-		var text_y = hp_y2 + 16;
-		var text = string(p1_combo_hits) + " Acerto";
-		if p1_combo_hits > 1 {
-			text += "s";
-		}
-		text += "!";
-		text += "\n" + string(p1_combo_damage) + " de dano!";
-		text_x += random(p2_active_character.hitstop);
-		text_y += random(p2_active_character.hitstop);
-		draw_set_alpha(0.5);
-		draw_set_color(c_black);
-		draw_text(text_x + 3, text_y + 5,text);
-		draw_set_alpha(1);
-		draw_set_color(p1_color);
-		draw_text(text_x + 2, text_y + 2,text);
-		draw_set_color(c_white);
-		draw_text(text_x, text_y,text);
-	}
-	if p2_combo_timer > 0 {
-		draw_set_font(fnt_combo);
-		draw_set_halign(fa_right);
-		draw_set_valign(fa_top);
-		var text_x = _w * 0.9;
-		var text_y = hp_y2 + 16;
-		var text = string(p2_combo_hits) + " Acerto";
-		if p2_combo_hits > 1 {
-			text += "s";
-		}
-		text += "!";
-		text += "\n" + string(p2_combo_damage) + " de dano!";
-		text_x -= random(p1_active_character.hitstop);
-		text_y += random(p1_active_character.hitstop);
-		draw_set_alpha(0.5);
-		draw_set_color(c_black);
-		draw_text(text_x + 3, text_y + 5,text);
-		draw_set_alpha(1);
-		draw_set_color(p2_color);
-		draw_text(text_x + 2, text_y + 2,text);
-		draw_set_color(c_white);
-		draw_text(text_x, text_y,text);
-	}
+	draw_text(clock_x,clock_y,clock_text);
 }
 
 function draw_hitboxes() {
@@ -474,124 +428,124 @@ function draw_portraits() {
 	}
 }
 
-function draw_charselect() {
-	var _w = display_get_gui_width();
-	var _h = display_get_gui_height();
-	var _w2	= _w / 2;
-	var _h2 = _h / 2;
-	var grid_size = 40;
-	var grid_x = (display_get_gui_width()/2) - (chars_per_row * grid_size / 2);
-	var grid_y = grid_size * 0.5;
-	var i = 0;
-	for(var ii = 0; ii < chars_per_column; ii++) {
-		for(var iii = 0; iii < chars_per_row; iii++) {
-			var _x1 = grid_x+(grid_size*iii);
-			var _y1 = grid_y+(grid_size*ii)
-			var _x2 = _x1+grid_size-2;
-			var _y2 = _y1+grid_size-2;
+//function draw_charselect() {
+//	var _w = display_get_gui_width();
+//	var _h = display_get_gui_height();
+//	var _w2	= _w / 2;
+//	var _h2 = _h / 2;
+//	var grid_size = 40;
+//	var grid_x = (display_get_gui_width()/2) - (chars_per_row * grid_size / 2);
+//	var grid_y = grid_size * 0.5;
+//	var i = 0;
+//	for(var ii = 0; ii < chars_per_column; ii++) {
+//		for(var iii = 0; iii < chars_per_row; iii++) {
+//			var _x1 = grid_x+(grid_size*iii);
+//			var _y1 = grid_y+(grid_size*ii)
+//			var _x2 = _x1+grid_size-2;
+//			var _y2 = _y1+grid_size-2;
 			
-			if p1_selecting_char == i
-			and p2_selecting_char == i {
-				draw_set_color(p_color);
-			}
-			else if p1_selecting_char == i {
-				draw_set_color(p1_color);
-			}
-			else if p2_selecting_char == i {
-				draw_set_color(p2_color);
-			}
-			else {
-				draw_set_color(c_black);
-			}
-			draw_set_alpha(0.75);
-			draw_rectangle(_x1,_y1,_x2,_y2,false);
+//			if p1_selecting_char == i
+//			and p2_selecting_char == i {
+//				draw_set_color(p_color);
+//			}
+//			else if p1_selecting_char == i {
+//				draw_set_color(p1_color);
+//			}
+//			else if p2_selecting_char == i {
+//				draw_set_color(p2_color);
+//			}
+//			else {
+//				draw_set_color(c_black);
+//			}
+//			draw_set_alpha(0.75);
+//			draw_rectangle(_x1,_y1,_x2,_y2,false);
 			
-			draw_set_alpha(1);
-			draw_set_color(c_white);
-			draw_rectangle(_x1,_y1,_x2,_y2,true);
-			i += 1;
-		}
-	}
-	var i = 0;
-	for(var ii = 0; ii < chars_per_column; ii++) {
-		for(var iii = 0; iii < chars_per_row; iii++) {
-			var _x = grid_x+(grid_size*iii)+(grid_size/2);
-			var _y = grid_y+(grid_size*ii)+(grid_size/2);
-			if sprite_exists(charselect_icon[i]) {
-				draw_sprite(charselect_icon[i],0,_x,_y);
-			}
-			i += 1;
-		}
-	}
-	draw_set_font(fnt_assists);
-	var _margin = 4;
-	var text = "";
-	if p1_charselect_state == charselectstates.form {
-		text = "Selecione a forma."
-	}
-	else if p1_charselect_state == charselectstates.assist {
-		var text = "Assist [";
-		if p1_selecting_assist == assist_type.a {
-			text += "A";
-		}
-		else if p1_selecting_assist == assist_type.b {
-			text += "B";
-		}
-		else if p1_selecting_assist == assist_type.c {
-			text += "C";
-		}
-		text += "]: ";
-		text += charselect_assist[p1_selecting_char][p1_selecting_form][p1_selecting_assist];
-	}
-	if text != "" {
-		var text_width = string_width(text);
-		var text_height = string_height(text);
-		var text_x = _w * 0.25;
-		var text_y = _h2;
-		var text_box_width = text_width + (_margin * 2);
-		var text_box_height = text_height + (_margin * 2);
-		var text_box_x = text_x - (text_box_width / 2);
-		var text_box_y = text_y - (text_box_height / 2);
-		draw_sprite_stretched(spr_menu,0,text_box_x,text_box_y,text_box_width,text_box_height);
-		draw_set_halign(fa_center);
-		draw_set_valign(fa_middle);
-		draw_set_color(c_white);
-		draw_text(text_x,text_y,text);
-	}
-	text = "";
-	if p2_charselect_state == charselectstates.form {
-		text = "Selecione a forma."
-	}
-	else if p2_charselect_state == charselectstates.assist {
-		var text = "Assist [";
-		if p2_selecting_assist == assist_type.a {
-			text += "A";
-		}
-		else if p2_selecting_assist == assist_type.b {
-			text += "B";
-		}
-		else if p2_selecting_assist == assist_type.c {
-			text += "C";
-		}
-		text += "]: ";
-		text += charselect_assist[p2_selecting_char][p2_selecting_form][p2_selecting_assist];
-	}
-	if text != "" {
-		var text_width = string_width(text);
-		var text_height = string_height(text);
-		var text_x = _w * 0.75;
-		var text_y = _h2;
-		var text_box_width = text_width + (_margin * 2);
-		var text_box_height = text_height + (_margin * 2);
-		var text_box_x = text_x - (text_box_width / 2);
-		var text_box_y = text_y - (text_box_height / 2);
-		draw_sprite_stretched(spr_menu,0,text_box_x,text_box_y,text_box_width,text_box_height);
-		draw_set_halign(fa_center);
-		draw_set_valign(fa_middle);
-		draw_set_color(c_white);
-		draw_text(text_x,text_y,text);
-	}
-}
+//			draw_set_alpha(1);
+//			draw_set_color(c_white);
+//			draw_rectangle(_x1,_y1,_x2,_y2,true);
+//			i += 1;
+//		}
+//	}
+//	var i = 0;
+//	for(var ii = 0; ii < chars_per_column; ii++) {
+//		for(var iii = 0; iii < chars_per_row; iii++) {
+//			var _x = grid_x+(grid_size*iii)+(grid_size/2);
+//			var _y = grid_y+(grid_size*ii)+(grid_size/2);
+//			if sprite_exists(charselect_icon[i]) {
+//				draw_sprite(charselect_icon[i],0,_x,_y);
+//			}
+//			i += 1;
+//		}
+//	}
+//	draw_set_font(fnt_assists);
+//	var _margin = 4;
+//	var text = "";
+//	if p1_charselect_state == charselectstates.form {
+//		text = "Selecione a forma."
+//	}
+//	else if p1_charselect_state == charselectstates.assist {
+//		var text = "Assist [";
+//		if p1_selecting_assist == assist_type.a {
+//			text += "A";
+//		}
+//		else if p1_selecting_assist == assist_type.b {
+//			text += "B";
+//		}
+//		else if p1_selecting_assist == assist_type.c {
+//			text += "C";
+//		}
+//		text += "]: ";
+//		text += charselect_assist[p1_selecting_char][p1_selecting_form][p1_selecting_assist];
+//	}
+//	if text != "" {
+//		var text_width = string_width(text);
+//		var text_height = string_height(text);
+//		var text_x = _w * 0.25;
+//		var text_y = _h2;
+//		var text_box_width = text_width + (_margin * 2);
+//		var text_box_height = text_height + (_margin * 2);
+//		var text_box_x = text_x - (text_box_width / 2);
+//		var text_box_y = text_y - (text_box_height / 2);
+//		draw_sprite_stretched(spr_menu,0,text_box_x,text_box_y,text_box_width,text_box_height);
+//		draw_set_halign(fa_center);
+//		draw_set_valign(fa_middle);
+//		draw_set_color(c_white);
+//		draw_text(text_x,text_y,text);
+//	}
+//	text = "";
+//	if p2_charselect_state == charselectstates.form {
+//		text = "Selecione a forma."
+//	}
+//	else if p2_charselect_state == charselectstates.assist {
+//		var text = "Assist [";
+//		if p2_selecting_assist == assist_type.a {
+//			text += "A";
+//		}
+//		else if p2_selecting_assist == assist_type.b {
+//			text += "B";
+//		}
+//		else if p2_selecting_assist == assist_type.c {
+//			text += "C";
+//		}
+//		text += "]: ";
+//		text += charselect_assist[p2_selecting_char][p2_selecting_form][p2_selecting_assist];
+//	}
+//	if text != "" {
+//		var text_width = string_width(text);
+//		var text_height = string_height(text);
+//		var text_x = _w * 0.75;
+//		var text_y = _h2;
+//		var text_box_width = text_width + (_margin * 2);
+//		var text_box_height = text_height + (_margin * 2);
+//		var text_box_x = text_x - (text_box_width / 2);
+//		var text_box_y = text_y - (text_box_height / 2);
+//		draw_sprite_stretched(spr_menu,0,text_box_x,text_box_y,text_box_width,text_box_height);
+//		draw_set_halign(fa_center);
+//		draw_set_valign(fa_middle);
+//		draw_set_color(c_white);
+//		draw_text(text_x,text_y,text);
+//	}
+//}
 
 function draw_versus() {
 	var _w = display_get_gui_width();
