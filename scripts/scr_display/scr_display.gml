@@ -3,6 +3,7 @@
 
 globalvar	screen_width, screen_height, screen_aspectratio,
 			game_width, game_height, game_aspectratio,
+			gui_width, gui_height,
 			window_width, window_height, window_scale, window_max_scale,
 			fullscreen_width, fullscreen_height;
 
@@ -17,6 +18,9 @@ game_height = 480;
 game_height = round(game_width / screen_aspectratio);
 
 game_aspectratio = game_width / game_height;
+
+gui_width = game_width;
+gui_height = game_height;
 
 window_max_scale = floor(min(screen_width / game_width, screen_height / game_height));
 if (game_width * window_max_scale) >= screen_width
@@ -130,7 +134,7 @@ function toggle_fullscreen() {
 	}
 }
 
-display_set_gui_size(game_width,game_height);
+display_set_gui_size(gui_width,gui_height);
 resize_window(window_max_scale);
 if os_type == os_windows {
 	disable_fullscreen();

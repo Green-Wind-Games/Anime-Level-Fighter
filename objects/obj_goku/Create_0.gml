@@ -4,6 +4,8 @@ event_inherited();
 
 init_charsprites("goku");
 
+name = "Goku";
+
 theme = mus_dbfz_goku;
 
 kamehameha_cooldown = 0;

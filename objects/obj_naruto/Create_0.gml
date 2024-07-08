@@ -4,6 +4,8 @@ event_inherited();
 
 init_charsprites("naruto");
 
+name = "Naruto";
+
 walk_speed *= 1.5;
 
 theme = mus_naruto_strongandstrike;

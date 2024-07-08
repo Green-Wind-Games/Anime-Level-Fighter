@@ -187,14 +187,22 @@ function draw_hud() {
 		}
 	}
 
-	var hp_bar_width = (_w / active_players) - _spacing - icon_size;
+	var hp_bar_width = (_w / active_players) - (_spacing * 2);
 	var hp_bar_height = 8;
 	var mp_bar_width = hp_bar_width * 0.75;
 	var mp_bar_height = hp_bar_height * 0.5;
 	var tp_bar_width = mp_bar_width * 0.75;
 	var tp_bar_height = mp_bar_height;
-
-	var hud_y = _spacing;
+	
+	draw_set_font(fnt_hud);
+	var playertext = "Player 1: Naruto";
+	var playertext_width = string_width(playertext);
+	var playertext_height = string_height(playertext);
+	
+	var hud_w = _w / active_players;
+	var hud_h = (_spacing * 2) + hp_bar_height + mp_bar_height + tp_bar_height + playertext_height;
+	var hud_x = 0;
+	var hud_y = 0;
 
 	var hp_color = make_color_rgb(0, 255, 0);
 	var dmg_color = make_color_rgb(255, 0, 0);
@@ -208,28 +216,36 @@ function draw_hud() {
 		var tp_x1, tp_x2, tp_y1, tp_y2;
 
 		if (!_right) {
-			hp_x1 = (_spacing * (i + 1)) + (hp_bar_width * i);
+			hp_x1 = hud_x + _spacing;
 			hp_x2 = hp_x1 + hp_bar_width;
+			
+			mp_x1 = hp_x1;
+			mp_x2 = mp_x1 + mp_bar_width;
+
+			tp_x1 = hp_x1;
+			tp_x2 = tp_x1 + tp_bar_width;
 		} 
 		else {
-			hp_x2 = _w - (_spacing * (i + 1)) - (hp_bar_width * i);
+			hp_x2 = hud_x + hud_w - _spacing;
 			hp_x1 = hp_x2 - hp_bar_width;
+			
+			mp_x2 = hp_x2;
+			mp_x1 = mp_x2 - mp_bar_width;
+			
+			tp_x2 = hp_x2;
+			tp_x1 = tp_x1 - tp_bar_width;
 		}
 
-		hp_y1 = hud_y;
+		hp_y1 = hud_y + _spacing;
 		hp_y2 = hp_y1 + hp_bar_height;
 
-		mp_x1 = hp_x1;
-		mp_x2 = hp_x1 + mp_bar_width;
 		mp_y1 = hp_y2 + 1;
 		mp_y2 = mp_y1 + mp_bar_height;
-
-		tp_x1 = mp_x1;
-		tp_x2 = mp_x1 + tp_bar_width;
+		
 		tp_y1 = mp_y2 + 1;
 		tp_y2 = tp_y1 + tp_bar_height;
 
-		with (player_slot[i]) {
+		with(player_slot[i]) {
 			draw_set_color(c_black);
 			draw_set_alpha(1);
 			draw_rectangle(hp_x1, hp_y1, hp_x2, hp_y2, false);
@@ -288,7 +304,6 @@ function draw_hud() {
 					draw_rectangle(_tp_x, tp_y1 + 1, tp_x2 - 1, tp_y2 - 1, false);
 				}
 			}
-
 			
 			draw_set_color(c_black);
 			var hp_segments = 4;
@@ -311,29 +326,29 @@ function draw_hud() {
 				draw_line(_x,_y1,_x,_y2);
 			}
 			
-			//if p1_combo_timer > 0 {
-			//	draw_set_font(fnt_combo);
-			//	draw_set_halign(fa_left);
-			//	draw_set_valign(fa_top);
-			//	var text_x = _w * 0.1;
-			//	var text_y = hp_y2 + 16;
-			//	var text = string(p1_combo_hits) + " Acerto";
-			//	if p1_combo_hits > 1 {
-			//		text += "s";
-			//	}
-			//	text += "!";
-			//	text += "\n" + string(p1_combo_damage) + " de dano!";
-			//	text_x += random(p2_active_character.hitstop);
-			//	text_y += random(p2_active_character.hitstop);
-			//	draw_set_alpha(0.5);
-			//	draw_set_color(c_black);
-			//	draw_text(text_x + 3, text_y + 5,text);
-			//	draw_set_alpha(1);
-			//	draw_set_color(p1_color);
-			//	draw_text(text_x + 2, text_y + 2,text);
-			//	draw_set_color(c_white);
-			//	draw_text(text_x, text_y,text);
-			//}
+			draw_set_font(fnt_hud);
+			var playertext = "Player " + string(i+1) + ": " + name;
+			var playertext_width = string_width(playertext);
+			var playertext_height = string_height(playertext);
+			draw_set_halign(fa_left);
+			draw_set_valign(fa_top);
+			var playertext_x1 = hp_x1;
+			var playertext_y1 = tp_y2 + 1;
+			var playertext_x2 = playertext_x1 + playertext_width;
+			var playertext_y2 = playertext_y1 + playertext_height;
+			
+			if _right {
+				playertext_x2 = hp_x2;
+				playertext_x1 = playertext_x2 - playertext_width;
+			}
+			
+			draw_set_color(c_black);
+			draw_rectangle(playertext_x1, playertext_y1, playertext_x2, playertext_y2, false);
+			
+			draw_set_color(player_color[i]);
+			draw_text(playertext_x1,playertext_y1,playertext);
+			
+			hud_x += hud_w;
 		}
 	}
 	
@@ -548,26 +563,35 @@ function draw_portraits() {
 //}
 
 function draw_versus() {
-	var _w = display_get_gui_width();
-	var _h = display_get_gui_height();
-	var _w2 = _w / 2;
-	var _h2 = _h / 2;
-	var _size = _h / 3;
-	var _spacing = _size / 2;
-	for(var i = 0; i < max_team_size; i++) {
-		var p1_portrait = charselect_portrait[p1_selected_char[i]][p1_selected_form[i]];
-		var p2_portrait = charselect_portrait[p2_selected_char[i]][p2_selected_form[i]];
-		
-		var _x1 = _w2 - _size - (_spacing * -i);
-		var _x2 = _w2 + _size + (_spacing * i);
-		var _y = _h2 + (_size / 2) + ((_spacing / 2) * i);
-		
-		var _scale1 = _size / sprite_get_height(p1_portrait);
-		var _scale2 = _size / sprite_get_height(p2_portrait);
-		
-		draw_sprite_ext(p1_portrait,0,_x1,_y,_scale1,_scale1,0,c_white,1);
-		draw_sprite_ext(p2_portrait,0,_x2,_y,-_scale2,_scale2,0,c_white,1);
+	var active_players = 0;
+	for(var i = 0; i < array_length(player_slot); i++) {
+		if player_slot[i] != noone {
+			active_players++;
+		}
 	}
+	var _w = gui_width;
+	var _h = gui_height;
+	var _w2 = _w / max(3,active_players);
+	var _h2 = _h / 2;
+	var _x = _w2;
+	var _y = _h2 + 24;
+	for(var i = 0; i < array_length(player_slot); i++) {
+		if player_slot[i] != noone {
+			var _portrait = get_char_portrait(player_char[i]);
+			var _yscale = _h / sprite_get_height(_portrait);
+			var _xscale = _yscale;
+			
+			if i >= active_players / 2 {
+				_xscale *= -1;
+			}
+			
+			draw_sprite_ext(,0,_x,_y,_xscale,_yscale,0,c_white,1);
+			_x += _w2;
+		}
+	}
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_top);
+	draw_set_color(c_white);
 }
 
 function draw_pause() {

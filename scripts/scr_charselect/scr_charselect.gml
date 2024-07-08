@@ -138,7 +138,7 @@ function draw_charselect() {
 			_x += _w2;
 			draw_sprite(get_char_sprite(player_char[i]),0,_x,_y);
 			
-			draw_set_font(fnt_charselect);
+			draw_set_font(fnt_menu);
 			draw_set_halign(fa_center);
 			draw_set_valign(fa_top);
 			draw_set_color(player_color[i]);
@@ -151,7 +151,7 @@ function draw_charselect() {
 		}
 	}
 	if ready_timer <= 0 {
-		draw_set_font(fnt_charselect);
+		draw_set_font(fnt_menu);
 		draw_set_halign(fa_center);
 		draw_set_valign(fa_middle);
 		draw_set_color(c_white);
