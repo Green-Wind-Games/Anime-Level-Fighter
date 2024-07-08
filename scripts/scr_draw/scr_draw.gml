@@ -571,10 +571,10 @@ function draw_versus() {
 	}
 	var _w = gui_width;
 	var _h = gui_height;
-	var _w2 = _w / max(3,active_players);
+	var _w2 = _w / max(1,active_players-1);
 	var _h2 = _h / 2;
-	var _x = _w2;
-	var _y = _h2 + 24;
+	var _x = 0;
+	var _y = 0;
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
 			var _portrait = get_char_portrait(player_char[i]);
@@ -585,7 +585,7 @@ function draw_versus() {
 				_xscale *= -1;
 			}
 			
-			draw_sprite_ext(,0,_x,_y,_xscale,_yscale,0,c_white,1);
+			draw_sprite_ext(_portrait,0,_x,_y,_xscale,_yscale,0,c_white,1);
 			_x += _w2;
 		}
 	}

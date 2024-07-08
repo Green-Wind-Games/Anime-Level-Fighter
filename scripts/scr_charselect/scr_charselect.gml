@@ -131,11 +131,10 @@ function draw_charselect() {
 	var _h = gui_height;
 	var _w2 = _w / max(3,active_players);
 	var _h2 = _h / 2;
-	var _x = 0;
+	var _x = _w2;
 	var _y = _h2 + 24;
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
-			_x += _w2;
 			draw_sprite(get_char_sprite(player_char[i]),0,_x,_y);
 			
 			draw_set_font(fnt_menu);
@@ -148,6 +147,7 @@ function draw_charselect() {
 				_text += "\n" + "OK!";
 			}
 			draw_text(_x,_y,_text);
+			_x += _w2;
 		}
 	}
 	if ready_timer <= 0 {
@@ -155,7 +155,7 @@ function draw_charselect() {
 		draw_set_halign(fa_center);
 		draw_set_valign(fa_middle);
 		draw_set_color(c_white);
-		draw_text(_w/2,_h/4,"Aperte Ataque para iniciar!");
+		draw_text(_w/2,_h/4,"Pronto para iniciar!");
 	}
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);
@@ -165,6 +165,12 @@ function draw_charselect() {
 function get_char_sprite(_id) {
 	switch(_id) {
 		case playerchars.goku: return spr_goku_idle; break;
+	}
+}
+
+function get_char_portrait(_id) {
+	switch(_id) {
+		case playerchars.goku: return spr_goku_portrait; break;
 	}
 }
 

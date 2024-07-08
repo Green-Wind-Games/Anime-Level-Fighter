@@ -24,10 +24,11 @@ gui_height = game_height;
 
 window_max_scale = floor(min(screen_width / game_width, screen_height / game_height));
 if (game_width * window_max_scale) >= screen_width
-or (game_height * window_max_scale) >= screen_height {
+or (game_height * window_max_scale) >= (screen_height - 48) {
 	window_max_scale -= 1;
 }
-window_scale = 1;
+window_max_scale = max(1,window_max_scale);
+window_scale = window_max_scale;
 window_width = game_width * window_scale;
 window_height = game_height * window_scale;
 	
