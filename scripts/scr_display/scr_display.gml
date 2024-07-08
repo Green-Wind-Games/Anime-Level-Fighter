@@ -1,12 +1,17 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
+globalvar	screen_width, screen_height, screen_aspectratio,
+			game_width, game_height, game_aspectratio,
+			window_width, window_height, window_scale, window_max_scale,
+			fullscreen_width, fullscreen_height;
+
 screen_width = display_get_width();
 screen_height = display_get_height();
 screen_aspectratio = screen_width / screen_height;
 	
-game_width = 520;
-game_height = 400;
+game_width = 640;
+game_height = 480;
 
 //game_width = round(game_height * screen_aspectratio);
 game_height = round(game_width / screen_aspectratio);

@@ -58,7 +58,7 @@ autocombo[i].start = function() {
 	}
 }
 autocombo[i].run = function() {
-	standard_attack(2,10,attacktype.light,hiteffects.punch);
+	//standard_attack(2,10,attacktype.normal,hiteffects.hit);
 	check_moves();
 }
 i++;
@@ -70,7 +70,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,20,attacktype.medium,hiteffects.punch);
+	//standard_attack(2,20,attacktype.medium,hiteffects.hit);
 	if check_frame(2) {
 		xspeed = 10 * facing;
 		yspeed = 0;
@@ -86,7 +86,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,30,attacktype.light,hiteffects.punch);
+	//standard_attack(2,30,attacktype.normal,hiteffects.hit);
 	check_moves();
 }
 i++;
@@ -98,7 +98,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_heavyattack,50,false);
 }
 autocombo[i].run = function() {
-	standard_launcher(3,50,hiteffects.punch);
+	//standard_launcher(3,50,hiteffects.hit);
 }
 i++;
 
@@ -109,7 +109,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,10,attacktype.light,hiteffects.punch);
+	//standard_attack(2,10,attacktype.normal,hiteffects.hit);
 	check_moves();
 }
 i++;
@@ -121,7 +121,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,20,attacktype.medium,hiteffects.punch);
+	//standard_attack(2,20,attacktype.medium,hiteffects.hit);
 	if check_frame(2) {
 		xspeed = 5 * facing;
 	}
@@ -136,7 +136,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(1,30,attacktype.heavy,hiteffects.punch);
+	//standard_attack(1,30,attacktype.heavy,hiteffects.hit);
 	check_moves();
 	land();
 }
@@ -148,8 +148,8 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(4,20,attacktype.medium,hiteffects.punch);
-	standard_attack(8,20,attacktype.medium,hiteffects.punch);
+	//standard_attack(4,20,attacktype.medium,hiteffects.hit);
+	//standard_attack(8,20,attacktype.medium,hiteffects.hit);
 	if check_frame(2) or check_frame(6) {
 		play_sound(snd_punch_whiff_medium);
 	}
@@ -166,9 +166,9 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(3,10,attacktype.light,hiteffects.punch);
-	standard_attack(5,10,attacktype.light,hiteffects.punch);
-	standard_attack(7,10,attacktype.light,hiteffects.punch);
+	//standard_attack(3,10,attacktype.normal,hiteffects.hit);
+	//standard_attack(5,10,attacktype.normal,hiteffects.hit);
+	//standard_attack(7,10,attacktype.normal,hiteffects.hit);
 	if check_frame(2) or check_frame(4) or check_frame(6) {
 		play_sound(snd_punch_whiff_light);
 	}
@@ -186,7 +186,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_heavyattack,100,true);
 }
 autocombo[i].run = function() {
-	standard_smash(2,100,hiteffects.punch);
+	//standard_smash(2,100,hiteffects.hit);
 }
 i++;
 
@@ -300,7 +300,7 @@ kamehameha.run = function() {
 		play_sound(snd_kamehameha_fire,1,1.5);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(30,-25,20,spr_kamehameha_beam,attacktype.beam,hiteffects.light);
+		fire_beam_attack(30,-25,20,spr_kamehameha_beam,attacktype.beam,hiteffects.hit);
 	}
 	if anim_finished {
 		change_state(idle_state);
@@ -348,7 +348,7 @@ super_kamehameha.run = function() {
 		play_sound(snd_kamehameha_fire);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(30,-25,20,spr_superkamehameha_beam,attacktype.beam,hiteffects.light);
+		fire_beam_attack(30,-25,20,spr_superkamehameha_beam,attacktype.beam,hiteffects.hit);
 	}
 	if anim_finished {
 		if state_timer >= 150 {
@@ -385,7 +385,7 @@ genkidama.run = function() {
 		}
 	}
 	if check_frame(2) {
-		spirit_bomb = create_shot(0,-200,0,0,spr_genkidama,0,attacktype.light,hiteffects.light)
+		spirit_bomb = create_shot(0,-200,0,0,spr_genkidama,0,attacktype.normal,hiteffects.hit)
 		with(spirit_bomb) {
 			duration = -1;
 			hit_limit = -1;
@@ -409,7 +409,7 @@ genkidama.run = function() {
 					duration = 0;
 					for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
 						with(ds_list_find_value(hitbox.hit_list,i)) {
-							get_hit(other,attacktype.launcher,500,hiteffects.light,hitanims.spinout);
+							get_hit(other,attacktype.normal,500,hiteffects.hit,hitanims.spinout);
 							x = other.x;
 							y = ground_height - 1;
 						}
@@ -450,11 +450,11 @@ meteor_combo.run = function() {
 		frame = 0;
 		frame_timer = 0;
 	}
-	if sprite == spr_goku_jab standard_attack(3,40,attacktype.medium,hiteffects.punch);
-	if sprite == spr_goku_elbowbash standard_attack(2,40,attacktype.medium,hiteffects.punch);
-	if sprite == spr_goku_kick2 standard_attack(2,40,attacktype.medium,hiteffects.punch);
-	if sprite == spr_goku_kick standard_attack(1,40,attacktype.medium,hiteffects.punch);
-	if sprite == spr_goku_backflipkick standard_attack(3,40,attacktype.launcher,hiteffects.punch);
+	if sprite == spr_goku_jab //standard_attack(3,40,attacktype.medium,hiteffects.hit);
+	if sprite == spr_goku_elbowbash //standard_attack(2,40,attacktype.medium,hiteffects.hit);
+	if sprite == spr_goku_kick2 //standard_attack(2,40,attacktype.medium,hiteffects.hit);
+	if sprite == spr_goku_kick //standard_attack(1,40,attacktype.medium,hiteffects.hit);
+	if sprite == spr_goku_backflipkick //standard_attack(3,40,attacktype.normal,hiteffects.hit);
 	if can_cancel {
 		sprite_sequence(
 			[
@@ -525,9 +525,9 @@ assist_b_state.run = function() {
 		}
 	}
 	else {
-		standard_attack(3,10,attacktype.light,hiteffects.punch);
-		standard_attack(5,10,attacktype.light,hiteffects.punch);
-		standard_attack(7,10,attacktype.light,hiteffects.punch);
+		//standard_attack(3,10,attacktype.normal,hiteffects.hit);
+		//standard_attack(5,10,attacktype.normal,hiteffects.hit);
+		//standard_attack(7,10,attacktype.normal,hiteffects.hit);
 		if value_in_range(frame,2,8) {
 			accelerate(5*facing);
 		}

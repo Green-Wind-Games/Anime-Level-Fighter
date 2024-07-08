@@ -25,7 +25,7 @@ autocombo[i].start = function() {
 	}
 }
 autocombo[i].run = function() {
-	standard_attack(2,10,attacktype.light,hiteffects.punch);
+	//standard_attack(2,10,attacktype.normal,hiteffects.hit);
 	check_moves();
 }
 i++;
@@ -37,7 +37,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,20,attacktype.light,hiteffects.punch);
+	//standard_attack(2,20,attacktype.normal,hiteffects.hit);
 	check_moves();
 }
 i++;
@@ -49,7 +49,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,30,attacktype.light,hiteffects.punch);
+	//standard_attack(2,30,attacktype.normal,hiteffects.hit);
 	check_moves();
 }
 i++;
@@ -61,7 +61,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,30,attacktype.light,hiteffects.slash);
+	//standard_attack(2,30,attacktype.normal,hiteffects.slash);
 	check_moves();
 }
 i++;
@@ -73,7 +73,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_heavyattack,50,false);
 }
 autocombo[i].run = function() {
-	standard_launcher(4,50,hiteffects.punch);
+	//standard_launcher(4,50,hiteffects.hit);
 }
 i++;
 
@@ -84,7 +84,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,10,attacktype.light,hiteffects.punch);
+	//standard_attack(2,10,attacktype.normal,hiteffects.hit);
 	check_moves();
 	land();
 }
@@ -97,7 +97,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,20,attacktype.light,hiteffects.punch);
+	//standard_attack(2,20,attacktype.normal,hiteffects.hit);
 	check_moves();
 	land();
 }
@@ -110,7 +110,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(3,30,attacktype.light,hiteffects.slash);
+	//standard_attack(3,30,attacktype.normal,hiteffects.slash);
 	if check_frame(3) {
 		xspeed = 3 * facing;
 		yspeed = -8;
@@ -127,7 +127,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(1,20,attacktype.light,hiteffects.punch);
+	//standard_attack(1,20,attacktype.normal,hiteffects.hit);
 	check_moves();
 	land();
 }
@@ -140,7 +140,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(3,30,attacktype.heavy,hiteffects.punch);
+	//standard_attack(3,30,attacktype.heavy,hiteffects.hit);
 	check_moves();
 	land();
 }
@@ -153,7 +153,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_heavyattack,100,true);
 }
 autocombo[i].run = function() {
-	standard_smash(3,100,hiteffects.punch);
+	//standard_smash(3,100,hiteffects.hit);
 }
 i++;
 
@@ -184,7 +184,7 @@ forward_throw.run = function() {
 		var _hit = grabbed;
 		release_grab(0,20,0,0,0);
 		with(_hit) {
-			get_hit(other,attacktype.launcher,50,hiteffects.punch,hitanims.normal);
+			get_hit(other,attacktype.normal,50,hiteffects.hit,hitanims.normal);
 		}
 	}
 	if anim_finished {

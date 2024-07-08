@@ -12,9 +12,9 @@ damage = 0;
 xknockback = 0;
 yknockback = 0;
 
-attack_type = attacktype.light;
+attack_type = attacktype.normal;
 
 hit_anim = hitanims.normal;
-hit_effect = hiteffects.punch;
+hit_effect = hiteffects.hit;
 
 my_state = noone;

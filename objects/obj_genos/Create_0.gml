@@ -38,7 +38,7 @@ autocombo[i].start = function() {
 	}
 }
 autocombo[i].run = function() {
-	standard_attack(2,10,attacktype.light,hiteffects.punch);
+	//standard_attack(2,10,attacktype.normal,hiteffects.hit);
 	check_moves();
 }
 i++;
@@ -50,7 +50,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,20,attacktype.medium,hiteffects.punch);
+	//standard_attack(2,20,attacktype.medium,hiteffects.hit);
 	check_moves();
 }
 i++;
@@ -62,7 +62,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,30,attacktype.medium,hiteffects.punch);
+	//standard_attack(2,30,attacktype.medium,hiteffects.hit);
 	check_moves();
 }
 i++;
@@ -74,7 +74,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_heavyattack,50,false);
 }
 autocombo[i].run = function() {
-	standard_launcher(1,50,hiteffects.punch);
+	//standard_launcher(1,50,hiteffects.hit);
 }
 i++;
 
@@ -85,7 +85,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,20,attacktype.light,hiteffects.punch);
+	//standard_attack(2,20,attacktype.normal,hiteffects.hit);
 	check_moves();
 	land();
 }
@@ -98,7 +98,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,30,attacktype.medium,hiteffects.punch);
+	//standard_attack(2,30,attacktype.medium,hiteffects.hit);
 	check_moves();
 	land();
 }
@@ -111,7 +111,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(1,40,attacktype.medium,hiteffects.punch);
+	//standard_attack(1,40,attacktype.medium,hiteffects.hit);
 	check_moves();
 	land();
 }
@@ -124,7 +124,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	standard_attack(2,50,attacktype.medium,hiteffects.punch);
+	//standard_attack(2,50,attacktype.medium,hiteffects.hit);
 	check_moves();
 	land();
 }
@@ -137,7 +137,7 @@ autocombo[i].start = function() {
 	play_voiceline(voice_heavyattack,100,true);
 }
 autocombo[i].run = function() {
-	standard_smash(2,100,hiteffects.punch);
+	//standard_smash(2,100,hiteffects.hit);
 }
 i++;
 
@@ -168,7 +168,7 @@ forward_throw.run = function() {
 		var _hit = grabbed;
 		release_grab(0,20,0,0,0);
 		with(_hit) {
-			get_hit(other,attacktype.launcher,50,hiteffects.punch,hitanims.normal);
+			get_hit(other,attacktype.normal,50,hiteffects.hit,hitanims.normal);
 		}
 	}
 	if anim_finished {
@@ -196,9 +196,9 @@ dash_attack.start = function() {
 dash_attack.run = function() {
 	xspeed = dash_speed * facing;
 	yspeed = 0;
-	standard_attack(2,10,attacktype.light,hiteffects.punch);
-	standard_attack(3,20,attacktype.medium,hiteffects.punch);
-	standard_attack(4,50,attacktype.wall_bounce,hiteffects.punch);
+	//standard_attack(2,10,attacktype.normal,hiteffects.hit);
+	//standard_attack(3,20,attacktype.medium,hiteffects.hit);
+	//standard_attack(4,50,attacktype.wall_bounce,hiteffects.hit);
 	if anim_finished {
 		change_state(idle_state);
 	}
@@ -231,14 +231,14 @@ dropkick.run = function() {
 		 frame -= 1;
 		 frame_timer = 0;
 	}
-	standard_smash(7,100,hiteffects.punch);
-	standard_smash(8,100,hiteffects.punch);
+	//standard_smash(7,100,hiteffects.hit);
+	//standard_smash(8,100,hiteffects.hit);
 	if on_ground {
-		with(create_shot(0,0,5,0,spr_explosion_floor,100,attacktype.launcher,hiteffects.fire)) {
+		with(create_shot(0,0,5,0,spr_explosion_floor,100,attacktype.normal,hiteffects.fire)) {
 			hit_limit = -1;
 			duration = anim_duration;
 		}
-		with(create_shot(0,0,-5,0,spr_explosion_floor,100,attacktype.launcher,hiteffects.fire)) {
+		with(create_shot(0,0,-5,0,spr_explosion_floor,100,attacktype.normal,hiteffects.fire)) {
 			hit_limit = -1;
 			duration = anim_duration;
 		}
@@ -291,12 +291,12 @@ fireshot_down.start = function() {
 }
 fireshot_down.run = function() {
 	if check_frame(2) {
-		with(create_shot(15,-10,5,15,spr_fireball_small,50,attacktype.smash,hitanims.normal)) {
+		with(create_shot(15,-10,5,15,spr_fireball_small,50,attacktype.hard_knockdown,hitanims.normal)) {
 			blend = true;
 			hit_limit = -1;
 			active_script = function() {
 				if on_ground {
-					with(create_shot(0,0,1,0,spr_explosion_floor,50,attacktype.launcher,hitanims.normal)) {
+					with(create_shot(0,0,1,0,spr_explosion_floor,50,attacktype.normal,hitanims.normal)) {
 						duration = anim_duration;
 						hit_limit = -1;
 						play_sound(snd_explosion,1,2);

@@ -57,13 +57,7 @@ globalvar	player, player_char, player_input,
 			screen_shake_x, screen_shake_y, screen_shake_intensity, screen_shake_timer,
 			screen_flash_color, screen_flash_timer,
 			screen_overlay_sprite, screen_overlay_timer,
-			screen_zoom, screen_zoom_target, 
-			
-			screen_width, screen_height, screen_aspectratio,
-			game_width, game_height, game_aspectratio,
-			window_width, window_height, window_scale, window_max_scale,
-			fullscreen_width, fullscreen_height,
-			
+			screen_zoom, screen_zoom_target,
 			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha;
 
 game_state = gamestates.versus_select;
