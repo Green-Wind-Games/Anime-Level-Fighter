@@ -308,19 +308,19 @@ function draw_hud() {
 			draw_set_color(c_black);
 			var hp_segments = 4;
 			for(var ii = 0; ii < hp_segments - 1; ii++) {
-				var _x = map_value(ii,-1,hp_segments-1,hp_x1,hp_x2) + 1;
+				var _x = map_value(ii,-1,hp_segments-1,hp_x1+1,hp_x2-1);
 				var _y1 = hp_y1;
 				var _y2 = hp_y2;
 				draw_line(_x,_y1,_x,_y2);
 			}
 			for(var ii = 0; ii < max_mp_stocks - 1; ii++) {
-				var _x = map_value(ii,-1,max_mp_stocks-1,mp_x1,mp_x2) + 1;
+				var _x = map_value(ii,-1,max_mp_stocks-1,mp_x1+1,mp_x2-1);
 				var _y1 = mp_y1;
 				var _y2 = mp_y2;
 				draw_line(_x,_y1,_x,_y2);
 			}
 			for(var ii = 0; ii < max_tp_stocks - 1; ii++) {
-				var _x = map_value(ii,-1,max_tp_stocks-1,tp_x1,tp_x2) + 1;
+				var _x = map_value(ii,-1,max_tp_stocks-1,tp_x1+1,tp_x2-1);
 				var _y1 = tp_y1;
 				var _y2 = tp_y2;
 				draw_line(_x,_y1,_x,_y2);
