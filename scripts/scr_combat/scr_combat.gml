@@ -45,48 +45,28 @@ enum hiteffects {
 	light,
 }
 
-function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _hiteffect, _hitanim) {
+function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _strength, _hiteffect, _hitanim) {
 	var _xspeed = xspeed;
 	var _yspeed = yspeed;
 	xspeed = _xknockback * _attacker.facing;
 	yspeed = _yknockback;
-	switch(_attacktype) {
-		default:
-		hitstun = 15;
-		blockstun = 12;
-		hitstop = 8;
-		break;
-		
-		case attacktype.antiair:
-		case attacktype.unblockable:
-		hitstun = 20;
-		blockstun = 18;
-		hitstop = 10;
-		break;
-		
-		case attacktype.hard_knockdown:
-		hitstun = 30;
-		blockstun = 20;
-		hitstop = 12;
-		break
-		
-		case attacktype.ground_bounce:
-		case attacktype.slide_knockdown:
-		case attacktype.wall_bounce:
-		case attacktype.wall_splat:
-		hitstun = 60;
-		blockstun = 20;
-		hitstop = 20;
-		break;
-		
-		case attacktype.beam:
-		hitstun = 60;
-		blockstun = 20;
-		hitstop = 0;
-		xspeed = abs(_attacker.xspeed);
-		yspeed = _attacker.yspeed - 3;
-		break;
+	
+	hitstun = round(_strength * 5);
+	blockstun = round(hitstun * 0.6);
+	hitstop = round((_strength + 1) * 4);
+	
+	var _recovery = 15;
+	if object_is_ancestor(_attacker.object_index,obj_char) {
+		_recovery = max(
+			_attacker.anim_duration - _attacker.state_timer,
+			_recovery
+		);
 	}
+	else {
+		hitstop = round(hitstop * 0.75);
+	}
+	hitstun += _recovery;
+	blockstun += _recovery;
 			
 	var blocking =	((input_back or input_down)
 					or ((ai_enabled) and (irandom(100) <= map_value(ai_level,1,ai_level_max,10,90)))
@@ -256,14 +236,13 @@ function take_damage(_attacker,_amount,_kill) {
 	var defender = id;
 	
 	dmg *= true_attacker.attack_power;
+	dmg *= true_attacker.level * level_scaling;
 	
 	dmg /= defender.defense;
 	
-	var scaling = map_value(hp + combo_damage_taken,max_hp,0,1,0);
+	var scaling = map_value(hp + combo_damage_taken,max_hp*0.5,0,1,0);
 	scaling = clamp(scaling,0.1,1);
 	dmg *= scaling;
-	
-	dmg *= true_attacker.level * level_scaling;
 	
 	dmg = max(ceil(dmg),1);
 	hp -= dmg;

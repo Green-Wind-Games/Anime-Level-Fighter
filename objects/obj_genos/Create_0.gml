@@ -173,9 +173,7 @@ forward_throw.run = function() {
 			get_hit(other,attacktype.normal,50,hiteffects.hit,hitanims.normal);
 		}
 	}
-	if anim_finished {
-		change_state(idle_state);
-	}
+	return_to_idle();
 }
 
 back_throw = new state();
@@ -201,9 +199,7 @@ dash_attack.run = function() {
 	//standard_attack(2,10,attacktype.normal,hiteffects.hit);
 	//standard_attack(3,20,attacktype.medium,hiteffects.hit);
 	//standard_attack(4,50,attacktype.wall_bounce,hiteffects.hit);
-	if anim_finished {
-		change_state(idle_state);
-	}
+	return_to_idle();
 }
 
 dropkick = new state();
@@ -356,9 +352,7 @@ incinerate.run = function() {
 	if value_in_range(frame,5,6) {
 		fire_beam_attack(10,-30,20,spr_incinerate_beam,attacktype.beam,hiteffects.fire);
 	}
-	if anim_finished {
-		change_state(idle_state);
-	}
+	return_to_idle();
 }
 incinerate.stop = function() {
 	deactivate_super();
@@ -406,9 +400,7 @@ super_incinerate.run = function() {
 	if value_in_range(frame,5,6) {
 		fire_beam_attack(10,-30,20,spr_incinerate2_beam,attacktype.beam,hiteffects.fire);
 	}
-	if anim_finished {
-		change_state(idle_state);
-	}
+	return_to_idle();
 }
 super_incinerate.stop = function() {
 	deactivate_super();

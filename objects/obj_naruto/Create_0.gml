@@ -189,9 +189,7 @@ forward_throw.run = function() {
 			get_hit(other,attacktype.normal,50,hiteffects.hit,hitanims.normal);
 		}
 	}
-	if anim_finished {
-		change_state(idle_state);
-	}
+	return_to_idle();
 }
 
 back_throw = new state();
@@ -316,10 +314,9 @@ ai_script = function() {
 //voice_hurt_heavy[i++] = snd_naruto_hurt_heavy5;
 
 victory_state.run = function() {
-	if anim_finished {
+	if frame >= anim_frames - 1
+	and frame_timer >= frame_duration {
 		frame = 3;
-		frame_timer = 0;
-		anim_finished = false;
 	}
 }
 

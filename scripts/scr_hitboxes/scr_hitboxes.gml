@@ -17,7 +17,7 @@ function create_hurtbox(_xoffset, _yoffset, _width, _height) {
 	return _hurtbox;
 }
 
-function create_hitbox(_xoffset,_yoffset,_width,_height,_damage,_xknockback,_yknockback,_attacktype,_hiteffect) {
+function create_hitbox(_xoffset,_yoffset,_width,_height,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect) {
 	var _hitbox = instance_create(x,y,obj_hitbox);
 	with(_hitbox) {
 		owner = other;
@@ -29,6 +29,7 @@ function create_hitbox(_xoffset,_yoffset,_width,_height,_damage,_xknockback,_ykn
 		xknockback = _xknockback;
 		yknockback = _yknockback;
 		attack_type = _attacktype;
+		attack_strength = _strength;
 		hit_effect = _hiteffect;
 		my_state = owner.active_state;
 		duration = owner.frame_duration;
@@ -96,6 +97,7 @@ function check_hit() {
 		if object_is_ancestor(a2.object_index,obj_char) {
 			if b2.dodging_attacks {
 				contact = false;
+				ds_list_add(a.hit_list,b2);
 			}
 			if b2.deflecting_attacks {
 				contact = false;
@@ -107,6 +109,7 @@ function check_hit() {
 		else {
 			if b2.dodging_projectiles {
 				contact = false;
+				ds_list_add(a.hit_list,b2);
 			}
 			if b2.deflecting_projectiles {
 				contact = false;
@@ -122,11 +125,11 @@ function check_hit() {
 			or object_is_ancestor(a2.object_index,obj_shot) {
 				with(a2) {
 					hit_script(b2);
-					hit_count += 1;
+					hit_count++;
 				}
 			}
 			with(b2) {
-				get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.hit_effect,a.hit_anim);
+				get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect,a.hit_anim);
 			}
 			ds_list_add(a.hit_list,b2);
 		}

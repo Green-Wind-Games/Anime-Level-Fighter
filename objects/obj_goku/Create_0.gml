@@ -217,9 +217,7 @@ forward_throw.run = function() {
 	if check_frame(6) {
 		play_voiceline(voice_attack);
 	}
-	if anim_finished {
-		change_state(idle_state);
-	}
+	return_to_idle();
 }
 
 back_throw = new state();
@@ -304,9 +302,7 @@ kamehameha.run = function() {
 	if value_in_range(frame,6,9) {
 		fire_beam_attack(30,-25,20,spr_kamehameha_beam,attacktype.beam,hiteffects.hit);
 	}
-	if anim_finished {
-		change_state(idle_state);
-	}
+	return_to_idle();
 }
 
 super_kamehameha = new state();
@@ -352,10 +348,8 @@ super_kamehameha.run = function() {
 	if value_in_range(frame,6,9) {
 		fire_beam_attack(30,-25,20,spr_superkamehameha_beam,attacktype.beam,hiteffects.hit);
 	}
-	if anim_finished {
-		if state_timer >= 150 {
-			change_state(idle_state);
-		}
+	if state_timer >= 150 {
+		change_state(idle_state);
 	}
 }
 super_kamehameha.stop = function() {
@@ -427,9 +421,7 @@ genkidama.run = function() {
 			frame_timer = 0;
 		}
 	}
-	if anim_finished {
-		change_state(air_state);
-	}
+	return_to_idle();
 }
 genkidama.stop = function() {
 	deactivate_super();
@@ -490,71 +482,6 @@ meteor_combo.run = function() {
 }
 meteor_combo.stop = function() {
 	deactivate_super();
-}
-
-assist_a_state = new state();
-assist_a_state.start = function() {
-	change_sprite(air_down_sprite,6,false);
-	face_target();
-	x -= (50 * facing);
-}
-assist_a_state.run = function() {
-	if sprite == air_down_sprite {
-		if on_ground {
-			yspeed = 0;
-			change_sprite(spr_goku_kiblast,2,false);
-		}
-	}
-	else {
-		kiblast.run();
-	}
-}
-assist_a_state.stop = function() {
-	kiblast.stop();
-}
-
-assist_b_state = new state();
-assist_b_state.start = function() {
-	change_sprite(air_down_sprite,6,false);
-	face_target();
-	x = target_x - (50 * facing);
-}
-assist_b_state.run = function() {
-	if sprite == air_down_sprite {
-		if on_ground {
-			yspeed = 0;
-			change_sprite(spr_goku_triplekick,2,false);
-		}
-	}
-	else {
-		//standard_attack(3,10,attacktype.normal,hiteffects.hit);
-		//standard_attack(5,10,attacktype.normal,hiteffects.hit);
-		//standard_attack(7,10,attacktype.normal,hiteffects.hit);
-		if value_in_range(frame,2,8) {
-			accelerate(5*facing);
-		}
-		if anim_finished {
-			change_state(tag_out_state);
-		}
-	}
-}
-
-assist_c_state = new state();
-assist_c_state.start = function() {
-	change_sprite(air_down_sprite,6,false);
-	face_target();
-	x += (20 * facing);
-}
-assist_c_state.run = function() {
-	if sprite == air_down_sprite {
-		if on_ground {
-			yspeed = 0;
-			change_sprite(spr_goku_kamehameha,5,false);
-		}
-	}
-	else {
-		kamehameha.run();
-	}
 }
 
 max_air_moves = 3;

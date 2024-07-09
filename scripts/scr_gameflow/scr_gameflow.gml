@@ -94,6 +94,8 @@ function chars_update_stats() {
 		
 		mp_stocks = floor(mp/mp_stock_size);
 		tp_stocks = floor(tp/tp_stock_size);
+		
+		dead = (hp <= 0);
 	}
 }
 
@@ -144,7 +146,9 @@ function run_charphysics() {
 				gravitate(ygravity_mod);
 			}
 		}
-		x = clamp(x, left_wall, right_wall);
+		if !dead {
+			x = clamp(x, left_wall, right_wall);
+		}
 		y = min(y,ground_height);
 		
 		//x = round(x);

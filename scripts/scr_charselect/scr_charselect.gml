@@ -72,11 +72,8 @@ function charselect_changechars() {
 				}
 			}
 		}
-		if player_char[i] < 0 {
-			player_char[i] = max_characters - 1;
-		}
-		if player_char[i] >= max_characters {
-			player_char[i] = 0;
+		if !value_in_range(player_char[i],0,max_characters-1) {
+			player_char[i] = player_char[i] mod max_characters;
 		}
 	}
 }

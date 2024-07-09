@@ -41,7 +41,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.6.0.157",
+    "IDEVersion":"2024.6.1.160",
   },
   "name":"anime level fighter",
   "resources":[
@@ -87,6 +87,7 @@
     {"id":{"name":"scr_instances","path":"scripts/scr_instances/scr_instances.yy",},},
     {"id":{"name":"scr_math","path":"scripts/scr_math/scr_math.yy",},},
     {"id":{"name":"scr_menus","path":"scripts/scr_menus/scr_menus.yy",},},
+    {"id":{"name":"scr_movetemplates","path":"scripts/scr_movetemplates/scr_movetemplates.yy",},},
     {"id":{"name":"scr_particles","path":"scripts/scr_particles/scr_particles.yy",},},
     {"id":{"name":"scr_physics","path":"scripts/scr_physics/scr_physics.yy",},},
     {"id":{"name":"scr_shot","path":"scripts/scr_shot/scr_shot.yy",},},

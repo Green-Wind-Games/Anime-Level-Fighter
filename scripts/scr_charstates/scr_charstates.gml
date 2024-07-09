@@ -69,9 +69,7 @@ function init_charstates() {
 			if sprite != uncrouch_sprite {
 				change_sprite(uncrouch_sprite,frame_duration,false);
 			}
-			if anim_finished {
-				change_state(idle_state);
-			}
+			return_to_idle();
 		}
 		if input.up {
 			change_state(superjump_state);
@@ -421,9 +419,7 @@ function init_charstates() {
 					if sprite != wakeup_sprite {
 						change_sprite(wakeup_sprite,5,false);
 					}
-					if anim_finished {
-						change_state(idle_state);
-					}
+					return_to_idle();
 				}
 				else {
 					dead = true;
@@ -585,6 +581,12 @@ function init_charstates() {
 	add_move(backdash_state,"754");
 	
 	init_states(idle_state);
+}
+
+function return_to_idle() {
+	if anim_finished {
+		change_state(idle_state);
+	}
 }
 
 function land() {
