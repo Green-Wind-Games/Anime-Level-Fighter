@@ -61,14 +61,16 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			_attacker.anim_duration - _attacker.state_timer,
 			_recovery
 		);
+		target = _attacker;
 	}
 	else {
 		hitstop = round(hitstop * 0.75);
+		target = _attacker.owner;
 	}
 	hitstun += _recovery;
 	blockstun += _recovery;
 			
-	var blocking =	((input_back or input_down)
+	var blocking =	((input.back or input.down)
 					or ((ai_enabled) and (irandom(100) <= map_value(ai_level,1,ai_level_max,10,90)))
 					or (is_blocking));
 	var block_valid = (can_block) and (!is_hit);
@@ -135,7 +137,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 				}
 				break;
 			}
-			change_sprite(hurt_sprite,3,false);
+			change_sprite(choose(hit_high_sprite,hit_low_sprite),3,false);
 			if _hitanim == hitanims.spinout {
 				change_sprite(spinout_sprite,3,true);
 				yoffset = -height_half;
@@ -156,14 +158,16 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			combo_hits_taken++;
 			combo_damage_taken += dmg;
 			
-			if _attacker.object_index == obj_shot or object_is_ancestor(_attacker.object_index,obj_shot) {
-				with(_attacker.owner) {
+			if object_is_ancestor(_attacker.object_index,obj_char) {
+				with(_attacker) {
+					combo_timer = 30;
 					combo_hits++;
 					combo_damage += dmg;
 				}
 			}
 			else {
-				with(_attacker) {
+				with(_attacker.owner) {
+					combo_timer = 20;
 					combo_hits++;
 					combo_damage += dmg;
 				}
@@ -236,11 +240,11 @@ function take_damage(_attacker,_amount,_kill) {
 	var defender = id;
 	
 	dmg *= true_attacker.attack_power;
-	dmg *= true_attacker.level * level_scaling;
+	dmg *= true_attacker.level;
 	
 	dmg /= defender.defense;
 	
-	var scaling = map_value(hp + combo_damage_taken,max_hp*0.5,0,1,0);
+	var scaling = map_value(hp + combo_damage_taken,max_hp*0.4,0,1,0);
 	scaling = clamp(scaling,0.1,1);
 	dmg *= scaling;
 	

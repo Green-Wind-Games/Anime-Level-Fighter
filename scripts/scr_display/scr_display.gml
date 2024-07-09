@@ -11,8 +11,8 @@ screen_width = display_get_width();
 screen_height = display_get_height();
 screen_aspectratio = screen_width / screen_height;
 	
-game_width = 640;
-game_height = 480;
+game_width = 500;
+game_height = 400;
 
 //game_width = round(game_height * screen_aspectratio);
 game_height = round(game_width / screen_aspectratio);
@@ -44,14 +44,19 @@ function init_view() {
 
 function update_view() {
 	if instance_exists(obj_char) {
-		var playerdist = point_distance(
-			p1_active_character.x,
-			0,
-			p2_active_character.x,
-			0
-		);
-		playerdist += p1_active_character.width_half;
-		playerdist += p2_active_character.width_half;
+		var _x1 = room_width;
+		var _y1 = room_height;
+		var _x2 = 0;
+		var _y2 = 0;
+		with(obj_char) {
+			if !dead {
+				_x1 = min(_x1,x-width_half);
+				_y1 = min(_y1,y-height);
+				_x2 = max(_x2,x+width_half);
+				_y2 = max(_y2,y);
+			}
+		}
+		var playerdist = abs(_x1 - _x2);
 		var max_dist = right_wall-left_wall;
 		var desired_zoom = game_width / playerdist;
 		desired_zoom = min(desired_zoom,1);
@@ -71,11 +76,8 @@ function update_view() {
 		
 		camera_set_view_size(view,_w,_h);
 		
-		var _x = mean(p1_active_character.x,p2_active_character.x);
-		var _y = min(
-			p1_active_character.y-(p1_active_character.height_half),
-			p2_active_character.y-(p2_active_character.height_half)
-		);
+		var _x = mean(_x1,_x2);
+		var _y = mean(_y1,_y2);
 	
 		var _view_x = _x;
 		var _view_y = _y;

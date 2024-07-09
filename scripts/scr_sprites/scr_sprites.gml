@@ -53,11 +53,6 @@ function reset_sprite() {
 	rotation_speed = 0;
 	color = c_white;
 	alpha = 1;
-	
-	if object_is_ancestor(object_index,obj_char) {
-		xscale = max(1,64 / sprite_get_height(sprite));
-		yscale = xscale;
-	}
 }
 
 function flash_sprite(_duration = 6,_color = c_white) {

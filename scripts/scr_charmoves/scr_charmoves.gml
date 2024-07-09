@@ -144,67 +144,33 @@ function superfreeze(_duration = 30) {
 	superfreeze_active = true;
 	superfreeze_activator = id;
 	superfreeze_timer = _duration;
-	if team == 1 {
-		p1_super_active = true;
-	}
-	else {
-		p2_super_active = true;
-	}
+	super_active = true;
 }
 
 function deactivate_super() {
-	if team == 1 {
-		p1_super_active = false;
-	}
-	else {
-		p2_super_active = false;
-	}
+	super_active = false;
 }
 
 function check_mp(_stocks) {
-	if team == 1 {
-		if p1_mp >= (_stocks * mp_stock_size) {
-			return true;
-		}
-	}
-	else {
-		if p2_mp >= (_stocks * mp_stock_size) {
-			return true;
-		}
+	if mp >= (_stocks * mp_stock_size) {
+		return true;
 	}
 	return false;
 }
 
 function spend_mp(_stocks) {
-	if team == 1 {
-		p1_mp -= (_stocks * mp_stock_size);
-	}
-	else {
-		p2_mp -= (_stocks * mp_stock_size);
-	}
+	mp -= (_stocks * mp_stock_size);
 }
 
 function check_tp(_stocks) {
-	if team == 1 {
-		if p1_tp >= (_stocks * tp_stock_size) {
-			return true;
-		}
-	}
-	else {
-		if p2_tp >= (_stocks * tp_stock_size) {
-			return true;
-		}
+	if tp >= (_stocks * tp_stock_size) {
+		return true;
 	}
 	return false;
 }
 
 function spend_tp(_stocks) {
-	if team == 1 {
-		p1_tp -= (_stocks * tp_stock_size);
-	}
-	else {
-		p2_tp -= (_stocks * tp_stock_size);
-	}
+	tp -= (_stocks * tp_stock_size);
 }
 
 function check_sp(_stocks) {

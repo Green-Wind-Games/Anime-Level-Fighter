@@ -1,5 +1,9 @@
 /// @description Insert description here
 // You can write your code in this editor
+	
+for(var i = 0; i < array_length(player_slot); i++) {
+	player[i] = noone;
+}
 
 init_view();
 
@@ -10,7 +14,6 @@ ground_height = room_height - floor(game_height * 0.25);
 switch(room) {
 	case rm_charselect:
 	for(var i = 0; i < array_length(player_slot); i++) {
-		player[i] = noone;
 		player_ready[i] = false;
 	}
 	ready_timer = 100;
@@ -46,19 +49,23 @@ switch(room) {
 			with(instance_create(_x,_y,get_char_object(player_char[i]))) {
 				player[i] = id;
 				input = player_input[player_slot[i]];
+				team = i;
+				if x > battle_x {
+					facing = -1;
+				}
+				mp = mp_stock_size;
+				tp = max_tp;
+				change_state(intro_state);
 			}
 			spawned_players++;
 		}
 	}
 	
-	with(obj_char) {
-		change_state(intro_state);
-	}
+	chars_update_targeting();
+	chars_update_stats();
 	
 	stop_music();
-	
 	var picked_player = instance_find(obj_char,irandom(instance_number(obj_char)-1));
-	
 	play_music(picked_player.theme);
 	
 	switch(room) {

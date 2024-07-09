@@ -129,7 +129,7 @@ function draw_charselect() {
 	var _w2 = _w / max(3,active_players);
 	var _h2 = _h / 2;
 	var _x = _w2;
-	var _y = _h2 + 24;
+	var _y = _h2;
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
 			draw_sprite(get_char_sprite(player_char[i]),0,_x,_y);
@@ -152,7 +152,7 @@ function draw_charselect() {
 		draw_set_halign(fa_center);
 		draw_set_valign(fa_middle);
 		draw_set_color(c_white);
-		draw_text(_w/2,_h/4,"Pronto para iniciar!");
+		draw_text(_w/2,_h/8,"Pronto para iniciar!");
 	}
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);

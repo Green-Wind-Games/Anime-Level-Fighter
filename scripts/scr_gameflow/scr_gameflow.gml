@@ -86,7 +86,7 @@ function chars_update_stats() {
 	with(obj_char) {
 		hp = clamp(round(hp),0,max_hp);
 		mp = clamp(round(mp),0,max_mp);
-		tp = clamp(round(tp)+1,0,max_tp);
+		tp = clamp(round(tp),0,max_tp);
 		
 		hp_percent = (hp/max_hp)*100;
 		mp_percent = (mp/max_mp)*100;
@@ -112,6 +112,7 @@ function run_charstates() {
 		if (!superfreeze_active) and (!hitstop) {
 			char_script();
 			state_timer += 1;
+			tp++;
 		}
 		if facing == 0 {
 			facing = 1;
@@ -668,22 +669,11 @@ function update_hitboxes() {
 }
 
 function update_combo() {
-	p1_combo_timer -= 1;
-	p2_combo_timer -= 1;
-	if p1_combo_timer <= 0 {
-		p1_combo_hits = 0;
-		p1_combo_damage = 0;
-		for(var i = 0; i < max_team_size; i++) {
-			p1_char[i].combo_hits = 0;
-			p1_char[i].combo_damage = 0;
-		}
-	}
-	if p2_combo_timer <= 0 {
-		p2_combo_hits = 0;
-		p2_combo_damage = 0;
-		for(var i = 0; i < max_team_size; i++) {
-			p2_char[i].combo_hits = 0;
-			p2_char[i].combo_damage = 0;
+	with(obj_char) {
+		if !hitstop {
+			if combo_timer-- <= 0 {
+				reset_combo();
+			}
 		}
 	}
 }

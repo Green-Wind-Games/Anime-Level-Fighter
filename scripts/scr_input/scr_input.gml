@@ -11,7 +11,7 @@ enum input_types {
 
 function update_input() {
 	with(obj_input) {
-		var u, d, l, r, a, b, c, d, e, f;
+		var u, d, l, r, b1, b2, b3, b4, b5, b6;
 
 		switch(type) {
 			default:
@@ -20,12 +20,12 @@ function update_input() {
 			l = false;
 			r = false;
 	
-			a = false;
-			b = false;
-			c = false;
-			d = false;
-			e = false;
-			f = false;
+			b1 = false;
+			b2 = false;
+			b3 = false;
+			b4 = false;
+			b5 = false;
+			b6 = false;
 			break;
 	
 			case input_types.joystick:
@@ -34,26 +34,26 @@ function update_input() {
 			l =	gamepad_axis_value(pad,gp_axislh) < 0 or gamepad_button_check(pad,gp_padl);
 			r =	gamepad_axis_value(pad,gp_axislh) > 0 or gamepad_button_check(pad,gp_padr);
 	
-			a = gamepad_button_check(pad,gp_face1);
-			b = gamepad_button_check(pad,gp_face2);
-			c = gamepad_button_check(pad,gp_face3);
-			d = gamepad_button_check(pad,gp_face4);
-			e = gamepad_button_check(pad,gp_shoulderl) or gamepad_button_check(pad,gp_shoulderlb);
-			f = gamepad_button_check(pad,gp_shoulderr) or gamepad_button_check(pad,gp_shoulderrb);
+			b1 = gamepad_button_check(pad,gp_face1);
+			b2 = gamepad_button_check(pad,gp_face2);
+			b3 = gamepad_button_check(pad,gp_face3);
+			b4 = gamepad_button_check(pad,gp_face4);
+			b5 = gamepad_button_check(pad,gp_shoulderl) or gamepad_button_check(pad,gp_shoulderlb);
+			b6 = gamepad_button_check(pad,gp_shoulderr) or gamepad_button_check(pad,gp_shoulderrb);
 			break;
 	
 			case input_types.wasd:
 			u = keyboard_check(ord("W"));
-			d = keyboard_check(ord("c"));
+			d = keyboard_check(ord("S"));
 			l = keyboard_check(ord("A"));
 			r = keyboard_check(ord("D"));
 	
-			a = keyboard_check(ord("B"));
-			b = keyboard_check(ord("N"));
-			c = keyboard_check(ord("M"));
-			d = keyboard_check(ord("G"));
-			e = keyboard_check(ord("H"));
-			f = keyboard_check(ord("J"));
+			b1 = keyboard_check(ord("B"));
+			b2 = keyboard_check(ord("N"));
+			b3 = keyboard_check(ord("M"));
+			b4 = keyboard_check(ord("G"));
+			b5 = keyboard_check(ord("H"));
+			b6 = keyboard_check(ord("J"));
 			break;
 	
 			case input_types.numpad:
@@ -62,12 +62,12 @@ function update_input() {
 			l = keyboard_check(vk_left);
 			r = keyboard_check(vk_right);
 	
-			a = keyboard_check(vk_numpad1);
-			b = keyboard_check(vk_numpad2);
-			c = keyboard_check(vk_numpad3);
-			d = keyboard_check(vk_numpad4);
-			e = keyboard_check(vk_numpad5);
-			f = keyboard_check(vk_numpad6);
+			b1 = keyboard_check(vk_numpad1);
+			b2 = keyboard_check(vk_numpad2);
+			b3 = keyboard_check(vk_numpad3);
+			b4 = keyboard_check(vk_numpad4);
+			b5 = keyboard_check(vk_numpad5);
+			b6 = keyboard_check(vk_numpad6);
 			break;
 		}
 
@@ -81,19 +81,19 @@ function update_input() {
 		left = l;
 		right = r;
 
-		button1 = (!button1_held) and a;
-		button2 = (!button2_held) and b;
-		button3 = (!button3_held) and c;
-		button4 = (!button4_held) and d;
-		button4 = (!button5_held) and e;
-		button4 = (!button6_held) and f;
+		button1 = (!button1_held) and b1;
+		button2 = (!button2_held) and b2;
+		button3 = (!button3_held) and b3;
+		button4 = (!button4_held) and b4;
+		button4 = (!button5_held) and b5;
+		button4 = (!button6_held) and b6;
 		
-		button1_held = a;
-		button2_held = b;
-		button3_held = c;
-		button4_held = d;
-		button4_held = e;
-		button4_held = f;
+		button1_held = b1;
+		button2_held = b2;
+		button3_held = b3;
+		button4_held = b4;
+		button4_held = b5;
+		button4_held = b6;
 	}
 }
 

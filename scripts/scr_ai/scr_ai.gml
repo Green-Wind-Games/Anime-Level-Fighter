@@ -23,7 +23,7 @@ function update_ai() {
 }
 
 function ai_default_movement() {
-	var _x = sign(input_right-input_left);
+	var _x = sign(input.right-input.left);
 	var _y = 0;
 	
 	if irandom(10) == 1 { _y = -1; }
@@ -31,18 +31,18 @@ function ai_default_movement() {
 	if irandom(6) == 1 { _x = -facing; }
 	if irandom(3) == 1 { _x = facing; }
 	
-	input_up = _y > 0;
-	input_down = _y < 0;
-	input_left = _x < 0;
-	input_right = _x > 0;
+	input.up = _y > 0;
+	input.down = _y < 0;
+	input.left = _x < 0;
+	input.right = _x > 0;
 	
-	input_forward = _x == facing;
-	input_back = _x == -facing;
+	input.forward = _x == facing;
+	input.back = _x == -facing;
 	
 	if active_state == crouch_state {
 		if irandom(50) == 1 {
-			input_down = false;
-			input_up = true;
+			input.down = false;
+			input.up = true;
 		}
 	}
 	if target_distance_x < 100 {

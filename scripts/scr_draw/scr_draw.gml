@@ -195,7 +195,7 @@ function draw_hud() {
 	var tp_bar_height = mp_bar_height;
 	
 	draw_set_font(fnt_hud);
-	var playertext = "Player 1: Naruto";
+	var playertext = "Player N: Character";
 	var playertext_width = string_width(playertext);
 	var playertext_height = string_height(playertext);
 	
@@ -210,7 +210,7 @@ function draw_hud() {
 	var tp_color = make_color_rgb(255, 192, 0);
 
 	for (var i = 0; i < array_length(player_slot); i++) {
-		var _right = i >= active_players / 2;
+		var _right = hud_x >= _w2;
 		var hp_x1, hp_x2, hp_y1, hp_y2;
 		var mp_x1, mp_x2, mp_y1, mp_y2;
 		var tp_x1, tp_x2, tp_y1, tp_y2;
@@ -233,7 +233,7 @@ function draw_hud() {
 			mp_x1 = mp_x2 - mp_bar_width;
 			
 			tp_x2 = hp_x2;
-			tp_x1 = tp_x1 - tp_bar_width;
+			tp_x1 = tp_x2 - tp_bar_width;
 		}
 
 		hp_y1 = hud_y + _spacing;
@@ -245,7 +245,7 @@ function draw_hud() {
 		tp_y1 = mp_y2 + 1;
 		tp_y2 = tp_y1 + tp_bar_height;
 
-		with(player_slot[i]) {
+		with(player[i]) {
 			draw_set_color(c_black);
 			draw_set_alpha(1);
 			draw_rectangle(hp_x1, hp_y1, hp_x2, hp_y2, false);
@@ -307,22 +307,22 @@ function draw_hud() {
 			
 			draw_set_color(c_black);
 			var hp_segments = 4;
-			for(var i = 0; i < hp_segments - 1; i++) {
-				var _x = map_value(i,-1,hp_segments-1,hp_x1,hp_x2);
+			for(var ii = 0; ii < hp_segments - 1; ii++) {
+				var _x = map_value(ii,-1,hp_segments-1,hp_x1,hp_x2) + 1;
 				var _y1 = hp_y1;
-				var _y2 = hp_y2-1;
+				var _y2 = hp_y2;
 				draw_line(_x,_y1,_x,_y2);
 			}
-			for(var i = 0; i < max_mp_stocks - 1; i++) {
-				var _x = map_value(i,-1,max_mp_stocks-1,mp_x1,mp_x2);
+			for(var ii = 0; ii < max_mp_stocks - 1; ii++) {
+				var _x = map_value(ii,-1,max_mp_stocks-1,mp_x1,mp_x2) + 1;
 				var _y1 = mp_y1;
-				var _y2 = mp_y2-1;
+				var _y2 = mp_y2;
 				draw_line(_x,_y1,_x,_y2);
 			}
-			for(var i = 0; i < max_tp_stocks - 1; i++) {
-				var _x = map_value(i,-1,max_tp_stocks-1,tp_x1,tp_x2);
+			for(var ii = 0; ii < max_tp_stocks - 1; ii++) {
+				var _x = map_value(ii,-1,max_tp_stocks-1,tp_x1,tp_x2) + 1;
 				var _y1 = tp_y1;
-				var _y2 = tp_y2-1;
+				var _y2 = tp_y2;
 				draw_line(_x,_y1,_x,_y2);
 			}
 			

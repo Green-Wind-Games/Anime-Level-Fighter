@@ -10,6 +10,8 @@ function init_charstates() {
 			reset_cancels();
 			yspeed = 0;
 			air_moves = 0;
+			
+			auto_levelup();
 		}
 		else {
 			change_state(air_state);
@@ -20,30 +22,30 @@ function init_charstates() {
 		is_blocking = false;
 	}
 	idle_state.run = function() {
-		can_block = true;
-		can_cancel = true;
 		face_target();
-		var walk_anim_speed = round(map_value(sprite_get_number(walk_sprite),4,8,6,3));
-		if input.forward {
-			change_sprite(walk_sprite,walk_anim_speed,true);
-			accelerate(walk_speed * facing);
-			xscale = abs(xscale);
+		if round_state == roundstates.fight {
+			var walk_anim_speed = round(map_value(sprite_get_number(walk_sprite),4,8,6,3));
+			if input.forward {
+				change_sprite(walk_sprite,walk_anim_speed,true);
+				accelerate(walk_speed * facing);
+				xscale = abs(xscale);
+			}
+			else if input.back {
+				change_sprite(walk_sprite,walk_anim_speed,true);
+				accelerate(walk_speed * -facing);
+				xscale = -abs(xscale);
+			}
+			else {
+				change_sprite(idle_sprite,6,true);
+			}
+			if input.up {
+				change_state(jump_state);
+			}
+			else if input.down {
+				change_state(crouch_state);
+			}
+			check_moves();
 		}
-		else if input.back {
-			change_sprite(walk_sprite,walk_anim_speed,true);
-			accelerate(walk_speed * -facing);
-			xscale = -abs(xscale);
-		}
-		else {
-			change_sprite(idle_sprite,6,true);
-		}
-		if input.up {
-			change_state(jump_state);
-		}
-		else if input.down {
-			change_state(crouch_state);
-		}
-		check_moves();
 	}
 
 	crouch_state = new state();
@@ -57,8 +59,6 @@ function init_charstates() {
 		can_cancel = true;
 	}
 	crouch_state.run = function() {
-		can_block = true;
-		can_cancel = true;
 		face_target();
 		if input.down {
 			if sprite != crouch_sprite {
@@ -90,13 +90,11 @@ function init_charstates() {
 		can_cancel = true;
 	}
 	jump_state.run = function() {
-		can_block = true;
-		can_cancel = true;
 		if state_timer > 5 {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -jump_speed;
-			xspeed = walk_speed * sign(input_right - input_left);
+			xspeed = walk_speed * sign(input.right - input.left);
 			play_sound(snd_jump);
 		}
 	}
@@ -113,13 +111,11 @@ function init_charstates() {
 		can_cancel = true;
 	}
 	superjump_state.run = function() {
-		can_block = true;
-		can_cancel = true;
 		if state_timer > 5 {
 			change_state(air_state);
 			squash_stretch(0.75,1.25);
-			yspeed = -jump_speed * 2;
-			xspeed = walk_speed * sign(input_right - input_left);
+			yspeed = -jump_speed * 1.5;
+			xspeed = walk_speed * sign(input.right - input.left);
 			play_sound(snd_jump,1,0.8);
 		}
 	}
@@ -132,12 +128,10 @@ function init_charstates() {
 		can_cancel = true;
 	}
 	air_state.run = function() {
-		can_block = true;
-		can_cancel = true;
 		if yspeed >= 0 {
 			if input.up {
 				if air_moves < max_air_moves {
-					xspeed = walk_speed * sign(input_right - input_left);
+					xspeed = walk_speed * sign(input.right - input.left);
 					yspeed = -jump_speed * 0.75;
 					air_moves += 1;
 					squash_stretch(0.8,1.2);
@@ -431,7 +425,7 @@ function init_charstates() {
 			}
 		}
 		else {
-			change_sprite(hurt_sprite,3,false);
+			change_sprite(hit_air_sprite,3,false);
 		}
 	}
 	liedown_state.stop = function() {
@@ -451,7 +445,7 @@ function init_charstates() {
 		flash_sprite();
 		yoffset = -height_half;
 		rotation_speed = 36;
-		xspeed = 5 * sign(input_right - input_left);
+		xspeed = 5 * sign(input.right - input.left);
 		yspeed = -3;
 		dodging_attacks = true;
 		dodging_projectiles = true;
@@ -552,13 +546,12 @@ function init_charstates() {
 	
 	intro_state = new state();
 	intro_state.start = function() {
-		change_sprite(chant_sprite,10,true);
+		change_sprite(idle_sprite,10,true);
 		play_voiceline(voice_intro);
 	}
 	intro_state.run = function() {
 		if !audio_is_playing(voice) 
-		and anim_finished 
-		and state_timer > 120 {
+		and anim_finished {
 			change_state(idle_state);
 		}
 	}

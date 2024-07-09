@@ -4,8 +4,14 @@
 max_hp = 1000;
 hp = max_hp;
 previous_hp = hp;
-hp_percent = map_value(hp,0,max_hp,0,100);
+hp_percent = 100;
 dead = false;
+
+mp = 0;
+mp_stocks = 0;
+
+tp = 0;
+tp_stocks = 0;
 
 team = 1;
 target = noone;
@@ -23,6 +29,7 @@ mask_index = spr_charbox;
 
 hitstun = 0;
 blockstun = 0;
+hitstop = 0;
 
 is_hit = false;
 
@@ -32,8 +39,7 @@ can_block = true;
 grabbed = noone;
 grab_connect_state = noone;
 
-hitstop = 0;
-
+combo_timer = 0;
 combo_hits = 0;
 combo_damage = 0;
 combo_hits_taken = 0;
@@ -54,6 +60,8 @@ movelist[0][0] = noone;
 cancelable_moves = ds_list_create();
 can_cancel = true;
 
+super_active = false;
+
 air_moves = 0;
 max_air_moves = 1;
 
@@ -67,9 +75,6 @@ next_form = noone;
 
 char_script = function() {};
 draw_script = function() {};
-
-weapon_sprite = spr_sword_blue;
-weapon_enabled = false;
 
 init_physics();
 init_charsprites("goku");
