@@ -51,7 +51,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	xspeed = _xknockback * _attacker.facing;
 	yspeed = _yknockback;
 	
-	hitstun = round(_strength * 5);
+	hitstun = round((_strength + 1) * 8);
 	blockstun = round(hitstun * 0.6);
 	hitstop = round((_strength + 1) * 4);
 	
@@ -158,16 +158,18 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			combo_hits_taken++;
 			combo_damage_taken += dmg;
 			
+			combo_timer = hitstun + 10;
+			
 			if object_is_ancestor(_attacker.object_index,obj_char) {
 				with(_attacker) {
-					combo_timer = 30;
+					combo_timer = other.combo_timer;
 					combo_hits++;
 					combo_damage += dmg;
 				}
 			}
 			else {
 				with(_attacker.owner) {
-					combo_timer = 20;
+					combo_timer = other.combo_timer;
 					combo_hits++;
 					combo_damage += dmg;
 				}
@@ -248,7 +250,9 @@ function take_damage(_attacker,_amount,_kill) {
 	scaling = clamp(scaling,0.1,1);
 	dmg *= scaling;
 	
-	dmg = max(ceil(dmg),1);
+	dmg /= 4;
+	
+	dmg = max(round(dmg),1);
 	hp -= dmg;
 	if !_kill {
 		hp = max(hp,1);

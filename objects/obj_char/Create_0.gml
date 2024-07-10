@@ -10,8 +10,8 @@ dead = false;
 mp = 0;
 mp_stocks = 0;
 
-tp = 0;
-tp_stocks = 0;
+tp = max_tp;
+tp_stocks = max_tp_stocks;
 
 team = 1;
 target = noone;

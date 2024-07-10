@@ -9,7 +9,7 @@ init_view();
 
 stop_music();
 
-ground_height = room_height - floor(game_height * 0.25);
+ground_height = room_height - round(game_height * 0.25);
 
 switch(room) {
 	case rm_charselect:
@@ -53,8 +53,6 @@ switch(room) {
 				if x > battle_x {
 					facing = -1;
 				}
-				mp = mp_stock_size;
-				tp = max_tp;
 				change_state(intro_state);
 			}
 			spawned_players++;

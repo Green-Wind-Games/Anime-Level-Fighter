@@ -159,6 +159,18 @@ function run_charphysics() {
 			if grabbed or other.grabbed continue;
 			if dead or other.dead continue;
 			if team == other.team continue;
+			
+			if !rectangle_in_rectangle(
+				x-width_half,
+				y-height,
+				x+width_half,
+				y,
+				other.x-other.width_half,
+				other.y-other.height,
+				other.x+other.width_half,
+				other.y,
+			) continue;
+			
 			var _dist = abs(x-other.x);
 			_dist -= width_half;
 			_dist -= other.width_half;

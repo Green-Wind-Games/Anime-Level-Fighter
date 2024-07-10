@@ -316,7 +316,6 @@ function init_charstates() {
 			if on_ground {
 				if yspeed > 0 {
 					change_state(tech_state);
-					reset_combo();
 				}
 			}
 			if state_timer >= hitstun {
@@ -326,7 +325,6 @@ function init_charstates() {
 				else {
 					change_state(tech_state);
 				}
-				reset_combo();
 			}
 		}
 		else {
@@ -368,7 +366,6 @@ function init_charstates() {
 		if on_ground {
 			change_state(liedown_state);
 			play_voiceline(voice_hurt,50,true);
-			reset_combo();
 		}
 	}
 	
