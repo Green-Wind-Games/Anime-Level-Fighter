@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_goku_heavyattack1",
+  "%Name":"snd_goku_heavyattack",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":2.156813,
-  "name":"snd_goku_heavyattack1",
+  "duration":0.673312,
+  "name":"snd_goku_heavyattack",
   "parent":{
     "name":"Goku Voice",
     "path":"folders/Chars/Dragon Ball/Goku/Goku Voice.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_goku_heavyattack1.ogg",
+  "soundFile":"snd_goku_heavyattack.ogg",
   "type":0,
-  "volume":0.5,
+  "volume":1.0,
 }

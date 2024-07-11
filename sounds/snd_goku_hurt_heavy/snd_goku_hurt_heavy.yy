@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_goku_attack1",
+  "%Name":"snd_goku_hurt_heavy",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.475729,
-  "name":"snd_goku_attack1",
+  "duration":1.595792,
+  "name":"snd_goku_hurt_heavy",
   "parent":{
     "name":"Goku Voice",
     "path":"folders/Chars/Dragon Ball/Goku/Goku Voice.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_goku_attack1.ogg",
+  "soundFile":"snd_goku_hurt_heavy.ogg",
   "type":0,
-  "volume":0.5,
+  "volume":1.0,
 }

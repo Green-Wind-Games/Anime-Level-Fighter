@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.421042,
+  "duration":0.433479,
   "name":"snd_goku_attack3",
   "parent":{
     "name":"Goku Voice",
@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_goku_attack3.ogg",
   "type":0,
-  "volume":0.5,
+  "volume":1.0,
 }

@@ -22,9 +22,9 @@ char_script = function() {
 	
 	var _kaioken_active = kaioken_active;
 	var kaioken_color = make_color_rgb(255,128,128);
-	if kaioken_timer > 0 {
+	if kaioken_timer-- > 0 {
 		kaioken_active = true;
-		if kaioken_timer-- mod 12 == 0 {
+		if kaioken_timer mod 10 == 0 {
 			hp -= 1;
 		}
 		color = kaioken_color;

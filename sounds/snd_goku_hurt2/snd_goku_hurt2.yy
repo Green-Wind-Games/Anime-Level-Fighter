@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.57425,
+  "duration":0.620563,
   "name":"snd_goku_hurt2",
   "parent":{
     "name":"Goku Voice",
@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_goku_hurt2.ogg",
   "type":0,
-  "volume":0.5,
+  "volume":1.0,
 }

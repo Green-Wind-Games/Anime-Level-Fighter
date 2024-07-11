@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":2.79225,
+  "duration":1.546667,
   "name":"snd_goku_kamehameha",
   "parent":{
     "name":"Goku Voice",
@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_goku_kamehameha.ogg",
   "type":0,
-  "volume":0.5,
+  "volume":1.0,
 }

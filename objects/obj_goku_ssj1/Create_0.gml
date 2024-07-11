@@ -4,19 +4,12 @@ event_inherited();
 
 init_charsprites("goku_ssj1");
 
-name = "Goku Super Saiyajin"
+name = "Goku Super Saiyajin";
 
 theme = mus_dbfz_goku;
 
-kamehameha_cooldown = 0;
-kamehameha_cooldown_duration = 100;
-
-attack_power = 1.2;
-
 char_script = function() {
-	if active_state != kamehameha {
-		kamehameha_cooldown -= 1;
-	}
+	kamehameha_cooldown -= 1;
 }
 
 var i = 0;
