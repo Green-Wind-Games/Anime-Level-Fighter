@@ -516,23 +516,23 @@ ai_script = function() {
 }
 
 var i = 0;
-voice_attack[i++] = snd_goku_attack1;
+voice_attack[i++] = snd_goku_attack;
 voice_attack[i++] = snd_goku_attack2;
 voice_attack[i++] = snd_goku_attack3;
 voice_attack[i++] = snd_goku_attack4;
 voice_attack[i++] = snd_goku_attack5;
 i = 0;
-voice_heavyattack[i++] = snd_goku_heavyattack1;
+voice_heavyattack[i++] = snd_goku_heavyattack;
 voice_heavyattack[i++] = snd_goku_heavyattack2;
 voice_heavyattack[i++] = snd_goku_heavyattack3;
 i = 0;
-voice_hurt[i++] = snd_goku_hurt1;
+voice_hurt[i++] = snd_goku_hurt;
 voice_hurt[i++] = snd_goku_hurt2;
 voice_hurt[i++] = snd_goku_hurt3;
 voice_hurt[i++] = snd_goku_hurt4;
 voice_hurt[i++] = snd_goku_hurt5;
 i = 0;
-voice_hurt_heavy[i++] = snd_goku_hurt_heavy1;
+voice_hurt_heavy[i++] = snd_goku_hurt_heavy;
 voice_hurt_heavy[i++] = snd_goku_hurt_heavy2;
 voice_hurt_heavy[i++] = snd_goku_hurt_heavy3;
 voice_hurt_heavy[i++] = snd_goku_hurt_heavy4;

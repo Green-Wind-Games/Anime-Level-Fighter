@@ -571,9 +571,9 @@ function draw_versus() {
 	}
 	var _w = gui_width;
 	var _h = gui_height;
-	var _w2 = _w / max(1,active_players-1);
+	var _w2 = _w / max(3,active_players+1);
 	var _h2 = _h / 2;
-	var _x = 0;
+	var _x = _w2;
 	var _y = 0;
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {

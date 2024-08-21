@@ -49,7 +49,7 @@ switch(room) {
 			with(instance_create(_x,_y,get_char_object(player_char[i]))) {
 				player[i] = id;
 				input = player_input[player_slot[i]];
-				team = i;
+				team = id;
 				if x > battle_x {
 					facing = -1;
 				}

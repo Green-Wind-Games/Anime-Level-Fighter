@@ -23,7 +23,7 @@
   ],
   "name":"spr_naruto_portrait",
   "nineSlice":null,
-  "origin":0,
+  "origin":1,
   "parent":{
     "name":"Naruto Base Sprites",
     "path":"folders/Chars/Naruto Shippuden/Naruto/Naruto Sprites/Naruto Base Sprites.yy",
@@ -75,7 +75,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":0,
+    "xorigin":399,
     "yorigin":0,
   },
   "swatchColours":null,

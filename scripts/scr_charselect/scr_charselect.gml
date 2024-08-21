@@ -6,13 +6,16 @@ enum playerchars {
 	//vegeta,
 	//trunks,
 	
-	//naruto,
+	naruto,
 	//sasuke,
 	//sakura,
 	
 	//ichigo,
 	//renji,
 	//zaraki,
+	
+	//saitama,
+	genos,
 	
 	allchars
 }
@@ -72,8 +75,11 @@ function charselect_changechars() {
 				}
 			}
 		}
-		if !value_in_range(player_char[i],0,max_characters-1) {
-			player_char[i] = player_char[i] mod max_characters;
+		if player_char[i] < 0 {
+			player_char[i] = max_characters-1;
+		}
+		if player_char[i] >= max_characters {
+			player_char[i] = 0;
 		}
 	}
 }
@@ -126,7 +132,7 @@ function draw_charselect() {
 	}
 	var _w = gui_width;
 	var _h = gui_height;
-	var _w2 = _w / max(3,active_players);
+	var _w2 = _w / max(3,active_players+1);
 	var _h2 = _h / 2;
 	var _x = _w2;
 	var _y = _h2;
@@ -162,23 +168,39 @@ function draw_charselect() {
 function get_char_sprite(_id) {
 	switch(_id) {
 		case playerchars.goku: return spr_goku_idle; break;
+		
+		case playerchars.naruto: return spr_naruto_idle; break;
+		
+		case playerchars.genos: return spr_genos_idle; break;
 	}
 }
 
 function get_char_portrait(_id) {
 	switch(_id) {
 		case playerchars.goku: return spr_goku_portrait; break;
+		
+		case playerchars.naruto: return spr_naruto_portrait; break;
+		
+		case playerchars.genos: return spr_genos_portrait; break;
 	}
 }
 
 function get_char_name(_id) {
 	switch(_id) {
 		case playerchars.goku: return "Goku"; break;
+		
+		case playerchars.naruto: return "Naruto"; break;
+		
+		case playerchars.genos: return "Genos"; break;
 	}
 }
 
 function get_char_object(_id) {
 	switch(_id) {
 		case playerchars.goku: return obj_goku; break;
+		
+		case playerchars.naruto: return obj_naruto; break;
+		
+		case playerchars.genos: return obj_genos; break;
 	}
 }

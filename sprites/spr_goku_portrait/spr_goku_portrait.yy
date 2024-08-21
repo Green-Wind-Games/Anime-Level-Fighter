@@ -23,7 +23,7 @@
   ],
   "name":"spr_goku_portrait",
   "nineSlice":null,
-  "origin":0,
+  "origin":1,
   "parent":{
     "name":"Goku Base Sprites",
     "path":"folders/Chars/Dragon Ball/Goku/Goku Sprites/Goku Base Sprites.yy",
@@ -75,7 +75,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":0,
+    "xorigin":562,
     "yorigin":0,
   },
   "swatchColours":null,

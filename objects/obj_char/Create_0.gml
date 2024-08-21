@@ -13,7 +13,7 @@ mp_stocks = 0;
 tp = max_tp;
 tp_stocks = max_tp_stocks;
 
-team = 1;
+team = id;
 target = noone;
 target_x = 0;
 target_y = 0;

@@ -42,13 +42,16 @@ function target_closest_enemy() {
 	var dist = room_width+room_height;
 	target = noone;
 	with(obj_char) {
-		if team == me.team continue;
-		if dead continue;
+		var me2 = id;
+		if me.team == me2.team continue;
+		if me2.dead continue;
 		
 		var mydist = point_distance(x,y,other.x,other.y);
 		if mydist > dist continue;
 		
-		me.target = id;
+		dist = mydist;
+		
+		me.target = me2;
 	}
 	return target;
 }
