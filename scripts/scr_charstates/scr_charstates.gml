@@ -34,6 +34,15 @@ function init_charstates() {
 				change_sprite(walk_sprite,walk_anim_speed,true);
 				accelerate(walk_speed * -facing);
 				xscale = -abs(xscale);
+				
+				facing = -facing;
+				if target_front_enemy() == noone {
+					facing = -facing;
+				}
+				else {
+					xscale = abs(xscale);
+					target = target_front_enemy();
+				}
 			}
 			else {
 				change_sprite(idle_sprite,6,true);
@@ -74,6 +83,15 @@ function init_charstates() {
 		if input.up {
 			change_state(superjump_state);
 		}
+		else if input.back {
+			facing = -facing;
+			if target_front_enemy() == noone {
+				facing = -facing;
+			}
+			else {
+				target = target_front_enemy();
+			}
+		}
 		check_moves();
 	}
 
@@ -96,6 +114,15 @@ function init_charstates() {
 			yspeed = -jump_speed;
 			xspeed = walk_speed * sign(input.right - input.left);
 			play_sound(snd_jump);
+		}
+		else if input.back {
+			facing = -facing;
+			if target_front_enemy() == noone {
+				facing = -facing;
+			}
+			else {
+				target = target_front_enemy();
+			}
 		}
 	}
 

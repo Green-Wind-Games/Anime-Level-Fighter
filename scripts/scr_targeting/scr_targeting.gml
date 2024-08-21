@@ -3,7 +3,10 @@
 function chars_update_targeting() {
 	with(obj_char) {
 		if (!is_hit) and (!is_blocking) {
-			target_closest_enemy();
+			target = target_front_enemy();
+			if !target_exists() {
+				target = target_closest_enemy();
+			}
 		}
 		if target_exists() {
 			target_x = target.x;
@@ -40,7 +43,7 @@ function face_target() {
 function target_closest_enemy() {
 	var me = id;
 	var dist = room_width+room_height;
-	target = noone;
+	var _target = noone;
 	with(obj_char) {
 		var me2 = id;
 		if me.team == me2.team continue;
@@ -51,7 +54,29 @@ function target_closest_enemy() {
 		
 		dist = mydist;
 		
-		me.target = me2;
+		_target = me2;
 	}
-	return target;
+	return _target;
+}
+
+function target_front_enemy() {
+	var me = id;
+	var dist = room_width+room_height;
+	var _target = noone;
+	with(obj_char) {
+		var me2 = id;
+		if me.team == me2.team continue;
+		if me2.dead continue;
+		
+		if me.x < me2.x and me.facing != 1 continue;
+		if me.x > me2.x and me.facing !=-1 continue;
+		
+		var mydist = point_distance(x,y,other.x,other.y);
+		if mydist > dist continue;
+		
+		dist = mydist;
+		
+		_target = me2;
+	}
+	return _target;
 }
