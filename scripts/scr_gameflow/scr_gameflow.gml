@@ -147,14 +147,15 @@ function run_charphysics() {
 				gravitate(ygravity_mod);
 			}
 		}
-		if !dead {
+		if (!dead) and (xspeed != 0) {
 			x = clamp(x, left_wall, right_wall);
 		}
 		y = min(y,ground_height);
 		
 		//x = round(x);
 		//y = round(y);
-		
+	}
+	with(obj_char) {
 		with(obj_char) {
 			if grabbed or other.grabbed continue;
 			if dead or other.dead continue;
@@ -181,10 +182,12 @@ function run_charphysics() {
 			if _push == 0 then _push = facing;
 			if _push == 0 then _push = 1;
 			_push *= 0.5;
+			var i = 0;
 			while(_dist < 0) {
 				x = clamp(x-_push, left_wall, right_wall);
 				other.x = clamp(other.x+_push, left_wall, right_wall);
-				_dist += abs(_push*2);
+				_dist = point_distance(x,0,other.x,0) - (width_half + other.width_half);
+				if i++ > 20 break;
 			}
 		}
 	}

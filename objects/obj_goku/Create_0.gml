@@ -67,7 +67,7 @@ i++;
 
 autocombo[i] = new state();
 autocombo[i].start = function() {
-	change_sprite(spr_goku_elbowbash,3,false);
+	change_sprite(spr_goku_elbowbash,4,false);
 	play_sound(snd_punch_whiff_medium);
 	play_voiceline(voice_attack,50,false);
 }
@@ -80,7 +80,7 @@ i++;
 
 autocombo[i] = new state();
 autocombo[i].start = function() {
-	change_sprite(spr_goku_kick2,3,false);
+	change_sprite(spr_goku_kick2,5,false);
 	play_sound(snd_punch_whiff_medium);
 	play_voiceline(voice_attack,50,false);
 }
@@ -117,7 +117,7 @@ i++;
 
 autocombo[i] = new state();
 autocombo[i].start = function() {
-	change_sprite(spr_goku_elbowbash,5,false);
+	change_sprite(spr_goku_elbowbash,3,false);
 	play_sound(snd_punch_whiff_medium);
 	play_voiceline(voice_attack,50,false);
 }
@@ -130,7 +130,7 @@ i++;
 
 autocombo[i] = new state();
 autocombo[i].start = function() {
-	change_sprite(spr_goku_kick,5,false);
+	change_sprite(spr_goku_kick,4,false);
 	play_sound(snd_punch_whiff_medium);
 	play_voiceline(voice_attack,50,false);
 }
@@ -180,7 +180,7 @@ i++;
 
 autocombo[i] = new state();
 autocombo[i].start = function() {
-	change_sprite(spr_goku_axehandle,5,false);
+	change_sprite(spr_goku_axehandle,4,false);
 	play_sound(snd_punch_whiff_heavy);
 	play_voiceline(voice_heavyattack,100,true);
 }
@@ -243,7 +243,7 @@ kiblast.start = function() {
 }
 kiblast.run = function() {
 	if check_frame(3) {
-		create_kiblast(spr_kiblast_blue);
+		create_kiblast(20,-35,spr_kiblast_blue);
 		if is_airborne {
 			xspeed = -2 * facing;
 			yspeed = -2;
@@ -379,7 +379,7 @@ genkidama.run = function() {
 		}
 	}
 	if check_frame(2) {
-		spirit_bomb = create_shot(0,-200,0,0,spr_genkidama,0,attacktype.normal,hiteffects.hit)
+		spirit_bomb = create_shot(0,-200,0,0,spr_genkidama,1,0,0,0,attacktype.normal,attackstrength.heavy,hiteffects.hit)
 		with(spirit_bomb) {
 			duration = -1;
 			hit_limit = -1;
@@ -403,7 +403,7 @@ genkidama.run = function() {
 					duration = 0;
 					for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
 						with(ds_list_find_value(hitbox.hit_list,i)) {
-							get_hit(other,attacktype.normal,500,hiteffects.hit,hitanims.spinout);
+							get_hit(other,500,0,-12,attacktype.hard_knockdown,attackstrength.ultimate,hiteffects.hit,hitanims.spinout);
 							x = other.x;
 							y = ground_height - 1;
 						}
@@ -457,7 +457,7 @@ meteor_combo.run = function() {
 				spr_goku_backflipkick,
 				spr_goku_kamehameha_air
 			],
-			2
+			frame_duration
 		);
 	}
 	if sprite == spr_goku_kamehameha_air {
@@ -487,20 +487,16 @@ max_air_moves = 3;
 max_kiblasts = 7;
 kiblast_count = 0;
 setup_autocombo();
-add_move(kiblast,"C");
 
-add_move(meteor_combo,"236A");
-add_move(meteor_combo,"214A");
+add_move(kiblast,"B");
+add_move(kamehameha,"6B");
+add_move(kamehameha,"4B");
 
-add_move(kaioken,"252A");
+add_move(super_kamehameha,"C");
+add_move(meteor_combo,"6C");
+add_move(kaioken,"2C");
 
-add_move(kamehameha,"236B");
-add_move(kamehameha,"214B");
-
-add_move(super_kamehameha,"236C");
-add_move(super_kamehameha,"214C");
-
-add_move(genkidama,"252C");
+add_move(genkidama,"D");
 
 ai_script = function() {
 	ai_input_move(kaioken,1);

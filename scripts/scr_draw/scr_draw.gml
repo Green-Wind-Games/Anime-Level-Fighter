@@ -360,7 +360,7 @@ function draw_hud() {
 	var clock_text_height = string_height(clock_text_max);
 	var clock_text = string(ceil(round_timer / 60));
 	var clock_x = _w2;
-	var clock_y = _spacing + hp_bar_height + mp_bar_height + tp_bar_height + (clock_text_height * 2);
+	var clock_y = _h - _spacing - clock_text_height;
 	//if _w - (hp_bar_width * 2) - (_spacing * 2) - (icon_size * 2) > text_width {
 	//	text_y = mean(hp_y1,hp_y2);
 	//}

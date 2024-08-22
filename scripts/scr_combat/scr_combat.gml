@@ -51,27 +51,35 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	xspeed = _xknockback * _attacker.facing;
 	yspeed = _yknockback;
 	
-	hitstun = round((_strength + 1) * 8);
-	blockstun = round(hitstun * 0.6);
-	hitstop = round((_strength + 1) * 4);
+	hitstun = map_value(_strength,attackstrength.light,attackstrength.heavy,15,20);
+	blockstun = hitstun - 5;
+	hitstop = map_value(_strength,attackstrength.light,attackstrength.heavy,10,15);
 	
-	var _recovery = 15;
-	if object_is_ancestor(_attacker.object_index,obj_char) {
-		_recovery = max(
-			_attacker.anim_duration - _attacker.state_timer,
-			_recovery
-		);
-		target = _attacker;
-	}
-	else {
-		hitstop = round(hitstop * 0.75);
+	if object_is_ancestor(_attacker.object_index,obj_shot) {
+		hitstop *= 0.5;
 		target = _attacker.owner;
 	}
-	hitstun += _recovery;
-	blockstun += _recovery;
+	else {
+		var _recovery = _attacker.anim_duration - _attacker.anim_timer;
+		hitstun = max(hitstun,_recovery);
+		blockstun = _recovery - 10;
+		target = _attacker;
+	}
+	
+	if abs(_xknockback) >= 10
+	or abs(_yknockback) >= 10 {
+		hitstun = max(hitstun,40);
+	}
+	else {
+		hitstun -= (combo_hits_taken / 3);
+	}
+	
+	hitstun = round(hitstun);
+	blockstun = round(blockstun);
+	hitstop = round(hitstop);
 			
 	var blocking =	((input.back or input.down)
-					or ((ai_enabled) and (irandom(100) <= map_value(ai_level,1,ai_level_max,10,90)))
+					or ((ai_enabled) and (random(100) < map_value(ai_level,1,ai_level_max,10,90)))
 					or (is_blocking));
 	var block_valid = (can_block) and (!is_hit);
 	if _attacktype == attacktype.unblockable
@@ -229,7 +237,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	_attacker.depth = -1;
 	_attacker.hitstop = hitstop;
 	_attacker.can_cancel = true;
-	create_hitspark(x-width_half,y-(height*0.75),x+width_half,y-(height*0.25),_attacktype,_hiteffect,block_valid && blocking);
+	create_hitspark(x-width_half,y-(height*0.75),x+width_half,y-(height*0.25),_strength,_hiteffect,block_valid and blocking);
 }
 
 function take_damage(_attacker,_amount,_kill) {

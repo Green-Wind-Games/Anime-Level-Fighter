@@ -17,9 +17,9 @@ function check_moves() {
 	var moved = false;
 	if can_cancel {
 		var available_moves = ds_priority_create();
-		var min_cancel = 0;
+		var min_cancel = floor(combo_hits * 0.8);
 		if ds_list_empty(cancelable_moves) {
-			for(var i = 0; i < array_length(movelist); i++) {
+			for(var i = min_cancel; i < array_length(movelist); i++) {
 				if active_state == movelist[i][0]
 				and ds_list_find_index(cancelable_moves,active_state) == -1 {
 					min_cancel = i+1;
@@ -94,26 +94,26 @@ function air_chase() {
 	//yspeed = -2.5;
 }
 
-function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_yknockback,_attacktype,_hiteffect) {
+function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect) {
 	var shot = instance_create(x+(_x*facing),y+_y,obj_shot);
 	with(shot) {
 		owner = other;
 		if owner.object_index == obj_shot or object_is_ancestor(owner.object_index,obj_shot) {
 			owner = owner.owner;
 		}
-		team = owner.team;
 		init_sprite(_sprite);
-		change_sprite(_sprite,3,true);
+		change_sprite(sprite,3,true);
 		xscale = _scale;
 		yscale = _scale;
 		width = min(sprite_get_width(sprite),sprite_get_height(sprite)) * _scale * 0.75;
 		height = width;
 		width_half = floor(width / 2);
 		height_half = floor(height / 2);
-		hitbox = create_hitbox(-width/2,-height/2,width,height,_damage,_xknockback,_yknockback,_attacktype,_hiteffect);
+		hitbox = create_hitbox(-width/2,-height/2,width,height,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect);
 		hitbox.duration = -1;
 		xspeed = _xspeed * owner.facing;
 		yspeed = _yspeed;
+		team = owner.team;
 		facing = owner.facing;
 		target = owner.target;
 		
@@ -129,14 +129,10 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	return shot;
 }
 
-function fire_beam_attack(_x, _y, _damage, beam_sprite, _attacktype, _hiteffect) {
-	var split = 1;
-	var beam_speed = sprite_get_width(beam_sprite) / split;
-	if (state_timer mod split == 0) {
-		with(create_shot(_x, _y, beam_speed, 0, beam_sprite, _damage, _attacktype, _hiteffect)) {
-			blend = true;
-			hit_limit = -1;
-		}
+function fire_beam_attack(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_attacktype,_strength,_hiteffect) {
+	with(create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xspeed,_yspeed,_attacktype,_strength,_hiteffect)) {
+		blend = true;
+		hit_limit = -1;
 	}
 }
 

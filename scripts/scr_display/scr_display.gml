@@ -11,8 +11,8 @@ screen_width = display_get_width();
 screen_height = display_get_height();
 screen_aspectratio = screen_width / screen_height;
 	
-game_width = 500;
-game_height = 400;
+game_width = 480;
+game_height = 360;
 
 //game_width = round(game_height * screen_aspectratio);
 game_height = round(game_width / screen_aspectratio);
@@ -118,13 +118,13 @@ function reposition_window() {
 }
 
 function enable_fullscreen() {
-	window_set_fullscreen(true);
 	surface_resize(application_surface,fullscreen_width,fullscreen_height);
+	window_set_fullscreen(true);
 }
 
 function disable_fullscreen() {
-	window_set_fullscreen(false);
 	surface_resize(application_surface,window_width,window_height);
+	window_set_fullscreen(false);
 	reposition_window();
 }
 

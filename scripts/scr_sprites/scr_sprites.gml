@@ -8,6 +8,7 @@ function init_sprite(_sprite = sprite_index) {
 	anim_frames = sprite_get_number(sprite);
 	anim_duration = anim_frames * frame_duration;
 	anim_loop = true;
+	anim_timer = 0;
 	anim_finished = false;
 	xoffset = 0;
 	yoffset = 0;
@@ -31,6 +32,7 @@ function change_sprite(_sprite,_frameduration, _loop) {
 		sprite = _sprite;
 		frame = 0;
 		frame_timer = 0;
+		anim_timer = 0;
 		anim_frames = sprite_get_number(sprite);
 		anim_finished = false;
 		reset_sprite();
@@ -85,6 +87,7 @@ function run_animation() {
 	ystretch = approach(ystretch,1,1/30);
 	rotation += rotation_speed;
 	flash -= 1;
+	anim_timer = anim_duration - (frame_timer + (frame * frame_duration));
 }
 
 function check_frame(_frame, _startonly = true) {

@@ -6,7 +6,7 @@ init_charsprites("naruto");
 
 name = "Naruto";
 
-walk_speed *= 1.5;
+move_speed *= 1.5;
 
 theme = mus_naruto_strongandstrike;
 
@@ -186,7 +186,7 @@ forward_throw.run = function() {
 		var _hit = grabbed;
 		release_grab(0,20,0,0,0);
 		with(_hit) {
-			get_hit(other,attacktype.normal,50,hiteffects.hit,hitanims.normal);
+			get_hit(other,50,1,-10,attacktype.normal,attackstrength.heavy,hiteffects.hit,hitanims.normal);
 		}
 	}
 	return_to_idle();
@@ -236,8 +236,8 @@ airdash_state.start = function() {
 		change_sprite(dash_sprite,2,true);
 		yoffset = -height/2;
 		rotation = 20;
-		xspeed = dash_speed * facing;
-		yspeed = -dash_speed * 0.5;
+		xspeed = move_speed * 1.5 * facing;
+		yspeed = -5;
 		air_moves += 1;
 		play_sound(snd_dash);
 		play_voiceline(voice_chase,20,false);
@@ -258,8 +258,8 @@ air_backdash_state.start = function() {
 		yoffset = -height/2;
 		xscale = -1;
 		rotation = 20;
-		xspeed = dash_speed * -facing;
-		yspeed = -dash_speed * 0.5;
+		xspeed = move_speed * 1.5 * -facing;
+		yspeed = -5;
 		air_moves += 1;
 		play_sound(snd_dash);
 		play_voiceline(voice_retreat,20,false);

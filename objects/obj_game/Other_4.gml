@@ -49,7 +49,12 @@ switch(room) {
 			with(instance_create(_x,_y,get_char_object(player_char[i]))) {
 				player[i] = id;
 				input = player_input[player_slot[i]];
-				team = id;
+				if active_players mod 2 == 0 {
+					if x < battle_x team = 1; else team = 2;
+				}
+				else {
+					team = spawned_players + 1;
+				}
 				if x > battle_x {
 					facing = -1;
 				}
@@ -57,6 +62,9 @@ switch(room) {
 			}
 			spawned_players++;
 		}
+	}
+	
+	with(obj_char) {
 	}
 	
 	chars_update_targeting();

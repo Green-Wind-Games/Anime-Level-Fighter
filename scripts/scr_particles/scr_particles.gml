@@ -101,18 +101,18 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 	}
 }
 
-function create_hitspark(_x1,_y1,_x2,_y2,_attacktype,_hiteffect,_guard) {
+function create_hitspark(_x1,_y1,_x2,_y2,_strength,_hiteffect,_guard) {
 	var _sound = noone;
 	switch(_hiteffect) {
 		default:
 		if !_guard {
 			switch(_hiteffect) {
 				default:
-				if _attacktype < attackstrength.medium {
+				if _strength < attackstrength.medium {
 					_sound = choose(snd_punch_hit_light,snd_punch_hit_light2);
 					create_particles(_x1,_y1,_x2,_y2,hitspark_light);
 				}
-				else if _attacktype < attackstrength.heavy {
+				else if _strength < attackstrength.heavy {
 					_sound = choose(snd_punch_hit_medium,snd_punch_hit_medium2);
 					create_particles(_x1,_y1,_x2,_y2,hitspark_medium);
 				}
@@ -124,10 +124,10 @@ function create_hitspark(_x1,_y1,_x2,_y2,_attacktype,_hiteffect,_guard) {
 				
 				case hiteffects.slash:
 				create_particles(_x1,_y1,_x2,_y2,slashspark);
-				if _attacktype < attackstrength.medium {
+				if _strength < attackstrength.medium {
 					_sound = snd_slash_hit_light;
 				}
-				else if _attacktype < attackstrength.heavy {
+				else if _strength < attackstrength.heavy {
 					_sound = snd_slash_hit_medium;
 				}
 				else {

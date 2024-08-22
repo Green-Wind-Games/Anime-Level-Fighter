@@ -4,8 +4,7 @@
 function init_physics() {
 	xspeed = 0;
 	yspeed = 0;
-	walk_speed = 5;
-	dash_speed = walk_speed * 2;
+	move_speed = 5;
 	jump_speed = 8;
 	on_ground = y >= ground_height and yspeed >= 0;
 	is_airborne = !on_ground;
@@ -26,8 +25,10 @@ function run_physics() {
 
 function gravitate(_multiplier = 1) {
 	if is_airborne {
-		if is_hit or is_blocking {
-			_multiplier = 1;
+		if object_is_ancestor(object_index,obj_char) {
+			if is_hit or is_blocking {
+				_multiplier = 1;
+			}
 		}
 		yspeed += ygravity * _multiplier;
 	}
