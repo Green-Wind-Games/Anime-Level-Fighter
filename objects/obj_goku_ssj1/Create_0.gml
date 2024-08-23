@@ -258,7 +258,7 @@ kamehameha.start = function() {
 		yspeed = 0;
 		kamehameha_cooldown = kamehameha_cooldown_duration;
 		play_voiceline(snd_goku_kamehameha);
-		play_sound(snd_kamehameha_start,1,1.5);
+		play_sound(snd_dbz_beam_charge_short);
 	}
 	else {
 		change_state(previous_state);
@@ -268,10 +268,10 @@ kamehameha.run = function() {
 	xspeed = 0;
 	yspeed = 0;
 	if check_frame(6) {
-		play_sound(snd_kamehameha_fire,1,1.5);
+		play_sound(snd_dbz_beam_fire,1,1.5);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(30,-25,20,spr_kamehameha_beam,attacktype.beam,hiteffects.hit);
+		fire_beam_attack(spr_kamehameha,0.3,1,hiteffects.light);
 	}
 	return_to_idle();
 }
@@ -291,7 +291,7 @@ super_kamehameha.start = function() {
 		spend_mp(2);
 		kamehameha_cooldown = kamehameha_cooldown_duration * 2;
 		play_sound(snd_activate_super);
-		play_sound(snd_kamehameha_start);
+		play_sound(snd_dbz_beam_charge_long);
 	}
 	else {
 		change_state(previous_state);
@@ -314,10 +314,10 @@ super_kamehameha.run = function() {
 	}
 	if check_frame(6) {
 		play_voiceline(snd_goku_kamehameha);
-		play_sound(snd_kamehameha_fire,1,0.8);
+		play_sound(snd_dbz_beam_fire2,1,0.8);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(30,-25,20,spr_superkamehameha_beam,attacktype.beam,hiteffects.hit);
+		fire_beam_attack(spr_kamehameha,1,3,hiteffects.light);
 	}
 	if state_timer >= 150 {
 		change_state(idle_state);
@@ -407,13 +407,23 @@ ai_script = function() {
 }
 
 var i = 0;
-voice_hurt[i++] = snd_goku_hurt1;
+voice_attack[i++] = snd_goku_attack;
+voice_attack[i++] = snd_goku_attack2;
+voice_attack[i++] = snd_goku_attack3;
+voice_attack[i++] = snd_goku_attack4;
+voice_attack[i++] = snd_goku_attack5;
+i = 0;
+voice_heavyattack[i++] = snd_goku_heavyattack;
+voice_heavyattack[i++] = snd_goku_heavyattack2;
+voice_heavyattack[i++] = snd_goku_heavyattack3;
+i = 0;
+voice_hurt[i++] = snd_goku_hurt;
 voice_hurt[i++] = snd_goku_hurt2;
 voice_hurt[i++] = snd_goku_hurt3;
 voice_hurt[i++] = snd_goku_hurt4;
 voice_hurt[i++] = snd_goku_hurt5;
 i = 0;
-voice_hurt_heavy[i++] = snd_goku_hurt_heavy1;
+voice_hurt_heavy[i++] = snd_goku_hurt_heavy;
 voice_hurt_heavy[i++] = snd_goku_hurt_heavy2;
 voice_hurt_heavy[i++] = snd_goku_hurt_heavy3;
 voice_hurt_heavy[i++] = snd_goku_hurt_heavy4;

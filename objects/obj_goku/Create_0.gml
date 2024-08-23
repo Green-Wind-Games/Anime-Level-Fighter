@@ -285,7 +285,7 @@ kamehameha.start = function() {
 		yspeed = 0;
 		kamehameha_cooldown = kamehameha_cooldown_duration;
 		play_voiceline(snd_goku_kamehameha);
-		play_sound(snd_kamehameha_start,1,1.5);
+		play_sound(snd_dbz_beam_charge_short);
 	}
 	else {
 		change_state(previous_state);
@@ -295,10 +295,10 @@ kamehameha.run = function() {
 	xspeed = 0;
 	yspeed = 0;
 	if check_frame(6) {
-		play_sound(snd_kamehameha_fire,1,1.5);
+		play_sound(snd_dbz_beam_fire);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(30,-25,20,spr_kamehameha_beam,attacktype.beam,hiteffects.hit);
+		fire_beam_attack(spr_kamehameha,0.3,1,hiteffects.light);
 	}
 	return_to_idle();
 }
@@ -318,7 +318,7 @@ super_kamehameha.start = function() {
 		yspeed = 0;
 		kamehameha_cooldown = kamehameha_cooldown_duration * 2;
 		play_sound(snd_activate_super);
-		play_sound(snd_kamehameha_start);
+		play_sound(snd_dbz_beam_charge_long);
 	}
 	else {
 		change_state(previous_state);
@@ -341,10 +341,10 @@ super_kamehameha.run = function() {
 	}
 	if check_frame(6) {
 		play_voiceline(snd_goku_kamehameha);
-		play_sound(snd_kamehameha_fire);
+		play_sound(snd_dbz_beam_fire2);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(30,-25,20,spr_superkamehameha_beam,attacktype.beam,hiteffects.hit);
+		fire_beam_attack(spr_kamehameha,1,3,hiteffects.light);
 	}
 	if state_timer >= 150 {
 		change_state(idle_state);
@@ -557,7 +557,7 @@ draw_script = function() {
 		if frame == 3 {
 			var _x = x + (32 * facing);
 			var _y = y - 32;
-			var _scale = (frame_timer + 1) / (frame_duration * 1.5);
+			var _scale = (frame_timer + 1) / 3;
 			draw_sprite_ext(
 				spr_ki_spark,
 				frame mod 2,
@@ -577,7 +577,7 @@ draw_script = function() {
 		if value_in_range(frame,3,5) {
 			var _x = x - (10 * facing);
 			var _y = y - 25;
-			var _scale = (frame_timer + 1) / (frame_duration / 1.5);
+			var _scale = (frame_timer + 1) / 10;
 			draw_sprite_ext(
 				spr_kamehameha_charge,
 				frame mod 2,
@@ -585,33 +585,6 @@ draw_script = function() {
 				_y,
 				facing * _scale,
 				_scale,
-				rotation*facing,
-				c_white,
-				1
-			);
-		}
-		if value_in_range(frame,6,9) {
-			var _x = x + (20 * facing);
-			var _y = y - 25;
-			var _scale = (frame_timer + 1) / (frame_duration / 1.5);
-			draw_sprite_ext(
-				spr_ki_spark,
-				frame mod 2,
-				_x,
-				_y,
-				facing * _scale,
-				_scale,
-				rotation*facing,
-				c_white,
-				1
-			);
-			draw_sprite_ext(
-				spr_kamehameha_origin,
-				frame mod 2,
-				_x,
-				_y,
-				facing,
-				1,
 				rotation*facing,
 				c_white,
 				1
@@ -624,7 +597,7 @@ draw_script = function() {
 		if value_in_range(frame,3,5) {
 			var _x = x - (10 * facing);
 			var _y = y - 25;
-			var _scale = (frame_timer + 1) / (frame_duration / 1.5);
+			var _scale = (frame_timer + 1) / 5;
 			draw_sprite_ext(
 				spr_kamehameha_charge,
 				frame mod 2,
@@ -632,33 +605,6 @@ draw_script = function() {
 				_y,
 				facing * _scale,
 				_scale,
-				rotation*facing,
-				c_white,
-				1
-			);
-		}
-		if value_in_range(frame,6,9) {
-			var _x = x + (25 * facing);
-			var _y = y - 25;
-			var _scale = (frame_timer + 1) / (frame_duration / 2);
-			draw_sprite_ext(
-				spr_ki_spark,
-				frame mod 2,
-				_x,
-				_y,
-				facing * _scale,
-				_scale,
-				rotation*facing,
-				c_white,
-				1
-			);
-			draw_sprite_ext(
-				spr_superkamehameha_origin,
-				frame mod 2,
-				_x,
-				_y,
-				facing,
-				1,
 				rotation*facing,
 				c_white,
 				1

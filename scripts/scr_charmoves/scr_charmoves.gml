@@ -95,11 +95,12 @@ function air_chase() {
 }
 
 function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect) {
+	var me = id;
 	var shot = instance_create(x+(_x*facing),y+_y,obj_shot);
 	with(shot) {
-		owner = other;
+		owner = me;
 		if owner.object_index == obj_shot or object_is_ancestor(owner.object_index,obj_shot) {
-			owner = owner.owner;
+			owner = me.owner;
 		}
 		init_sprite(_sprite);
 		change_sprite(sprite,3,true);
@@ -129,10 +130,30 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	return shot;
 }
 
-function fire_beam_attack(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_attacktype,_strength,_hiteffect) {
-	with(create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xspeed,_yspeed,_attacktype,_strength,_hiteffect)) {
-		blend = true;
-		hit_limit = -1;
+function fire_beam_attack(_sprite,_scale,_damage,_hiteffect) {
+	if !instance_exists(beam) {
+		beam = create_shot(width_half,-height_half,0.01,0,_sprite,_scale,_damage,20,-2,attacktype.normal,attackstrength.light,_hiteffect);
+		with(beam) {
+			blend = true;
+			hit_limit = -1;
+			duration = 10;
+			xscale = 0.1;
+			active_script = function() {
+				x = owner.x + (owner.width_half * owner.facing);
+				y = owner.y - (owner.height * 0.65);
+				xscale += 0.1;
+				with(hitbox) {
+					xoffset = 0;
+					image_xscale = (sprite_get_width(owner.sprite) * owner.xscale) / sprite_get_width(spr_hitbox);
+				}
+				alpha -= 0.1;
+			}
+		}
+	}
+	with(beam) {
+		ds_list_clear(hitbox.hit_list);
+		alpha = 1;
+		duration = 10;
 	}
 }
 

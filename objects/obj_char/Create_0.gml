@@ -62,6 +62,8 @@ can_cancel = true;
 
 super_active = false;
 
+beam = noone;
+
 air_moves = 0;
 max_air_moves = 1;
 

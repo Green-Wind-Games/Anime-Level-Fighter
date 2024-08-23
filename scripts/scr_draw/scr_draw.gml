@@ -189,9 +189,9 @@ function draw_hud() {
 
 	var hp_bar_width = (_w / active_players) - (_spacing * 2);
 	var hp_bar_height = 8;
-	var mp_bar_width = hp_bar_width * 0.75;
+	var mp_bar_width = hp_bar_width * 0.8;
 	var mp_bar_height = hp_bar_height * 0.5;
-	var tp_bar_width = mp_bar_width * 0.75;
+	var tp_bar_width = mp_bar_width * 0.8;
 	var tp_bar_height = mp_bar_height;
 	
 	draw_set_font(fnt_hud);

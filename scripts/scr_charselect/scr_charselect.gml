@@ -6,9 +6,13 @@ enum playerchars {
 	//vegeta,
 	//trunks,
 	
+	//freeza,
+	//cell,
+	//broly,
+	
 	naruto,
 	//sasuke,
-	//sakura,
+	//kakashi,
 	
 	//ichigo,
 	//renji,
@@ -42,6 +46,7 @@ function charselect_joinin() {
 				player_ready[ii] = false;
 				player_input[i].assigned = true;
 				player_input[i].button1 = false;
+				play_sound(snd_menu_select);
 				break;
 			}
 		}
@@ -69,17 +74,19 @@ function charselect_changechars() {
 			if !player_ready[i] {
 				if player_input[player_slot[i]].left_pressed {
 					player_char[i]--;
+					play_sound(snd_menu_scroll);
 				}
 				if player_input[player_slot[i]].right_pressed {
 					player_char[i]++;
+					play_sound(snd_menu_scroll);
 				}
 			}
-		}
-		if player_char[i] < 0 {
-			player_char[i] = max_characters-1;
-		}
-		if player_char[i] >= max_characters {
-			player_char[i] = 0;
+			if player_char[i] < 0 {
+				player_char[i] = max_characters-1;
+			}
+			if player_char[i] >= max_characters {
+				player_char[i] = 0;
+			}
 		}
 	}
 }
@@ -90,6 +97,7 @@ function charselect_readyup() {
 			if player_input[player_slot[i]].button1 {
 				player_ready[i] = true;
 				player_input[i].button1 = false;
+				play_sound(snd_menu_select);
 			}
 			else if player_input[player_slot[i]].button2 {
 				player_ready[i] = false;

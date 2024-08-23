@@ -1,8 +1,6 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-owner = noone;
-
 init_physics();
 
 hit_limit = 1;

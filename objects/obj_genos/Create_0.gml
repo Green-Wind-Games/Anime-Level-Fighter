@@ -347,10 +347,10 @@ incinerate.run = function() {
 		}
 	}
 	if check_frame(5) {
-		play_sound(snd_kamehameha_fire);
+		play_sound(snd_dbz_beam_fire);
 	}
 	if value_in_range(frame,5,6) {
-		fire_beam_attack(10,-30,20,spr_incinerate_beam,attacktype.beam,hiteffects.fire);
+		fire_beam_attack(spr_incinerate,0.3,1,hiteffects.light);
 	}
 	return_to_idle();
 }
@@ -395,10 +395,10 @@ super_incinerate.run = function() {
 		}
 	}
 	if check_frame(5) {
-		play_sound(snd_kamehameha_fire,1,0.9);
+		play_sound(snd_dbz_beam_fire,1,0.8);
 	}
 	if value_in_range(frame,5,6) {
-		fire_beam_attack(10,-30,20,spr_incinerate2_beam,attacktype.beam,hiteffects.fire);
+		fire_beam_attack(spr_incinerate,1,1,hiteffects.light);
 	}
 	return_to_idle();
 }
