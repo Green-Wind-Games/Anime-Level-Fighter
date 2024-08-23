@@ -144,7 +144,7 @@ function fire_beam_attack(_sprite,_scale,_damage,_hiteffect) {
 				xscale += 0.1;
 				with(hitbox) {
 					xoffset = 0;
-					image_xscale = (sprite_get_width(owner.sprite) * owner.xscale) / sprite_get_width(spr_hitbox);
+					image_xscale = (sprite_get_width(other.sprite) * other.xscale) / sprite_get_width(spr_hitbox) * other.owner.facing;
 				}
 				alpha -= 0.1;
 			}

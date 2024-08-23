@@ -51,15 +51,15 @@ function update_fight() {
 		round_state_timer = 0;
 	}
 		
-	update_charinputs();
-		
 	chars_update_targeting();
+		
+	update_charinputs();
 		
 	update_shots();
 		
 	run_charanimations();
-	run_charphysics();
 	run_charstates();
+	run_charphysics();
 	
 	chars_update_stats();
 	

@@ -62,7 +62,7 @@ function ai_perform_random_moves() {
 	}
 	
 	var _move = ds_list_find_value(_inputs,irandom(ds_list_size(_inputs)-1));
-	ai_input_command(_move,map_value(target_distance,game_width,0,10,60));
+	ai_input_command(_move,map_value(target_distance,game_width,0,20,60));
 	
 	ds_list_destroy(_inputs);
 }
@@ -81,14 +81,14 @@ function ai_combo() {
 }
 
 function ai_input_command(_command,_chance = 100) {
-	if irandom(100) <= _chance {
+	if random(100) < _chance {
 		input_buffer = _command;
 		input_buffer_timer = ai_think_interval;
 	}
 }
 
 function ai_input_move(_move,_chance = 100) {
-	if irandom(100) <= _chance {
+	if random(100) < _chance {
 		var _move_input = "";
 		for(var i = 0; i < array_length(movelist); i++) {
 			if movelist[i][0] == _move {

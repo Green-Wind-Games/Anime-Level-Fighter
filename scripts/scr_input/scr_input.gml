@@ -99,6 +99,10 @@ function update_input() {
 
 function update_charinputs() {
 	with(obj_char) {
+		if ai_enabled {
+			update_ai();
+		}
+		
 		var _buffer = input_buffer;
 		
 		input.forward = sign(input.right - input.left) == (facing);
