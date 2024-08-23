@@ -473,8 +473,7 @@ function init_charstates() {
 		yspeed = -3;
 		dodging_attacks = true;
 		dodging_projectiles = true;
-		combo_hits_taken = 0;
-		combo_damage_taken = 0;
+		reset_combo();
 	}
 	tech_state.run = function() {
 		if state_timer > 10 {

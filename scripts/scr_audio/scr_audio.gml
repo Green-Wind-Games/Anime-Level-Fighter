@@ -1,5 +1,5 @@
 globalvar master_volume, sound_volume, music_volume, voice_volume;
-master_volume = 0.2;
+master_volume = 1/30;
 sound_volume = 1;
 music_volume = 1;
 voice_volume = 1;

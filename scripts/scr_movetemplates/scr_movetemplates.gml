@@ -1,9 +1,9 @@
 function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 	if state_timer == 1 {
 		if is_airborne {
-			if target_distance <= 20 {
+			if target_distance <= width_half {
 				xspeed = 3 * facing;
-				yspeed = -2.5;
+				yspeed = -2.69;
 			}
 		}
 		else {

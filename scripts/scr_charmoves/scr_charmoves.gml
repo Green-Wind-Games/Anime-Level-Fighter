@@ -17,7 +17,7 @@ function check_moves() {
 	var moved = false;
 	if can_cancel {
 		var available_moves = ds_priority_create();
-		var min_cancel = floor(combo_hits * 0.8);
+		var min_cancel = 0; //floor(combo_hits * 0.5);
 		if ds_list_empty(cancelable_moves) {
 			for(var i = min_cancel; i < array_length(movelist); i++) {
 				if active_state == movelist[i][0]

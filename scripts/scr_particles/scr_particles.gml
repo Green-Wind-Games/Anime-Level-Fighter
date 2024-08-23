@@ -88,11 +88,11 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 	}
 	switch(_particle) {
 		case explosion_small:
-		play_sound(snd_explosion,0.3,2);
+		play_sound(snd_explosion,0.5,1.5);
 		break;
 		
 		case explosion_medium:
-		play_sound(snd_explosion,0.5,1.5);
+		play_sound(snd_explosion,0.8,1.2);
 		break;
 		
 		case explosion_large:
@@ -106,7 +106,11 @@ function create_hitspark(_x1,_y1,_x2,_y2,_strength,_hiteffect,_guard) {
 	switch(_hiteffect) {
 		default:
 		if !_guard {
-			switch(_hiteffect) {				
+			switch(_hiteffect) {	
+				case hiteffects.none:
+				//none lol
+				break;
+				
 				default:
 				if _strength < attackstrength.medium {
 					_sound = choose(snd_punch_hit_light,snd_punch_hit_light2);
@@ -122,8 +126,6 @@ function create_hitspark(_x1,_y1,_x2,_y2,_strength,_hiteffect,_guard) {
 				}
 				break;
 				
-				case 
-				
 				case hiteffects.slash:
 				create_particles(_x1,_y1,_x2,_y2,slashspark);
 				if _strength < attackstrength.medium {
@@ -136,7 +138,6 @@ function create_hitspark(_x1,_y1,_x2,_y2,_strength,_hiteffect,_guard) {
 					_sound = choose(snd_slash_hit_heavy,snd_slash_hit_heavy2);
 				}
 				break;
-				
 			}
 		}
 		else {

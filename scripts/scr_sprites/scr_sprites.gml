@@ -102,7 +102,9 @@ function check_frame(_frame, _startonly = true) {
 function apply_hiteffect(_hiteffect,_strength,_blocking) {
 	switch(_hiteffect) {
 		case hiteffects.fire:
-		flash_sprite(15,make_color_rgb(255,irandom(128),0));
+		if !_blocking {
+			flash_sprite(15,make_color_rgb(255,irandom(128),0));
+		}
 		break;
 	}
 }

@@ -77,7 +77,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		hitstun = max(hitstun,40);
 	}
 	else {
-		hitstun -= (combo_hits_taken / 3);
+		hitstun = max(hitstun - (combo_hits_taken / 3), 5);
 	}
 	
 	hitstun = round(hitstun);
@@ -261,7 +261,7 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	dmg /= defender.defense;
 	
-	var scaling = map_value(hp + combo_damage_taken,max_hp*0.4,0,1,0);
+	var scaling = map_value(hp + combo_damage_taken,max_hp*0.35,0,1,0);
 	scaling = clamp(scaling,0.1,1);
 	dmg *= scaling;
 	
