@@ -106,7 +106,7 @@ function create_hitspark(_x1,_y1,_x2,_y2,_strength,_hiteffect,_guard) {
 	switch(_hiteffect) {
 		default:
 		if !_guard {
-			switch(_hiteffect) {
+			switch(_hiteffect) {				
 				default:
 				if _strength < attackstrength.medium {
 					_sound = choose(snd_punch_hit_light,snd_punch_hit_light2);
@@ -121,6 +121,8 @@ function create_hitspark(_x1,_y1,_x2,_y2,_strength,_hiteffect,_guard) {
 					create_particles(_x1,_y1,_x2,_y2,hitspark_heavy);
 				}
 				break;
+				
+				case 
 				
 				case hiteffects.slash:
 				create_particles(_x1,_y1,_x2,_y2,slashspark);

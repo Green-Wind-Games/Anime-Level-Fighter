@@ -30,17 +30,23 @@ enum hitanims {
 }
 
 enum hiteffects {
+	none,
+	
 	hit,
 	slash,
 	pierce,
+	
 	fire,
 	fire_dark,
+	
 	thunder_blue,
 	thunder_yellow,
 	thunder_purple,
+	
 	wind,
 	ice,
 	water,
+	
 	dark,
 	light,
 }
@@ -238,6 +244,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	_attacker.hitstop = hitstop;
 	_attacker.can_cancel = true;
 	create_hitspark(x-width_half,y-(height*0.75),x+width_half,y-(height*0.25),_strength,_hiteffect,block_valid and blocking);
+	apply_hiteffect(_hiteffect,_strength,block_valid and blocking);
 }
 
 function take_damage(_attacker,_amount,_kill) {

@@ -350,7 +350,7 @@ incinerate.run = function() {
 		play_sound(snd_dbz_beam_fire);
 	}
 	if value_in_range(frame,5,6) {
-		fire_beam_attack(spr_incinerate,0.3,1,hiteffects.light);
+		fire_beam_attack(spr_incinerate,0.3,1);
 	}
 	return_to_idle();
 }
@@ -398,7 +398,7 @@ super_incinerate.run = function() {
 		play_sound(snd_dbz_beam_fire,1,0.8);
 	}
 	if value_in_range(frame,5,6) {
-		fire_beam_attack(spr_incinerate,1,1,hiteffects.light);
+		fire_beam_attack(spr_incinerate,1,1);
 	}
 	return_to_idle();
 }

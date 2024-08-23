@@ -271,7 +271,7 @@ kamehameha.run = function() {
 		play_sound(snd_dbz_beam_fire,1,1.5);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(spr_kamehameha,0.3,1,hiteffects.light);
+		fire_beam_attack(spr_kamehameha,0.3,1);
 	}
 	return_to_idle();
 }
@@ -317,7 +317,7 @@ super_kamehameha.run = function() {
 		play_sound(snd_dbz_beam_fire2,1,0.8);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(spr_kamehameha,1,3,hiteffects.light);
+		fire_beam_attack(spr_kamehameha,1,3);
 	}
 	if state_timer >= 150 {
 		change_state(idle_state);

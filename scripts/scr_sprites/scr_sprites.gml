@@ -99,6 +99,14 @@ function check_frame(_frame, _startonly = true) {
 	return false;
 }
 
+function apply_hiteffect(_hiteffect,_strength,_blocking) {
+	switch(_hiteffect) {
+		case hiteffects.fire:
+		flash_sprite(15,make_color_rgb(255,irandom(128),0));
+		break;
+	}
+}
+
 function sprite_sequence(_sprites, _frameduration) {
 	if (frame >= anim_frames - 1) and (frame_timer >= frame_duration - 2) {
 		show_debug_message("sprite sequence check");

@@ -130,18 +130,22 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	return shot;
 }
 
-function fire_beam_attack(_sprite,_scale,_damage,_hiteffect) {
+function fire_beam_attack(_sprite,_scale,_damage) {
 	if !instance_exists(beam) {
-		beam = create_shot(width_half,-height_half,0.01,0,_sprite,_scale,_damage,20,-2,attacktype.normal,attackstrength.light,_hiteffect);
+		beam = create_shot(width_half,-height_half,0.01,0,_sprite,_scale,_damage,20,-2,attacktype.normal,attackstrength.light,hiteffects.none);
 		with(beam) {
 			blend = true;
 			hit_limit = -1;
 			duration = 10;
-			xscale = 0.1;
+			xscale = 100 / sprite_get_width(sprite);
+			with(hitbox) {
+				yoffset *= 2/3;
+				image_yscale *= 2/3;
+			}
 			active_script = function() {
-				x = owner.x + (owner.width_half * owner.facing);
-				y = owner.y - (owner.height * 0.65);
-				xscale += 0.1;
+				x = owner.x + (owner.width * 0.45 * owner.facing);
+				y = owner.y - (owner.height * 0.69);
+				xscale += 100 / sprite_get_width(sprite);
 				with(hitbox) {
 					xoffset = 0;
 					image_xscale = (sprite_get_width(other.sprite) * other.xscale) / sprite_get_width(spr_hitbox) * other.owner.facing;

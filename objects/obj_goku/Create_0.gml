@@ -9,7 +9,7 @@ name = "Goku";
 theme = mus_dbfz_goku;
 
 kamehameha_cooldown = 0;
-kamehameha_cooldown_duration = 100;
+kamehameha_cooldown_duration = 200;
 kaioken_active = false;
 kaioken_timer = 0;
 kaioken_duration = 5 * 60;
@@ -298,7 +298,7 @@ kamehameha.run = function() {
 		play_sound(snd_dbz_beam_fire);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(spr_kamehameha,0.3,1,hiteffects.light);
+		fire_beam_attack(spr_kamehameha,0.5,3);
 	}
 	return_to_idle();
 }
@@ -306,19 +306,16 @@ kamehameha.run = function() {
 super_kamehameha = new state();
 super_kamehameha.start = function() {
 	if kamehameha_cooldown <= 0 and check_mp(2) {
-		if on_ground {
-			change_sprite(spr_goku_superkamehameha,4,false);
+		change_sprite(spr_goku_kamehameha,2,false);
+		if is_airborne {
+			change_sprite(spr_goku_kamehameha_air,frame_duration,false);
 		}
-		else {
-			change_sprite(spr_goku_superkamehameha_air,4,false);
-		}
-		superfreeze();
+		superfreeze(6 * 60);
 		spend_mp(2);
 		xspeed = 0;
 		yspeed = 0;
 		kamehameha_cooldown = kamehameha_cooldown_duration * 2;
 		play_sound(snd_activate_super);
-		play_sound(snd_dbz_beam_charge_long);
 	}
 	else {
 		change_state(previous_state);
@@ -339,16 +336,18 @@ super_kamehameha.run = function() {
 			frame_timer = 1;
 		}
 	}
+	if check_frame(3) {
+		play_voiceline(snd_goku_kamehameha_charge);
+		play_sound(snd_dbz_beam_charge_long);
+	}
 	if check_frame(6) {
-		play_voiceline(snd_goku_kamehameha);
+		play_voiceline(snd_goku_kamehameha_fire);
 		play_sound(snd_dbz_beam_fire2);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(spr_kamehameha,1,3,hiteffects.light);
+		fire_beam_attack(spr_kamehameha,1,1);
 	}
-	if state_timer >= 150 {
-		change_state(idle_state);
-	}
+	return_to_idle();
 }
 super_kamehameha.stop = function() {
 	deactivate_super();
@@ -557,10 +556,10 @@ draw_script = function() {
 		if frame == 3 {
 			var _x = x + (32 * facing);
 			var _y = y - 32;
-			var _scale = (frame_timer + 1) / 3;
+			var _scale = 1;
 			draw_sprite_ext(
 				spr_ki_spark,
-				frame mod 2,
+				frame_timer,
 				_x,
 				_y,
 				facing * _scale,
@@ -577,33 +576,13 @@ draw_script = function() {
 		if value_in_range(frame,3,5) {
 			var _x = x - (10 * facing);
 			var _y = y - 25;
-			var _scale = (frame_timer + 1) / 10;
+			var _scale = anim_timer / 50;
 			draw_sprite_ext(
 				spr_kamehameha_charge,
-				frame mod 2,
+				state_timer,
 				_x,
 				_y,
-				facing * _scale,
 				_scale,
-				rotation*facing,
-				c_white,
-				1
-			);
-		}
-	}
-	if sprite == spr_goku_superkamehameha
-	or sprite == spr_goku_superkamehameha_air {
-		gpu_set_blendmode(bm_add);
-		if value_in_range(frame,3,5) {
-			var _x = x - (10 * facing);
-			var _y = y - 25;
-			var _scale = (frame_timer + 1) / 5;
-			draw_sprite_ext(
-				spr_kamehameha_charge,
-				frame mod 2,
-				_x,
-				_y,
-				facing * _scale,
 				_scale,
 				rotation*facing,
 				c_white,

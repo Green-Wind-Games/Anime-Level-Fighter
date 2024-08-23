@@ -14,7 +14,7 @@ switch(game_state) {
 	
 	draw_particles();
 
-	//draw_hitboxes();
+	draw_hitboxes();
 
 	//with(obj_char) {
 	//	draw_set_halign(fa_center);

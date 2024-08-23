@@ -94,12 +94,12 @@ function charselect_changechars() {
 function charselect_readyup() {
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
-			if player_input[player_slot[i]].button1 {
+			if (!player_ready[i]) and player_input[player_slot[i]].button1 {
 				player_ready[i] = true;
 				player_input[i].button1 = false;
 				play_sound(snd_menu_select);
 			}
-			else if player_input[player_slot[i]].button2 {
+			else if player_ready[i] and player_input[player_slot[i]].button2 {
 				player_ready[i] = false;
 				player_input[i].button2 = false;
 			}
@@ -114,7 +114,7 @@ function charselect_readyup() {
 		}
 	}
 	var countdown = false;
-	if active_players > 0 
+	if active_players >= 2
 	and ready_players == active_players { countdown = true; }
 	if !countdown { ready_timer = 10; } else { ready_timer--; }
 }
@@ -140,7 +140,7 @@ function draw_charselect() {
 	}
 	var _w = gui_width;
 	var _h = gui_height;
-	var _w2 = _w / max(3,active_players+1);
+	var _w2 = _w / (active_players+1);
 	var _h2 = _h / 2;
 	var _x = _w2;
 	var _y = _h2;
