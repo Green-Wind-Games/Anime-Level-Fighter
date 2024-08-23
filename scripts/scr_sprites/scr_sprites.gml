@@ -42,7 +42,7 @@ function change_sprite(_sprite,_frameduration, _loop) {
 		frame_timer = 0;
 	}
 	anim_loop = _loop;
-	frame_duration = _frameduration;
+	frame_duration = max(_frameduration,2);
 	anim_duration = anim_frames * frame_duration;
 }
 
@@ -68,7 +68,7 @@ function squash_stretch(_x,_y) {
 }
 
 function run_animation() {
-	frame_timer += 1;
+	frame_timer++;
 	if frame_timer >= frame_duration {
 		frame += 1;
 		frame_timer = 0;
@@ -83,30 +83,17 @@ function run_animation() {
 			anim_finished = true;
 		}
 	}
+	anim_timer = frame_timer + (frame * frame_duration);
+	
 	xstretch = approach(xstretch,1,1/30);
 	ystretch = approach(ystretch,1,1/30);
 	rotation += rotation_speed;
-	flash -= 1;
-	anim_timer = anim_duration - (frame_timer + (frame * frame_duration));
+	
+	flash--;
 }
 
-function check_frame(_frame, _startonly = true) {
-	if frame == _frame {
-		if (!_startonly) or (_startonly and frame_timer == 0) {
-			return true;
-		}
-	}
-	return false;
-}
-
-function apply_hiteffect(_hiteffect,_strength,_blocking) {
-	switch(_hiteffect) {
-		case hiteffects.fire:
-		if !_blocking {
-			flash_sprite(15,make_color_rgb(255,irandom(128),0));
-		}
-		break;
-	}
+function check_frame(_frame) {
+	if (frame == _frame) and (frame_timer == 0) return true; else return false;
 }
 
 function sprite_sequence(_sprites, _frameduration) {

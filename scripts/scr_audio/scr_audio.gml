@@ -18,20 +18,21 @@ function init_charaudio() {
 	sound = noone;
 	voice = noone;
 	
+	voice_intro[0] = noone;
+	
 	voice_attack[0] = noone;
 	voice_heavyattack[0] = noone;
-	
-	voice_chase[0] = noone;
-	voice_retreat[0] = noone;
 	
 	voice_hurt[0] = noone;
 	voice_hurt_heavy[0] = noone;
 	
 	voice_grabbed[0] = noone;
 	
+	voice_powerup[0] = noone;
+	voice_transform[0] = noone;
+	
 	voice_dead[0] = noone;
 	
-	voice_intro[0] = noone;
 	voice_victory[0] = noone;
 	voice_defeat[0] = noone;
 }

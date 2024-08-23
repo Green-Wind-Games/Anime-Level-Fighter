@@ -5,8 +5,9 @@ event_inherited();
 init_charsprites("goku_ssj");
 
 name = "Goku Super Saiyajin";
-
 theme = mus_dbfz_goku;
+
+//next_form = obj_goku_ssj3;
 
 char_script = function() {
 	kamehameha_cooldown -= 1;

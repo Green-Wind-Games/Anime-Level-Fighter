@@ -65,3 +65,13 @@ function init_charsprites(_name) {
 	
 	create_hurtbox(-_w/2,-_h,_w,_h);
 }
+
+function apply_hiteffect(_hiteffect,_strength,_blocking) {
+	switch(_hiteffect) {
+		case hiteffects.fire:
+		if !_blocking {
+			flash_sprite(10,make_color_rgb(255,irandom(100),0));
+		}
+		break;
+	}
+}

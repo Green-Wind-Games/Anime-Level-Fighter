@@ -197,7 +197,6 @@ function init_charstates() {
 			yspeed = 0;
 			play_sound(snd_dash);
 			play_sound(snd_dash_loop);
-			play_voiceline(voice_chase,20,false);
 		}
 	}
 	dash_state.run = function() {
@@ -242,7 +241,6 @@ function init_charstates() {
 			xspeed = move_speed * 2 * -facing;
 			yspeed = -1.5;
 			play_sound(snd_dash);
-			play_voiceline(voice_retreat,20,false);
 		}
 	}
 	backdash_state.run = function() {
@@ -270,7 +268,6 @@ function init_charstates() {
 			yspeed = 0;
 			air_moves += 1;
 			play_sound(snd_dash);
-			play_voiceline(voice_chase,20,false);
 		}
 		else {
 			change_state(air_state);
@@ -294,7 +291,6 @@ function init_charstates() {
 			yspeed = 0;
 			air_moves += 1;
 			play_sound(snd_dash);
-			play_voiceline(voice_retreat,20,false);
 		}
 		else {
 			change_state(air_state);
@@ -544,7 +540,6 @@ function init_charstates() {
 		yspeed = 0;
 		can_block = true;
 		can_cancel = true;
-		play_voiceline(voice_chase,50,false);
 	}
 	homing_dash_state.run = function() {
 		var _speed = move_speed * 2.5;
@@ -566,6 +561,35 @@ function init_charstates() {
 			yspeed = -5;
 			change_state(air_state);
 			check_moves();
+		}
+	}
+	
+	levelup_state = new state();
+	levelup_state.start = function() {
+		change_sprite(charge_sprite,3,true);
+		flash_sprite();
+		superfreeze(3 * 60);
+		play_sound(snd_energy_surge);
+		level_up();
+	}
+	levelup_state.run = function() {
+		if !superfreeze_active {
+			change_state(idle_state);
+		}
+	}
+	
+	transform_state = new state();
+	transform_state.start = function() {
+		change_sprite(charge_sprite,3,true);
+		superfreeze(2 * 60);
+		play_voiceline(voice_transform);
+	}
+	transform_state.run = function() {
+		if !audio_is_playing(snd_energy_wave) {
+			play_sound(snd_energy_wave);
+		}
+		if superfreeze_timer <= 5 {
+			transform(next_form);
 		}
 	}
 	

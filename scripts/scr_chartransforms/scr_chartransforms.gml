@@ -14,8 +14,6 @@ function level_up() {
 	
 	hp += map_value(transform_heal_percent,0,100,0,max_hp);
 	hp = min(round(hp),max_hp);
-	
-	change_state(levelup_state);
 }
 			
 function transform(_form) {
@@ -23,6 +21,7 @@ function transform(_form) {
 	var _maxhp = max_hp;
 	var _hp = hp;
 	var _mp = mp;
+	var _target = target;
 	
 	instance_change(_form,true);
 	
@@ -30,15 +29,18 @@ function transform(_form) {
 	max_hp = _maxhp;
 	hp = map_value(_hp,0,_maxhp,0,max_hp);
 	mp = _mp;
+	target = _target;
 	
-	level_up();
+	face_target();
+	change_state(levelup_state);
 }
 
 function auto_levelup() {
 	if level < max_level {
 		if hp_percent <= transform_min_hp_percent {
 			if next_form == noone {
-				level_up();
+				change_state(levelup_state);
+				play_voiceline(voice_powerup);
 			}
 			else {
 				change_state(transform_state);

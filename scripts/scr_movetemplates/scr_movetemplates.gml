@@ -1,9 +1,9 @@
 function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 	if state_timer == 1 {
 		if is_airborne {
-			if target_distance <= width_half {
+			if target_distance <= 30 {
 				xspeed = 3 * facing;
-				yspeed = -2.69;
+				yspeed = -2.64;
 			}
 		}
 		else {
@@ -12,7 +12,7 @@ function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 	}
 	if check_frame(_hitframe) {
 		var _w = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
-		var _h = sprite_get_height(sprite) * 0.75;
+		var _h = sprite_get_height(sprite) * 0.69;
 		var _x = 2;
 		var _y = -_h;
 		create_hitbox(_x,_y,_w,_h,_damage,3,0,attacktype.normal,_strength,_hiteffect);
@@ -46,16 +46,16 @@ function basic_launcher(_hitframe,_damage,_hiteffect) {
 
 function basic_smash(_hitframe,_damage,_hiteffect) {
 	if state_timer == 1 {
-		if target_distance < width * 1.25 {
+		if target_distance <= 30 {
 			xspeed = 3 * facing;
-			yspeed = -2.75;
+			yspeed = -2.69;
 		}
 	}
 	if check_frame(_hitframe) {
 		var _w = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
 		var _h = sprite_get_height(sprite) / 2;
 		var _x = 2;
-		var _y = -_h + 10;
+		var _y = -_h * 0.69;
 		create_hitbox(_x,_y,_w,_h,_damage,3,10,attacktype.hard_knockdown,attackstrength.heavy,_hiteffect);
 		
 		xspeed = -3 * facing;

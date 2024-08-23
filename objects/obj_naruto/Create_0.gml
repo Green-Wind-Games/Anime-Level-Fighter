@@ -240,7 +240,6 @@ airdash_state.start = function() {
 		yspeed = -5;
 		air_moves += 1;
 		play_sound(snd_dash);
-		play_voiceline(voice_chase,20,false);
 	}
 	else {
 		change_state(air_state);
@@ -262,7 +261,6 @@ air_backdash_state.start = function() {
 		yspeed = -5;
 		air_moves += 1;
 		play_sound(snd_dash);
-		play_voiceline(voice_retreat,20,false);
 	}
 	else {
 		change_state(air_state);
