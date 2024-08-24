@@ -152,6 +152,16 @@ function fire_beam_attack(_sprite,_scale,_damage) {
 	}
 }
 
+function check_charge() {
+	if !ai_enabled {
+		if button5_held return true;
+	}
+	else {
+		if mp >= max_mp return false;
+	}
+	return false;
+}
+
 function check_substitution(_defender,_cost = 1) {
 	with(_defender) {
 		if check_input("F") {

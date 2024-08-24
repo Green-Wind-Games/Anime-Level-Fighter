@@ -5,7 +5,6 @@ event_inherited();
 init_charsprites("genos");
 
 name = "Genos";
-
 theme = mus_opm_genos;
 
 dropkick_cooldown = 0;
