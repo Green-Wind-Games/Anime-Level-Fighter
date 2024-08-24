@@ -131,6 +131,14 @@ function fire_beam_attack(_sprite,_scale,_damage) {
 				}
 				alpha -= 0.1;
 			}
+			hit_script = function(_hit) {
+				with(_hit) {
+					if object_is_ancestor(_hit.object_index,obj_char) {
+						x += sign(other.xspeed)*3;
+						y = lerp(y,other.y+height_half,0.2);
+					}
+				}
+			}
 		}
 	}
 	with(beam) {

@@ -80,6 +80,16 @@ function update_fight() {
 		superfreeze_activator = noone;
 		superfreeze_timer = 0;
 	}
+	
+	if gamefreeze_timer > 0 {
+		gamefreeze_active = true;
+		gamefreeze_timer -= 1;
+	}
+	else {
+		gamefreeze_active = false;
+		gamefreeze_activator = noone;
+		gamefreeze_timer = 0;
+	}
 }
 
 function chars_update_stats() {
@@ -155,7 +165,7 @@ function run_charphysics() {
 		//x = round(x);
 		//y = round(y);
 	}
-	if !superfreeze_active {
+	if (!superfreeze_active) and (!gamefreeze_active) {
 		with(obj_char) {
 			with(obj_char) {
 				if grabbed or other.grabbed continue;
@@ -573,7 +583,7 @@ function check_deaths() {
 }
 
 function update_shots() {
-	if !superfreeze_active {
+	if (!superfreeze_active) and (!gamefreeze_active) {
 		with(obj_shot) {
 			gravitate(affected_by_gravity);
 			if bounce {
@@ -677,7 +687,7 @@ function update_hitboxes() {
 			}
 		}
 		if active {
-			if !superfreeze_active {
+			if (!superfreeze_active) and (!gamefreeze_active) {
 				check_hit();
 			}
 		}

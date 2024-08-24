@@ -288,10 +288,9 @@ super_kamehameha.start = function() {
 		}
 		xspeed = 0;
 		yspeed = 0;
-		superfreeze();
+		activate_super(320);
 		spend_mp(2);
 		kamehameha_cooldown = kamehameha_cooldown_duration * 2;
-		play_sound(snd_activate_super);
 		play_sound(snd_dbz_beam_charge_long);
 	}
 	else {
@@ -332,9 +331,8 @@ meteor_combo = new state();
 meteor_combo.start = function() {
 	if on_ground and check_mp(1) {
 		change_sprite(spr_goku_ssj_jab,3,false);
-		superfreeze();
+		activate_super();
 		spend_mp(1);
-		play_sound(snd_activate_super);
 	}
 	else {
 		change_state(previous_state);

@@ -20,6 +20,7 @@ function init_charstates() {
 		can_cancel = true;
 		is_hit = false;
 		is_blocking = false;
+		deactivate_super();
 	}
 	idle_state.run = function() {
 		face_target();
@@ -568,13 +569,13 @@ function init_charstates() {
 	substitution_state.start = function() {
 		change_sprite(guard_sprite,3,false);
 		reset_sprite();
-		superfreeze();
+		gamefreeze();
 	}
 	substitution_state.run = function() {
 		xspeed = 0;
 		yspeed = 0;
 		face_target();
-		superfreeze(10);
+		gamefreeze(10);
 		if sprite == guard_sprite {
 			xspeed = facing;
 			
@@ -599,7 +600,7 @@ function init_charstates() {
 			color = merge_color(color,c_white,alpha);
 			if alpha >= 1 {
 				reset_sprite();
-				superfreeze(0);
+				gamefreeze(0);
 				change_state(idle_state);
 			}
 		}

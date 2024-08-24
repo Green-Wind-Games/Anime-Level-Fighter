@@ -84,10 +84,27 @@ function setup_autocombo() {
 	}
 }
 
+function gamefreeze(_duration = 30) {
+	gamefreeze_active = true;
+	gamefreeze_activator = id;
+	gamefreeze_timer = _duration;
+}
+
 function superfreeze(_duration = 30) {
 	superfreeze_active = true;
 	superfreeze_activator = id;
 	superfreeze_timer = _duration;
+}
+
+function activate_super(_duration = 30) {
+	superfreeze(_duration);
+	play_sound(snd_activate_super);
+	super_active = true;
+}
+
+function activate_ultimate(_duration = 60) {
+	superfreeze(_duration);
+	play_sound(snd_activate_ultimate);
 	super_active = true;
 }
 

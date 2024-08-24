@@ -314,11 +314,10 @@ incinerate = new state();
 incinerate.start = function() {
 	if check_mp(2) {
 		change_sprite(spr_genos_incinerate,5,false);
-		superfreeze();
+		activate_super();
 		spend_mp(2);
 		xspeed = 0;
 		yspeed = 0;
-		play_sound(snd_activate_super);
 		play_voiceline(snd_genos_incinerate);
 	}
 	else {
@@ -362,11 +361,10 @@ super_incinerate = new state();
 super_incinerate.start = function() {
 	if check_mp(3) {
 		change_sprite(spr_genos_incinerate2,5,false);
-		superfreeze();
+		activate_super();
 		spend_mp(3);
 		xspeed = 0;
 		yspeed = 0;
-		play_sound(snd_activate_super);
 		play_voiceline(snd_genos_incinerate);
 	}
 	else {

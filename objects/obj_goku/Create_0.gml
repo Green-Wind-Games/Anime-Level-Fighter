@@ -9,7 +9,7 @@ theme = mus_dbfz_goku;
 next_form = obj_goku_ssj;
 
 kamehameha_cooldown = 0;
-kamehameha_cooldown_duration = 200;
+kamehameha_cooldown_duration = 150;
 kaioken_active = false;
 kaioken_timer = 0;
 kaioken_duration = 5 * 60;
@@ -230,11 +230,16 @@ back_throw.run = function() {
 kaioken = new state();
 kaioken.start = function() {
 	if check_mp(1) and (!kaioken_timer) {
+		change_sprite(charge_sprite,3,true);
+		activate_super(150);
 		spend_mp(1);
 		kaioken_timer = kaioken_duration;
-		play_sound(snd_activate_super);
 	}
-	change_state(idle_state);
+}
+kaioken.run = function() {
+	if !superfreeze_active {
+		change_state(idle_state);
+	}
 }
 
 kiblast = new state();
@@ -275,11 +280,9 @@ kiblast.stop = function() {
 kamehameha = new state();
 kamehameha.start = function() {
 	if kamehameha_cooldown <= 0 {
-		if on_ground {
-			change_sprite(spr_goku_kamehameha,4,false);
-		}
-		else {
-			change_sprite(spr_goku_kamehameha_air,4,false);
+		change_sprite(spr_goku_kamehameha,5,false);
+		if is_airborne {
+			change_sprite(spr_goku_kamehameha_air,frame_duration,false);
 		}
 		xspeed = 0;
 		yspeed = 0;
@@ -306,16 +309,15 @@ kamehameha.run = function() {
 super_kamehameha = new state();
 super_kamehameha.start = function() {
 	if kamehameha_cooldown <= 0 and check_mp(2) {
-		change_sprite(spr_goku_kamehameha,2,false);
+		change_sprite(spr_goku_kamehameha,5,false);
 		if is_airborne {
 			change_sprite(spr_goku_kamehameha_air,frame_duration,false);
 		}
-		superfreeze(6 * 60);
+		activate_super(320);
 		spend_mp(2);
 		xspeed = 0;
 		yspeed = 0;
-		kamehameha_cooldown = kamehameha_cooldown_duration * 2;
-		play_sound(snd_activate_super);
+		kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
 	}
 	else {
 		change_state(previous_state);
@@ -357,12 +359,11 @@ genkidama = new state();
 genkidama.start = function() {
 	if check_mp(4) {
 		change_sprite(spr_goku_genkidama,5,false);
-		superfreeze();
+		activate_ultimate();
 		spend_mp(4);
 		xspeed = 0;
 		yspeed = 0;
 		y = target_y - (game_height * 0.75);
-		play_sound(snd_activate_ultimate);
 	}
 	else {
 		change_state(previous_state);
@@ -428,9 +429,8 @@ meteor_combo = new state();
 meteor_combo.start = function() {
 	if on_ground and check_mp(1) {
 		change_sprite(spr_goku_jab,3,false);
-		superfreeze();
+		activate_super();
 		spend_mp(1);
-		play_sound(snd_activate_super);
 	}
 	else {
 		change_state(previous_state);
@@ -487,15 +487,14 @@ max_kiblasts = 7;
 kiblast_count = 0;
 setup_autocombo();
 
+add_move(meteor_combo,"DA");
+add_move(kaioken,"DDA");
+
 add_move(kiblast,"B");
-add_move(kamehameha,"6B");
-add_move(kamehameha,"4B");
 
-add_move(super_kamehameha,"C");
-add_move(meteor_combo,"6C");
-add_move(kaioken,"2C");
-
-add_move(genkidama,"D");
+add_move(kamehameha,"C");
+add_move(super_kamehameha,"DC");
+add_move(genkidama,"DDC");
 
 ai_script = function() {
 	ai_input_move(kaioken,1);
@@ -554,9 +553,9 @@ draw_script = function() {
 	or sprite == spr_goku_kiblast2 {
 		gpu_set_blendmode(bm_add);
 		if frame == 3 {
-			var _x = x + (32 * facing);
+			var _x = x + (28 * facing);
 			var _y = y - 32;
-			var _scale = 1;
+			var _scale = 1 / 2;
 			draw_sprite_ext(
 				spr_ki_spark,
 				frame_timer,
@@ -576,15 +575,15 @@ draw_script = function() {
 		if value_in_range(frame,3,5) {
 			var _x = x - (10 * facing);
 			var _y = y - 25;
-			var _scale = anim_timer / 50;
+			var _scale = anim_timer / 100;
 			draw_sprite_ext(
 				spr_kamehameha_charge,
-				state_timer,
+				0,
 				_x,
 				_y,
 				_scale,
 				_scale,
-				rotation*facing,
+				anim_timer * 3,
 				c_white,
 				1
 			);

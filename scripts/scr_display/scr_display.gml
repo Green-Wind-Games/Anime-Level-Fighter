@@ -61,13 +61,13 @@ function update_view() {
 		var desired_zoom = game_width / playerdist;
 		desired_zoom = min(desired_zoom,1.25);
 		if superfreeze_active {
-			//desired_zoom = 2;
-			//screen_zoom_target = superfreeze_activator;
+			desired_zoom = 1.25;
+			screen_zoom_target = superfreeze_activator;
 		}
 		else {
 			screen_zoom_target = noone;
 		}
-		screen_zoom = approach(screen_zoom,desired_zoom,0.1);
+		screen_zoom = approach(screen_zoom,desired_zoom,1/15);
 		
 		var _w = round(game_width / screen_zoom);
 		var _h = round(game_height / screen_zoom);
