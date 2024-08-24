@@ -59,10 +59,10 @@ function update_view() {
 		var playerdist = abs(_x1 - _x2);
 		var max_dist = right_wall-left_wall;
 		var desired_zoom = game_width / playerdist;
-		desired_zoom = min(desired_zoom,1);
+		desired_zoom = min(desired_zoom,1.25);
 		if superfreeze_active {
-			desired_zoom = 2;
-			screen_zoom_target = superfreeze_activator;
+			//desired_zoom = 2;
+			//screen_zoom_target = superfreeze_activator;
 		}
 		else {
 			screen_zoom_target = noone;

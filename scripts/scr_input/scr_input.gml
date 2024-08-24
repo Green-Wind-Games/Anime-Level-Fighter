@@ -85,15 +85,15 @@ function update_input() {
 		button2 = (!button2_held) and b2;
 		button3 = (!button3_held) and b3;
 		button4 = (!button4_held) and b4;
-		button4 = (!button5_held) and b5;
-		button4 = (!button6_held) and b6;
+		button5 = (!button5_held) and b5;
+		button6 = (!button6_held) and b6;
 		
 		button1_held = b1;
 		button2_held = b2;
 		button3_held = b3;
 		button4_held = b4;
-		button4_held = b5;
-		button4_held = b6;
+		button5_held = b5;
+		button6_held = b6;
 	}
 }
 

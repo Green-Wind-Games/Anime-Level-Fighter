@@ -564,6 +564,47 @@ function init_charstates() {
 		}
 	}
 	
+	substitution_state = new state();
+	substitution_state.start = function() {
+		change_sprite(guard_sprite,3,false);
+		reset_sprite();
+		superfreeze();
+	}
+	substitution_state.run = function() {
+		xspeed = 0;
+		yspeed = 0;
+		face_target();
+		superfreeze(10);
+		if sprite == guard_sprite {
+			xspeed = facing;
+			
+			alpha -= 0.1;
+			color = merge_color(color,c_black,alpha);
+			if alpha <= 0 {
+				change_sprite(air_up_sprite,frame_duration,false);
+				reset_sprite();
+				alpha = 0;
+				color = c_black;
+				x = target_x + (width * facing);
+				y = target_y;
+				
+				if !value_in_range(x,left_wall,right_wall) {
+					x = target_x;
+					y = target_y - 69;
+				}
+			}
+		}
+		else {
+			alpha += 0.1;
+			color = merge_color(color,c_white,alpha);
+			if alpha >= 1 {
+				reset_sprite();
+				superfreeze(0);
+				change_state(idle_state);
+			}
+		}
+	}
+	
 	levelup_state = new state();
 	levelup_state.start = function() {
 		change_sprite(charge_sprite,3,true);

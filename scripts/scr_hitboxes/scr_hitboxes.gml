@@ -43,37 +43,29 @@ function check_hit() {
 	with(obj_hitbox) {
 		var b = id;
 		var b2 = owner;
-		var contact = true;
-		if !place_meeting(x,y,a) {
-			contact = false;
+		
+		if !place_meeting(x,y,a) continue;
+		if a2.team == b2.team continue;
+		if ds_list_find_index(a.hit_list,b2) != -1 continue;
+		
+		if object_is_ancestor(a2.object_index,obj_char)
+		and object_is_ancestor(b2.object_index,obj_char) {
+			init_clash(a2,b2);
+			ds_list_add(a.hit_list,b2);
+			ds_list_add(b.hit_list,a2);
 		}
-		if a2.team == b2.team {
-			contact = false;
-		}
-		if ds_list_find_index(a.hit_list,b2) != -1 {
-			contact = false;
-		}
-		if contact {
-			if object_is_ancestor(a2.object_index,obj_char)
-			and object_is_ancestor(b2.object_index,obj_char) {
-				init_clash(a2,b2);
-				ds_list_add(a.hit_list,b2);
-				ds_list_add(b.hit_list,a2);
-			}
-			
-			if ((a2.object_index == obj_shot) or (object_is_ancestor(a2.object_index,obj_shot)))
-			and ((b2.object_index == obj_shot) or (object_is_ancestor(b2.object_index,obj_shot))) {
-				with(a2) {
-					hit_script(b2);
-					if b2.width >= a2.width {
-						hit_count++;
-					}
+		else if ((a2.object_index == obj_shot) or (object_is_ancestor(a2.object_index,obj_shot)))
+		and ((b2.object_index == obj_shot) or (object_is_ancestor(b2.object_index,obj_shot))) {
+			with(a2) {
+				hit_script(b2);
+				if b2.width >= a2.width {
+					hit_count++;
 				}
-				with(b2) {
-					hit_script(a2);
-					if a2.width >= b2.width {
-						hit_count++;
-					}
+			}
+			with(b2) {
+				hit_script(a2);
+				if a2.width >= b2.width {
+					hit_count++;
 				}
 			}
 		}
@@ -81,57 +73,49 @@ function check_hit() {
 	with(obj_hurtbox) {
 		var b = id;
 		var b2 = owner;
-		var contact = true;
-		if !place_meeting(x,y,a) {
-			contact = false;
-		}
-		if a2.team == b2.team {
-			contact = false;
-		}
-		if ds_list_find_index(a.hit_list,b2) != -1 {
-			contact = false;
-		}
-		if b2.grabbed {
-			contact = false;
-		}
-		if object_is_ancestor(a2.object_index,obj_char) {
-			if b2.dodging_attacks {
-				contact = false;
-				ds_list_add(a.hit_list,b2);
+		if a2.team == b2.team continue;
+		if !place_meeting(x,y,a) continue;
+		if ds_list_find_index(a.hit_list,b2) != -1 continue;
+		if b2.grabbed continue;
+		
+		ds_list_add(a.hit_list,b2);
+		
+		if object_is_ancestor(a2.object_index,obj_shot) {
+			if b2.dodging_projectiles {
+				continue;
 			}
-			if b2.deflecting_attacks {
-				contact = false;
-				a2.xspeed = 20 * b2.facing;
-				a2.yspeed = b2.yspeed;
-				ds_list_add(a.hit_list,b2);
+			if b2.deflecting_projectiles {
+				var _speed = abs(a2.xspeed) + abs(a2.yspeed);
+				var _dir = random_range(45,135);
+				a2.xspeed = lengthdir_x(_speed * b2.facing,_dir);
+				a2.yspeed = lengthdir_y(_speed,_dir);
+				a2.homing = false;
+				a2.affected_by_gravity = true;
+				continue;
 			}
 		}
 		else {
-			if b2.dodging_projectiles {
-				contact = false;
-				ds_list_add(a.hit_list,b2);
+			if b2.dodging_attacks {
+				continue;
 			}
-			if b2.deflecting_projectiles {
-				contact = false;
-				a2.xspeed = 20 * b2.facing;
-				a2.yspeed = -20;
-				a2.homing = false;
-				a2.affected_by_gravity = true;
-				ds_list_add(a.hit_list,b2);
+			if b2.deflecting_attacks {
+				a2.xspeed = 12 * b2.facing;
+				//a2.yspeed = b2.yspeed;
+				continue;
 			}
 		}
-		if contact {
-			if a2.object_index == obj_shot
-			or object_is_ancestor(a2.object_index,obj_shot) {
-				with(a2) {
-					hit_script(b2);
-					hit_count++;
-				}
+		
+		if check_substitution(b2,2) continue;
+		
+		if a2.object_index == obj_shot
+		or object_is_ancestor(a2.object_index,obj_shot) {
+			with(a2) {
+				hit_script(b2);
+				hit_count++;
 			}
-			with(b2) {
-				get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect,a.hit_anim);
-			}
-			ds_list_add(a.hit_list,b2);
+		}
+		with(b2) {
+			get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect,a.hit_anim);
 		}
 	}
 }

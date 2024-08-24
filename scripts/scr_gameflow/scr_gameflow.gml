@@ -155,39 +155,41 @@ function run_charphysics() {
 		//x = round(x);
 		//y = round(y);
 	}
-	with(obj_char) {
+	if !superfreeze_active {
 		with(obj_char) {
-			if grabbed or other.grabbed continue;
-			if dead or other.dead continue;
-			if team == other.team continue;
+			with(obj_char) {
+				if grabbed or other.grabbed continue;
+				if dead or other.dead continue;
+				if team == other.team continue;
 			
-			if !rectangle_in_rectangle(
-				x-width_half,
-				y-height,
-				x+width_half,
-				y,
-				other.x-other.width_half,
-				other.y-other.height,
-				other.x+other.width_half,
-				other.y,
-			) continue;
+				if !rectangle_in_rectangle(
+					x-width_half,
+					y-height,
+					x+width_half,
+					y,
+					other.x-other.width_half,
+					other.y-other.height,
+					other.x+other.width_half,
+					other.y,
+				) continue;
 			
-			var _dist = abs(x-other.x);
-			_dist -= width_half;
-			_dist -= other.width_half;
-			if _dist >= 0 continue;
+				var _dist = abs(x-other.x);
+				_dist -= width_half;
+				_dist -= other.width_half;
+				if _dist >= 0 continue;
 			
-			var _push = -sign(x-other.x);
-			//if _push == 0 then _push = sign(on_left_wall - on_right_wall) * sign(y - other.y);
-			if _push == 0 then _push = facing;
-			if _push == 0 then _push = 1;
-			_push *= 0.5;
-			var i = 0;
-			while(_dist < 0) {
-				x = clamp(x-_push, left_wall, right_wall);
-				other.x = clamp(other.x+_push, left_wall, right_wall);
-				_dist = point_distance(x,0,other.x,0) - (width_half + other.width_half);
-				if i++ > 20 break;
+				var _push = -sign(x-other.x);
+				//if _push == 0 then _push = sign(on_left_wall - on_right_wall) * sign(y - other.y);
+				if _push == 0 then _push = facing;
+				if _push == 0 then _push = 1;
+				_push *= 0.5;
+				var i = 0;
+				while(_dist < 0) {
+					x = clamp(x-_push, left_wall, right_wall);
+					other.x = clamp(other.x+_push, left_wall, right_wall);
+					_dist = point_distance(x,0,other.x,0) - (width_half + other.width_half);
+					if i++ > 20 break;
+				}
 			}
 		}
 	}
@@ -675,7 +677,9 @@ function update_hitboxes() {
 			}
 		}
 		if active {
-			check_hit();
+			if !superfreeze_active {
+				check_hit();
+			}
 		}
 		else {
 			instance_destroy();

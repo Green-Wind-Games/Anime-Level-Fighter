@@ -45,7 +45,6 @@ globalvar	player, player_char, player_input,
 			
 			max_mp, max_mp_stocks, mp_stock_size,
 			max_tp, max_tp_stocks, tp_stock_size,
-			max_sp, max_sp_stocks, sp_stock_size,
 			
 			game_state, game_state_previous, game_state_timer, game_state_duration,
 			round_state, round_timer, round_state_timer, round_timer_max, round_countdown_duration, round_is_infinite,
@@ -107,13 +106,9 @@ mp_stock_size = 1000;
 max_mp_stocks = 5;
 max_mp = max_mp_stocks * mp_stock_size;
 
-tp_stock_size = 1000;
+tp_stock_size = 300;
 max_tp_stocks = 4;
 max_tp = max_tp_stocks * tp_stock_size;
-
-sp_stock_size = 1000;
-max_sp_stocks = 4;
-max_sp = sp_stock_size * max_sp_stocks;
 
 superfreeze_active = false;
 superfreeze_activator = noone;

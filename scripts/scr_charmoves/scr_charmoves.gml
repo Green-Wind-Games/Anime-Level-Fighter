@@ -84,83 +84,6 @@ function setup_autocombo() {
 	}
 }
 
-function air_chase() {
-	var _factor = 0.2;
-	xspeed = (target_x-x) * _factor;
-	yspeed = min(-2.25,(target_y-y) * _factor);
-	//xspeed += target.xspeed;
-	//yspeed += target.yspeed;
-	//xspeed = 3 * facing;
-	//yspeed = -2.5;
-}
-
-function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect) {
-	var me = id;
-	var shot = instance_create(x+(_x*facing),y+_y,obj_shot);
-	with(shot) {
-		owner = me;
-		if owner.object_index == obj_shot or object_is_ancestor(owner.object_index,obj_shot) {
-			owner = me.owner;
-		}
-		init_sprite(_sprite);
-		change_sprite(sprite,3,true);
-		xscale = _scale;
-		yscale = _scale;
-		width = min(sprite_get_width(sprite),sprite_get_height(sprite)) * _scale * 0.75;
-		height = width;
-		width_half = floor(width / 2);
-		height_half = floor(height / 2);
-		hitbox = create_hitbox(-width/2,-height/2,width,height,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect);
-		hitbox.duration = -1;
-		xspeed = _xspeed * owner.facing;
-		yspeed = _yspeed;
-		team = owner.team;
-		facing = owner.facing;
-		target = owner.target;
-		
-		rotation = point_direction(0,0,xspeed,yspeed);
-
-		if xspeed > 0 {
-			facing = 1;
-		}
-		else if xspeed < 0 {
-			facing = -1;
-		}
-	}
-	return shot;
-}
-
-function fire_beam_attack(_sprite,_scale,_damage) {
-	if !instance_exists(beam) {
-		beam = create_shot(width_half,-height_half,0.01,0,_sprite,_scale,_damage,20,-2,attacktype.normal,attackstrength.light,hiteffects.none);
-		with(beam) {
-			blend = true;
-			hit_limit = -1;
-			duration = 10;
-			xscale = 100 / sprite_get_width(sprite);
-			with(hitbox) {
-				yoffset *= 2/3;
-				image_yscale *= 2/3;
-			}
-			active_script = function() {
-				x = owner.x + (owner.width * 0.45 * owner.facing);
-				y = owner.y - (owner.height * 0.69);
-				xscale += 100 / sprite_get_width(sprite);
-				with(hitbox) {
-					xoffset = 0;
-					image_xscale = (sprite_get_width(other.sprite) * other.xscale) / sprite_get_width(spr_hitbox) * other.owner.facing;
-				}
-				alpha -= 0.1;
-			}
-		}
-	}
-	with(beam) {
-		ds_list_clear(hitbox.hit_list);
-		alpha = 1;
-		duration = 10;
-	}
-}
-
 function superfreeze(_duration = 30) {
 	superfreeze_active = true;
 	superfreeze_activator = id;
@@ -192,27 +115,4 @@ function check_tp(_stocks) {
 
 function spend_tp(_stocks) {
 	tp -= (_stocks * tp_stock_size);
-}
-
-function check_sp(_stocks) {
-	if team == 1 {
-		if p1_sp >= (_stocks * sp_stock_size) {
-			return true;
-		}
-	}
-	else {
-		if p2_sp >= (_stocks * sp_stock_size) {
-			return true;
-		}
-	}
-	return false;
-}
-
-function spend_sp(_stocks) {
-	if team == 1 {
-		p1_sp -= (_stocks * sp_stock_size);
-	}
-	else {
-		p2_sp -= (_stocks * sp_stock_size);
-	}
 }

@@ -2,11 +2,9 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function chars_update_targeting() {
 	with(obj_char) {
-		if (!is_hit) and (!is_blocking) {
-			target = target_front_enemy();
-			if !target_exists() {
-				target = target_closest_enemy();
-			}
+		target = target_front_enemy();
+		if !target_exists() {
+			target = target_closest_enemy();
 		}
 		if target_exists() {
 			target_x = target.x;
