@@ -53,22 +53,22 @@ part_type_blend(slashspark,true);
 	
 explosion_small = part_type_create();
 part_type_sprite(explosion_small,spr_explosion,true,true,false);
-part_type_life(explosion_small,20,20);
-part_type_size(explosion_small,0.2,0.2,1/50,0);
+part_type_life(explosion_small,12,12);
+part_type_size(explosion_small,0.25,0.25,1/50,0);
 part_type_orientation(explosion_small,0,360,0,0,true);
 part_type_blend(explosion_small,true);
 	
 explosion_medium = part_type_create();
 part_type_sprite(explosion_medium,spr_explosion,true,true,false);
-part_type_life(explosion_medium,20,20);
-part_type_size(explosion_medium,0.5,0.5,1/50,0);
+part_type_life(explosion_medium,16,16);
+part_type_size(explosion_medium,1,1,1/50,0);
 part_type_orientation(explosion_medium,0,360,0,0,true);
 part_type_blend(explosion_medium,true);
 	
 explosion_large = part_type_create();
 part_type_sprite(explosion_large,spr_explosion,true,true,false);
 part_type_life(explosion_large,20,20);
-part_type_size(explosion_large,1,1,1/50,0);
+part_type_size(explosion_large,2,2,1/50,0);
 part_type_orientation(explosion_large,0,360,0,0,true);
 part_type_blend(explosion_large,true);
 	

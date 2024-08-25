@@ -11,8 +11,8 @@ screen_width = display_get_width();
 screen_height = display_get_height();
 screen_aspectratio = screen_width / screen_height;
 	
-game_width = 512;
-game_height = 384;
+game_width = 520;
+game_height = 390;
 
 //game_width = round(game_height * (16 / 9));
 game_height = round(game_width / (16 / 9));
@@ -152,6 +152,7 @@ function shake_screen(_duration, _intensity) {
 	screen_shake_intensity = _intensity;
 }
 
+window_enable_borderless_fullscreen(true);
 display_set_gui_size(gui_width,gui_height);
 resize_window(window_max_scale);
 if os_type == os_windows {

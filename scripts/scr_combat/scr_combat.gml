@@ -105,6 +105,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		if on_ground {
 			yspeed = 0;
 		}
+		take_damage(_attacker,_damage/10,false);
 	}
 	else {
 		var connect = true;

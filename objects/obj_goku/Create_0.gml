@@ -12,7 +12,7 @@ kamehameha_cooldown_duration = 150;
 kaioken_active = false;
 kaioken_timer = 0;
 kaioken_duration = 5 * 60;
-kaioken_buff = 2;
+kaioken_buff = 1.5;
 kaioken_color = make_color_rgb(255,128,128);
 
 spirit_bomb = noone;
@@ -35,11 +35,11 @@ char_script = function() {
 	}
 	if kaioken_active != _kaioken_active {
 		if kaioken_active {
-			attack_power *= kaioken_buff;
+			attack_power += kaioken_buff;
 		}
 		else {
 			flash_sprite();
-			attack_power /= kaioken_buff;
+			attack_power -= kaioken_buff;
 			if color == kaioken_color {
 				color = c_white;
 			}
@@ -352,7 +352,7 @@ super_kamehameha.run = function() {
 			frame = 4;
 			frame_timer = 0;
 		}
-		if superfreeze_timer == 20 {
+		if superfreeze_timer == 15 {
 			if input.forward {
 				play_sound(snd_dbz_teleport_long);
 				x = target_x + ((width + target.width) * facing);
@@ -376,6 +376,10 @@ super_kamehameha.run = function() {
 			frame_timer = 1;
 		}
 	}
+	if value_in_range(frame,6,9) {
+		fire_beam_attack(spr_kamehameha,1,10);
+		shake_screen(5,3);
+	}
 	if check_frame(3) {
 		play_voiceline(snd_goku_kamehameha_charge);
 		play_sound(snd_dbz_beam_charge_long);
@@ -383,10 +387,6 @@ super_kamehameha.run = function() {
 	if check_frame(6) {
 		play_voiceline(snd_goku_kamehameha_fire);
 		play_sound(snd_dbz_beam_fire2);
-	}
-	if value_in_range(frame,6,9) {
-		fire_beam_attack(spr_kamehameha,1,5);
-		shake_screen(5,3);
 	}
 	return_to_idle();
 }
@@ -480,7 +480,7 @@ genkidama.run = function() {
 		}
 	}
 	if check_frame(2) {
-		spirit_bomb = create_shot(0,-200,0,0,spr_genkidama,0.3,0,0,0,attacktype.normal,attackstrength.heavy,hiteffects.none)
+		spirit_bomb = create_shot(0,-200,0,0,spr_genkidama,0.3,0,0,0,attacktype.unblockable,attackstrength.heavy,hiteffects.none)
 		with(spirit_bomb) {
 			play_sound(snd_activate_super,1,2);
 			duration = -1;
@@ -505,7 +505,7 @@ genkidama.run = function() {
 					duration = 0;
 					for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
 						with(ds_list_find_value(hitbox.hit_list,i)) {
-							get_hit(other,520,1,-12,attacktype.hard_knockdown,attackstrength.ultimate,hiteffects.hit,hitanims.spinout);
+							get_hit(other,520,1,-12,attacktype.hard_knockdown,attackstrength.ultimate,hiteffects.none,hitanims.spinout);
 							x = other.x;
 							y = ground_height - 1;
 							shake_screen(20,5);
