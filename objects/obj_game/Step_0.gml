@@ -69,7 +69,7 @@ if game_state_timer <= 0 {
 		
 		case gamestates.versus_intro:
 		game_state_duration = 360;
-		audio_stop_sound(music);
+		stop_music();
 		play_sound(mus_slammasters_versus);
 		break;
 		

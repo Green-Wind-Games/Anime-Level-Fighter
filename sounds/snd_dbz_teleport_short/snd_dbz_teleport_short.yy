@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_punch_block",
+  "%Name":"snd_dbz_teleport_short",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.197415,
-  "name":"snd_punch_block",
+  "duration":0.862042,
+  "name":"snd_dbz_teleport_short",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_punch_block.wav",
+  "soundFile":"snd_dbz_teleport_short.ogg",
   "type":0,
   "volume":1.0,
 }

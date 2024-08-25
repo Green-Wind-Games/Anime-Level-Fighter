@@ -38,13 +38,22 @@ function check_moves() {
 			}
 		}
 		if !ds_priority_empty(available_moves) {
-			can_block = false;
-			can_cancel = false;
-			input_buffer = "";
-			input_buffer_timer = 0;
-			reset_cancels();
-			change_state(ds_priority_find_max(available_moves));
-			moved = true;
+			while(!ds_priority_empty(available_moves)) {
+				var _state = ds_priority_find_max(available_moves);
+				change_state(_state);
+				if (active_state == idle_state) or (active_state == air_state) {
+					ds_priority_delete_max(available_moves);
+				}
+				else {
+					reset_cancels();
+					can_guard = false;
+					can_cancel = false;
+					input_buffer = "";
+					input_buffer_timer = 0;
+					moved = true;
+					break;
+				}
+			}
 		}
 		ds_priority_destroy(available_moves);
 	}
@@ -84,10 +93,10 @@ function setup_autocombo() {
 	}
 }
 
-function gamefreeze(_duration = 30) {
-	gamefreeze_active = true;
-	gamefreeze_activator = id;
-	gamefreeze_timer = _duration;
+function timefreeze(_duration = 30) {
+	timefreeze_active = true;
+	timefreeze_activator = id;
+	timefreeze_timer = _duration;
 }
 
 function superfreeze(_duration = 30) {

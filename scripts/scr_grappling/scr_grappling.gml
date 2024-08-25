@@ -6,10 +6,10 @@ function init_grab(_attacker, _target) {
 	}
 	with(_target) {
 		if grabbed return false;
-		if is_blocking {
+		if is_guarding {
 			return false;
 		}
-		if !can_block {
+		if !can_guard {
 			return false;
 		}
 	}

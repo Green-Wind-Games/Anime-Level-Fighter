@@ -127,13 +127,14 @@ function update_charinputs() {
 		input_buffer += command;
 	
 		if input_buffer != _buffer {
-			input_buffer_timer = 10;
+			input_buffer_timer = ceil(60 / 5);
 		}
 		else {
-			input_buffer_timer -= (!hitstop);
-			if input_buffer_timer <= 0 {
-				input_buffer = dir;
-				input_buffer_timer = 0;
+			if (!hitstop) and (!timefreeze_active) and (!superfreeze_active) {
+				if input_buffer_timer-- <= 0 {
+					input_buffer = dir;
+					input_buffer_timer = 0;
+				}
 			}
 		}
 	}

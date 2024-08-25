@@ -26,7 +26,7 @@ function run_physics() {
 function gravitate(_multiplier = 1) {
 	if is_airborne {
 		if object_is_ancestor(object_index,obj_char) {
-			if is_hit or is_blocking {
+			if is_hit or is_guarding {
 				_multiplier = 1;
 			}
 		}

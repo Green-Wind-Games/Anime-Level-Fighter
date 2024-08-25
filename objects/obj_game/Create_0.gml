@@ -50,7 +50,7 @@ globalvar	player, player_char, player_input,
 			round_state, round_timer, round_state_timer, round_timer_max, round_countdown_duration, round_is_infinite,
 			stage,
 			
-			gamefreeze_active, gamefreeze_timer, gamefreeze_activator,
+			timefreeze_active, timefreeze_timer, timefreeze_activator,
 			superfreeze_active, superfreeze_timer, superfreeze_activator,
 			player_super_active,
 			
@@ -111,9 +111,9 @@ tp_stock_size = 300;
 max_tp_stocks = 4;
 max_tp = max_tp_stocks * tp_stock_size;
 
-gamefreeze_active = false;
-gamefreeze_activator = noone;
-gamefreeze_timer = 0;
+timefreeze_active = false;
+timefreeze_activator = noone;
+timefreeze_timer = 0;
 
 superfreeze_active = false;
 superfreeze_activator = noone;

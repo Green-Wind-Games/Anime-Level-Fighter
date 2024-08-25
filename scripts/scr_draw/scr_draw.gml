@@ -5,8 +5,8 @@ function draw_ground() {
 	if sprite_exists(ground_sprite) {
 		var ground_w = room_width * 1.5;
 		var ground_h = (room_height-ground_height)*1.5;
-		var ground_x = (-ground_w/2)+screen_shake_x;
-		var ground_y = ground_height-sprite_get_yoffset(ground_sprite)+screen_shake_y;
+		var ground_x = (-ground_w/2);
+		var ground_y = ground_height-sprite_get_yoffset(ground_sprite);
 		draw_sprite_stretched(ground_sprite,0,ground_x,ground_y,ground_w,ground_h);
 	}
 }
@@ -50,8 +50,8 @@ function draw_chars() {
 	}
 	while(!ds_priority_empty(draw_order)) {
 		with(ds_priority_find_max(draw_order)) {
-			var _x = x + (xoffset*facing) + screen_shake_x;
-			var _y = y + yoffset + screen_shake_y;
+			var _x = x + (xoffset*facing);
+			var _y = y + yoffset;
 			_x += random(hitstop)*choose(1,-1);
 			_y += random(hitstop)*choose(1,-1)*is_airborne;
 		
@@ -87,8 +87,8 @@ function draw_char_shadows() {
 	var shadow_scale = -0.1;
 	var shadow_alpha = 0.5;
 	with(obj_char) {
-		var _x = x + (xoffset*facing) + screen_shake_x;
-		var _y = ground_height + screen_shake_y;
+		var _x = x + (xoffset*facing);
+		var _y = ground_height;
 		_y += map_value(y+yoffset,ground_height,0,-1,-(room_height/2)*shadow_scale);
 		//_x += random(hitstop)*choose(1,-1);
 		//_y -= random(hitstop)*choose(1,-1)*is_airborne;
@@ -141,8 +141,8 @@ function draw_superfreeze() {
 		draw_set_alpha(1);
 		draw_set_color(c_white);
 		with(superfreeze_activator) {
-			var _x = x + (xoffset*facing) + screen_shake_x;
-			var _y = y + yoffset + screen_shake_y;
+			var _x = x + (xoffset*facing);
+			var _y = y + yoffset;
 		
 			if flash {
 				gpu_set_fog(true,flash_color,0,0);

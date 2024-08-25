@@ -35,7 +35,7 @@ function change_sprite(_sprite,_frameduration, _loop) {
 		anim_timer = 0;
 		anim_frames = sprite_get_number(sprite);
 		anim_finished = false;
-		reset_sprite();
+		reset_sprite(true,true);
 	}
 	if !_loop {
 		frame = 0;
@@ -46,15 +46,19 @@ function change_sprite(_sprite,_frameduration, _loop) {
 	anim_duration = anim_frames * frame_duration;
 }
 
-function reset_sprite() {
+function reset_sprite(_keep_color = false, _keep_alpha = false) {
 	xoffset = 0;
 	yoffset = 0;
 	xscale = 1;
 	yscale = 1;
 	rotation = 0;
 	rotation_speed = 0;
-	color = c_white;
-	alpha = 1;
+	if !_keep_color {
+		color = c_white;
+	}
+	if !_keep_alpha {
+		alpha = 1;
+	}
 }
 
 function flash_sprite(_duration = 6,_color = c_white) {
@@ -97,7 +101,7 @@ function check_frame(_frame) {
 }
 
 function sprite_sequence(_sprites, _frameduration) {
-	if (frame >= anim_frames - 1) and (frame_timer >= frame_duration - 2) {
+	if anim_timer >= (anim_duration - 3) {
 		show_debug_message("sprite sequence check");
 		for(var i = 0; i < array_length(_sprites) - 1; i++) {
 			if sprite == _sprites[i] {

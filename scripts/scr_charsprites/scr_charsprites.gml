@@ -66,10 +66,10 @@ function init_charsprites(_name) {
 	create_hurtbox(-_w/2,-_h,_w,_h);
 }
 
-function apply_hiteffect(_hiteffect,_strength,_blocking) {
+function apply_hiteffect(_hiteffect,_strength,_guarding) {
 	switch(_hiteffect) {
 		case hiteffects.fire:
-		if !_blocking {
+		if !_guarding {
 			flash_sprite(10,make_color_rgb(255,irandom(100),0));
 		}
 		break;

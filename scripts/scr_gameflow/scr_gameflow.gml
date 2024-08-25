@@ -7,7 +7,7 @@ function update_fight() {
 		var finished = round_state_timer > 60;
 		with(obj_char) {
 			if active_state != idle_state { finished = false; }
-			if audio_is_playing(voice) { finished = false; }
+			if sound_is_playing(voice) { finished = false; }
 		}
 		if finished {
 			round_state = roundstates.countdown;
@@ -40,7 +40,7 @@ function update_fight() {
 		with(obj_char) {
 			if active_state == victory_state {
 				if !anim_finished { ready = false; }
-				if audio_is_playing(voice) { ready = false; }
+				if sound_is_playing(voice) { ready = false; }
 			}
 		}
 		if ready {
@@ -81,14 +81,14 @@ function update_fight() {
 		superfreeze_timer = 0;
 	}
 	
-	if gamefreeze_timer > 0 {
-		gamefreeze_active = true;
-		gamefreeze_timer -= 1;
+	if timefreeze_timer > 0 {
+		timefreeze_active = true;
+		timefreeze_timer -= 1;
 	}
 	else {
-		gamefreeze_active = false;
-		gamefreeze_activator = noone;
-		gamefreeze_timer = 0;
+		timefreeze_active = false;
+		timefreeze_activator = noone;
+		timefreeze_timer = 0;
 	}
 }
 
@@ -111,7 +111,8 @@ function chars_update_stats() {
 
 function run_charstates() {
 	with(obj_char) {
-		if (!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)) {
+		if ((!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)))
+		and ((!timefreeze_active) or ((timefreeze_active) and (timefreeze_activator == id))) {
 			if (!hitstop) {
 				run_state();
 			}
@@ -119,7 +120,7 @@ function run_charstates() {
 				hitstop -= 1;
 			}
 		}
-		if (!superfreeze_active) and (!hitstop) {
+		if (!superfreeze_active) and (!timefreeze_active) and (!hitstop) {
 			char_script();
 			state_timer += 1;
 			tp++;
@@ -137,35 +138,35 @@ function run_charphysics() {
 	var _x2 = 0;
 	var _y2 = 0;
 	with(obj_char) {
-		if !dead {
+		if ((!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)))
+		and ((!timefreeze_active) or ((timefreeze_active) and (timefreeze_activator == id)))
+		and (!hitstop) {
+			run_physics();
+			decelerate();
+			gravitate(ygravity_mod);
+		}
+		
+		if (!dead) or (xspeed != 0) {
+			x = clamp(x, left_wall, right_wall);
+		}
+		y = min(y,ground_height);
+		
+		if (!dead) {
 			_x1 = min(_x1,x);
 			_y1 = min(_y1,y);
 			_x2 = max(_x2,x);
 			_y2 = max(_y2,y);
 		}
+		
+		//x = round(x);
+		//y = round(y);
 	}
 	battle_x = mean(_x1,_x2);
 	battle_y = mean(_y1,_y2);
 	var battle_size = game_width * 1.25;
 	left_wall = clamp(battle_x - (battle_size / 2),0,room_width-game_width) + border;
 	right_wall = clamp(battle_x + (battle_size / 2),game_width,room_width) - border;
-	with(obj_char) {
-		if (!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)) {
-			if (!hitstop) {
-				run_physics();
-				decelerate();
-				gravitate(ygravity_mod);
-			}
-		}
-		if (!dead) and (xspeed != 0) {
-			x = clamp(x, left_wall, right_wall);
-		}
-		y = min(y,ground_height);
-		
-		//x = round(x);
-		//y = round(y);
-	}
-	if (!superfreeze_active) and (!gamefreeze_active) {
+	if (!superfreeze_active) and (!timefreeze_active) {
 		with(obj_char) {
 			with(obj_char) {
 				if grabbed or other.grabbed continue;
@@ -207,16 +208,16 @@ function run_charphysics() {
 
 function run_charanimations() {
 	with(obj_char) {
-		if (!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)) {
-			if (!hitstop) {
-				run_animation();
-			}
+		if ((!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)))
+		and (!hitstop) {
+			run_animation();
 		}
 		if sprite == spinout_sprite
-		or sprite == launch_sprite {
+		or sprite == launch_sprite
+		or sprite == dash_sprite {
 			rotation = point_direction(0,0,abs(xspeed),-yspeed);
 		}
-		if (!is_hit) and (!is_blocking) {
+		if (!is_hit) and (!is_guarding) {
 			previous_hp = approach(previous_hp,hp,100);
 		}
 	}
@@ -268,7 +269,7 @@ function check_assists() {
 		}
 	
 		if p1_call1 {
-			if !p1_is_hit and !p1_is_blocking {
+			if !p1_is_hit and !p1_is_guarding {
 				var called_number = 1;
 				var called_char = p1_char[1];
 				if p1_active_character == p1_char[1] {
@@ -308,7 +309,7 @@ function check_assists() {
 		}
 
 		if p1_call2 {
-			if !p1_is_hit and !p1_is_blocking {
+			if !p1_is_hit and !p1_is_guarding {
 				var called_number = 2;
 				var called_char = p1_char[2];
 				if p1_active_character == p1_char[2] {
@@ -348,7 +349,7 @@ function check_assists() {
 		}
 
 		if p2_call1 {
-			if !p2_is_hit and !p2_is_blocking {
+			if !p2_is_hit and !p2_is_guarding {
 				var called_number = 1;
 				var called_char = p2_char[1];
 				if p2_active_character == p2_char[1] {
@@ -388,7 +389,7 @@ function check_assists() {
 		}
 
 		if p2_call2 {
-			if !p2_is_hit and !p2_is_blocking {
+			if !p2_is_hit and !p2_is_guarding {
 				var called_number = 2;
 				var called_char = p2_char[2];
 				if p2_active_character == p2_char[2] {
@@ -435,8 +436,8 @@ function check_assists() {
 //	var ai_tagout_odds = 50;
 
 //	var assists = [
-//		{ call: [p1_button5, p1_button6], back: sign(p1_right - p1_left) == -p1_active_character.facing, ai: p1_active_character.ai_enabled, is_hit: p1_is_hit, is_blocking: p1_is_blocking, char: p1_char, char_assist_timer: p1_char_assist_timer, char_hp: p1_char_hp, char_assist_type: p1_char_assist_type, change_active_char: change_p1_active_char },
-//		{ call: [p2_button5, p2_button6], back: sign(p2_right - p2_left) == -p2_active_character.facing, ai: p2_active_character.ai_enabled, is_hit: p2_is_hit, is_blocking: p2_is_blocking, char: p2_char, char_assist_timer: p2_char_assist_timer, char_hp: p2_char_hp, char_assist_type: p2_char_assist_type, change_active_char: change_p2_active_char }
+//		{ call: [p1_button5, p1_button6], back: sign(p1_right - p1_left) == -p1_active_character.facing, ai: p1_active_character.ai_enabled, is_hit: p1_is_hit, is_guarding: p1_is_guarding, char: p1_char, char_assist_timer: p1_char_assist_timer, char_hp: p1_char_hp, char_assist_type: p1_char_assist_type, change_active_char: change_p1_active_char },
+//		{ call: [p2_button5, p2_button6], back: sign(p2_right - p2_left) == -p2_active_character.facing, ai: p2_active_character.ai_enabled, is_hit: p2_is_hit, is_guarding: p2_is_guarding, char: p2_char, char_assist_timer: p2_char_assist_timer, char_hp: p2_char_hp, char_assist_type: p2_char_assist_type, change_active_char: change_p2_active_char }
 //	];
 
 //	if (round_state != roundstates.fight || superfreeze_active || p1_grabbed || p2_grabbed) {
@@ -453,7 +454,7 @@ function check_assists() {
 //			}
 
 //			for (var j = 0; j < 2; j++) {
-//				if (assists[i].call[j] && !assists[i].is_hit && !assists[i].is_blocking) {
+//				if (assists[i].call[j] && !assists[i].is_hit && !assists[i].is_guarding) {
 //					var called_number = j + 1;
 //					var called_char = assists[i].char[called_number];
 //					if (assists[i].char[0] == called_char) {
@@ -570,8 +571,10 @@ function check_assists() {
 function check_deaths() {
 	var alldead = true;
 	with(obj_char) {
-		if target_exists() {
-			alldead = false;
+		if !dead {
+			if target_exists() {
+				alldead = false;
+			}
 		}
 	}
 	if alldead {
@@ -583,7 +586,7 @@ function check_deaths() {
 }
 
 function update_shots() {
-	if (!superfreeze_active) and (!gamefreeze_active) {
+	if (!superfreeze_active) and (!timefreeze_active) {
 		with(obj_shot) {
 			gravitate(affected_by_gravity);
 			if bounce {
@@ -687,7 +690,7 @@ function update_hitboxes() {
 			}
 		}
 		if active {
-			if (!superfreeze_active) and (!gamefreeze_active) {
+			if (!superfreeze_active) and (!timefreeze_active) {
 				check_hit();
 			}
 		}

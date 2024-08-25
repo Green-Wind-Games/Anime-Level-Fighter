@@ -1,9 +1,9 @@
 function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
-	if state_timer == 1 {
+	if check_frame(max(_hitframe-1,1)) {
 		if is_airborne {
 			if target_distance <= 30 {
 				xspeed = 3 * facing;
-				yspeed = -2.64;
+				yspeed = -2;
 			}
 		}
 		else {
@@ -23,7 +23,7 @@ function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 }
 
 function basic_launcher(_hitframe,_damage,_hiteffect) {
-	if state_timer == max(1,(_hitframe-1)*frame_duration) {
+	if check_frame(max(_hitframe-1,1)) {
 		xspeed = 3 * facing;
 		yspeed = -5;
 	}
@@ -45,10 +45,10 @@ function basic_launcher(_hitframe,_damage,_hiteffect) {
 }
 
 function basic_smash(_hitframe,_damage,_hiteffect) {
-	if state_timer == 1 {
+	if check_frame(max(_hitframe-1,1)) {
 		if target_distance <= 30 {
 			xspeed = 3 * facing;
-			yspeed = -2.69;
+			yspeed = -2;
 		}
 	}
 	if check_frame(_hitframe) {
@@ -153,11 +153,13 @@ function fire_beam_attack(_sprite,_scale,_damage) {
 }
 
 function check_charge() {
-	if !ai_enabled {
-		if button5_held return true;
-	}
-	else {
-		if mp >= max_mp return false;
+	if mp >= max_mp return false;
+	if (previous_state == charge_state) and (state_timer < 60) return false;
+	if input.button5_held return true;
+	if ai_enabled {
+		if target_distance_x < 100 return false;
+		if active_state == charge_state return true;
+		if random(100) < 5 return true;
 	}
 	return false;
 }

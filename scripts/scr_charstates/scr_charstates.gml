@@ -16,10 +16,10 @@ function init_charstates() {
 		else {
 			change_state(air_state);
 		}
-		can_block = true;
+		can_guard = true;
 		can_cancel = true;
 		is_hit = false;
-		is_blocking = false;
+		is_guarding = false;
 		deactivate_super();
 	}
 	idle_state.run = function() {
@@ -54,6 +54,9 @@ function init_charstates() {
 			else if input.down {
 				change_state(crouch_state);
 			}
+			else if check_charge() {
+				change_state(charge_state);
+			}
 			check_moves();
 		}
 	}
@@ -65,7 +68,7 @@ function init_charstates() {
 		reset_cancels();
 		yspeed = 0;
 		air_moves = 0;
-		can_block = true;
+		can_guard = true;
 		can_cancel = true;
 	}
 	crouch_state.run = function() {
@@ -105,7 +108,7 @@ function init_charstates() {
 		xspeed = 0;
 		yspeed = 0;
 		air_moves = 0;
-		can_block = true;
+		can_guard = true;
 		can_cancel = true;
 	}
 	jump_state.run = function() {
@@ -135,7 +138,7 @@ function init_charstates() {
 		xspeed = 0;
 		yspeed = 0;
 		air_moves = 0;
-		can_block = true;
+		can_guard = true;
 		can_cancel = true;
 	}
 	superjump_state.run = function() {
@@ -152,7 +155,7 @@ function init_charstates() {
 	air_state.start = function() {
 		change_sprite(air_peak_sprite,5,true);
 		reset_cancels();
-		can_block = true;
+		can_guard = true;
 		can_cancel = true;
 	}
 	air_state.run = function() {
@@ -209,9 +212,7 @@ function init_charstates() {
 			dash_duration *= 4;
 		}
 		if state_timer < dash_duration {
-			if !audio_is_playing(snd_dash_loop) {
-				play_sound(snd_dash_loop);
-			}
+			loop_sound(snd_dash_loop);
 		}
 		else {
 			change_state(dash_stop_state);
@@ -228,7 +229,7 @@ function init_charstates() {
 	}
 	dash_state.stop = function() {
 		if next_state != airdash_state {
-			audio_stop_sound(sound);
+			stop_sound(sound);
 		}
 	}
 	
@@ -305,16 +306,16 @@ function init_charstates() {
 		}
 	}
 	
-	block_state = new state();
-	block_state.start = function() {
+	guard_state = new state();
+	guard_state.start = function() {
 		change_sprite(guard_sprite,6,false);
 		reset_cancels();
-		is_blocking = true;
-		can_block = true;
+		is_guarding = true;
+		can_guard = true;
 	}
-	block_state.run = function() {
-		is_blocking = true;
-		can_block = true;
+	guard_state.run = function() {
+		is_guarding = true;
+		can_guard = true;
 		if state_timer < blockstun - anim_duration {
 			frame = 0;
 			frame_timer = 0;
@@ -323,19 +324,19 @@ function init_charstates() {
 			change_state(idle_state);
 		}
 	}
-	block_state.stop = function() {
-		is_blocking = false;
+	guard_state.stop = function() {
+		is_guarding = false;
 	}
 	
 	hit_state = new state();
 	hit_state.start = function() {
 		reset_cancels();
 		is_hit = true;
-		can_block = false;
+		can_guard = false;
 	}
 	hit_state.run = function() {
 		is_hit = true;
-		can_block = false;
+		can_guard = false;
 		if hp > 0 {
 			if on_ground {
 				if yspeed > 0 {
@@ -384,7 +385,7 @@ function init_charstates() {
 	hard_knockdown_state.start = function() {
 		reset_cancels();
 		is_hit = true;
-		can_block = false;
+		can_guard = false;
 	}
 	hard_knockdown_state.run = function() {
 		if on_ground {
@@ -397,7 +398,7 @@ function init_charstates() {
 	wall_bounce_state.start = function() {
 		reset_cancels();
 		is_hit = true;
-		can_block = false;
+		can_guard = false;
 	}
 	wall_bounce_state.run = function() {
 		if yspeed >= 0 {
@@ -439,6 +440,7 @@ function init_charstates() {
 				else {
 					dead = true;
 					is_hit = false;
+					change_state(dead_state);
 				}
 			}
 			else {
@@ -539,7 +541,7 @@ function init_charstates() {
 		yoffset = -height_half;
 		xspeed = 0;
 		yspeed = 0;
-		can_block = true;
+		can_guard = true;
 		can_cancel = true;
 	}
 	homing_dash_state.run = function() {
@@ -569,13 +571,13 @@ function init_charstates() {
 	substitution_state.start = function() {
 		change_sprite(guard_sprite,3,false);
 		reset_sprite();
-		gamefreeze();
+		timefreeze();
 	}
 	substitution_state.run = function() {
 		xspeed = 0;
 		yspeed = 0;
 		face_target();
-		gamefreeze(10);
+		timefreeze(10);
 		if sprite == guard_sprite {
 			xspeed = facing;
 			
@@ -600,7 +602,7 @@ function init_charstates() {
 			color = merge_color(color,c_white,alpha);
 			if alpha >= 1 {
 				reset_sprite();
-				gamefreeze(0);
+				timefreeze(0);
 				change_state(idle_state);
 			}
 		}
@@ -612,9 +614,11 @@ function init_charstates() {
 		flash_sprite();
 		superfreeze(3 * 60);
 		play_sound(snd_energy_surge);
+		play_voiceline(voice_powerup);
 		level_up();
 	}
 	levelup_state.run = function() {
+		shake_screen(5,2);
 		if !superfreeze_active {
 			change_state(idle_state);
 		}
@@ -627,11 +631,34 @@ function init_charstates() {
 		play_voiceline(voice_transform);
 	}
 	transform_state.run = function() {
-		if !audio_is_playing(snd_energy_wave) {
-			play_sound(snd_energy_wave);
-		}
+		shake_screen(5,2);
+		loop_sound(snd_energy_wave);
 		if superfreeze_timer <= 5 {
 			transform(next_form);
+		}
+	}
+	
+	charge_state = new state();
+	charge_state.start = function() {
+		if check_charge() {
+			change_sprite(charge_sprite,3,true);
+			flash_sprite();
+			play_sound(snd_energy_surge);
+			play_voiceline(voice_powerup);
+		}
+		else {
+			change_state(previous_state);
+		}
+	}
+	charge_state.run = function() {
+		if check_charge() or state_timer < 30 {
+			mp += ceil((mp_stock_size / 60) / 1.5);
+			loop_sound(snd_energy_wave);
+			shake_screen(5,2);
+		}
+		else {
+			stop_sound(voice);
+			change_state(idle_state);
 		}
 	}
 	
@@ -641,7 +668,7 @@ function init_charstates() {
 		play_voiceline(voice_intro);
 	}
 	intro_state.run = function() {
-		if !audio_is_playing(voice) 
+		if !sound_is_playing(voice) 
 		and anim_finished {
 			change_state(idle_state);
 		}
@@ -656,6 +683,16 @@ function init_charstates() {
 	defeat_state.start = function() {
 		change_sprite(defeat_sprite,6,false);
 		play_voiceline(voice_defeat);
+	}
+	
+	dead_state = new state();
+	dead_state.start = function() {
+		change_sprite(liedown_sprite,10,true);
+	}
+	dead_state.run = function() {
+		if hp > 0 {
+			change_state(liedown_state);
+		}
 	}
 	
 	add_move(dash_state,"656");

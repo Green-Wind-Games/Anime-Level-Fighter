@@ -84,20 +84,20 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	blockstun = round(blockstun);
 	hitstop = round(hitstop);
 			
-	var blocking =	((input.back or input.down)
+	var guarding =	((input.back or input.down)
 					or ((ai_enabled) and (random(100) < map_value(ai_level,1,ai_level_max,10,90)))
-					or (is_blocking));
-	var block_valid = (can_block) and (!is_hit);
+					or (is_guarding));
+	var guard_valid = (can_guard) and (!is_hit);
 	if _attacktype == attacktype.unblockable
 	or _attacktype == attacktype.grab {
-		block_valid = false;
+		guard_valid = false;
 	}
 	if _attacktype == attacktype.antiair
 	and is_airborne {
-		block_valid = false;
+		guard_valid = false;
 	}
-	if block_valid and blocking {
-		change_state(block_state);
+	if guard_valid and guarding {
+		change_state(guard_state);
 		change_sprite(guard_sprite,6,false);
 		xspeed *= 2;
 		//yspeed /= 2;
@@ -220,7 +220,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	var mp_gain = _damage;
 	var attack_mp_multiplier = 3;
 	var defend_mp_multiplier = 2;
-	//if block_valid {
+	//if guard_valid {
 	//	mp_gain *= 0.5;
 	//}
 	mp += mp_gain * defend_mp_multiplier;
@@ -243,8 +243,8 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	_attacker.depth = -1;
 	_attacker.hitstop = hitstop;
 	_attacker.can_cancel = true;
-	create_hitspark(x-width_half,y-(height*0.75),x+width_half,y-(height*0.25),_strength,_hiteffect,block_valid and blocking);
-	apply_hiteffect(_hiteffect,_strength,block_valid and blocking);
+	create_hitspark(x-width_half,y-(height*0.75),x+width_half,y-(height*0.25),_strength,_hiteffect,guard_valid and guarding);
+	apply_hiteffect(_hiteffect,_strength,guard_valid and guarding);
 }
 
 function take_damage(_attacker,_amount,_kill) {
@@ -256,18 +256,36 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	var defender = id;
 	
-	dmg *= true_attacker.attack_power;
-	dmg *= true_attacker.level;
+	var scaling = map_value(
+		combo_hits_taken,
+		0,
+		30,
+		1,
+		0
+	);
+	scaling = clamp(scaling,0.1,1);
 	
+	var guts = map_value(
+		hp + combo_damage_taken,
+		max_hp*0.5,
+		0,
+		1,
+		0
+	);
+	guts = clamp(guts,0.1,1);
+	
+	dmg *= scaling;
+	dmg *= guts;
+	
+	dmg *= true_attacker.attack_power;
 	dmg /= defender.defense;
 	
-	var scaling = map_value(hp + combo_damage_taken,max_hp*0.35,0,1,0);
-	scaling = clamp(scaling,0.1,1);
-	dmg *= scaling;
+	dmg *= true_attacker.level;
 	
-	dmg /= 4;
+	//dmg /= 4;
 	
 	dmg = max(round(dmg),1);
+	
 	hp -= dmg;
 	if !_kill {
 		hp = max(hp,1);

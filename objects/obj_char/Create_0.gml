@@ -33,8 +33,8 @@ hitstop = 0;
 
 is_hit = false;
 
-is_blocking = false;
-can_block = true;
+is_guarding = false;
+can_guard = true;
 
 grabbed = noone;
 grab_connect_state = noone;

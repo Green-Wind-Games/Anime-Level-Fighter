@@ -1,5 +1,5 @@
 globalvar master_volume, sound_volume, music_volume, voice_volume;
-master_volume = 1/30;
+master_volume = 1/20;
 sound_volume = 1;
 music_volume = 1;
 voice_volume = 1;
@@ -75,10 +75,24 @@ function play_sound(_snd,_volume = 1,_pitch = 1) {
 	return noone;
 }
 
+function stop_sound(_snd) {
+	audio_stop_sound(_snd);
+}
+
+function sound_is_playing(_snd) {
+	return audio_is_playing(_snd);
+}
+
+function loop_sound(_snd,_volume = 1,_pitch = 1) {
+	if !sound_is_playing(_snd) {
+		play_sound(_snd,_volume,_pitch);
+	}
+}
+
 function play_voiceline(_snd,_chance = 100,_interrupt = true) {
-	if (_interrupt) or ((!_interrupt) and (!audio_is_playing(voice))) {
+	if (_interrupt) or ((!_interrupt) and (!sound_is_playing(voice))) {
 		if random(100) < _chance {
-			audio_stop_sound(voice);
+			stop_sound(voice);
 			var _voice = _snd;
 			if is_array(_snd) {
 				_voice = _snd[irandom(array_length(_snd)-1)];

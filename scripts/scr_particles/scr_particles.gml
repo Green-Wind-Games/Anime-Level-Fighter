@@ -17,8 +17,8 @@ part_type_life(guardspark,25,25);
 part_type_size(guardspark,0.5,0.5,0,0);
 part_type_blend(guardspark,true);
 	
-var _spark_scale = 30 / sprite_get_width(spr_hitspark);
-var _spark_increase = (_spark_scale) / 15;
+var _spark_scale = 40 / sprite_get_width(spr_hitspark);
+var _spark_increase = (_spark_scale) / 10;
 	
 hitspark_light = part_type_create();
 part_type_sprite(hitspark_light,spr_hitspark,true,true,false);
@@ -30,7 +30,7 @@ part_type_color1(hitspark_light,c_white);
 	
 hitspark_medium = part_type_create();
 part_type_sprite(hitspark_medium,spr_hitspark,true,true,false);
-part_type_life(hitspark_medium,18,18);
+part_type_life(hitspark_medium,15,15);
 part_type_size(hitspark_medium,_spark_scale,_spark_scale,_spark_increase,0);
 part_type_orientation(hitspark_medium,0,360,0,0,true);
 part_type_blend(hitspark_medium,true);
@@ -38,7 +38,7 @@ part_type_color1(hitspark_medium,make_color_rgb(255,255,0));
 	
 hitspark_heavy = part_type_create();
 part_type_sprite(hitspark_heavy,spr_hitspark,true,true,false);
-part_type_life(hitspark_heavy,20,20);
+part_type_life(hitspark_heavy,15,15);
 part_type_size(hitspark_heavy,_spark_scale,_spark_scale,_spark_increase,0);
 part_type_orientation(hitspark_heavy,0,360,0,0,true);
 part_type_blend(hitspark_heavy,true);
@@ -54,21 +54,21 @@ part_type_blend(slashspark,true);
 explosion_small = part_type_create();
 part_type_sprite(explosion_small,spr_explosion,true,true,false);
 part_type_life(explosion_small,20,20);
-part_type_size(explosion_small,0.2,0.2,0,0);
+part_type_size(explosion_small,0.2,0.2,1/50,0);
 part_type_orientation(explosion_small,0,360,0,0,true);
 part_type_blend(explosion_small,true);
 	
 explosion_medium = part_type_create();
 part_type_sprite(explosion_medium,spr_explosion,true,true,false);
 part_type_life(explosion_medium,20,20);
-part_type_size(explosion_medium,0.5,0.5,0,0);
+part_type_size(explosion_medium,0.5,0.5,1/50,0);
 part_type_orientation(explosion_medium,0,360,0,0,true);
 part_type_blend(explosion_medium,true);
 	
 explosion_large = part_type_create();
 part_type_sprite(explosion_large,spr_explosion,true,true,false);
 part_type_life(explosion_large,20,20);
-part_type_size(explosion_large,1,1,0,0);
+part_type_size(explosion_large,1,1,1/50,0);
 part_type_orientation(explosion_large,0,360,0,0,true);
 part_type_blend(explosion_large,true);
 	
@@ -93,10 +93,12 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 		
 		case explosion_medium:
 		play_sound(snd_explosion,0.8,1.2);
+		shake_screen(5,2);
 		break;
 		
 		case explosion_large:
 		play_sound(snd_explosion);
+		shake_screen(10,5);
 		break;
 	}
 }
@@ -143,7 +145,7 @@ function create_hitspark(_x1,_y1,_x2,_y2,_strength,_hiteffect,_guard) {
 		else {
 			switch(_hiteffect) {
 				default: 
-				_sound = snd_punch_block;
+				_sound = snd_punch_guard;
 				create_particles(_x1,_y1,_x2,_y2,guardspark);
 				break;
 			}
