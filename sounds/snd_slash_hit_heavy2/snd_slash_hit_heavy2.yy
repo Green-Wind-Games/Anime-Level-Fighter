@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_slash_hit_heavy2.wav",
   "type":0,
-  "volume":0.75,
+  "volume":1.0,
 }

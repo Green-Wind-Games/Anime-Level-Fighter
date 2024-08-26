@@ -323,9 +323,6 @@ super_kamehameha.run = function() {
 		change_state(idle_state);
 	}
 }
-super_kamehameha.stop = function() {
-	deactivate_super();
-}
 
 meteor_combo = new state();
 meteor_combo.start = function() {
@@ -378,9 +375,6 @@ meteor_combo.run = function() {
 			play_sound(snd_punch_whiff_medium);
 		}
 	}
-}
-meteor_combo.stop = function() {
-	deactivate_super();
 }
 
 max_air_moves = 3;

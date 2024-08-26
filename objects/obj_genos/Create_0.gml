@@ -352,9 +352,6 @@ incinerate.run = function() {
 	}
 	return_to_idle();
 }
-incinerate.stop = function() {
-	deactivate_super();
-}
 
 super_incinerate = new state();
 super_incinerate.start = function() {
@@ -398,9 +395,6 @@ super_incinerate.run = function() {
 		fire_beam_attack(spr_incinerate,1,1);
 	}
 	return_to_idle();
-}
-super_incinerate.stop = function() {
-	deactivate_super();
 }
 
 assist_a_state = new state();

@@ -271,7 +271,6 @@ kaioken.run = function() {
 	xspeed = 0;
 	yspeed = 0;
 	if !superfreeze_active {
-		deactivate_super();
 		change_state(idle_state);
 	}
 }
@@ -311,19 +310,29 @@ kiblast.stop = function() {
 	}
 }
 
+kiai_push = new state();
+kiai_push.start = function() {
+	if check_mp(1) {
+		activate_super();
+		spend_mp(1);
+		change_sprite(spr_goku_special_ki_blast,3,false);
+	}
+}
+kiai_push.run = function() {
+	if check_frame(4) {
+		create_particles(x+width_half,y-height_half,x+width_half,y-height_half,shockwave);
+		create_hitbox(-50,-150,200,200,30,10,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
+	}
+	if state_timer > 60 {
+		return_to_idle();
+	}
+}
+kiai_push.stop = function() {
+	super_active = false;
+}
+
 kamehameha = new state();
 kamehameha.start = function() {
-	if is_airborne {
-		if input.down {
-			//change_state(kamehameha_down)
-		}
-		else if input.up {
-			//change_state(kamehameha_diagonal_up)
-		}
-		else if !input.forward {
-			//change_state(kamehameha_diagonal_down)
-		}
-	}
 	if kamehameha_cooldown <= 0 {
 		change_sprite(spr_goku_special_kamehameha,5,false);
 		if is_airborne {
@@ -346,7 +355,7 @@ kamehameha.run = function() {
 		play_sound(snd_dbz_beam_fire);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam(20,-45,spr_kamehameha,0.5,0,15);
+		fire_beam(20,-45,spr_kamehameha,0.5,0,10);
 	}
 	return_to_idle();
 }
@@ -354,9 +363,9 @@ kamehameha.run = function() {
 super_kamehameha = new state();
 super_kamehameha.start = function() {
 	if kamehameha_cooldown <= 0 and check_mp(2) {
-		change_sprite(spr_goku_kamehameha,5,false);
+		change_sprite(spr_goku_special_kamehameha,5,false);
 		if is_airborne {
-			change_sprite(spr_goku_kamehameha_air,frame_duration,false);
+			change_sprite(spr_goku_special_kamehameha_air,frame_duration,false);
 		}
 		activate_super(320);
 		spend_mp(2);
@@ -401,7 +410,7 @@ super_kamehameha.run = function() {
 		}
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam_attack(spr_kamehameha,1,10);
+		fire_beam(20,-45,spr_kamehameha,1,0,10);
 		shake_screen(5,3);
 	}
 	if check_frame(3) {
@@ -414,14 +423,11 @@ super_kamehameha.run = function() {
 	}
 	return_to_idle();
 }
-super_kamehameha.stop = function() {
-	deactivate_super();
-}
 
 meteor_combo = new state();
 meteor_combo.start = function() {
 	if on_ground and check_mp(1) {
-		change_sprite(spr_goku_jab,3,false);
+		change_sprite(spr_goku_attack_punch_straight,3,false);
 		activate_super();
 		spend_mp(1);
 	}
@@ -437,18 +443,18 @@ meteor_combo.run = function() {
 	if can_cancel {
 		sprite_sequence(
 			[
-				spr_goku_jab,
-				spr_goku_elbowbash,
-				spr_goku_kick2,
-				spr_goku_kick,
-				spr_goku_backflipkick,
-				spr_goku_kamehameha_air
+				spr_goku_attack_punch_straight,
+				spr_goku_attack_elbow_bash,
+				spr_goku_attack_kick_side,
+				spr_goku_attack_kick_arc,
+				spr_goku_attack_backflip_kick,
+				spr_goku_special_kamehameha_air
 			],
 			frame_duration
 		);
 	}
-	if sprite == spr_goku_kamehameha_air {
-		if check_frame(1) and (combo_hits > 0) {
+	if sprite == spr_goku_special_kamehameha_air {
+		if check_frame(1) {
 			play_sound(snd_dbz_teleport_short);
 			x = target_x - (100 * facing);
 			y = target_y - 50;
@@ -456,34 +462,31 @@ meteor_combo.run = function() {
 		kamehameha.run();
 	}
 	else {
-		if sprite == spr_goku_backflipkick {
-			if state_timer == 2 {
+		if sprite == spr_goku_attack_backflip_kick {
+			if check_frame(2) {
 				xspeed = 3 * facing;
 				yspeed = -5;
+				play_sound(snd_punch_whiff_heavy2);
 			}
 			if check_frame(3) {
 				create_hitbox(0,-height,width,height,80,3,-10,attacktype.normal,attackstrength.heavy,hiteffects.hit);
 			}
 		}
 		else {
+			if check_frame(1) {
+				xspeed = 10 * facing;
+				play_sound(snd_punch_whiff_medium);
+			}
 			basic_attack(2,50,attackstrength.medium,hiteffects.hit);
-		}
-		if check_frame(1) {
-			face_target();
-			xspeed = 10 * facing;
-			play_sound(snd_punch_whiff_medium);
 		}
 	}
 	return_to_idle();
-}
-meteor_combo.stop = function() {
-	deactivate_super();
 }
 
 genkidama = new state();
 genkidama.start = function() {
 	if check_mp(4) and !kaioken_active {
-		change_sprite(spr_goku_genkidama,5,false);
+		change_sprite(spr_goku_special_spiritbomb,5,false);
 		activate_ultimate();
 		spend_mp(4);
 		xspeed = 0;
@@ -510,7 +513,7 @@ genkidama.run = function() {
 			duration = -1;
 			hit_limit = -1;
 			active_script = function() {
-				if owner.sprite == spr_goku_genkidama and owner.frame >= 9 {
+				if owner.sprite == spr_goku_special_spiritbomb and owner.frame >= 9 {
 					xspeed += 1/15 * owner.facing;
 					yspeed = abs(xspeed);
 				}
@@ -551,9 +554,6 @@ genkidama.run = function() {
 	}
 	return_to_idle();
 }
-genkidama.stop = function() {
-	deactivate_super();
-}
 
 max_air_moves = 3;
 
@@ -565,18 +565,19 @@ add_move(meteor_combo,"DA");
 add_move(kaioken,"DDA");
 
 add_move(kiblast,"B");
+add_move(kiai_push,"DB");
 
 add_move(kamehameha,"C");
 add_move(super_kamehameha,"DC");
 add_move(genkidama,"DDC");
 
 ai_script = function() {
-	ai_input_move(kaioken,1);
-	if target_distance_x < 50 {
+	if target_distance < 50 {
 		ai_input_move(meteor_combo,10);
+		ai_input_move(kaioken,10);
 	}
-	if target_distance > 150 {
-		ai_input_move(kiblast,1);
+	else if target_distance > 150 {
+		ai_input_move(kiblast,10);
 		ai_input_move(kamehameha,10);
 		ai_input_move(super_kamehameha,10);
 		ai_input_move(genkidama,10);
@@ -625,33 +626,33 @@ victory_state.run = function() {
 }
 
 draw_script = function() {
-	if sprite == spr_goku_kiblast
-	or sprite == spr_goku_kiblast2 {
+	if sprite == spr_goku_special_ki_blast
+	or sprite == spr_goku_special_ki_blast2 {
 		gpu_set_blendmode(bm_add);
 		if frame == 3 {
 			var _x = x + (28 * facing);
 			var _y = y - 32;
 			var _scale = 1 / 2;
-			draw_sprite_ext(
-				spr_ki_spark,
-				frame_timer,
-				_x,
-				_y,
-				facing * _scale,
-				_scale,
-				rotation*facing,
-				c_white,
-				1
-			);
+			//draw_sprite_ext(
+			//	spr_ki_spark,
+			//	frame_timer,
+			//	_x,
+			//	_y,
+			//	facing * _scale,
+			//	_scale,
+			//	rotation*facing,
+			//	c_white,
+			//	1
+			//);
 		}
 	}
-	if sprite == spr_goku_kamehameha
-	or sprite == spr_goku_kamehameha_air {
+	if sprite == spr_goku_special_kamehameha
+	or sprite == spr_goku_special_kamehameha_air {
 		gpu_set_blendmode(bm_add);
 		if value_in_range(frame,3,5) {
 			var _x = x - (10 * facing);
 			var _y = y - 25;
-			var _scale = anim_timer / 100;
+			var _scale = anim_timer / 120;
 			draw_sprite_ext(
 				spr_kamehameha_charge,
 				0,
@@ -659,7 +660,7 @@ draw_script = function() {
 				_y,
 				_scale,
 				_scale,
-				anim_timer * 3,
+				anim_timer * 5,
 				c_white,
 				1
 			);

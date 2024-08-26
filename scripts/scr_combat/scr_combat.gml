@@ -240,6 +240,8 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		}
 	}
 	
+	super_active = false;
+	
 	depth = 0;
 	_attacker.depth = -1;
 	_attacker.hitstop = hitstop;

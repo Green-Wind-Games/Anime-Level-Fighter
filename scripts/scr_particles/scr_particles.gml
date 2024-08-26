@@ -4,7 +4,8 @@ globalvar	particle_system,
 			hitspark_light, hitspark_medium, hitspark_heavy,
 			guardspark,
 			slashspark,
-			explosion_small, explosion_medium, explosion_large;
+			explosion_small, explosion_medium, explosion_large,
+			shockwave_particle;
 				
 particle_system = part_system_create();
 part_system_depth(particle_system,-9999);
@@ -71,6 +72,14 @@ part_type_life(explosion_large,20,20);
 part_type_size(explosion_large,2,2,1/50,0);
 part_type_orientation(explosion_large,0,360,0,0,true);
 part_type_blend(explosion_large,true);
+
+shockwave_particle = part_type_create();
+part_type_sprite(shockwave_particle,spr_shockwave,true,true,false);
+part_type_life(shockwave_particle,50,50);
+part_type_size(shockwave_particle,0.1,0.1,1/10,0);
+part_type_orientation(shockwave_particle,0,360,0,0,true);
+part_type_blend(shockwave_particle,true);
+part_type_alpha3(shockwave_particle,1,1,0);
 	
 function update_particles() {
 	part_system_update(particle_system);
@@ -93,12 +102,17 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 		
 		case explosion_medium:
 		play_sound(snd_explosion,0.8,1.2);
-		shake_screen(5,2);
+		shake_screen(10,5);
 		break;
 		
 		case explosion_large:
 		play_sound(snd_explosion);
-		shake_screen(10,5);
+		shake_screen(20,10);
+		break;
+		
+		case shockwave_particle:
+		play_sound(snd_shockwave);
+		shake_screen(10,10);
 		break;
 	}
 }

@@ -114,7 +114,11 @@ function run_charstates() {
 		if ((!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)))
 		and ((!timefreeze_active) or ((timefreeze_active) and (timefreeze_activator == id))) {
 			if (!hitstop) {
+				var _state = active_state;
 				run_state();
+				if _state != active_state {
+					super_active = false;
+				}
 			}
 			else {
 				hitstop -= 1;
