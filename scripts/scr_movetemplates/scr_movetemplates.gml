@@ -110,10 +110,26 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	return shot;
 }
 
-function fire_beam_attack(_sprite,_scale,_damage) {
+function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
+	var _xlength = lengthdir_x(1,_angle);
+	var _ylength = lengthdir_y(1,_angle);
 	if !instance_exists(beam) {
-		beam = create_shot(width_half,-height_half,1,0,_sprite,_scale,_damage,20,-2,attacktype.normal,attackstrength.light,hiteffects.none);
+		beam = create_shot(
+			_x,
+			_y,
+			_xlength,
+			_ylength,
+			_sprite,
+			_scale,
+			_damage,
+			_xlength * 10,
+			_ylength * 10,
+			attacktype.normal,
+			attackstrength.light,
+			hiteffects.none
+		);
 		with(beam) {
+			rotation = _angle;
 			blend = true;
 			hit_limit = -1;
 			duration = 10;
@@ -126,16 +142,17 @@ function fire_beam_attack(_sprite,_scale,_damage) {
 			active_script = function() {
 				xscale += 100 / sprite_get_width(sprite);
 				with(hitbox) {
-					xoffset = 0;
 					image_xscale = (sprite_get_width(other.sprite) * other.xscale) / sprite_get_width(spr_hitbox) * other.xspeed;
 				}
-				alpha -= 0.1;
+				alpha = duration / 10;
 			}
 			hit_script = function(_hit) {
 				with(_hit) {
 					if object_is_ancestor(_hit.object_index,obj_char) {
-						x += sign(other.xspeed)*3;
-						y = lerp(y,other.y+height_half,0.2);
+						if (!on_ground) or (other.yspeed <= 0) {
+							x += other.xspeed*4;
+							y += other.yspeed*4;
+						}
 					}
 				}
 			}
@@ -143,12 +160,21 @@ function fire_beam_attack(_sprite,_scale,_damage) {
 	}
 	with(beam) {
 		ds_list_clear(hitbox.hit_list);
-		xspeed = owner.facing;
-		yspeed = 0;
-		x = owner.x + (owner.width * 0.45 * owner.facing);
-		y = owner.y - (owner.height * 0.69);
+		xspeed = _xlength;
+		yspeed = _ylength;
+		x = owner.x + _x;
+		y = owner.y + _y;
 		alpha = 1;
 		duration = 10;
+		
+		with(hitbox) {
+			image_angle = other.rotation;
+			xoffset = lengthdir_x(sprite_height,_angle+90);
+			yoffset = lengthdir_y(sprite_height,_angle+90);
+			xknockback = _xlength * 10;
+			yknockback = _ylength * 10;
+			if yknockback == 0 then yknockback -= 2;
+		}
 	}
 }
 

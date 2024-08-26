@@ -32,11 +32,11 @@ function init_charsprites(_name) {
 	hit_low_sprite = asset_get_index(prefix + "hit_low");
 	hit_air_sprite = asset_get_index(prefix + "hit_air");
 	
-	launch_sprite = asset_get_index(prefix + "launch");
-	spinout_sprite = asset_get_index(prefix + "spinout");
+	launch_sprite = asset_get_index(prefix + "hit_launch");
+	spinout_sprite = asset_get_index(prefix + "hit_spinout");
 	liedown_sprite = asset_get_index(prefix + "liedown");
 	wakeup_sprite = asset_get_index(prefix + "wakeup");
-	tech_sprite = asset_get_index(prefix + "tech");
+	tech_sprite = asset_get_index(prefix + "air_recover");
 	
 	grabbed_sprite = asset_get_index(prefix + "grabbed");
 	grabbed_head_sprite = asset_get_index(prefix + "grabbed_head");
@@ -47,7 +47,7 @@ function init_charsprites(_name) {
 	victory_sprite = asset_get_index(prefix + "victory");
 	defeat_sprite = asset_get_index(prefix + "defeat");
 	
-	charge_sprite = asset_get_index(prefix + "charge");
+	charge_sprite = asset_get_index(prefix + "energy_charge");
 	
 	icon = asset_get_index(prefix + "icon");
 	
@@ -60,7 +60,7 @@ function init_charsprites(_name) {
 	width_half = floor(width/2);
 	height_half = floor(height/2);
 	
-	var _w = max(24,width);
+	var _w = max(30,width);
 	var _h = max(40,height);
 	
 	create_hurtbox(-_w/2,-_h,_w,_h);

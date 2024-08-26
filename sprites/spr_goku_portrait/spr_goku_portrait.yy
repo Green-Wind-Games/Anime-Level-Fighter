@@ -2,9 +2,9 @@
   "$GMSprite":"",
   "%Name":"spr_goku_portrait",
   "bboxMode":0,
-  "bbox_bottom":1790,
+  "bbox_bottom":719,
   "bbox_left":0,
-  "bbox_right":1123,
+  "bbox_right":330,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"87a3e286-ed47-4141-b9fa-853bf605c1f7","name":"87a3e286-ed47-4141-b9fa-853bf605c1f7","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"f2efefb5-d565-459e-a207-b21551d097a9","name":"f2efefb5-d565-459e-a207-b21551d097a9","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
-  "height":1791,
+  "height":720,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"366617ce-4937-4212-8a3e-ab86d7e3b23e","blendMode":0,"displayName":"default","isLocked":false,"name":"366617ce-4937-4212-8a3e-ab86d7e3b23e","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"ae7bfd16-7e7a-40de-9751-21a50d89d9d6","blendMode":0,"displayName":"default","isLocked":false,"name":"ae7bfd16-7e7a-40de-9751-21a50d89d9d6","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_goku_portrait",
   "nineSlice":null,
@@ -69,13 +69,13 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"87a3e286-ed47-4141-b9fa-853bf605c1f7","path":"sprites/spr_goku_portrait/spr_goku_portrait.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"d4160014-acf8-4446-8cf9-6af28f6f14b7","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"f2efefb5-d565-459e-a207-b21551d097a9","path":"sprites/spr_goku_portrait/spr_goku_portrait.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"b63eed17-1baa-4954-bbcf-31bc58cde719","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":562,
+    "xorigin":165,
     "yorigin":0,
   },
   "swatchColours":null,
@@ -86,5 +86,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":1124,
+  "width":331,
 }
