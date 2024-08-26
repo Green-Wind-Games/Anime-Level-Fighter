@@ -106,15 +106,15 @@ function superfreeze(_duration = 30) {
 }
 
 function activate_super(_duration = 30) {
+	super_state = active_state;
 	superfreeze(_duration);
 	play_sound(snd_activate_super);
-	super_active = true;
 }
 
 function activate_ultimate(_duration = 60) {
+	super_state = active_state;
 	superfreeze(_duration);
 	play_sound(snd_activate_ultimate);
-	super_active = true;
 }
 
 function deactivate_super() {

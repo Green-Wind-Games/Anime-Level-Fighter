@@ -60,6 +60,7 @@ movelist[0][0] = noone;
 cancelable_moves = ds_list_create();
 can_cancel = true;
 
+super_state = noone;
 super_active = false;
 
 beam = noone;

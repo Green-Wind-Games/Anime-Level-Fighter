@@ -330,9 +330,6 @@ kiai_push.run = function() {
 		return_to_idle();
 	}
 }
-kiai_push.stop = function() {
-	super_active = false;
-}
 
 kamehameha = new state();
 kamehameha.start = function() {
@@ -400,7 +397,7 @@ super_kamehameha.run = function() {
 				}
 				
 				var _frame = frame;
-				change_sprite(spr_goku_kamehameha_air,frame_duration,false);
+				change_sprite(spr_goku_special_kamehameha_air,frame_duration,false);
 				frame = _frame;
 			}
 		}
@@ -464,21 +461,21 @@ meteor_combo.run = function() {
 	}
 	else {
 		if sprite == spr_goku_attack_backflip_kick {
+			if check_frame(3) {
+				create_hitbox(0,-height,width,height,40,3,-10,attacktype.normal,attackstrength.heavy,hiteffects.hit);
+			}
 			if check_frame(2) {
 				xspeed = 3 * facing;
 				yspeed = -5;
 				play_sound(snd_punch_whiff_heavy2);
 			}
-			if check_frame(3) {
-				create_hitbox(0,-height,width,height,80,3,-10,attacktype.normal,attackstrength.heavy,hiteffects.hit);
-			}
 		}
 		else {
+			basic_attack(2,40,attackstrength.medium,hiteffects.hit);
 			if check_frame(1) {
 				xspeed = 10 * facing;
 				play_sound(snd_punch_whiff_medium);
 			}
-			basic_attack(2,50,attackstrength.medium,hiteffects.hit);
 		}
 	}
 	return_to_idle();
@@ -508,7 +505,7 @@ genkidama.run = function() {
 		}
 	}
 	if check_frame(2) {
-		spirit_bomb = create_shot(0,-200,0,0,spr_genkidama,0.3,0,0,0,attacktype.unblockable,attackstrength.heavy,hiteffects.none)
+		spirit_bomb = create_shot(0,-200,0,0,spr_genkidama,0.5,0,0,0,attacktype.unblockable,attackstrength.heavy,hiteffects.none)
 		with(spirit_bomb) {
 			play_sound(snd_activate_super,1,2);
 			duration = -1;

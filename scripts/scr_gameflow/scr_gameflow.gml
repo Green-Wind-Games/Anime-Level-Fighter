@@ -114,11 +114,7 @@ function run_charstates() {
 		if ((!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)))
 		and ((!timefreeze_active) or ((timefreeze_active) and (timefreeze_activator == id))) {
 			if (!hitstop) {
-				var _state = active_state;
 				run_state();
-				if _state != active_state {
-					super_active = false;
-				}
 			}
 			else {
 				hitstop -= 1;
@@ -128,6 +124,13 @@ function run_charstates() {
 			char_script();
 			state_timer += 1;
 			tp++;
+		}
+		if active_state == super_state {
+			super_active = true;
+		}
+		else {
+			super_state = noone;
+			super_active = false;
 		}
 		if facing == 0 {
 			facing = 1;
@@ -705,7 +708,7 @@ function update_hitboxes() {
 
 function update_combo() {
 	with(obj_char) {
-		if !hitstop {
+		if (!hitstop) and (!superfreeze_active) and (!timefreeze_active) {
 			if combo_timer-- <= 0 {
 				reset_combo();
 			}
