@@ -158,7 +158,6 @@ forward_throw.run = function() {
 	yspeed = 0;
 	if state_timer < 20 {
 		frame = 0;
-		frame_timer = 0;
 	}
 	grab_frame(0,10,0,0,false);
 	if check_frame(1) {
@@ -226,7 +225,6 @@ dropkick.run = function() {
 	}
 	if (frame >= 8) and (frame_timer >= frame_duration - 1) {
 		 frame -= 1;
-		 frame_timer = 0;
 	}
 	//standard_smash(7,100,hiteffects.hit);
 	//standard_smash(8,100,hiteffects.hit);
@@ -329,7 +327,6 @@ incinerate.run = function() {
 	if superfreeze_active {
 		if frame >= 4 {
 			frame = 4;
-			frame_timer = 0;
 		}
 	}
 	if state_timer <= 120 {
@@ -341,7 +338,6 @@ incinerate.run = function() {
 	if state_timer <= 150 {
 		if frame >= anim_frames - 1 {
 			frame -= 1;
-			frame_timer = 0;
 		}
 	}
 	if check_frame(5) {
@@ -373,7 +369,6 @@ super_incinerate.run = function() {
 	if superfreeze_active {
 		if frame >= 4 {
 			frame = 4;
-			frame_timer = 0;
 		}
 	}
 	if state_timer <= 120 {
@@ -385,7 +380,6 @@ super_incinerate.run = function() {
 	if state_timer <= 150 {
 		if frame >= anim_frames - 1 {
 			frame -= 1;
-			frame_timer = 0;
 		}
 	}
 	if check_frame(5) {

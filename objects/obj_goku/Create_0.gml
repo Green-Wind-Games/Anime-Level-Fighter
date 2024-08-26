@@ -56,7 +56,7 @@ autocombo[i].start = function() {
 		play_voiceline(voice_attack,50,false);
 	}
 	else {
-		change_state(autocombo[4]);
+		change_state(autocombo[5]);
 	}
 }
 autocombo[i].run = function() {
@@ -319,7 +319,10 @@ kiai_push.start = function() {
 	}
 }
 kiai_push.run = function() {
-	if check_frame(4) {
+	if superfreeze_active {
+		frame = 0;
+	}
+	if check_frame(3) {
 		create_particles(x+width_half,y-height_half,x+width_half,y-height_half,shockwave);
 		create_hitbox(-50,-150,200,200,30,10,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
 	}
@@ -355,7 +358,7 @@ kamehameha.run = function() {
 		play_sound(snd_dbz_beam_fire);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam(20,-45,spr_kamehameha,0.5,0,10);
+		fire_beam(20,-25,spr_kamehameha,0.5,0,10);
 	}
 	return_to_idle();
 }
@@ -383,7 +386,6 @@ super_kamehameha.run = function() {
 	if superfreeze_active {
 		if frame > 5 {
 			frame = 4;
-			frame_timer = 0;
 		}
 		if superfreeze_timer == 15 {
 			if input.forward {
@@ -410,7 +412,7 @@ super_kamehameha.run = function() {
 		}
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam(20,-45,spr_kamehameha,1,0,10);
+		fire_beam(20,-25,spr_kamehameha,1,0,10);
 		shake_screen(5,3);
 	}
 	if check_frame(3) {
@@ -438,7 +440,6 @@ meteor_combo.start = function() {
 meteor_combo.run = function() {
 	if superfreeze_active {
 		frame = 0;
-		frame_timer = 0;
 	}
 	if can_cancel {
 		sprite_sequence(
@@ -549,7 +550,6 @@ genkidama.run = function() {
 	if frame > 11 {
 		if instance_exists(spirit_bomb) {
 			frame = 10;
-			frame_timer = 0;
 		}
 	}
 	return_to_idle();
@@ -620,7 +620,6 @@ victory_state.run = function() {
 			squash_stretch(1.1,0.9);
 			yspeed = 0;
 			frame = 2;
-			frame_timer = 0;
 		}
 	}
 }

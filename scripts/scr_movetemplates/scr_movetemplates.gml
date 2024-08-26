@@ -136,15 +136,17 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 			xscale = 100 / sprite_get_width(sprite);
 			with(hitbox) {
 				var hitbox_scale = 1/3;
+				xoffset = 0;
 				yoffset *= hitbox_scale;
 				image_yscale *= hitbox_scale;
 			}
 			active_script = function() {
 				xscale += 100 / sprite_get_width(sprite);
-				with(hitbox) {
-					image_xscale = (sprite_get_width(other.sprite) * other.xscale) / sprite_get_width(spr_hitbox) * other.xspeed;
-				}
 				alpha = duration / 10;
+				with(hitbox) {
+					image_angle = point_direction(0,0,abs(other.xspeed),other.yspeed);
+					image_xscale = ((sprite_get_width(other.sprite) * other.xscale) / sprite_get_width(spr_hitbox)) * other.facing;
+				}
 			}
 			hit_script = function(_hit) {
 				with(_hit) {
@@ -160,17 +162,14 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 	}
 	with(beam) {
 		ds_list_clear(hitbox.hit_list);
-		xspeed = _xlength;
-		yspeed = _ylength;
-		x = owner.x + _x;
-		y = owner.y + _y;
 		alpha = 1;
 		duration = 10;
 		
+		xspeed = _xlength * other.facing;
+		yspeed = _ylength;
+		x = owner.x + (_x * other.facing);
+		y = owner.y + _y;
 		with(hitbox) {
-			image_angle = other.rotation;
-			xoffset = lengthdir_x(sprite_height,_angle+90);
-			yoffset = lengthdir_y(sprite_height,_angle+90);
 			xknockback = _xlength * 10;
 			yknockback = _ylength * 10;
 			if yknockback == 0 then yknockback -= 2;

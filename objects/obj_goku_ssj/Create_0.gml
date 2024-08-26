@@ -189,7 +189,6 @@ forward_throw.run = function() {
 	yspeed = 0;
 	if state_timer < 30 {
 		frame = 0;
-		frame_timer = 0;
 	}
 	grab_frame(0,10,0,0,false);
 	if check_frame(3) {
@@ -303,7 +302,6 @@ super_kamehameha.run = function() {
 	if superfreeze_active {
 		if frame > 5 {
 			frame = 4;
-			frame_timer = 0;
 		}
 	}
 	if state_timer <= 120 {
@@ -338,7 +336,6 @@ meteor_combo.start = function() {
 meteor_combo.run = function() {
 	if superfreeze_active {
 		frame = 0;
-		frame_timer = 0;
 	}
 	if sprite == spr_goku_jab //standard_attack(3,40,attacktype.medium,hiteffects.hit);
 	if sprite == spr_goku_elbowbash //standard_attack(2,40,attacktype.medium,hiteffects.hit);

@@ -666,12 +666,11 @@ function update_shots() {
 function update_hitboxes() {
 	with(obj_hitbox_parent) {
 		if instance_exists(owner) {
-			x = owner.x + (xoffset * owner.facing);
-			y = owner.y + yoffset;
-			if facing != owner.facing {
-				image_xscale *= -1;
-				facing = owner.facing;
-			}
+			facing = owner.facing;
+			x = owner.x + lengthdir_x(xoffset * facing,image_angle) + lengthdir_y(yoffset, image_angle);
+			y = owner.y + lengthdir_x(yoffset,image_angle) + lengthdir_y(xoffset * facing, image_angle);
+			image_xscale = abs(image_xscale) * facing;
+			image_yscale = abs(image_yscale);
 		}
 		else {
 			instance_destroy();

@@ -175,7 +175,6 @@ forward_throw.run = function() {
 	yspeed = 0;
 	if state_timer < 20 {
 		frame = 0;
-		frame_timer = 0;
 	}
 	grab_frame(0,10,0,0,false);
 	if check_frame(2) {

@@ -206,10 +206,10 @@ function init_charstates() {
 	dash_state.run = function() {
 		xspeed = move_speed * 2 * facing;
 		yspeed = 0;
-		var dash_duration = 15;
+		var dash_duration = 10;
 		if input.forward {
 			if target.is_airborne or (target.on_ground and target_distance_x > 20)
-			dash_duration *= 4;
+			dash_duration = abs(left_wall-right_wall) / abs(xspeed);
 		}
 		if state_timer < dash_duration {
 			loop_sound(snd_dash_loop);
@@ -218,7 +218,7 @@ function init_charstates() {
 			change_state(dash_stop_state);
 		}
 		if input.up {
-			yspeed = -5;
+			yspeed = -jump_speed/2;
 			change_state(air_state);
 			play_sound(snd_jump);
 		}
@@ -318,7 +318,6 @@ function init_charstates() {
 		can_guard = true;
 		if state_timer < blockstun - anim_duration {
 			frame = 0;
-			frame_timer = 0;
 		}
 		if state_timer >= blockstun {
 			change_state(idle_state);
