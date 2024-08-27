@@ -7,8 +7,14 @@ init_charsprites("goku");
 name = "Goku";
 theme = mus_dbfz_goku;
 
+max_air_moves = 3;
+
+max_kiblasts = 7;
+kiblast_count = 0;
+
 kamehameha_cooldown = 0;
 kamehameha_cooldown_duration = 150;
+
 kaioken_active = false;
 kaioken_timer = 0;
 kaioken_duration = 5 * 60;
@@ -249,30 +255,39 @@ back_throw.run = function() {
 	forward_throw.run();
 }
 
-kaioken = new state();
-kaioken.start = function() {
-	if check_mp(1) and (!kaioken_timer) {
-		change_sprite(charge_sprite,3,true);
-		flash_sprite();
-		color = kaioken_color;
-		
-		activate_super(100);
+dragon_fist = new state();
+dragon_fist.start = function() {
+	if check_mp(1) {
+		change_sprite(spr_goku_attack_punch_gut,5,false);
+		activate_super();
 		spend_mp(1);
-		kaioken_timer = kaioken_duration;
-		
-		play_sound(snd_energy_surge);
-		play_voiceline(snd_goku_kaioken);
 	}
 	else {
 		change_state(previous_state);
 	}
 }
-kaioken.run = function() {
-	xspeed = 0;
-	yspeed = 0;
-	if !superfreeze_active {
-		change_state(idle_state);
+dragon_fist.run = function() {
+	if superfreeze_active {
+		frame = 0;
 	}
+	if check_frame(1) {
+		xspeed = -10 * facing;
+	}
+	if check_frame(2) {
+		xspeed = 0;
+		play_sound(snd_punch_whiff_heavy);
+	}
+	if check_frame(3) {
+		xspeed = 50 * facing;
+		create_hitbox(0,-height_half,width,height_half,50,20,-1,attacktype.unblockable,attackstrength.super,hiteffects.hit);
+	}
+	if check_frame(4) {
+		xspeed /= 10;
+		if can_cancel {
+			create_hitbox(0,-height_half,width,height_half,100,20,-1,attacktype.hard_knockdown,attackstrength.super,hiteffects.hit);
+		}
+	}
+	return_to_idle();
 }
 
 kiblast = new state();
@@ -481,6 +496,32 @@ meteor_combo.run = function() {
 	return_to_idle();
 }
 
+kaioken = new state();
+kaioken.start = function() {
+	if check_mp(1) and (!kaioken_timer) {
+		change_sprite(charge_sprite,3,true);
+		flash_sprite();
+		color = kaioken_color;
+		
+		activate_super(100);
+		spend_mp(1);
+		kaioken_timer = kaioken_duration;
+		
+		play_sound(snd_energy_surge);
+		play_voiceline(snd_goku_kaioken);
+	}
+	else {
+		change_state(previous_state);
+	}
+}
+kaioken.run = function() {
+	xspeed = 0;
+	yspeed = 0;
+	if !superfreeze_active {
+		change_state(idle_state);
+	}
+}
+
 genkidama = new state();
 genkidama.start = function() {
 	if check_mp(4) and !kaioken_active {
@@ -552,14 +593,10 @@ genkidama.run = function() {
 	return_to_idle();
 }
 
-max_air_moves = 3;
-
-max_kiblasts = 7;
-kiblast_count = 0;
 setup_autocombo();
 
-add_move(meteor_combo,"DA");
-add_move(kaioken,"DDA");
+add_move(dragon_fist,"DA");
+add_move(meteor_combo,"DDA");
 
 add_move(kiblast,"B");
 add_move(kiai_push,"DB");
@@ -567,6 +604,8 @@ add_move(kiai_push,"DB");
 add_move(kamehameha,"C");
 add_move(super_kamehameha,"DC");
 add_move(genkidama,"DDC");
+
+add_move(kaioken,"E");
 
 ai_script = function() {
 	if target_distance < 50 {
@@ -609,7 +648,7 @@ voice_powerup[i++] = snd_goku_powerup;
 victory_state.run = function() {
 	kaioken_timer = 0;
 	if check_frame(4) {
-		yspeed = -jump_speed / 2;
+		yspeed = -5;
 		squash_stretch(0.9,1.1);
 	}
 	if on_ground {

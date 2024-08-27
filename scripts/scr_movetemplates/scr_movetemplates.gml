@@ -178,9 +178,9 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 }
 
 function check_charge() {
-	if mp >= max_mp return false;
-	if (previous_state == charge_state) and (state_timer < 60) return false;
-	if input.button5_held return true;
+	//if mp >= max_mp return false;
+	if (previous_state == charge_state) and (state_timer < 30) return false;
+	if (input.button4_held >= 15) return true;
 	if ai_enabled {
 		if target_distance_x < 100 return false;
 		if active_state == charge_state return true;

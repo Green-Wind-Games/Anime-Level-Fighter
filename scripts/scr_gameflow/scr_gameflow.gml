@@ -690,13 +690,13 @@ function update_hitboxes() {
 			active = false;
 		}
 		if duration != -1 {
-			duration -= 1;
+			duration -= (!owner.hitstop) and (!superfreeze_active) and (!timefreeze_active);
 			if duration <= 0 {
 				active = false;
 			}
 		}
 		if active {
-			if (!superfreeze_active) and (!timefreeze_active) {
+			if (!owner.hitstop) and (!superfreeze_active) and (!timefreeze_active) {
 				check_hit();
 			}
 		}

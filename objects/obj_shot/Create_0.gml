@@ -21,3 +21,5 @@ hit_script = function() {};
 expire_script = function() {};
 
 blend = true;
+
+hitstop = 0;
