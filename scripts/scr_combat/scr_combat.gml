@@ -23,12 +23,6 @@ enum attackstrength {
 	ultimate
 }
 
-enum hitanims {
-	normal,
-	spinout,
-	flipout
-}
-
 enum hiteffects {
 	none,
 	
@@ -51,7 +45,7 @@ enum hiteffects {
 	light,
 }
 
-function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _strength, _hiteffect, _hitanim) {
+function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _strength, _hiteffect) {
 	var _xspeed = xspeed;
 	var _yspeed = yspeed;
 	xspeed = _xknockback * _attacker.facing;
@@ -72,12 +66,11 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		target = _attacker;
 	}
 	
+	hitstun = max(hitstun - (combo_hits_taken / 3), 1);
+		
 	if abs(_xknockback) >= 10
 	or abs(_yknockback) >= 10 {
 		hitstun = max(hitstun,40);
-	}
-	else {
-		hitstun = max(hitstun - (combo_hits_taken / 3), 5);
 	}
 	
 	hitstun = round(hitstun);
@@ -152,15 +145,18 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 				}
 				break;
 			}
+			
 			change_sprite(choose(hit_high_sprite,hit_low_sprite),3,false);
-			if _hitanim == hitanims.spinout {
-				change_sprite(spinout_sprite,3,true);
-				yoffset = -height_half;
+			if is_airborne {
+				change_sprite(hit_air_sprite,frame_duration,false);
 			}
-			else if (abs(xspeed) >= 10) or (abs(yspeed) >= 10) {
-				change_sprite(launch_sprite,3,true);
-				yoffset = -height_half;
+			if (abs(xspeed) >= 10) or (abs(yspeed) >= 10) {
+				change_sprite(launch_sprite,frame_duration,true);
 			}
+			if yspeed <= -10 {
+				change_sprite(spinout_sprite,frame_duration,true);
+			}
+			
 			if on_wall and on_ground {
 				if object_is_ancestor(_attacker.object_index,obj_char) {
 					_attacker.xspeed = xspeed * -0.5;
@@ -285,7 +281,14 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	dmg *= true_attacker.level;
 	
-	//dmg /= 4;
+	with(true_attacker) {
+		for(var i = 0; i < array_length(autocombo); i++) {
+			if active_state == autocombo[i] {
+				dmg /= 4;
+				break;
+			}
+		}
+	}
 	
 	dmg = max(round(dmg),1);
 	

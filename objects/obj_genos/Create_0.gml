@@ -168,7 +168,7 @@ forward_throw.run = function() {
 		var _hit = grabbed;
 		release_grab(0,20,0,0,0);
 		with(_hit) {
-			get_hit(other,50,1,-10,attacktype.normal,attackstrength.heavy,hiteffects.hit,hitanims.normal);
+			get_hit(other,50,1,-10,attacktype.normal,attackstrength.heavy,hiteffects.hit);
 		}
 	}
 	return_to_idle();
@@ -248,7 +248,7 @@ fireshot.start = function() {
 }
 fireshot.run = function() {
 	if check_frame(2) {
-		with(create_shot(40,-40,15,0,spr_fireball_small,1,50,10,-3,attacktype.wall_splat,attackstrength.heavy,hitanims.normal)) {
+		with(create_shot(40,-40,15,0,spr_fireball_small,1,50,10,-3,attacktype.wall_splat,attackstrength.heavy)) {
 			blend = true;
 			play_sound(snd_kiblast_fire,1,0.8);
 			hit_script = function() {
@@ -267,7 +267,7 @@ fireshot_up.start = function() {
 }
 fireshot_up.run = function() {
 	if check_frame(2) {
-		with(create_shot(15,-50,5,-15,spr_fireball_small,1,100,10,-10,attacktype.wall_bounce,attackstrength.heavy,hitanims.normal)) {
+		with(create_shot(15,-50,5,-15,spr_fireball_small,1,100,10,-10,attacktype.wall_bounce,attackstrength.heavy)) {
 			blend = true;
 			play_sound(snd_kiblast_fire,1,0.8);
 			hit_script = function() {
@@ -286,12 +286,12 @@ fireshot_down.start = function() {
 }
 fireshot_down.run = function() {
 	if check_frame(2) {
-		with(create_shot(15,-10,5,15,spr_fireball_small,1,50,1,0,attacktype.hard_knockdown,attackstrength.heavy,hitanims.normal)) {
+		with(create_shot(15,-10,5,15,spr_fireball_small,1,50,1,0,attacktype.hard_knockdown,attackstrength.heavy)) {
 			blend = true;
 			hit_limit = -1;
 			active_script = function() {
 				if on_ground {
-					with(create_shot(0,0,1,0,spr_explosion_floor,1,50,1,-10,attacktype.normal,attackstrength.heavy,hitanims.normal)) {
+					with(create_shot(0,0,1,0,spr_explosion_floor,1,50,1,-10,attacktype.normal,attackstrength.heavy)) {
 						duration = anim_duration;
 						hit_limit = -1;
 						play_sound(snd_explosion,1,2);

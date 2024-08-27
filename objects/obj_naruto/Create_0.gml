@@ -185,7 +185,7 @@ forward_throw.run = function() {
 		var _hit = grabbed;
 		release_grab(0,20,0,0,0);
 		with(_hit) {
-			get_hit(other,50,1,-10,attacktype.normal,attackstrength.heavy,hiteffects.hit,hitanims.normal);
+			get_hit(other,50,1,-10,attacktype.normal,attackstrength.heavy,hiteffects.hit);
 		}
 	}
 	return_to_idle();

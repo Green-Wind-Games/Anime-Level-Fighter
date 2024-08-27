@@ -76,7 +76,7 @@ part_type_blend(explosion_large,true);
 shockwave_particle = part_type_create();
 part_type_sprite(shockwave_particle,spr_shockwave,true,true,false);
 part_type_life(shockwave_particle,50,50);
-part_type_size(shockwave_particle,0.1,0.1,1/10,0);
+part_type_size(shockwave_particle,0.1,0.1,1/5,0);
 part_type_orientation(shockwave_particle,0,360,0,0,true);
 part_type_blend(shockwave_particle,true);
 part_type_alpha3(shockwave_particle,1,1,0);

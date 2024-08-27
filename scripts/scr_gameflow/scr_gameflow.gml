@@ -106,6 +106,10 @@ function chars_update_stats() {
 		tp_stocks = floor(tp/tp_stock_size);
 		
 		dead = (hp <= 0);
+		
+		if (!is_hit) and (!is_guarding) {
+			previous_hp = approach(previous_hp,hp,100);
+		}
 	}
 }
 
@@ -219,13 +223,10 @@ function run_charanimations() {
 		and (!hitstop) {
 			run_animation();
 		}
-		if sprite == spinout_sprite
-		or sprite == launch_sprite
-		or sprite == dash_sprite {
+		if sprite == spinout_sprite 
+		or sprite == launch_sprite {
+			yoffset = -height_half;
 			rotation = point_direction(0,0,abs(xspeed),-yspeed);
-		}
-		if (!is_hit) and (!is_guarding) {
-			previous_hp = approach(previous_hp,hp,100);
 		}
 	}
 }

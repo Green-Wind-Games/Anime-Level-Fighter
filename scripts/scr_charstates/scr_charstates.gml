@@ -395,6 +395,7 @@ function init_charstates() {
 	
 	wall_bounce_state = new state();
 	wall_bounce_state.start = function() {
+		change_sprite(launch_sprite,3,true);
 		reset_cancels();
 		is_hit = true;
 		can_guard = false;
@@ -581,7 +582,6 @@ function init_charstates() {
 			xspeed = facing;
 			
 			alpha -= 0.1;
-			color = merge_color(color,c_black,alpha);
 			if alpha <= 0 {
 				change_sprite(air_up_sprite,frame_duration,false);
 				reset_sprite();
@@ -598,7 +598,6 @@ function init_charstates() {
 		}
 		else {
 			alpha += 0.1;
-			color = merge_color(color,c_white,alpha);
 			if alpha >= 1 {
 				reset_sprite();
 				timefreeze(0);

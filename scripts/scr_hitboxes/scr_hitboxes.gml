@@ -115,7 +115,7 @@ function check_hit() {
 			}
 		}
 		with(b2) {
-			get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect,a.hit_anim);
+			get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect);
 		}
 	}
 }

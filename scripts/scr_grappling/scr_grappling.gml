@@ -41,14 +41,14 @@ function grab_frame(_frame, _x, _y, _rotation, _back) {
 	}
 }
 
-function release_grab(_frame,_x,_y,_xspeed,_yspeed,_damage,_attacktype,_strength,_hiteffect,_hitanim) {
+function release_grab(_frame,_x,_y,_xspeed,_yspeed,_damage,_attacktype,_strength,_hiteffect) {
 	if frame >= _frame {
 		with(grabbed) {
 			grabbed = noone;
 			other.x -= other.facing;
 			x = other.x + (_x * other.facing);
 			y = other.y + _y;
-			get_hit(other,_damage,_xspeed,_yspeed,_attacktype,_strength,_hiteffect,_hitanim);
+			get_hit(other,_damage,_xspeed,_yspeed,_attacktype,_strength,_hiteffect);
 		}
 		grabbed = noone;
 	}

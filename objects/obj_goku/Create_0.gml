@@ -338,8 +338,8 @@ kiai_push.run = function() {
 		frame = 0;
 	}
 	if check_frame(3) {
-		create_particles(x+width_half,y-height_half,x+width_half,y-height_half,shockwave);
-		create_hitbox(-50,-150,200,200,30,10,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
+		create_particles(x+width_half,y-height_half,x+width_half,y-height_half,shockwave_particle);
+		create_hitbox(-50,-150,200,200,100,20,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
 	}
 	if state_timer > 60 {
 		return_to_idle();
@@ -571,7 +571,7 @@ genkidama.run = function() {
 					duration = 0;
 					for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
 						with(ds_list_find_value(hitbox.hit_list,i)) {
-							get_hit(other,520,1,-12,attacktype.hard_knockdown,attackstrength.ultimate,hiteffects.none,hitanims.spinout);
+							get_hit(other,520,1,-12,attacktype.hard_knockdown,attackstrength.ultimate,hiteffects.none);
 							x = other.x;
 							y = ground_height - 1;
 							shake_screen(20,5);
