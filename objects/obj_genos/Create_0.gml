@@ -65,11 +65,12 @@ autocombo[i].start = function() {
 }
 autocombo[i].run = function() {
 	if state_timer mod 5 == 0 {
+		play_sound(snd_punch_whiff_medium);
 		repeat(3) {
 			with(create_shot(
 				0,
 				(-height) + random(height_half),
-				30,
+				10,
 				0,
 				spr_genos_blur_fist,
 				1,
@@ -81,11 +82,10 @@ autocombo[i].run = function() {
 				hiteffects.hit
 			)) {
 				blend = false;
-				duration = 10;
+				duration = 5;
 			}
 		}
 	}
-	play_sound(snd_punch_whiff_medium);
 	if state_timer > 60 {
 		if combo_hits > 0 {
 			change_state(autocombo[2]);
@@ -110,7 +110,7 @@ i++;
 
 autocombo[i] = new state();
 autocombo[i].start = function() {
-	change_sprite(spr_genos_attack_punch_straight,3,false);
+	change_sprite(spr_genos_attack_punch_straight,8,false);
 	play_sound(snd_punch_whiff_light);
 	play_voiceline(voice_attack,50,false);
 }
@@ -361,48 +361,4 @@ victory_state.run = function() {
 			frame = 2;
 		}
 	}
-}
-
-draw_script = function() {
-	if sprite == spr_genos_special_ki_blast
-	or sprite == spr_genos_special_ki_blast2 {
-		gpu_set_blendmode(bm_add);
-		if frame == 3 {
-			var _x = x + (28 * facing);
-			var _y = y - 32;
-			var _scale = 1 / 2;
-			//draw_sprite_ext(
-			//	spr_ki_spark,
-			//	frame_timer,
-			//	_x,
-			//	_y,
-			//	facing * _scale,
-			//	_scale,
-			//	rotation*facing,
-			//	c_white,
-			//	1
-			//);
-		}
-	}
-	if sprite == spr_genos_special_incinerate
-	or sprite == spr_genos_special_incinerate_air {
-		gpu_set_blendmode(bm_add);
-		if value_in_range(frame,3,5) {
-			var _x = x - (10 * facing);
-			var _y = y - 25;
-			var _scale = anim_timer / 120;
-			draw_sprite_ext(
-				spr_incinerate_charge,
-				0,
-				_x,
-				_y,
-				_scale,
-				_scale,
-				anim_timer * 5,
-				c_white,
-				1
-			);
-		}
-	}
-	gpu_set_blendmode(bm_normal);
 }
