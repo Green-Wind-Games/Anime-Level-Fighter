@@ -155,6 +155,14 @@ function create_hitspark(_x1,_y1,_x2,_y2,_strength,_hiteffect,_guard) {
 				}
 				break;
 			}
+			
+			if meme_enabled {
+				if _strength >= attackstrength.heavy {
+					if irandom(30) == 1 {
+						_sound = choose(snd_meme_hit_punch_gah,snd_meme_hit_fryingpan);
+					}
+				}
+			}
 		}
 		else {
 			switch(_hiteffect) {

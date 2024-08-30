@@ -158,6 +158,8 @@
     {"id":{"name":"snd_jump","path":"sounds/snd_jump/snd_jump.yy",},},
     {"id":{"name":"snd_kiblast_fire","path":"sounds/snd_kiblast_fire/snd_kiblast_fire.yy",},},
     {"id":{"name":"snd_knockout","path":"sounds/snd_knockout/snd_knockout.yy",},},
+    {"id":{"name":"snd_meme_hit_fryingpan","path":"sounds/snd_meme_hit_fryingpan/snd_meme_hit_fryingpan.yy",},},
+    {"id":{"name":"snd_meme_hit_punch_gah","path":"sounds/snd_meme_hit_punch_gah/snd_meme_hit_punch_gah.yy",},},
     {"id":{"name":"snd_menu_scroll","path":"sounds/snd_menu_scroll/snd_menu_scroll.yy",},},
     {"id":{"name":"snd_menu_select","path":"sounds/snd_menu_select/snd_menu_select.yy",},},
     {"id":{"name":"snd_punch_guard","path":"sounds/snd_punch_guard/snd_punch_guard.yy",},},

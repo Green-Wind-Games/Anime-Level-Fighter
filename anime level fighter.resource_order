@@ -128,6 +128,8 @@
     {"name":"snd_jump","order":9,"path":"sounds/snd_jump/snd_jump.yy",},
     {"name":"snd_kiblast_fire","order":10,"path":"sounds/snd_kiblast_fire/snd_kiblast_fire.yy",},
     {"name":"snd_knockout","order":11,"path":"sounds/snd_knockout/snd_knockout.yy",},
+    {"name":"snd_meme_hit_fryingpan","order":41,"path":"sounds/snd_meme_hit_fryingpan/snd_meme_hit_fryingpan.yy",},
+    {"name":"snd_meme_hit_punch_gah","order":42,"path":"sounds/snd_meme_hit_punch_gah/snd_meme_hit_punch_gah.yy",},
     {"name":"snd_menu_scroll","order":12,"path":"sounds/snd_menu_scroll/snd_menu_scroll.yy",},
     {"name":"snd_menu_select","order":13,"path":"sounds/snd_menu_select/snd_menu_select.yy",},
     {"name":"snd_punch_guard","order":14,"path":"sounds/snd_punch_guard/snd_punch_guard.yy",},

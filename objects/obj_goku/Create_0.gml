@@ -258,7 +258,7 @@ back_throw.run = function() {
 dragon_fist = new state();
 dragon_fist.start = function() {
 	if check_mp(1) {
-		change_sprite(spr_goku_attack_punch_gut,5,false);
+		change_sprite(spr_goku_attack_punch_gut,8,false);
 		activate_super();
 		spend_mp(1);
 	}
@@ -271,23 +271,25 @@ dragon_fist.run = function() {
 		frame = 0;
 	}
 	if check_frame(1) {
-		xspeed = -10 * facing;
+		xspeed = -5 * facing;
 	}
 	if check_frame(2) {
 		xspeed = 0;
 		play_sound(snd_punch_whiff_heavy);
 	}
 	if check_frame(3) {
-		xspeed = 50 * facing;
-		create_hitbox(0,-height_half,width,height_half,50,20,-1,attacktype.unblockable,attackstrength.super,hiteffects.hit);
+		xspeed = 30 * facing;
+		create_hitbox(0,-height_half,width,height_half,50,0,0,attacktype.unblockable,attackstrength.super,hiteffects.hit);
 	}
 	if check_frame(4) {
 		xspeed /= 10;
 		if can_cancel {
-			create_hitbox(0,-height_half,width,height_half,100,20,-1,attacktype.hard_knockdown,attackstrength.super,hiteffects.hit);
+			create_hitbox(0,-height_half,width,height_half,100,20,-2,attacktype.hard_knockdown,attackstrength.super,hiteffects.hit);
 		}
 	}
-	return_to_idle();
+	if (state_timer > 60) {
+		return_to_idle();
+	}
 }
 
 kiblast = new state();
