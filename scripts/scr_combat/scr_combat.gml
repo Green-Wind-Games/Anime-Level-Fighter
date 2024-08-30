@@ -244,8 +244,12 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	
 	depth = 0;
 	_attacker.depth = -1;
-	_attacker.hitstop = hitstop;
-	_attacker.can_cancel = true;
+	if (_attacker.object_index != obj_shot)
+	and (!object_is_ancestor(_attacker.object_index,obj_shot)) {
+		_attacker.hitstop = hitstop;
+		_attacker.can_cancel = true;
+	}
+	
 	create_hitspark(id,_strength,_hiteffect,guard_valid and guarding);
 	apply_hiteffect(_hiteffect,_strength,guard_valid and guarding);
 }

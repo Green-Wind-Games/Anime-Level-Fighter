@@ -5,6 +5,24 @@ function init_charstates() {
 	idle_state = new state();
 	idle_state.start = function() {
 		if on_ground {
+			if input != noone {
+				if input.forward {
+					change_sprite(walk_sprite,6,true);
+					accelerate(move_speed * facing);
+					xscale = abs(xscale);
+				}
+				else if input.back {
+					change_sprite(walk_sprite,6,true);
+					accelerate(move_speed * -facing);
+					xscale = -abs(xscale);
+				}
+				else {
+					change_sprite(idle_sprite,6,true);
+				}
+			}
+			else {
+				change_sprite(idle_sprite,6,true);
+			}
 			face_target();
 			reset_cancels();
 			yspeed = 0;

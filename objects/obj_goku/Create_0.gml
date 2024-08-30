@@ -343,7 +343,7 @@ kiai_push.run = function() {
 		frame = 0;
 	}
 	if check_frame(3) {
-		create_particles(x+width_half,y-height_half,x+width_half,y-height_half,shockwave_particle);
+		create_particles(x,y-height_half,x,y-height_half,shockwave_particle);
 		create_hitbox(-50,-150,200,200,100,20,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
 	}
 	if state_timer > 60 {
@@ -600,17 +600,17 @@ genkidama.run = function() {
 
 setup_autocombo();
 
-add_move(dragon_fist,"DA");
-add_move(meteor_combo,"DDA");
+add_move(dragon_fist,"EA");
+add_move(meteor_combo,"EEA");
 
 add_move(kiblast,"B");
-add_move(kiai_push,"DB");
+add_move(kiai_push,"EB");
 
 add_move(kamehameha,"C");
-add_move(super_kamehameha,"DC");
-add_move(genkidama,"DDC");
+add_move(super_kamehameha,"EC");
 
-add_move(kaioken,"E");
+add_move(kaioken,"D");
+add_move(genkidama,"ED");
 
 ai_script = function() {
 	if target_distance < 50 {

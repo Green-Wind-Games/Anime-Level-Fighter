@@ -154,6 +154,9 @@ function run_charphysics() {
 		and (!hitstop) {
 			run_physics();
 			decelerate();
+		}
+			
+		if (!superfreeze_active) and (!timestop_active) and (!hitstop) {
 			gravitate(ygravity_mod);
 		}
 		

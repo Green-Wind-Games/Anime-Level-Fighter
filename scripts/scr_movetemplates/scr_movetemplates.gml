@@ -180,8 +180,10 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 function check_charge() {
 	//if mp >= max_mp return false;
 	if (previous_state == charge_state) and (state_timer < 30) return false;
-	if (input.button4_held >= 15) return true;
-	if ai_enabled {
+	if !ai_enabled {
+		if (input.button5_held >= 10) return true;
+	}
+	else {
 		if target_distance_x < 100 return false;
 		if active_state == charge_state return true;
 		if random(100) < 5 return true;
