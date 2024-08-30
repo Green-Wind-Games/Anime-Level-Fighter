@@ -5,7 +5,6 @@ function init_charstates() {
 	idle_state = new state();
 	idle_state.start = function() {
 		if on_ground {
-			change_sprite(idle_sprite,6,true);
 			face_target();
 			reset_cancels();
 			yspeed = 0;
@@ -662,7 +661,7 @@ function init_charstates() {
 	
 	intro_state = new state();
 	intro_state.start = function() {
-		change_sprite(idle_sprite,10,true);
+		change_sprite(idle_sprite,6,true);
 		play_voiceline(voice_intro);
 	}
 	intro_state.run = function() {

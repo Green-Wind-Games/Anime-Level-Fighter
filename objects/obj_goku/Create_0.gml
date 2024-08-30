@@ -17,8 +17,8 @@ kamehameha_cooldown_duration = 150;
 
 kaioken_active = false;
 kaioken_timer = 0;
-kaioken_duration = 5 * 60;
-kaioken_buff = 1.5;
+kaioken_duration = 10 * 60;
+kaioken_buff = 1.25;
 kaioken_color = make_color_rgb(255,128,128);
 
 spirit_bomb = noone;

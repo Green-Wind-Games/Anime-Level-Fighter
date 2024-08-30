@@ -106,12 +106,16 @@ function superfreeze(_duration = 30) {
 }
 
 function activate_super(_duration = 30) {
+	xspeed = 0;
+	yspeed = 0;
 	super_state = active_state;
 	superfreeze(_duration);
 	play_sound(snd_activate_super);
 }
 
 function activate_ultimate(_duration = 60) {
+	xspeed = 0;
+	yspeed = 0;
 	super_state = active_state;
 	superfreeze(_duration);
 	play_sound(snd_activate_ultimate);
