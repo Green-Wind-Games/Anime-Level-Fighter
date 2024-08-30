@@ -91,7 +91,7 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 		change_sprite(sprite,3,true);
 		xscale = _scale;
 		yscale = _scale;
-		width = min(sprite_get_width(sprite),sprite_get_height(sprite)) * _scale * 0.5;
+		width = min(sprite_get_width(sprite),sprite_get_height(sprite)) * _scale * 0.64;
 		height = width;
 		width_half = floor(width / 2);
 		height_half = floor(height / 2);
