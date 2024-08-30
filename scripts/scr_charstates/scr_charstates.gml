@@ -419,9 +419,6 @@ function init_charstates() {
 		reset_cancels();
 		is_hit = true;
 		can_guard = false;
-		
-		xspeed = max(15,abs(xspeed)) * -facing;
-		play_sound(snd_punch_hit_launch);
 	}
 	wall_bounce_state.run = function() {
 		if yspeed >= 0 {
@@ -431,11 +428,12 @@ function init_charstates() {
 			y -= 1;
 		}
 		if on_wall {
+			take_damage(noone,abs(xspeed),true);
 			if xspeed < 0 {
-				create_particles(left_wall,y-height,left_wall,y-height,left_wall_bang_particle,10);
+				create_particles(left_wall,y-height_half,left_wall,y-height_half,left_wall_bang_particle,1);
 			}
 			else {
-				create_particles(right_wall,y-height,right_wall,y-height,right_wall_bang_particle,10);
+				create_particles(right_wall,y-height_half,right_wall,y-height_half,right_wall_bang_particle,1);
 			}
 			xspeed *= -0.25;
 			yspeed = -5;

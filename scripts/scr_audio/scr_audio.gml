@@ -1,8 +1,10 @@
 globalvar master_volume, sound_volume, music_volume, voice_volume;
-master_volume = 1/20;
+master_volume = 1;
 sound_volume = 1;
 music_volume = 1;
 voice_volume = 1;
+
+audio_set_master_gain(0,0.01);
 
 globalvar music, music_timer, music_min_duration;
 music = noone;

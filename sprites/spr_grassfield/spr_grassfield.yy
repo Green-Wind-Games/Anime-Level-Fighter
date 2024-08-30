@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Stages",
-    "path":"texturegroups/Stages",
+    "name":"Grassfield",
+    "path":"texturegroups/Grassfield",
   },
   "type":0,
   "VTile":false,

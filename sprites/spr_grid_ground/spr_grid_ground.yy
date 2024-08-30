@@ -100,8 +100,8 @@
   "swatchColours":null,
   "swfPrecision":2.525,
   "textureGroupId":{
-    "name":"Stages",
-    "path":"texturegroups/Stages",
+    "name":"TrainingStage",
+    "path":"texturegroups/TrainingStage",
   },
   "type":0,
   "VTile":false,

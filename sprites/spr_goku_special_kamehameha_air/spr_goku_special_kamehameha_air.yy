@@ -121,8 +121,8 @@
   "swatchColours":null,
   "swfPrecision":2.525,
   "textureGroupId":{
-    "name":"GokuBase",
-    "path":"texturegroups/GokuBase",
+    "name":"Genos",
+    "path":"texturegroups/Genos",
   },
   "type":0,
   "VTile":false,

@@ -82,24 +82,24 @@ part_type_blend(explosion_large,true);
 
 left_wall_bang_particle = part_type_create();
 part_type_sprite(left_wall_bang_particle,spr_impact_dust,true,true,false);
-part_type_life(left_wall_bang_particle,30,30);
-part_type_size(left_wall_bang_particle,0.2,0.2,0,0);
+part_type_life(left_wall_bang_particle,20,20);
+part_type_size(left_wall_bang_particle,0.5,0.5,1/30,0);
 part_type_orientation(left_wall_bang_particle,-90,-90,0,0,false);
 part_type_blend(left_wall_bang_particle,true);
 part_type_alpha3(left_wall_bang_particle,1,1,0);
 
 floor_bang_particle = part_type_create();
 part_type_sprite(floor_bang_particle,spr_impact_dust,true,true,false);
-part_type_life(floor_bang_particle,30,30);
-part_type_size(floor_bang_particle,0.2,0.2,0,0);
+part_type_life(floor_bang_particle,20,20);
+part_type_size(floor_bang_particle,0.5,0.5,1/30,0);
 part_type_orientation(floor_bang_particle,0,0,0,0,false);
 part_type_blend(floor_bang_particle,true);
 part_type_alpha3(floor_bang_particle,1,1,0);
 
 right_wall_bang_particle = part_type_create();
 part_type_sprite(right_wall_bang_particle,spr_impact_dust,true,true,false);
-part_type_life(right_wall_bang_particle,30,30);
-part_type_size(right_wall_bang_particle,0.2,0.2,0,0);
+part_type_life(right_wall_bang_particle,20,20);
+part_type_size(right_wall_bang_particle,0.5,0.5,1/30,0);
 part_type_orientation(right_wall_bang_particle,90,90,0,0,false);
 part_type_blend(right_wall_bang_particle,true);
 part_type_alpha3(right_wall_bang_particle,1,1,0);

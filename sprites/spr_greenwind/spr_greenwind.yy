@@ -117,8 +117,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Enker",
-    "path":"texturegroups/Enker",
+    "name":"SpecialEffects",
+    "path":"texturegroups/SpecialEffects",
   },
   "type":0,
   "VTile":false,

@@ -19,27 +19,18 @@ char_script = function() {
 var i = 0;
 autocombo[i] = new state();
 autocombo[i].start = function() {
-	if previous_state == dash_state
-	or previous_state == airdash_state
-	or previous_state == air_backdash_state {
-		if previous_state == air_backdash_state {
-			facing = -facing;
-		}
-		change_state(dash_attack);
+	if on_ground {
+		change_sprite(spr_genos_jab,3,false);
+		play_sound(snd_punch_whiff_light);
+		play_voiceline(voice_attack,50,false);
 	}
 	else {
-		if on_ground {
-			change_sprite(spr_genos_jab,3,false);
-			play_sound(snd_punch_whiff_light);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(autocombo[4]);
-		}
+		change_state(autocombo[4]);
 	}
 }
 autocombo[i].run = function() {
-	//standard_attack(2,10,attacktype.normal,hiteffects.hit);
+	basic_attack(2,10,attackstrength.light,hiteffects.hit);
+	return_to_idle();
 	check_moves();
 }
 i++;
@@ -51,7 +42,8 @@ autocombo[i].start = function() {
 	play_voiceline(voice_attack,50,false);
 }
 autocombo[i].run = function() {
-	//standard_attack(2,20,attacktype.medium,hiteffects.hit);
+	basic_attack(2,20,attackstrength.medium,hiteffects.hit);
+	return_to_idle();
 	check_moves();
 }
 i++;

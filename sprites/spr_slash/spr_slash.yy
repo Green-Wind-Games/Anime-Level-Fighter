@@ -89,8 +89,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Weapons",
-    "path":"texturegroups/Weapons",
+    "name":"SpecialEffects",
+    "path":"texturegroups/SpecialEffects",
   },
   "type":0,
   "VTile":false,

@@ -98,7 +98,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		if on_ground {
 			yspeed = 0;
 		}
-		take_damage(_attacker,_damage/10,false);
+		take_damage(_attacker,_damage/20,false);
 	}
 	else {
 		var connect = true;
@@ -129,10 +129,13 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 				case attacktype.wall_bounce:
 				if previous_state != wall_bounce_state {
 					change_state(wall_bounce_state);
+					play_sound(snd_punch_hit_launch);
 				}
 				else {
 					change_state(hit_state);
 				}
+				xspeed = max(40,_xknockback) * _attacker.facing;
+				hitstun = max(hitstun,100);
 				break;
 				
 				case attacktype.slide_knockdown:
@@ -169,11 +172,9 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			
 			var _hp = hp;
 			var dmg = take_damage(_attacker,_damage,!grabbed);
-			
-			combo_hits_taken++;
-			combo_damage_taken += dmg;
-			
+	
 			combo_timer = hitstun + 10;
+			combo_hits_taken++;
 			
 			if object_is_ancestor(_attacker.object_index,obj_char) {
 				with(_attacker) {
@@ -257,11 +258,24 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 function take_damage(_attacker,_amount,_kill) {
 	var dmg = round(_amount);
 	
-	var true_attacker = _attacker;
-	if !object_is_ancestor(_attacker.object_index,obj_char) {
-		true_attacker = _attacker.owner;
-	}
 	var defender = id;
+	
+	var true_attacker = _attacker;
+	if instance_exists(true_attacker) {
+		if !object_is_ancestor(_attacker.object_index,obj_char) {
+			true_attacker = _attacker.owner;
+		}
+		with(true_attacker) {
+			dmg *= attack_power;
+			dmg *= level;
+			for(var i = 0; i < array_length(autocombo); i++) {
+				if active_state == autocombo[i] {
+					dmg /= 3;
+					break;
+				}
+			}
+		}
+	}
 	
 	var scaling = map_value(
 		combo_hits_taken,
@@ -281,22 +295,9 @@ function take_damage(_attacker,_amount,_kill) {
 	);
 	guts = clamp(guts,0.1,1);
 	
+	dmg /= defender.defense;
 	dmg *= scaling;
 	dmg *= guts;
-	
-	dmg *= true_attacker.attack_power;
-	dmg /= defender.defense;
-	
-	dmg *= true_attacker.level;
-	
-	with(true_attacker) {
-		for(var i = 0; i < array_length(autocombo); i++) {
-			if active_state == autocombo[i] {
-				dmg /= 4;
-				break;
-			}
-		}
-	}
 	
 	dmg = max(round(dmg),1);
 	
@@ -304,6 +305,9 @@ function take_damage(_attacker,_amount,_kill) {
 	if !_kill {
 		hp = max(hp,1);
 	}
+	
+	combo_damage_taken += dmg;
+	
 	return dmg;
 }
 

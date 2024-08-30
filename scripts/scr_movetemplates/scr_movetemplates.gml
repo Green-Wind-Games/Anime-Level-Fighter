@@ -1,13 +1,18 @@
 function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
 		if is_airborne {
-			if target_distance <= 30 {
+			if target_distance <= 50 {
 				xspeed = 3 * facing;
 				yspeed = -1.8;
 			}
 		}
 		else {
-			xspeed = 3 * facing;
+			if target_distance <= 50 {
+				xspeed = (target_distance_x / 8) * facing;
+			}
+			else {
+				xspeed = 3 * facing;
+			}
 		}
 	}
 	if check_frame(_hitframe) {

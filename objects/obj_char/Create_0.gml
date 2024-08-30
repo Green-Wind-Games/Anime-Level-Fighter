@@ -52,7 +52,8 @@ deflecting_attacks = false;
 immune_to_projectiles = false;
 dodging_projectiles = false;
 deflecting_projectiles = false;
-	
+
+input = noone;
 input_buffer = "";
 input_buffer_timer = 0;
 	

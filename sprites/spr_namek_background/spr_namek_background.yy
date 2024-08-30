@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":2.525,
   "textureGroupId":{
-    "name":"Stages",
-    "path":"texturegroups/Stages",
+    "name":"Namek",
+    "path":"texturegroups/Namek",
   },
   "type":0,
   "VTile":false,
