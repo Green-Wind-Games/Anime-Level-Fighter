@@ -35,14 +35,14 @@ function init_charstates() {
 				accelerate(move_speed * -facing);
 				xscale = -abs(xscale);
 				
-				facing = -facing;
-				if target_front_enemy() == noone {
-					facing = -facing;
-				}
-				else {
-					xscale = abs(xscale);
-					target = target_front_enemy();
-				}
+				//facing = -facing;
+				//if target_front_enemy() == noone {
+				//	facing = -facing;
+				//}
+				//else {
+				//	xscale = abs(xscale);
+				//	target = target_front_enemy();
+				//}
 			}
 			else {
 				change_sprite(idle_sprite,6,true);
@@ -57,6 +57,9 @@ function init_charstates() {
 				change_state(charge_state);
 			}
 			check_moves();
+		}
+		else {
+			change_sprite(idle_sprite,6,true);
 		}
 	}
 
@@ -577,30 +580,30 @@ function init_charstates() {
 	
 	substitution_state = new state();
 	substitution_state.start = function() {
-		change_sprite(guard_sprite,3,false);
+		change_sprite(crouch_sprite,3,false);
 		reset_sprite();
-		timefreeze();
+		timestop();
 	}
 	substitution_state.run = function() {
 		xspeed = 0;
 		yspeed = 0;
 		face_target();
-		timefreeze(10);
-		if sprite == guard_sprite {
+		timestop(10);
+		if sprite == crouch_sprite {
 			xspeed = facing;
 			
 			alpha -= 0.1;
 			if alpha <= 0 {
-				change_sprite(air_up_sprite,frame_duration,false);
+				change_sprite(uncrouch_sprite,frame_duration,false);
 				reset_sprite();
 				alpha = 0;
 				color = c_black;
-				x = target_x + (width * facing);
+				x = target_x + (100 * facing);
 				y = target_y;
 				
 				if !value_in_range(x,left_wall,right_wall) {
 					x = target_x;
-					y = target_y - 69;
+					y = target_y - 100;
 				}
 			}
 		}
@@ -608,7 +611,67 @@ function init_charstates() {
 			alpha += 0.1;
 			if alpha >= 1 {
 				reset_sprite();
-				timefreeze(0);
+				timestop(0);
+				change_state(idle_state);
+			}
+		}
+	}
+	
+	teleport_state = new state();
+	teleport_state.start = function() {
+		if check_tp(1) {
+			spend_tp(1);
+			change_sprite(crouch_sprite,3,false);
+			reset_sprite();
+			timestop();
+			play_sound(snd_dbz_teleport_short);
+		}
+		else {
+			change_state(previous_state);
+		}
+	}
+	teleport_state.run = function() {
+		xspeed = 0;
+		yspeed = 0;
+		face_target();
+		timestop(10);
+		if sprite == crouch_sprite {
+			alpha -= 0.2;
+			if alpha <= 0 {
+				change_sprite(uncrouch_sprite,frame_duration,false);
+				reset_sprite();
+				alpha = 0;
+				color = c_black;
+				
+				var dist = (game_width / 3)
+				x += dist * sign(input.right-input.left);
+				y += dist * sign(input.down-input.up);
+				
+				if !input.left
+				and !input.right
+				and !input.up
+				and !input.down {
+					x += dist * facing;
+				}
+				
+				face_target();
+				if !value_in_range(x,left_wall,right_wall) {
+					x = clamp(x,left_wall,right_wall);
+					if target_x <= left_wall
+					or target_x >= right_wall {
+						target_x += width * facing;
+					}
+				}
+				if y > ground_height {
+					y = ground_height;
+				}
+			}
+		}
+		else {
+			alpha += 0.2;
+			if alpha >= 1 {
+				reset_sprite();
+				timestop(0);
 				change_state(idle_state);
 			}
 		}
@@ -706,6 +769,8 @@ function init_charstates() {
 	
 	add_move(dash_state,"956");
 	add_move(backdash_state,"754");
+	
+	add_move(teleport_state,"F");
 	
 	init_states(idle_state);
 }

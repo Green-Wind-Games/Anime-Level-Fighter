@@ -284,7 +284,7 @@ dragon_fist.run = function() {
 	if check_frame(4) {
 		xspeed /= 10;
 		if can_cancel {
-			create_hitbox(0,-height_half,width,height_half,100,20,-2,attacktype.hard_knockdown,attackstrength.super,hiteffects.hit);
+			create_hitbox(0,-height_half,width,height_half,100,20,-2,attacktype.hard_knockdown,attackstrength.super,hiteffects.none);
 		}
 	}
 	if (state_timer > 60) {
@@ -333,6 +333,9 @@ kiai_push.start = function() {
 		activate_super();
 		spend_mp(1);
 		change_sprite(spr_goku_special_ki_blast,3,false);
+	}
+	else {
+		change_state(previous_state)
 	}
 }
 kiai_push.run = function() {

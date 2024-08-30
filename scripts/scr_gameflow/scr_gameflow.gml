@@ -81,14 +81,14 @@ function update_fight() {
 		superfreeze_timer = 0;
 	}
 	
-	if timefreeze_timer > 0 {
-		timefreeze_active = true;
-		timefreeze_timer -= 1;
+	if timestop_timer > 0 {
+		timestop_active = true;
+		timestop_timer -= 1;
 	}
 	else {
-		timefreeze_active = false;
-		timefreeze_activator = noone;
-		timefreeze_timer = 0;
+		timestop_active = false;
+		timestop_activator = noone;
+		timestop_timer = 0;
 	}
 }
 
@@ -116,7 +116,7 @@ function chars_update_stats() {
 function run_charstates() {
 	with(obj_char) {
 		if ((!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)))
-		and ((!timefreeze_active) or ((timefreeze_active) and (timefreeze_activator == id))) {
+		and ((!timestop_active) or ((timestop_active) and (timestop_activator == id))) {
 			if (!hitstop) {
 				run_state();
 			}
@@ -124,7 +124,7 @@ function run_charstates() {
 				hitstop -= 1;
 			}
 		}
-		if (!superfreeze_active) and (!timefreeze_active) and (!hitstop) {
+		if (!superfreeze_active) and (!timestop_active) and (!hitstop) {
 			char_script();
 			state_timer += 1;
 			tp++;
@@ -150,7 +150,7 @@ function run_charphysics() {
 	var _y2 = 0;
 	with(obj_char) {
 		if ((!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)))
-		and ((!timefreeze_active) or ((timefreeze_active) and (timefreeze_activator == id)))
+		and ((!timestop_active) or ((timestop_active) and (timestop_activator == id)))
 		and (!hitstop) {
 			run_physics();
 			decelerate();
@@ -177,7 +177,7 @@ function run_charphysics() {
 	var battle_size = game_width * 1.25;
 	left_wall = clamp(battle_x - (battle_size / 2),0,room_width-game_width) + border;
 	right_wall = clamp(battle_x + (battle_size / 2),game_width,room_width) - border;
-	if (!superfreeze_active) and (!timefreeze_active) {
+	if (!superfreeze_active) and (!timestop_active) {
 		with(obj_char) {
 			with(obj_char) {
 				if grabbed or other.grabbed continue;
@@ -594,8 +594,9 @@ function check_deaths() {
 }
 
 function update_shots() {
-	if (!superfreeze_active) and (!timefreeze_active) {
+	if (!superfreeze_active) and (!timestop_active) {
 		with(obj_shot) {
+			hitstop = 0;
 			gravitate(affected_by_gravity);
 			if bounce {
 				if x <= left_wall {
@@ -691,13 +692,13 @@ function update_hitboxes() {
 			active = false;
 		}
 		if duration != -1 {
-			duration -= (!owner.hitstop) and (!superfreeze_active) and (!timefreeze_active);
+			duration -= (!owner.hitstop) and (!superfreeze_active) and (!timestop_active);
 			if duration <= 0 {
 				active = false;
 			}
 		}
 		if active {
-			if (!owner.hitstop) and (!superfreeze_active) and (!timefreeze_active) {
+			if (!owner.hitstop) and (!superfreeze_active) and (!timestop_active) {
 				check_hit();
 			}
 		}
@@ -709,7 +710,7 @@ function update_hitboxes() {
 
 function update_combo() {
 	with(obj_char) {
-		if (!hitstop) and (!superfreeze_active) and (!timefreeze_active) {
+		if (!hitstop) and (!superfreeze_active) and (!timestop_active) {
 			if combo_timer-- <= 0 {
 				reset_combo();
 			}

@@ -2,6 +2,7 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 globalvar	particle_system,
 			hitspark_light, hitspark_medium, hitspark_heavy,
+			hitspark_super,
 			guardspark,
 			slashspark,
 			explosion_small, explosion_medium, explosion_large,
@@ -19,32 +20,37 @@ part_type_life(guardspark,25,25);
 part_type_size(guardspark,0.5,0.5,0,0);
 part_type_blend(guardspark,true);
 	
-var _spark_scale = 40 / sprite_get_width(spr_hitspark);
-var _spark_increase = (_spark_scale) / 10;
-	
 hitspark_light = part_type_create();
 part_type_sprite(hitspark_light,spr_hitspark,true,true,false);
-part_type_life(hitspark_light,15,15);
-part_type_size(hitspark_light,_spark_scale,_spark_scale,_spark_increase,0);
+part_type_life(hitspark_light,12,12);
+part_type_size(hitspark_light,1/5,1/5,1/60,0);
 part_type_orientation(hitspark_light,0,360,0,0,true);
 part_type_blend(hitspark_light,true);
 part_type_color1(hitspark_light,c_white);
 	
 hitspark_medium = part_type_create();
 part_type_sprite(hitspark_medium,spr_hitspark,true,true,false);
-part_type_life(hitspark_medium,15,15);
-part_type_size(hitspark_medium,_spark_scale,_spark_scale,_spark_increase,0);
+part_type_life(hitspark_medium,16,16);
+part_type_size(hitspark_medium,1/5,1/5,1/50,0);
 part_type_orientation(hitspark_medium,0,360,0,0,true);
 part_type_blend(hitspark_medium,true);
 part_type_color1(hitspark_medium,make_color_rgb(255,255,0));
 	
 hitspark_heavy = part_type_create();
 part_type_sprite(hitspark_heavy,spr_hitspark,true,true,false);
-part_type_life(hitspark_heavy,15,15);
-part_type_size(hitspark_heavy,_spark_scale,_spark_scale,_spark_increase,0);
+part_type_life(hitspark_heavy,20,20);
+part_type_size(hitspark_heavy,1/5,1/5,1/40,0);
 part_type_orientation(hitspark_heavy,0,360,0,0,true);
 part_type_blend(hitspark_heavy,true);
 part_type_color1(hitspark_heavy,make_color_rgb(255,128,0));
+	
+hitspark_super = part_type_create();
+part_type_sprite(hitspark_super,spr_hitspark,true,true,false);
+part_type_life(hitspark_super,24,24);
+part_type_size(hitspark_super,1/5,1/5,1/30,0);
+part_type_orientation(hitspark_super,0,360,0,0,true);
+part_type_blend(hitspark_super,true);
+part_type_color1(hitspark_super,make_color_rgb(255,64,0));
 	
 slashspark = part_type_create();
 part_type_sprite(slashspark,spr_slashspark,true,true,false);
@@ -78,23 +84,23 @@ left_wall_bang_particle = part_type_create();
 part_type_sprite(left_wall_bang_particle,spr_impact_dust,true,true,false);
 part_type_life(left_wall_bang_particle,30,30);
 part_type_size(left_wall_bang_particle,0.2,0.2,0,0);
-part_type_orientation(left_wall_bang_particle,0,0,0,0,false);
+part_type_orientation(left_wall_bang_particle,-90,-90,0,0,false);
 part_type_blend(left_wall_bang_particle,true);
 part_type_alpha3(left_wall_bang_particle,1,1,0);
 
 floor_bang_particle = part_type_create();
-part_type_sprite(right_wall_bang_particle,spr_impact_dust,true,true,false);
-part_type_life(right_wall_bang_particle,30,30);
-part_type_size(right_wall_bang_particle,0.2,0.2,0,0);
-part_type_orientation(right_wall_bang_particle,90,90,0,0,false);
-part_type_blend(right_wall_bang_particle,true);
-part_type_alpha3(right_wall_bang_particle,1,1,0);
+part_type_sprite(floor_bang_particle,spr_impact_dust,true,true,false);
+part_type_life(floor_bang_particle,30,30);
+part_type_size(floor_bang_particle,0.2,0.2,0,0);
+part_type_orientation(floor_bang_particle,0,0,0,0,false);
+part_type_blend(floor_bang_particle,true);
+part_type_alpha3(floor_bang_particle,1,1,0);
 
 right_wall_bang_particle = part_type_create();
 part_type_sprite(right_wall_bang_particle,spr_impact_dust,true,true,false);
 part_type_life(right_wall_bang_particle,30,30);
 part_type_size(right_wall_bang_particle,0.2,0.2,0,0);
-part_type_orientation(right_wall_bang_particle,180,180,0,0,false);
+part_type_orientation(right_wall_bang_particle,90,90,0,0,false);
 part_type_blend(right_wall_bang_particle,true);
 part_type_alpha3(right_wall_bang_particle,1,1,0);
 
@@ -152,10 +158,10 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 function create_hitspark(_target,_strength,_hiteffect,_guard) {
 	var _sound = noone;
 	var _p = 1/5;
-	var _x1 = _target.x -						(target.width_half * _p);
-	var _y1 = _target.y - target.height_half -	(target.height_half * _p);
-	var _x2 = _target.x +						(target.width_half * _p);
-	var _y2 = _target.y - target.height_half +	(target.height_half * _p);
+	var _x1 = _target.x -						(_target.width_half * _p);
+	var _y1 = _target.y - _target.height_half -	(_target.height_half * _p);
+	var _x2 = _target.x +						(_target.width_half * _p);
+	var _y2 = _target.y - _target.height_half +	(_target.height_half * _p);
 	switch(_hiteffect) {
 		default:
 		if !_guard {
@@ -186,10 +192,13 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 				case hiteffects.slash:
 				create_particles(_x1,_y1,_x2,_y2,slashspark);
 				if _strength < attackstrength.medium {
-					_sound = snd_slash_hit_light;
+					_sound = choose(snd_slash_hit_light,snd_slash_hit_light2);
 				}
 				else if _strength < attackstrength.heavy {
-					_sound = snd_slash_hit_medium;
+					_sound = choose(snd_slash_hit_medium);
+				}
+				else if _strength < attackstrength.super {
+					_sound = choose(snd_slash_hit_heavy,snd_slash_hit_heavy2);
 				}
 				else if _strength < attackstrength.super {
 					_sound = choose(snd_slash_hit_super);
@@ -199,7 +208,7 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 			
 			if meme_enabled {
 				if _strength >= attackstrength.heavy {
-					if irandom(30) == 1 {
+					if irandom(20) == 1 {
 						_sound = choose(snd_meme_hit_punch_gah,snd_meme_hit_fryingpan);
 					}
 				}

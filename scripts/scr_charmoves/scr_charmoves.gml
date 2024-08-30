@@ -93,10 +93,10 @@ function setup_autocombo() {
 	}
 }
 
-function timefreeze(_duration = 30) {
-	timefreeze_active = true;
-	timefreeze_activator = id;
-	timefreeze_timer = _duration;
+function timestop(_duration = 30) {
+	timestop_active = true;
+	timestop_activator = id;
+	timestop_timer = _duration;
 }
 
 function superfreeze(_duration = 30) {

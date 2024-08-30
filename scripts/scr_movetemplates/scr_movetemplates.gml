@@ -3,7 +3,7 @@ function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 		if is_airborne {
 			if target_distance <= 30 {
 				xspeed = 3 * facing;
-				yspeed = -2;
+				yspeed = -1.8;
 			}
 		}
 		else {
@@ -86,7 +86,7 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 		change_sprite(sprite,3,true);
 		xscale = _scale;
 		yscale = _scale;
-		width = min(sprite_get_width(sprite),sprite_get_height(sprite)) * _scale * 0.75;
+		width = min(sprite_get_width(sprite),sprite_get_height(sprite)) * _scale * 0.5;
 		height = width;
 		width_half = floor(width / 2);
 		height_half = floor(height / 2);

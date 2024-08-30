@@ -44,9 +44,9 @@ function check_hit() {
 		var b = id;
 		var b2 = owner;
 		
-		if !place_meeting(x,y,a) continue;
 		if a2.team == b2.team continue;
 		if ds_list_find_index(a.hit_list,b2) != -1 continue;
+		if !place_meeting(x,y,a) continue;
 		
 		if object_is_ancestor(a2.object_index,obj_char)
 		and object_is_ancestor(b2.object_index,obj_char) {
@@ -73,14 +73,13 @@ function check_hit() {
 	with(obj_hurtbox) {
 		var b = id;
 		var b2 = owner;
+		
 		if a2.team == b2.team continue;
-		if !place_meeting(x,y,a) continue;
 		if ds_list_find_index(a.hit_list,b2) != -1 continue;
 		if b2.grabbed continue;
+		if !place_meeting(x,y,a) continue;
 		
-		ds_list_add(a.hit_list,b2);
-		
-		if object_is_ancestor(a2.object_index,obj_shot) {
+		if (a2.object_index == obj_shot) or object_is_ancestor(a2.object_index,obj_shot) {
 			if b2.dodging_projectiles {
 				continue;
 			}
@@ -107,6 +106,9 @@ function check_hit() {
 		
 		if check_substitution(b2,2) continue;
 		
+		with(b2) {
+			get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect);
+		}
 		if a2.object_index == obj_shot
 		or object_is_ancestor(a2.object_index,obj_shot) {
 			with(a2) {
@@ -114,8 +116,6 @@ function check_hit() {
 				hit_count++;
 			}
 		}
-		with(b2) {
-			get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect);
-		}
+		ds_list_add(a.hit_list,b2);
 	}
 }

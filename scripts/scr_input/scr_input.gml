@@ -130,7 +130,7 @@ function update_charinputs() {
 			input_buffer_timer = ceil(60 / 5);
 		}
 		else {
-			if (!hitstop) and (!timefreeze_active) and (!superfreeze_active) {
+			if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
 				if input_buffer_timer-- <= 0 {
 					input_buffer = dir;
 					input_buffer_timer = 0;

@@ -121,7 +121,11 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 					yspeed = -abs(xspeed) / 2;
 				}
 				break;
-									
+				
+				case attacktype.hard_knockdown:
+				change_state(hard_knockdown_state);
+				break;
+				
 				case attacktype.wall_bounce:
 				if previous_state != wall_bounce_state {
 					change_state(wall_bounce_state);
@@ -130,15 +134,11 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 					change_state(hit_state);
 				}
 				break;
-									
-				case attacktype.hard_knockdown:
-				change_state(hard_knockdown_state);
-				break;
-									
+				
 				case attacktype.slide_knockdown:
 				change_state(slide_knockdown_state);
 				break;
-									
+				
 				case attacktype.grab:
 				with(_attacker) {
 					init_grab(id,other);
@@ -152,9 +152,13 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			}
 			if (abs(xspeed) >= 10) or (abs(yspeed) >= 10) {
 				change_sprite(launch_sprite,frame_duration,true);
+				yoffset = -height_half;
+				rotation = point_direction(0,0,abs(xspeed),-yspeed);
 			}
 			if yspeed <= -10 {
 				change_sprite(spinout_sprite,frame_duration,true);
+				yoffset = -height_half;
+				rotation = point_direction(0,0,abs(xspeed),-yspeed);
 			}
 			
 			if on_wall and on_ground {
@@ -242,7 +246,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	_attacker.depth = -1;
 	_attacker.hitstop = hitstop;
 	_attacker.can_cancel = true;
-	create_hitspark(x-width_half,y-(height*0.75),x+width_half,y-(height*0.25),_strength,_hiteffect,guard_valid and guarding);
+	create_hitspark(id,_strength,_hiteffect,guard_valid and guarding);
 	apply_hiteffect(_hiteffect,_strength,guard_valid and guarding);
 }
 
