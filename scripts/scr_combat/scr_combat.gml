@@ -66,7 +66,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		target = _attacker;
 	}
 	
-	hitstun = max(hitstun - (combo_hits_taken / 3), 1);
+	hitstun = max(hitstun - (combo_hits_taken / 5), 10);
 		
 	if abs(_xknockback) >= 10
 	or abs(_yknockback) >= 10 {

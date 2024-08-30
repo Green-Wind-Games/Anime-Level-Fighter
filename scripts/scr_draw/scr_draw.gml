@@ -365,13 +365,14 @@ function draw_hud() {
 	//	text_y = mean(hp_y1,hp_y2);
 	//}
 	
-	var clock_x1 = clock_x - (clock_text_width / 2) + 1;
-	var clock_x2 = clock_x + (clock_text_width / 2) - 1;
-	var clock_y1 = clock_y - (clock_text_height / 2);
-	var clock_y2 = clock_y + (clock_text_height / 2);
-	draw_set_color(c_black);
-	draw_rectangle(clock_x1,clock_y1,clock_x2,clock_y2,false);
-	draw_set_color(c_white);
+	//var clock_x1 = clock_x - (clock_text_width / 2) + 1;
+	//var clock_x2 = clock_x + (clock_text_width / 2) - 1;
+	//var clock_y1 = clock_y - (clock_text_height / 2);
+	//var clock_y2 = clock_y + (clock_text_height / 2);
+	//draw_set_color(c_black);
+	//draw_rectangle(clock_x1,clock_y1,clock_x2,clock_y2,false);
+	draw_sprite(spr_timer,0,clock_x,clock_y);
+	draw_set_color(make_color_rgb(255,255,0));
 	draw_text(clock_x,clock_y,clock_text);
 }
 

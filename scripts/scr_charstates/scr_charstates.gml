@@ -582,7 +582,7 @@ function init_charstates() {
 		xspeed = _xspeed;
 		yspeed = _yspeed;
 		rotation = point_direction(0,0,abs(xspeed),yspeed);
-		var stop_distance = _speed;
+		var stop_distance = 5;
 		if previous_state == tag_out_state {
 			stop_distance *= 2;
 		}

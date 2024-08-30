@@ -83,6 +83,7 @@ autocombo[i].run = function() {
 			)) {
 				blend = false;
 				duration = 5;
+				hit_limit = 2;
 			}
 		}
 	}
@@ -110,7 +111,7 @@ i++;
 
 autocombo[i] = new state();
 autocombo[i].start = function() {
-	change_sprite(spr_genos_attack_punch_straight,8,false);
+	change_sprite(spr_genos_attack_punch_straight,3,false);
 	play_sound(snd_punch_whiff_light);
 	play_voiceline(voice_attack,50,false);
 }
@@ -136,7 +137,7 @@ i++;
 
 autocombo[i] = new state();
 autocombo[i].start = function() {
-	change_sprite(spr_genos_attack_kick_straight,4,false);
+	change_sprite(spr_genos_attack_kick_straight,3,false);
 	play_sound(snd_punch_whiff_medium);
 	play_voiceline(voice_attack,50,false);
 }
@@ -149,16 +150,14 @@ i++;
 
 autocombo[i] = new state();
 autocombo[i].start = function() {
-	change_sprite(spr_genos_attack_kick_up,2,false);
+	change_sprite(spr_genos_attack_kick_up,3,false);
 	play_voiceline(voice_attack,50,false);
 	play_sound(snd_punch_whiff_medium);
 }
 autocombo[i].run = function() {
 	basic_attack(2,30,attackstrength.medium,hiteffects.hit);
 	return_to_idle();
-	if frame >= 10 {
-		check_moves();
-	}
+	check_moves();
 }
 i++;
 
@@ -252,7 +251,7 @@ fireblast.run = function() {
 			yspeed = -2;
 		}
 	}
-	if state_timer > 60 {
+	if state_timer > 45 {
 		return_to_idle();
 	}
 }
@@ -286,8 +285,8 @@ incinerate.run = function() {
 super_incinerate = new state();
 super_incinerate.start = function() {
 	if (!incinerate_cooldown) and check_mp(2) {
-		change_sprite(spr_genos_special_incinerate2,5,false);
-		activate_super(320);
+		change_sprite(spr_genos_special_incinerate2,10,false);
+		activate_super(60);
 		spend_mp(2);
 		xspeed = 0;
 		yspeed = 0;
@@ -301,25 +300,25 @@ super_incinerate.run = function() {
 	xspeed = 0;
 	yspeed = 0;
 	if superfreeze_active {
-		if frame > 5 {
-			frame = 5;
+		if frame > 4 {
+			frame = 4;
 		}
 	}
 	if state_timer <= 120 {
-		if frame > 7 {
-			frame = 6;
+		if frame > 6 {
+			frame = 5;
 			frame_timer = 1;
 		}
 	}
-	if value_in_range(frame,6,7) {
+	if value_in_range(frame,5,6) {
 		fire_beam(20,-25,spr_incinerate,1,0,10);
 		shake_screen(5,3);
 	}
-	if check_frame(4) {
-		play_sound(snd_dbz_beam_charge_long);
-	}
-	if check_frame(6) {
+	if check_frame(3) {
 		play_voiceline(snd_genos_incinerate);
+		play_sound(snd_dbz_beam_charge_short);
+	}
+	if check_frame(5) {
 		play_sound(snd_dbz_beam_fire2);
 	}
 	return_to_idle();
