@@ -63,22 +63,3 @@ function update_menus() {
 function goto_versus_select() {
 	game_state = gamestates.versus_select;
 }
-
-function p1_select_a_assist() {
-	p1_selected_assist[p1_charselect_id] = assist_type.a;
-}
-function p1_select_b_assist() {
-	p1_selected_assist[p1_charselect_id] = assist_type.b;
-}
-function p1_select_c_assist() {
-	p1_selected_assist[p1_charselect_id] = assist_type.c;
-}
-function p2_select_a_assist() {
-	p2_selected_assist[p2_charselect_id] = assist_type.a;
-}
-function p2_select_b_assist() {
-	p2_selected_assist[p2_charselect_id] = assist_type.b;
-}
-function p2_select_c_assist() {
-	p2_selected_assist[p2_charselect_id] = assist_type.c;
-}

@@ -78,6 +78,10 @@ defense = 1;
 next_form = noone;
 
 char_script = function() {};
+
+death_script = function() {};
+death_timer = 0;
+
 draw_script = function() {};
 
 init_physics();

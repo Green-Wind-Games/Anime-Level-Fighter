@@ -73,11 +73,16 @@ else {
 	super_state = noone;
 	super_active = false;
 }
+
+if dead {
+	death_script();
+	death_timer++;
+}
+else {
+	death_timer = 0;
+}
 		
 if (!dead) or (xspeed != 0) {
 	x = clamp(x, left_wall, right_wall);
 }
 y = min(y,ground_height);
-
-if ((superfreeze_active) and (superfreeze_activator != id)) exit;
-if ((timestop_active) and (timestop_activator != id)) exit;

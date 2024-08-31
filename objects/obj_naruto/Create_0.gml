@@ -7,28 +7,84 @@ init_charsprites("naruto");
 name = "Naruto";
 
 move_speed *= 1.5;
+max_air_moves = 1;
 
 theme = mus_naruto_strongandstrike;
 
+shadow_clone_jutsu_cooldown = 0;
+shadow_clone_jutsu_cooldown_duration = 300;
+
 char_script = function() {
+	with(obj_helper) {
+		if owner == other {
+			with(other) {
+				shadow_clone_jutsu_cooldown = shadow_clone_jutsu_cooldown_duration;
+			}
+		}
+	}
+}
+
+ai_script = function() {
 	
 }
+
+airdash_state.start = function() {
+	if air_moves < max_air_moves {
+		change_sprite(dash_sprite,2,true);
+		yoffset = -height/2;
+		rotation = 20;
+		xspeed = move_speed * 1.5 * facing;
+		yspeed = -5;
+		air_moves += 1;
+		play_sound(snd_dash);
+	}
+	else {
+		change_state(air_state);
+	}
+}
+airdash_state.run = function() {
+	if state_timer >= 15 {
+		change_state(air_state);
+	}
+}
+
+air_backdash_state.start = function() {
+	if air_moves < max_air_moves {
+		change_sprite(dash_sprite,2,true);
+		yoffset = -height/2;
+		xscale = -1;
+		rotation = 20;
+		xspeed = move_speed * 1.5 * -facing;
+		yspeed = -5;
+		air_moves += 1;
+		play_sound(snd_dash);
+	}
+	else {
+		change_state(air_state);
+	}
+}
+air_backdash_state.run = function() {
+	if state_timer >= 15 {
+		change_state(air_state);
+	}
+}
+
 
 var i = 0;
 autocombo[i] = new state();
 autocombo[i].start = function() {
 	if on_ground {
-		change_sprite(spr_naruto_jab,3,false);
+		change_sprite(spr_naruto_attack_punch_straight,5,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
 	else {
-		change_state(autocombo[5]);
+		change_state(autocombo[7]);
 	}
 }
 autocombo[i].run = function() {
-	//standard_attack(2,10,attacktype.normal,hiteffects.hit);
-	check_moves();
+	basic_attack(2,10,attackstrength.light,hiteffects.hit);
+	return_to_idle();
 }
 i++;
 
@@ -200,79 +256,22 @@ back_throw.run = function() {
 	forward_throw.run();
 }
 
-assist_a_state = new state();
-assist_a_state.start = function() {
-	change_sprite(air_down_sprite,6,false);
-	face_target();
-	x -= (50 * facing);
-}
-assist_a_state.run = function() {
-	
-}
-
-assist_b_state = new state();
-assist_b_state.start = function() {
-	change_sprite(air_down_sprite,6,false);
-	face_target();
-	x = target_x - (50 * facing);
-}
-assist_b_state.run = function() {
-	
-}
-
-assist_c_state = new state();
-assist_c_state.start = function() {
-	change_sprite(air_down_sprite,6,false);
-	face_target();
-	x += (20 * facing);
-}
-assist_c_state.run = function() {
-	
-}
-
-airdash_state.start = function() {
-	if air_moves < max_air_moves {
-		change_sprite(dash_sprite,2,true);
-		yoffset = -height/2;
-		rotation = 20;
-		xspeed = move_speed * 1.5 * facing;
-		yspeed = -5;
-		air_moves += 1;
-		play_sound(snd_dash);
+shadow_clone_jutsu = new state();
+shadow_clone_jutsu.start = function() {
+	if check_mp(2) and (!shadow_clone_jutsu_cooldown) {
+		change_sprite(spr_naruto_jutsu,5,false);
+		activate_super();
+		spend_mp(2);
 	}
 	else {
-		change_state(air_state);
+		change_state(previous_state);
 	}
 }
-airdash_state.run = function() {
-	if state_timer >= 15 {
-		change_state(air_state);
+shadow_clone_jutsu.run = function() {
+	if check_frame(3) {
+		create_clone(-width_half,0);
 	}
 }
-
-air_backdash_state.start = function() {
-	if air_moves < max_air_moves {
-		change_sprite(dash_sprite,2,true);
-		yoffset = -height/2;
-		xscale = -1;
-		rotation = 20;
-		xspeed = move_speed * 1.5 * -facing;
-		yspeed = -5;
-		air_moves += 1;
-		play_sound(snd_dash);
-	}
-	else {
-		change_state(air_state);
-	}
-}
-air_backdash_state.run = function() {
-	if state_timer >= 15 {
-		change_state(air_state);
-	}
-}
-	
-
-max_air_moves = 1;
 
 setup_autocombo();
 //add_move(kiblast,"B");
@@ -282,10 +281,6 @@ setup_autocombo();
 //add_move(kaioken,"D");
 //add_move(super_rasengan,"41236B");
 //add_move(genkidama,"63214B");
-
-ai_script = function() {
-	
-}
 
 //var i = 0;
 //voice_attack[i++] = snd_naruto_attack1;

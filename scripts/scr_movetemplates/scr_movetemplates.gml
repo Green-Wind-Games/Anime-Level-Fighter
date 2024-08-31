@@ -84,7 +84,7 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	var shot = instance_create(x+(_x*facing),y+_y,obj_shot);
 	with(shot) {
 		owner = me;
-		if owner.object_index == obj_shot or object_is_ancestor(owner.object_index,obj_shot) {
+		if is_shot(me) {
 			owner = me.owner;
 		}
 		init_sprite(_sprite);
@@ -155,7 +155,7 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 			}
 			hit_script = function(_hit) {
 				with(_hit) {
-					if object_is_ancestor(_hit.object_index,obj_char) {
+					if is_char(_hit) or is_helper(_hit) {
 						if (!on_ground) or (other.yspeed <= 0) {
 							x += other.xspeed*4;
 							y += other.yspeed*4;
@@ -184,6 +184,7 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 
 function check_charge() {
 	//if mp >= max_mp return false;
+	if !is_char(id) return false;
 	if (previous_state == charge_state) and (state_timer < 30) return false;
 	if !ai_enabled {
 		if (input.button5_held >= 10) return true;
@@ -198,14 +199,14 @@ function check_charge() {
 
 function check_substitution(_defender,_cost = 1) {
 	with(_defender) {
-		if check_input("F") {
-			if check_tp(_cost) {
-				spend_tp(_cost);
-				change_state(substitution_state);
-				hitstop = 0;
-				return true;
-			}
-		}
+		if !is_char(id) return false;
+		if !check_input("F") return false;
+		if !check_tp(_cost) return false;
+		
+		spend_tp(_cost);
+		change_state(substitution_state);
+		hitstop = 0;
+		return true;
 	}
 	return false;
 }

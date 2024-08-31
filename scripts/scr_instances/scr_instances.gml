@@ -3,3 +3,19 @@
 function instance_create(_x,_y,obj) {
 	return instance_create_depth(_x,_y,0,obj);
 }
+
+function is_char(_obj) {
+	with(_obj) {
+		return object_is_ancestor(object_index,obj_char) and (!is_helper(id));
+	}
+}
+
+function is_helper(_obj) {
+	with(_obj) {
+		return object_index == obj_helper;
+	}
+}
+
+function is_shot(_obj) {
+	return (object_index == obj_shot) or object_is_ancestor(object_index,obj_shot);;
+}

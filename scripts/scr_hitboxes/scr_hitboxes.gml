@@ -48,14 +48,12 @@ function check_hit() {
 		if ds_list_find_index(a.hit_list,b2) != -1 continue;
 		if !place_meeting(x,y,a) continue;
 		
-		if object_is_ancestor(a2.object_index,obj_char)
-		and object_is_ancestor(b2.object_index,obj_char) {
+		if is_char(a2) and is_char(b2) {
 			init_clash(a2,b2);
 			ds_list_add(a.hit_list,b2);
 			ds_list_add(b.hit_list,a2);
 		}
-		else if ((a2.object_index == obj_shot) or (object_is_ancestor(a2.object_index,obj_shot)))
-		and ((b2.object_index == obj_shot) or (object_is_ancestor(b2.object_index,obj_shot))) {
+		else if is_shot(a2) and is_shot(b2) {
 			with(a2) {
 				hit_script(b2);
 				if b2.width >= a2.width {
@@ -79,7 +77,7 @@ function check_hit() {
 		if b2.grabbed continue;
 		if !place_meeting(x,y,a) continue;
 		
-		if (a2.object_index == obj_shot) or object_is_ancestor(a2.object_index,obj_shot) {
+		if is_shot(a2) {
 			if b2.dodging_projectiles {
 				continue;
 			}
@@ -109,8 +107,7 @@ function check_hit() {
 		with(b2) {
 			get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect);
 		}
-		if a2.object_index == obj_shot
-		or object_is_ancestor(a2.object_index,obj_shot) {
+		if is_shot(a2) {
 			with(a2) {
 				hit_script(b2);
 				hit_count++;

@@ -55,7 +55,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	blockstun = hitstun - 5;
 	hitstop = map_value(_strength,attackstrength.light,attackstrength.heavy,10,15);
 	
-	if object_is_ancestor(_attacker.object_index,obj_shot) {
+	if !is_char(_attacker) {
 		hitstop *= 0.5;
 		target = _attacker.owner;
 	}
@@ -105,7 +105,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		if invincible {
 			connect = false;
 		}
-		if _attacker.object_index == obj_shot or object_is_ancestor(_attacker.object_index,obj_shot) {
+		if is_shot(_attacker) {
 			if immune_to_projectiles {
 				connect = false;
 			}
@@ -165,7 +165,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			}
 			
 			if on_wall and on_ground {
-				if object_is_ancestor(_attacker.object_index,obj_char) {
+				if is_char(_attacker) or is_helper(_attacker) {
 					_attacker.xspeed = xspeed * -0.5;
 				}
 			}
@@ -176,7 +176,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			combo_timer = hitstun + 10;
 			combo_hits_taken++;
 			
-			if object_is_ancestor(_attacker.object_index,obj_char) {
+			if is_char(_attacker) or is_helper(_attacker) {
 				with(_attacker) {
 					combo_timer = other.combo_timer;
 					combo_hits++;
@@ -226,15 +226,15 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	//	mp_gain *= 0.5;
 	//}
 	mp += mp_gain * defend_mp_multiplier;
-	if _attacker.object_index == obj_shot or object_is_ancestor(_attacker.object_index,obj_shot) {
-		with(_attacker.owner) {
+	if is_char(_attacker) {
+		with(_attacker) {
 			if !super_active {
 				mp += mp_gain * attack_mp_multiplier;
 			}
 		}
 	}
 	else {
-		with(_attacker) {
+		with(_attacker.owner) {
 			if !super_active {
 				mp += mp_gain * attack_mp_multiplier;
 			}
@@ -245,8 +245,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	
 	depth = 0;
 	_attacker.depth = -1;
-	if (_attacker.object_index != obj_shot)
-	and (!object_is_ancestor(_attacker.object_index,obj_shot)) {
+	if is_char(_attacker) or is_helper(_attacker) {
 		_attacker.hitstop = hitstop;
 		_attacker.can_cancel = true;
 	}
@@ -262,7 +261,7 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	var true_attacker = _attacker;
 	if instance_exists(true_attacker) {
-		if !object_is_ancestor(_attacker.object_index,obj_char) {
+		if !is_char(true_attacker) {
 			true_attacker = _attacker.owner;
 		}
 		with(true_attacker) {
