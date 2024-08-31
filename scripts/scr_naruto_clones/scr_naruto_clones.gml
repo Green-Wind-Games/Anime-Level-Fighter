@@ -2,15 +2,20 @@ function init_naruto_baseform_clone() {
 	init_charsprites("naruto");
 	
 	create_particles(x,y,x,y,jutsu_smoke_particle);
+	
+	max_hp = 1;
+	hp = max_hp;
 
 	helper_attack_script = function() {
-		if (target_distance < 10) {
+		if (target_distance < 20) {
 			change_state(choose(punch,punch2));
 		}
 	}
 	
-	max_hp = 10;
-	hp = max_hp;
+	death_script = function() {
+		create_particles(x,y,x,y,jutsu_smoke_particle);
+		instance_destroy();
+	}
 	
 	punch = new state();
 	punch.start = function() {
@@ -21,9 +26,11 @@ function init_naruto_baseform_clone() {
 	punch.run = function() {
 		basic_attack(2,10,attackstrength.light,hiteffects.hit);
 		if anim_finished {
-			return_to_idle();
 			if can_cancel and choose(true,false) {
 				change_state(punch2);
+			}
+			else {
+				change_state(jump_state);
 			}
 		}
 	}
@@ -35,6 +42,8 @@ function init_naruto_baseform_clone() {
 	}
 	punch2.run = function() {
 		basic_attack(2,20,attackstrength.light,hiteffects.hit);
-		return_to_idle();
+		if anim_finished {
+			change_state(jump_state);
+		}
 	}
 }

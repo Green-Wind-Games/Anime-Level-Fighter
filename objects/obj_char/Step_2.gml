@@ -75,8 +75,9 @@ else {
 }
 
 if dead {
-	death_script();
-	death_timer++;
+	if death_timer++ >= hitstun {
+		death_script();
+	}
 }
 else {
 	death_timer = 0;

@@ -8,10 +8,10 @@ with(input) {
 }
 
 helper_script = function() {
-	if irandom(3) == 1 {
+	if irandom(5) == 1 {
 		change_state(jump_state);
 	}
-	else if irandom(3) == 1 {
+	else if irandom(2) == 1 {
 		change_sprite(walk_sprite,map_value(sprite_get_number(walk_sprite),4,8,6,3),true);
 	}
 	else {
@@ -29,9 +29,7 @@ helper_attack_script = function() {
 }
 
 death_script = function() {
-	if death_timer >= hitstun {
-		instance_destroy();
-	}
+	instance_destroy();
 }
 
 init_helperstates();

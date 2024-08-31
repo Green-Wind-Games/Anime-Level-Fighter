@@ -12,9 +12,10 @@ function init_naruto_baseform() {
 	shadow_clone_jutsu_cooldown_duration = 300;
 
 	char_script = function() {
+		var me = id;
 		with(obj_helper) {
-			if owner == other {
-				with(other) {
+			if owner == me {
+				with(me) {
 					shadow_clone_jutsu_cooldown = shadow_clone_jutsu_cooldown_duration;
 				}
 			}

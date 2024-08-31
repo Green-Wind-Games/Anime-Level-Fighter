@@ -269,7 +269,7 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	var true_attacker = _attacker;
 	if instance_exists(true_attacker) {
-		if !is_char(true_attacker) {
+		if (!is_char(true_attacker)) and (!is_helper(true_attacker)) {
 			true_attacker = _attacker.owner;
 		}
 		with(true_attacker) {
@@ -284,11 +284,11 @@ function take_damage(_attacker,_amount,_kill) {
 				}
 			}
 			else if is_helper(id) {
+				dmg *= owner.level;
 				dmg /= 4;
 			}
 		}
 	}
-	
 	var scaling = map_value(
 		combo_hits_taken,
 		0,

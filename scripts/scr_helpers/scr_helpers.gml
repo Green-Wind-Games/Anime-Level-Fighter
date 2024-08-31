@@ -29,10 +29,8 @@ function init_helperstates() {
 	idle_state.run = function() {
 		face_target();
 		if round_state == roundstates.fight {
-			if (state_timer mod 20) == 1 {
-				if choose(true,false) {
-					helper_attack_script();
-				}
+			helper_attack_script();
+			if (state_timer mod 30) == 1 {
 				if active_state == idle_state {
 					helper_script();
 				}

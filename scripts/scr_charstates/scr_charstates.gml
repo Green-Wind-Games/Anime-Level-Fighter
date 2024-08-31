@@ -6,22 +6,7 @@ function init_charstates() {
 	idle_state.start = function() {
 		if on_ground {
 			if input != noone {
-				if input.forward {
-					change_sprite(walk_sprite,6,true);
-					accelerate(move_speed * facing);
-					xscale = abs(xscale);
-				}
-				else if input.back {
-					change_sprite(walk_sprite,6,true);
-					accelerate(move_speed * -facing);
-					xscale = -abs(xscale);
-				}
-				else {
-					change_sprite(idle_sprite,6,true);
-				}
-			}
-			else {
-				change_sprite(idle_sprite,6,true);
+				idle_state.run();
 			}
 			face_target();
 			reset_cancels();
@@ -373,16 +358,15 @@ function init_charstates() {
 			}
 		}
 		else {
-			if on_ground {
-				if yspeed == 0 {
-					if state_timer >= hitstun {
-						change_state(liedown_state);
-						yspeed = -2;
-					}
-				}
-				else {
+			if on_ground and (yspeed >= 0) {
+				if state_timer >= hitstun {
 					change_state(liedown_state);
+					xspeed = -3 * facing;
+					yspeed = -5;
 				}
+			}
+			else {
+				change_state(hard_knockdown_state);
 			}
 		}
 	}
@@ -728,7 +712,6 @@ function init_charstates() {
 	charge_state.start = function() {
 		if check_charge() {
 			change_sprite(charge_start_sprite,3,false);
-			play_voiceline(voice_powerup);
 		}
 		else {
 			change_state(previous_state);
@@ -739,6 +722,7 @@ function init_charstates() {
 			if anim_finished {
 				change_sprite(charge_loop_sprite,3,true)
 				flash_sprite();
+				play_voiceline(voice_powerup);
 				play_sound(snd_energy_start);
 			}
 		}
