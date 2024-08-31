@@ -4,49 +4,33 @@
 function init_charstates() {
 	idle_state = new state();
 	idle_state.start = function() {
+		face_target();
+		can_guard = true;
+		can_cancel = true;
+		is_hit = false;
+		is_guarding = false;
+		reset_cancels();
+		
 		if auto_levelup() {
 			exit;
 		}
+		
 		if on_ground {
-			face_target();
-			reset_cancels();
 			yspeed = 0;
 			air_moves = 0;
+			
 			if input != noone {
-				var walk_anim_speed = round(map_value(sprite_get_number(walk_sprite),4,8,6,3));
-				if input.up {
-					change_state(jump_state);
-				}
-				else if input.down {
-					change_state(crouch_state);
-				}
-				else if input.forward {
-					change_sprite(walk_sprite,walk_anim_speed,true);
-					accelerate(move_speed * facing);
-					xscale = abs(xscale);
-				}
-				else if input.back {
-					change_sprite(walk_sprite,walk_anim_speed,true);
-					accelerate(move_speed * -facing);
-					xscale = -abs(xscale);
-				}
-				else {
-					change_sprite(idle_sprite,6,true);
-				}
+				idle_state.run();
 			}
 		}
 		else {
 			change_state(air_state);
 		}
-		can_guard = true;
-		can_cancel = true;
-		is_hit = false;
-		is_guarding = false;
-		deactivate_super();
 	}
 	idle_state.run = function() {
 		if round_state == roundstates.fight {
 			var walk_anim_speed = round(map_value(sprite_get_number(walk_sprite),4,8,6,3));
+			face_target();
 			if check_moves() {
 				
 			}
@@ -81,20 +65,21 @@ function init_charstates() {
 
 	crouch_state = new state();
 	crouch_state.start = function() {
-		change_sprite(crouch_sprite,3,false);
+		change_sprite(crouch_sprite,2,false);
 		face_target();
-		reset_cancels();
-		yspeed = 0;
-		air_moves = 0;
-		can_guard = true;
-		can_cancel = true;
 	}
 	crouch_state.run = function() {
 		face_target();
-		if input.down {
+		if check_moves() {
+			
+		}
+		else if input.down {
 			if sprite != crouch_sprite {
 				change_sprite(crouch_sprite,frame_duration,false);
 			}
+		}
+		else if input.up {
+			change_state(superjump_state);
 		}
 		else {
 			if sprite != uncrouch_sprite {
@@ -102,19 +87,6 @@ function init_charstates() {
 			}
 			return_to_idle();
 		}
-		if input.up {
-			change_state(superjump_state);
-		}
-		else if input.back {
-			facing = -facing;
-			if target_front_enemy() == noone {
-				facing = -facing;
-			}
-			else {
-				target = target_front_enemy();
-			}
-		}
-		check_moves();
 	}
 
 	jump_state = new state();
@@ -122,29 +94,17 @@ function init_charstates() {
 		change_sprite(crouch_sprite,2,false);
 		squash_stretch(1.2,0.8);
 		face_target();
-		reset_cancels();
-		xspeed = 0;
-		yspeed = 0;
-		air_moves = 0;
-		can_guard = true;
-		can_cancel = true;
 	}
 	jump_state.run = function() {
-		if state_timer > 5 {
+		if check_moves() {
+			
+		}
+		else if state_timer > 5 {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -jump_speed;
 			xspeed = move_speed * sign(input.right - input.left);
 			play_sound(snd_jump);
-		}
-		else if input.back {
-			facing = -facing;
-			if target_front_enemy() == noone {
-				facing = -facing;
-			}
-			else {
-				target = target_front_enemy();
-			}
 		}
 	}
 
@@ -152,15 +112,13 @@ function init_charstates() {
 	superjump_state.start = function() {
 		change_sprite(crouch_sprite,2,false);
 		squash_stretch(1.25,0.75);
-		reset_cancels();
-		xspeed = 0;
-		yspeed = 0;
-		air_moves = 0;
-		can_guard = true;
-		can_cancel = true;
+		face_target();
 	}
 	superjump_state.run = function() {
-		if state_timer > 5 {
+		if check_moves() {
+			
+		}
+		else if state_timer > 5 {
 			change_state(air_state);
 			squash_stretch(0.75,1.25);
 			yspeed = -jump_speed * 1.5;
@@ -172,11 +130,18 @@ function init_charstates() {
 	air_state = new state();
 	air_state.start = function() {
 		change_sprite(air_peak_sprite,5,true);
-		reset_cancels();
-		can_guard = true;
-		can_cancel = true;
+		if land() {
+			exit;
+		}
 	}
 	air_state.run = function() {
+		if land() {
+			exit;
+		}
+		if check_moves() {
+			exit;
+		}
+		
 		if yspeed >= 0 {
 			if input.up {
 				if air_moves < max_air_moves {
@@ -187,24 +152,23 @@ function init_charstates() {
 					play_sound(snd_airjump);
 				}
 			}
-			//else if input.down {
-			//	if yspeed < 5 {
-			//		yspeed = 5;
-			//	}
-			//}
+			else if input.down {
+				if yspeed < move_speed {
+					yspeed = move_speed;
+				}
+			}
 		}
+		
 		var peak_speed = 2;
-		if yspeed < -peak_speed {
-			change_sprite(air_up_sprite,5,true);
-		}
-		else if yspeed <= peak_speed {
+		if value_in_range(yspeed,-peak_speed,peak_speed) {
 			change_sprite(air_peak_sprite,5,true);
+		}
+		else if yspeed < 0 {
+			change_sprite(air_up_sprite,5,true);
 		}
 		else {
 			change_sprite(air_down_sprite,5,true);
 		}
-		land();
-		check_moves();
 	}
 	
 	dash_state = new state();
@@ -222,27 +186,29 @@ function init_charstates() {
 		}
 	}
 	dash_state.run = function() {
-		xspeed = move_speed * 2 * facing;
-		yspeed = 0;
-		var dash_duration = 10;
-		if input.forward {
-			if target.is_airborne or (target.on_ground and target_distance_x > 20)
-			dash_duration = abs(left_wall-right_wall) / abs(xspeed);
+		if check_moves() {
+			exit;
 		}
-		if state_timer < dash_duration {
+		
+		var dash_duration = 15;
+		if input.forward {
+			if (target.is_airborne) or (target.on_ground and target_distance_x > 10) {
+				dash_duration = abs(left_wall-right_wall) / abs(xspeed);
+			}
+		}
+		
+		if state_timer <= dash_duration {
+			xspeed = move_speed * 2 * facing;
+			yspeed = 0;
 			loop_sound(snd_dash_loop);
+			if input.up {
+				yspeed = -jump_speed/2;
+				change_state(air_state);
+				play_sound(snd_jump);
+			}
 		}
 		else {
 			change_state(dash_stop_state);
-		}
-		if input.up {
-			yspeed = -jump_speed/2;
-			change_state(air_state);
-			play_sound(snd_jump);
-		}
-		else {
-			can_cancel = true;
-			check_moves();
 		}
 	}
 	dash_state.stop = function() {
@@ -274,7 +240,7 @@ function init_charstates() {
 		change_sprite(uncrouch_sprite,3,false);
 	}
 	dash_stop_state.run = function() {
-		if state_timer > 8 {
+		if (state_timer > 10) or (xspeed == 0) {
 			change_state(idle_state);
 		}
 	}
@@ -294,6 +260,9 @@ function init_charstates() {
 		}
 	}
 	airdash_state.run = function() {
+		if check_moves() {
+			exit;
+		}
 		xspeed = move_speed * 2 * facing;
 		yspeed = 0;
 		if state_timer >= 15 {
@@ -317,7 +286,10 @@ function init_charstates() {
 		}
 	}
 	air_backdash_state.run = function() {
-		xspeed = move_speed * 2 * -facing;
+		if check_moves() {
+			exit;
+		}
+		xspeed = -move_speed * 2 * facing;
 		yspeed = 0;
 		if state_timer >= 15 {
 			change_state(air_state);
@@ -327,7 +299,6 @@ function init_charstates() {
 	guard_state = new state();
 	guard_state.start = function() {
 		change_sprite(guard_sprite,6,false);
-		reset_cancels();
 		is_guarding = true;
 		can_guard = true;
 	}
@@ -347,7 +318,6 @@ function init_charstates() {
 	
 	hit_state = new state();
 	hit_state.start = function() {
-		reset_cancels();
 		is_hit = true;
 		can_guard = false;
 	}
@@ -373,7 +343,7 @@ function init_charstates() {
 			if on_ground and (yspeed >= 0) {
 				if state_timer >= hitstun {
 					change_state(liedown_state);
-					xspeed = -3 * facing;
+					xspeed = -1 * facing;
 					yspeed = -5;
 				}
 			}
@@ -399,21 +369,34 @@ function init_charstates() {
 	
 	hard_knockdown_state = new state();
 	hard_knockdown_state.start = function() {
-		reset_cancels();
 		is_hit = true;
 		can_guard = false;
 	}
 	hard_knockdown_state.run = function() {
 		if on_ground {
-			change_state(liedown_state);
-			play_voiceline(voice_hurt,50,true);
+			if yspeed > 2 {
+				change_sprite(hit_air_sprite,3,false);
+				frame = anim_frames - 1;
+				yoffset = height / 4;
+				
+				if yspeed >= 10 {
+					take_damage(noone,abs(yspeed / 2),true);
+					create_particles(x,y,x,y,floor_bang_particle,1);
+				}
+				
+				xspeed /= 2;
+				yspeed /= -4;
+			}
+			else {
+				change_state(liedown_state);
+				play_voiceline(voice_hurt,50,true);
+			}
 		}
 	}
 	
 	wall_bounce_state = new state();
 	wall_bounce_state.start = function() {
 		change_sprite(launch_sprite,3,true);
-		reset_cancels();
 		is_hit = true;
 		can_guard = false;
 	}
@@ -421,11 +404,8 @@ function init_charstates() {
 		if yspeed >= 0 {
 			yspeed = 0;
 		}
-		if on_ground {
-			y -= 1;
-		}
 		if on_wall {
-			take_damage(noone,abs(xspeed),true);
+			take_damage(noone,abs(xspeed / 2),true);
 			if xspeed < 0 {
 				create_particles(left_wall,y-height_half,left_wall,y-height_half,left_wall_bang_particle,1);
 			}
@@ -508,57 +488,6 @@ function init_charstates() {
 		dodging_projectiles = false;
 	}
 	
-	tag_out_state = new state();
-	tag_out_state.start = function() {
-		change_sprite(crouch_sprite,3,false);
-		reset_cancels();
-		face_target();
-		invincible = true;
-		dodging_attacks = true;
-		dodging_projectiles = true;
-	}
-	tag_out_state.run = function() {
-		if sprite == crouch_sprite {
-			if anim_finished {
-				change_sprite(air_up_sprite,3,true);
-				xspeed = -15 * facing;
-				yspeed = -15;
-			}
-		}
-		else {
-			gravitate();
-			if on_ground {
-				yspeed = -15;
-			}
-			if !value_in_range(x,-width,room_width+width) {
-				invincible = true;
-				dodging_attacks = true;
-				dodging_projectiles = true;
-				if team == 1 {
-					x = -room_width;
-				}
-				else {
-					x = room_width * 2;
-				}
-				y = -room_height;
-				
-				if state_timer > 180 {
-					if hp_percent < 90 {
-						if state_timer mod 6 == 0 {
-							hp++;
-						}
-					}
-				}
-			}
-		}
-	}
-	tag_out_state.stop = function() {
-		alpha = 1;
-		invincible = false;
-		dodging_attacks = false;
-		dodging_projectiles = false;
-	}
-	
 	homing_dash_state = new state();
 	homing_dash_state.start = function() {
 		change_sprite(dash_sprite,2,true);
@@ -579,10 +508,7 @@ function init_charstates() {
 		xspeed = _xspeed;
 		yspeed = _yspeed;
 		rotation = point_direction(0,0,abs(xspeed),yspeed);
-		var stop_distance = 5;
-		if previous_state == tag_out_state {
-			stop_distance *= 2;
-		}
+		var stop_distance = 15;
 		if target_distance <= stop_distance {
 			xspeed = 3 * facing;
 			yspeed = -5;
@@ -821,5 +747,7 @@ function land() {
 		var squash = map_value(yspeed,0,8,1,0.75);
 		change_state(idle_state);
 		squash_stretch(stretch,squash);
+		return true;
 	}
+	return false;
 }

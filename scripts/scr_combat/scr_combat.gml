@@ -328,6 +328,7 @@ function reset_combo() {
 	combo_damage = 0;
 	combo_hits_taken = 0;
 	combo_damage_taken = 0;
+	combo_timer = 0;
 }
 
 function init_clash(_char1, _char2) {
