@@ -1,5 +1,3 @@
-update_input();
-
 var _gamestate = game_state;
 update_menus();
 
@@ -21,6 +19,12 @@ switch(game_state) {
 	}
 	break;
 	
+	case gamestates.story_select:
+	case gamestates.versus_select:
+	case gamestates.training_select:
+	update_charselect();
+	break;
+	
 	case gamestates.story_battle:
 	case gamestates.versus_battle:
 	case gamestates.training:
@@ -35,12 +39,6 @@ switch(game_state) {
 			round_state = roundstates.fight;
 		}
 	}
-	break;
-	
-	case gamestates.story_select:
-	case gamestates.versus_select:
-	case gamestates.training_select:
-	update_charselect();
 	break;
 }
 	

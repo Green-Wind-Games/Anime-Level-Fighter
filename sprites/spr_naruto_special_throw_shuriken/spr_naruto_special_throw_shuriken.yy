@@ -28,7 +28,7 @@
   ],
   "name":"spr_naruto_special_throw_shuriken",
   "nineSlice":null,
-  "origin":7,
+  "origin":9,
   "parent":{
     "name":"Naruto Base Sprites",
     "path":"folders/Chars/Naruto Shippuden/Naruto/Naruto Sprites/Naruto Base Sprites.yy",
@@ -95,7 +95,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":19,
+    "xorigin":23,
     "yorigin":52,
   },
   "swatchColours":null,

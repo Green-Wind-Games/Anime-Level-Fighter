@@ -19,6 +19,12 @@ function create_kiblast(_x,_y,_sprite) {
 		hit_script = function() {
 			create_particles(x,y,x,y,explosion_small);
 		}
+		active_script = function() {
+			if y >= ground_height {
+				hit_script();
+				instance_destroy();
+			}
+		}
 	}
 	play_sound(snd_kiblast_fire);
 }

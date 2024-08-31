@@ -79,6 +79,23 @@ function draw_chars() {
 	with(obj_char) {
 		draw_script();
 	}
+	with(obj_char) {
+		if sprite_exists(aura_sprite) {
+			gpu_set_blendmode(bm_add);
+			draw_sprite_ext(
+				aura_sprite,
+				floor(aura_frame),
+				x,
+				y,
+				sprite_get_width(sprite) / sprite_get_width(aura_sprite) * 2,
+				sprite_get_height(sprite) / sprite_get_height(aura_sprite) * 2,
+				0,
+				c_white,
+				alpha
+			)
+		}
+		gpu_set_blendmode(bm_normal);
+	}
 	
 	draw_playerindicators();
 }

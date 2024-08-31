@@ -1,8 +1,8 @@
 globalvar	max_level, level_scaling,
 			transform_min_hp_percent, transform_heal_percent;
 			
-max_level = 5;
-level_scaling = 1.5;
+max_level = 2;
+level_scaling = 2;
 
 transform_min_hp_percent = 10;
 transform_heal_percent = 69.420;

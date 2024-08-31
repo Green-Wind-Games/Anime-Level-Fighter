@@ -7,7 +7,8 @@ globalvar	particle_system,
 			slashspark,
 			explosion_small, explosion_medium, explosion_large,
 			left_wall_bang_particle, floor_bang_particle, right_wall_bang_particle,
-			shockwave_particle;
+			shockwave_particle,
+			jutsu_smoke_particle;
 				
 particle_system = part_system_create();
 part_system_depth(particle_system,-9999);
@@ -111,7 +112,22 @@ part_type_size(shockwave_particle,0.1,0.1,1/5,0);
 part_type_orientation(shockwave_particle,0,360,0,0,true);
 part_type_blend(shockwave_particle,true);
 part_type_alpha3(shockwave_particle,1,1,0);
-	
+
+shockwave_particle = part_type_create();
+part_type_sprite(shockwave_particle,spr_shockwave,true,true,false);
+part_type_life(shockwave_particle,50,50);
+part_type_size(shockwave_particle,0.1,0.1,1/5,0);
+part_type_orientation(shockwave_particle,0,360,0,0,true);
+part_type_blend(shockwave_particle,true);
+part_type_alpha3(shockwave_particle,1,1,0);
+
+jutsu_smoke_particle = part_type_create();
+part_type_sprite(jutsu_smoke_particle,spr_jutsu_smoke,true,true,false);
+part_type_life(jutsu_smoke_particle,30,30);
+part_type_size(jutsu_smoke_particle,0.6,0.6,0,0);
+part_type_blend(jutsu_smoke_particle,true);
+part_type_alpha3(jutsu_smoke_particle,1,1,0);
+
 function update_particles() {
 	part_system_update(particle_system);
 }
@@ -128,16 +144,16 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 	}
 	switch(_particle) {
 		case explosion_small:
-		play_sound(snd_explosion,0.5,1.5);
+		play_sound(snd_explosion_small);
 		break;
 		
 		case explosion_medium:
-		play_sound(snd_explosion,0.8,1.2);
+		play_sound(snd_explosion_medium);
 		shake_screen(10,5);
 		break;
 		
 		case explosion_large:
-		play_sound(snd_explosion);
+		play_sound(snd_explosion_large);
 		shake_screen(20,10);
 		break;
 		
@@ -152,12 +168,16 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 		play_sound(snd_wall_hit_heavy);
 		shake_screen(10,10);
 		break;
+		
+		case jutsu_smoke_particle:
+		play_sound(choose(snd_jutsu_smoke,snd_jutsu_smoke2));
+		break;
 	}
 }
 
 function create_hitspark(_target,_strength,_hiteffect,_guard) {
 	var _sound = noone;
-	var _p = 1/5;
+	var _p = 1/3;
 	var _x1 = _target.x -						(_target.width_half * _p);
 	var _y1 = _target.y - _target.height_half -	(_target.height_half * _p);
 	var _x2 = _target.x +						(_target.width_half * _p);

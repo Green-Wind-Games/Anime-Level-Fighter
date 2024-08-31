@@ -18,7 +18,7 @@ kamehameha_cooldown_duration = 150;
 kaioken_active = false;
 kaioken_timer = 0;
 kaioken_duration = 10 * 60;
-kaioken_buff = 1.25;
+kaioken_buff = 1.10;
 kaioken_color = make_color_rgb(255,128,128);
 
 spirit_bomb_shot = noone;
@@ -54,14 +54,17 @@ voice_transform[i++] = snd_goku_scream_transform;
 
 char_script = function() {
 	kamehameha_cooldown -= 1;
-	
 	var _kaioken_active = kaioken_active;
+	if dead {
+		kaioken_timer = 0;
+	}
 	if kaioken_timer-- > 0 {
 		kaioken_active = true;
-		if kaioken_timer mod 10 == 0 {
-			hp -= 1;
+		if kaioken_timer mod 6 == 0 {
+			hp = approach(hp,1,1);
 		}
 		color = kaioken_color;
+		aura_sprite = spr_aura_dbz_red;
 	}
 	else {
 		kaioken_active = false;
@@ -399,7 +402,7 @@ kamehameha.run = function() {
 		play_sound(snd_dbz_beam_fire);
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam(20,-25,spr_kamehameha,0.5,0,10);
+		fire_beam(20,-25,spr_kamehameha,0.5,0,5);
 	}
 	return_to_idle();
 }
@@ -453,7 +456,7 @@ super_kamehameha.run = function() {
 		}
 	}
 	if value_in_range(frame,6,9) {
-		fire_beam(20,-25,spr_kamehameha,1,0,10);
+		fire_beam(20,-25,spr_kamehameha,1,0,5);
 		shake_screen(5,3);
 	}
 	if check_frame(3) {

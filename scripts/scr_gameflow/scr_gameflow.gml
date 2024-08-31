@@ -23,9 +23,22 @@ function update_fight() {
 		if round_timer <= 0 {
 			round_state = roundstates.time_over;
 		}
+		
+		var alldead = true;
+		with(obj_char) {
+			if !dead {
+				if target_exists() {
+					alldead = false;
+				}
+			}
+		}
+		if alldead {
+			round_state = roundstates.knockout;
+			play_sound(snd_knockout);
+		}
 	}
 	else if round_state == roundstates.time_over or round_state == roundstates.knockout {
-		var ready = round_state_timer > 60;
+		var ready = round_state_timer > 100;
 		with(obj_char) {
 			if !dead {
 				if active_state != idle_state { ready = false; }
@@ -36,11 +49,14 @@ function update_fight() {
 		}
 	}
 	else if round_state == roundstates.victory {
-		var ready = round_state_timer > 120;
+		var ready = round_state_timer > 200;
 		with(obj_char) {
 			if active_state == victory_state {
 				if !anim_finished { ready = false; }
 				if sound_is_playing(voice) { ready = false; }
+			}
+			else {
+				change_state(victory_state);
 			}
 		}
 		if ready {
@@ -50,26 +66,25 @@ function update_fight() {
 	if round_state != _roundstate {
 		round_state_timer = 0;
 	}
-		
-	chars_update_targeting();
-		
-	update_charinputs();
-		
-	update_shots();
-		
-	run_charanimations();
-	run_charstates();
-	run_charphysics();
 	
-	chars_update_stats();
-	
-	chars_update_targeting();
-		
-	update_hitboxes();
-	
-	update_combo();
-	
-	check_deaths();
+	var border = 16;
+	var _x1 = room_width;
+	var _y1 = room_height;
+	var _x2 = 0;
+	var _y2 = 0;
+	with(obj_char) {
+		if (!dead) {
+			_x1 = min(_x1,x);
+			_y1 = min(_y1,y);
+			_x2 = max(_x2,x);
+			_y2 = max(_y2,y);
+		}
+	}
+	battle_x = mean(_x1,_x2);
+	battle_y = mean(_y1,_y2);
+	var battle_size = game_width * 1.25;
+	left_wall = clamp(battle_x - (battle_size / 2),0,room_width-game_width) + border;
+	right_wall = clamp(battle_x + (battle_size / 2),game_width,room_width) - border;
 	
 	if superfreeze_timer > 0 {
 		superfreeze_active = true;
@@ -89,148 +104,6 @@ function update_fight() {
 		timestop_active = false;
 		timestop_activator = noone;
 		timestop_timer = 0;
-	}
-}
-
-function chars_update_stats() {
-	with(obj_char) {
-		hp = clamp(round(hp),0,max_hp);
-		mp = clamp(round(mp),0,max_mp);
-		tp = clamp(round(tp),0,max_tp);
-		
-		hp_percent = (hp/max_hp)*100;
-		mp_percent = (mp/max_mp)*100;
-		tp_percent = (tp/max_tp)*100;
-		
-		mp_stocks = floor(mp/mp_stock_size);
-		tp_stocks = floor(tp/tp_stock_size);
-		
-		dead = (hp <= 0);
-		
-		if (!is_hit) and (!is_guarding) {
-			previous_hp = approach(previous_hp,hp,100);
-		}
-	}
-}
-
-function run_charstates() {
-	with(obj_char) {
-		if ((!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)))
-		and ((!timestop_active) or ((timestop_active) and (timestop_activator == id))) {
-			if (!hitstop) {
-				run_state();
-			}
-			else {
-				hitstop -= 1;
-			}
-		}
-		if (!superfreeze_active) and (!timestop_active) and (!hitstop) {
-			char_script();
-			state_timer += 1;
-			tp++;
-		}
-		if active_state == super_state {
-			super_active = true;
-		}
-		else {
-			super_state = noone;
-			super_active = false;
-		}
-		if facing == 0 {
-			facing = 1;
-		}
-	}
-}
-
-function run_charphysics() {
-	var border = 16;
-	var _x1 = room_width;
-	var _y1 = room_height;
-	var _x2 = 0;
-	var _y2 = 0;
-	with(obj_char) {
-		if ((!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)))
-		and ((!timestop_active) or ((timestop_active) and (timestop_activator == id)))
-		and (!hitstop) {
-			run_physics();
-			decelerate();
-		}
-			
-		if (!superfreeze_active) and (!timestop_active) and (!hitstop) {
-			gravitate(ygravity_mod);
-		}
-		
-		if (!dead) or (xspeed != 0) {
-			x = clamp(x, left_wall, right_wall);
-		}
-		y = min(y,ground_height);
-		
-		if (!dead) {
-			_x1 = min(_x1,x);
-			_y1 = min(_y1,y);
-			_x2 = max(_x2,x);
-			_y2 = max(_y2,y);
-		}
-		
-		//x = round(x);
-		//y = round(y);
-	}
-	battle_x = mean(_x1,_x2);
-	battle_y = mean(_y1,_y2);
-	var battle_size = game_width * 1.25;
-	left_wall = clamp(battle_x - (battle_size / 2),0,room_width-game_width) + border;
-	right_wall = clamp(battle_x + (battle_size / 2),game_width,room_width) - border;
-	if (!superfreeze_active) and (!timestop_active) {
-		with(obj_char) {
-			with(obj_char) {
-				if grabbed or other.grabbed continue;
-				if dead or other.dead continue;
-				if team == other.team continue;
-			
-				if !rectangle_in_rectangle(
-					x-width_half,
-					y-height,
-					x+width_half,
-					y,
-					other.x-other.width_half,
-					other.y-other.height,
-					other.x+other.width_half,
-					other.y,
-				) continue;
-			
-				var _dist = abs(x-other.x);
-				_dist -= width_half;
-				_dist -= other.width_half;
-				if _dist >= 0 continue;
-			
-				var _push = -sign(x-other.x);
-				//if _push == 0 then _push = sign(on_left_wall - on_right_wall) * sign(y - other.y);
-				if _push == 0 then _push = facing;
-				if _push == 0 then _push = 1;
-				_push *= 0.5;
-				var i = 0;
-				while(_dist < 0) {
-					x = clamp(x-_push, left_wall, right_wall);
-					other.x = clamp(other.x+_push, left_wall, right_wall);
-					_dist = point_distance(x,0,other.x,0) - (width_half + other.width_half);
-					if i++ > 20 break;
-				}
-			}
-		}
-	}
-}
-
-function run_charanimations() {
-	with(obj_char) {
-		if ((!superfreeze_active) or ((superfreeze_active) and (superfreeze_activator == id)))
-		and (!hitstop) {
-			run_animation();
-		}
-		if sprite == spinout_sprite 
-		or sprite == launch_sprite {
-			yoffset = -height_half;
-			rotation = point_direction(0,0,abs(xspeed),-yspeed);
-		}
 	}
 }
 
@@ -578,145 +451,3 @@ function check_assists() {
 //		p2_active_character = id;
 //	}
 //}
-
-function check_deaths() {
-	var alldead = true;
-	with(obj_char) {
-		if !dead {
-			if target_exists() {
-				alldead = false;
-			}
-		}
-	}
-	if alldead {
-		if round_state != roundstates.knockout && round_state != roundstates.victory {
-			round_state = roundstates.knockout;
-			play_sound(snd_knockout);
-		}
-	}
-}
-
-function update_shots() {
-	if (!superfreeze_active) and (!timestop_active) {
-		with(obj_shot) {
-			hitstop = 0;
-			gravitate(affected_by_gravity);
-			if bounce {
-				if x <= left_wall {
-					xspeed = abs(xspeed);
-				}
-				if x >= right_wall {
-					xspeed = -abs(xspeed);
-				}
-				if y >= ground_height {
-					yspeed = -abs(yspeed);
-				}
-			}
-			if homing {
-				if target_exists() {
-					target_x = target.x;
-					target_y = target.y-target.height_half;
-					target_direction = point_direction(x,y,target_x,target_y);
-					var _direction = point_direction(0,0,xspeed,yspeed);
-					if homing_max_turn > 0 {
-						var turn = angle_difference(target_direction,_direction);
-						turn = clamp(turn,-homing_max_turn,homing_max_turn);
-						_direction += turn;
-					}
-					else {
-						_direction = target_direction;
-					}
-					xspeed = lengthdir_x(homing_speed,_direction);
-					yspeed = lengthdir_y(homing_speed,_direction);
-				}
-			}
-		
-			run_animation();
-
-			active_script();
-		
-			rotation = point_direction(0,0,xspeed,yspeed);
-
-			if xspeed > 0 {
-				facing = 1;
-			}
-			else if xspeed < 0 {
-				facing = -1;
-			}
-		
-			run_physics();
-		
-			var active = true;
-
-			if !value_in_range(x,-room_width,room_width*2) {
-				active = false;
-			}
-			if duration != -1 {
-				duration -= 1;
-				if duration <= 0 {
-					active = false
-				}
-			}
-			if hit_limit != -1 {
-				if hit_count >= hit_limit {
-					active = false;
-				}
-			}
-		
-			if !active {
-				expire_script();
-				instance_destroy();
-			}
-		}
-	}
-}
-
-function update_hitboxes() {
-	with(obj_hitbox_parent) {
-		if instance_exists(owner) {
-			facing = owner.facing;
-			x = owner.x + lengthdir_x(xoffset * facing,image_angle) + lengthdir_y(yoffset, image_angle);
-			y = owner.y + lengthdir_x(yoffset,image_angle) + lengthdir_y(xoffset * facing, image_angle);
-			image_xscale = abs(image_xscale) * facing;
-			image_yscale = abs(image_yscale);
-		}
-		else {
-			instance_destroy();
-		}
-	}
-	with(obj_hitbox) {
-		var active = true;
-		if instance_exists(owner) {
-			if owner.active_state != my_state {
-				active = false;
-			}
-		}
-		else {
-			active = false;
-		}
-		if duration != -1 {
-			duration -= (!owner.hitstop) and (!superfreeze_active) and (!timestop_active);
-			if duration <= 0 {
-				active = false;
-			}
-		}
-		if active {
-			if (!owner.hitstop) and (!superfreeze_active) and (!timestop_active) {
-				check_hit();
-			}
-		}
-		else {
-			instance_destroy();
-		}
-	}
-}
-
-function update_combo() {
-	with(obj_char) {
-		if (!hitstop) and (!superfreeze_active) and (!timestop_active) {
-			if combo_timer-- <= 0 {
-				reset_combo();
-			}
-		}
-	}
-}

@@ -110,17 +110,17 @@ mp_stock_size = 1000;
 max_mp_stocks = 5;
 max_mp = max_mp_stocks * mp_stock_size;
 
-tp_stock_size = 300;
+tp_stock_size = 5 * 60;
 max_tp_stocks = 4;
 max_tp = max_tp_stocks * tp_stock_size;
-
-timestop_active = false;
-timestop_activator = noone;
-timestop_timer = 0;
 
 superfreeze_active = false;
 superfreeze_activator = noone;
 superfreeze_timer = 0;
+
+timestop_active = false;
+timestop_activator = noone;
+timestop_timer = 0;
 
 screen_flash_color = c_white;
 screen_flash_timer = 0;
