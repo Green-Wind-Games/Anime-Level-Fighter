@@ -40,7 +40,6 @@ function init_charstates() {
 		deactivate_super();
 	}
 	idle_state.run = function() {
-		face_target();
 		if round_state == roundstates.fight {
 			var walk_anim_speed = round(map_value(sprite_get_number(walk_sprite),4,8,6,3));
 			if input.forward {
@@ -64,6 +63,7 @@ function init_charstates() {
 			}
 			else {
 				change_sprite(idle_sprite,6,true);
+				face_target();
 			}
 			if input.up {
 				change_state(jump_state);
@@ -78,6 +78,7 @@ function init_charstates() {
 		}
 		else {
 			change_sprite(idle_sprite,6,true);
+			face_target();
 		}
 	}
 

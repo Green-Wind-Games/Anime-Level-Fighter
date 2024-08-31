@@ -14,8 +14,12 @@
   "frames":[
     {"$GMSpriteFrame":"","%Name":"f1dc9568-0609-436e-8144-2dbc7bef8f29","name":"f1dc9568-0609-436e-8144-2dbc7bef8f29","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
     {"$GMSpriteFrame":"","%Name":"1e158e19-c598-493b-9004-f85fa5989363","name":"1e158e19-c598-493b-9004-f85fa5989363","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"3f8a6e21-72ad-4c9d-8f86-130a387abb31","name":"3f8a6e21-72ad-4c9d-8f86-130a387abb31","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
     {"$GMSpriteFrame":"","%Name":"2af0df4f-6a64-42ac-a304-118c7b16b7ff","name":"2af0df4f-6a64-42ac-a304-118c7b16b7ff","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"3f8a6e21-72ad-4c9d-8f86-130a387abb31","name":"3f8a6e21-72ad-4c9d-8f86-130a387abb31","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"9756b732-dbab-416a-adda-e18582080d78","name":"9756b732-dbab-416a-adda-e18582080d78","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"8273d5dc-c406-4c27-936d-9adfec4a5a51","name":"8273d5dc-c406-4c27-936d-9adfec4a5a51","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"d978fbab-c97e-4d1c-899c-23b39633379c","name":"d978fbab-c97e-4d1c-899c-23b39633379c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"4b471b67-8f7a-4f60-943a-4b41b46fcf64","name":"4b471b67-8f7a-4f60-943a-4b41b46fcf64","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
@@ -52,7 +56,7 @@
     },
     "eventStubScript":null,
     "eventToFunction":{},
-    "length":4.0,
+    "length":8.0,
     "lockOrigin":false,
     "moments":{
       "$KeyframeStore<MomentsEventKeyframe>":"",
@@ -78,11 +82,23 @@
                 "0":{"$SpriteFrameKeyframe":"","Id":{"name":"1e158e19-c598-493b-9004-f85fa5989363","path":"sprites/spr_naruto_jutsu/spr_naruto_jutsu.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"1430a943-8e8c-4497-901e-1e71e6265229","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"3f8a6e21-72ad-4c9d-8f86-130a387abb31","path":"sprites/spr_naruto_jutsu/spr_naruto_jutsu.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"0e761579-2470-4efc-abf3-af9fec4eda30","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
-            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
                 "0":{"$SpriteFrameKeyframe":"","Id":{"name":"2af0df4f-6a64-42ac-a304-118c7b16b7ff","path":"sprites/spr_naruto_jutsu/spr_naruto_jutsu.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"41ba3199-eb41-4074-88eb-8a99f3ec1950","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+              },"Disabled":false,"id":"41ba3199-eb41-4074-88eb-8a99f3ec1950","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"3f8a6e21-72ad-4c9d-8f86-130a387abb31","path":"sprites/spr_naruto_jutsu/spr_naruto_jutsu.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"0e761579-2470-4efc-abf3-af9fec4eda30","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"9756b732-dbab-416a-adda-e18582080d78","path":"sprites/spr_naruto_jutsu/spr_naruto_jutsu.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"22dc8a6a-9b90-4172-af8b-05c0035679ab","IsCreationKey":false,"Key":4.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"8273d5dc-c406-4c27-936d-9adfec4a5a51","path":"sprites/spr_naruto_jutsu/spr_naruto_jutsu.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"61b9ec29-b3fe-4c73-a4c5-1740e51b9689","IsCreationKey":false,"Key":5.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"d978fbab-c97e-4d1c-899c-23b39633379c","path":"sprites/spr_naruto_jutsu/spr_naruto_jutsu.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"7a57029e-27a1-4d9c-a645-608eb884295f","IsCreationKey":false,"Key":6.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"4b471b67-8f7a-4f60-943a-4b41b46fcf64","path":"sprites/spr_naruto_jutsu/spr_naruto_jutsu.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"02a29769-8da2-4c50-a014-25c54162f0ea","IsCreationKey":false,"Key":7.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

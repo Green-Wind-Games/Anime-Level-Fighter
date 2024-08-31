@@ -84,7 +84,7 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	var shot = instance_create(x+(_x*facing),y+_y,obj_shot);
 	with(shot) {
 		owner = me;
-		if is_shot(me) {
+		if is_shot(owner) {
 			owner = me.owner;
 		}
 		init_sprite(_sprite);
@@ -186,7 +186,7 @@ function check_charge() {
 	//if mp >= max_mp return false;
 	if !is_char(id) return false;
 	if (previous_state == charge_state) and (state_timer < 30) return false;
-	if !ai_enabled {
+	if (!ai_enabled) {
 		if (input.button5_held >= 10) return true;
 	}
 	else {

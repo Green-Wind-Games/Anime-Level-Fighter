@@ -12,33 +12,43 @@ function draw_ground() {
 }
 
 function draw_playerindicators() {
+	for(var i = 0; i < array_length(player_slot); i++) {
+		with(player[i]) {
+			with(obj_helper) {
+				if owner == other {
+					draw_my_playerindicator(i);
+				}
+			}
+			draw_my_playerindicator(i);
+		}
+	}
+}
+
+function draw_my_playerindicator(_playerid = 0) {
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_bottom);
 	draw_set_font(fnt_playerindicator);
+	
 	var border = string_height("[]");
-	for(var i = 0; i < array_length(player_slot); i++) {
-		with(player[i]) {
-			var indicator_x = x;
-			
-			var indicator_y = y - 2;
-			//var _height = (sprite_get_bbox_bottom(sprite) - sprite_get_bbox_top(sprite));
-			indicator_y -= height * yscale * ystretch;
-			indicator_y = clamp(
-				indicator_y,
-				camera_get_view_y(view)+border,
-				camera_get_view_y(view)+camera_get_view_height(view)
-			);
-			
-			var text = "[P"+string(i+1)+"]";
-			draw_set_color(c_black);
-			draw_text(indicator_x+1,indicator_y,text);
-			draw_text(indicator_x-1,indicator_y,text);
-			draw_text(indicator_x,indicator_y-1,text);
-			draw_text(indicator_x,indicator_y+1,text);
-			draw_set_color(player_color[i]);
-			draw_text(indicator_x,indicator_y,text);
-		}
-	}
+	
+	var indicator_x = x;
+	var indicator_y = y - 2;
+	//var _height = (sprite_get_bbox_bottom(sprite) - sprite_get_bbox_top(sprite));
+	indicator_y -= height * yscale * ystretch;
+	indicator_y = clamp(
+		indicator_y,
+		camera_get_view_y(view)+border,
+		camera_get_view_y(view)+camera_get_view_height(view)
+	);
+	
+	var text = "[P"+string(_playerid+1)+"]";
+	draw_set_color(c_black);
+	draw_text(indicator_x+1,indicator_y,text);
+	draw_text(indicator_x-1,indicator_y,text);
+	draw_text(indicator_x,indicator_y-1,text);
+	draw_text(indicator_x,indicator_y+1,text);
+	draw_set_color(player_color[_playerid]);
+	draw_text(indicator_x,indicator_y,text);
 }
 
 function draw_chars() {

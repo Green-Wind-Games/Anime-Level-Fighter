@@ -206,7 +206,15 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 					}
 				}
 				else {
-					play_voiceline(voice_dead,100,true);
+					if is_char(id) {
+						play_voiceline(voice_dead,100,true);
+					}
+					if on_ground {
+						if yspeed >= 0 {
+							yspeed = -5;
+							xspeed = 5 * _attacker.facing;
+						}
+					}
 				}
 			}
 			

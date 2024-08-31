@@ -36,15 +36,16 @@ function transform(_form) {
 }
 
 function auto_levelup() {
-	if level < max_level {
-		if hp_percent <= transform_min_hp_percent {
-			if next_form == noone {
-				change_state(levelup_state);
-				play_voiceline(voice_powerup);
-			}
-			else {
-				change_state(transform_state);
-			}
-		}
+	if !is_char(id) return;
+	
+	if level >= max_level return;
+	if hp_percent > transform_min_hp_percent return;
+	
+	if next_form == noone {
+		change_state(levelup_state);
+		play_voiceline(voice_powerup);
+	}
+	else {
+		change_state(transform_state);
 	}
 }

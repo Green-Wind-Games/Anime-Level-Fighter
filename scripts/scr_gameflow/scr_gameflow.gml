@@ -73,7 +73,7 @@ function update_fight() {
 	var _x2 = 0;
 	var _y2 = 0;
 	with(obj_char) {
-		if (!dead) {
+		if (!dead) and (!is_helper(id)) {
 			_x1 = min(_x1,x);
 			_y1 = min(_y1,y);
 			_x2 = max(_x2,x);

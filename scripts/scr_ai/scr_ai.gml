@@ -9,15 +9,48 @@ ai_level_max = 8;
 function change_ai_level(_level = ai_level) {
 	ai_level = round(clamp(_level,1,ai_level_max));
 	ai_think_interval = round(map_value(ai_level,1,ai_level_max,10,2));
+	//ai_think_interval = 0;
 }
 
 change_ai_level(ai_level_max / 2);
 
 function update_ai() {
 	if ai_timer-- <= 0 {
-		ai_default_movement();
-		ai_perform_random_moves();
-		ai_combo();
+		if !is_helper(id) {
+			ai_default_movement();
+			ai_perform_random_moves();
+			ai_combo();
+		}
+		else {
+			input.up = false;
+			input.down = false;
+			input.left = false;
+			input.right = false;
+			input.forward = false;
+			input.back = false;
+		}
+		ai_script();
+		
+		input.left = false;
+		input.right = false;
+		var _x = sign(input.forward - input.back);
+		if facing == 1 {
+			if _x > 0 {
+				input.right = true;
+			}
+			else if _x < 0 {
+				input.left = true;
+			}
+		}
+		else {
+			if _x > 0 {
+				input.left = true;
+			}
+			else if _x < 0 {
+				input.right = true;
+			}
+		}
+		
 		ai_timer = ai_think_interval;
 	}
 }
@@ -82,7 +115,7 @@ function ai_combo() {
 
 function ai_input_command(_command,_chance = 100) {
 	if random(100) < _chance {
-		input_buffer = _command;
+		input_buffer += _command;
 		input_buffer_timer = ai_think_interval;
 	}
 }

@@ -1,17 +1,16 @@
-function create_helper(_x,_y,_spritename,_aiscript = -1) {
+function create_helper(_x,_y,_charscript,_aiscript) {
 	var me = id;
-	var _helper = instance_create(x+(_x * facing),_y,obj_helper);
+	var _helper = instance_create(x+(_x * facing),y+_y,obj_helper);
 	with(_helper) {
+		_charscript();
+		
 		owner = me;
 		team = me.team;
 		facing = me.facing;
-		target = me.facing;
+		target = me.target;
+		ai_script = _aiscript;
 		
-		init_charsprites(_spritename);
-		
-		if _aiscript != -1 {
-			ai_script = _aiscript;
-		}
+		max_hp = round(owner.max_hp / 50);
 	}
 	return _helper;
 }

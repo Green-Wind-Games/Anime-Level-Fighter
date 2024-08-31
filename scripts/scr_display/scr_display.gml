@@ -64,7 +64,7 @@ function update_view() {
 	var _x2 = 0;
 	var _y2 = 0;
 	with(obj_char) {
-		if (!dead) or (xspeed != 0) or (yspeed != 0) {
+		if ((!dead) or (xspeed != 0) or (yspeed != 0)) and (!is_helper(id)) {
 			_x1 = min(_x1,x-width_half);
 			_y1 = min(_y1,y-height);
 			_x2 = max(_x2,x+width_half);
