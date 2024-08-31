@@ -17,5 +17,7 @@ function is_helper(_obj) {
 }
 
 function is_shot(_obj) {
-	return (object_index == obj_shot) or object_is_ancestor(object_index,obj_shot);;
+	with(_obj) {
+		return (object_index == obj_shot) or object_is_ancestor(object_index,obj_shot);
+	}
 }

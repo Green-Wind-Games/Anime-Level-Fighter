@@ -25,9 +25,12 @@ function run_physics() {
 
 function gravitate(_multiplier = 1) {
 	if is_airborne {
-		if is_char(id) {
+		if is_char(id) or is_helper(id) {
 			if is_hit or is_guarding {
 				_multiplier = 1;
+			}
+			if yspeed > 0 {
+				_multiplier += 1/4;
 			}
 		}
 		yspeed += ygravity * _multiplier;

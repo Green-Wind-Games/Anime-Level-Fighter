@@ -84,8 +84,8 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	var shot = instance_create(x+(_x*facing),y+_y,obj_shot);
 	with(shot) {
 		owner = me;
-		if is_shot(owner) {
-			owner = me.owner;
+		if (!is_char(owner)) and (!is_helper(owner)) {
+			owner = owner.owner;
 		}
 		init_sprite(_sprite);
 		change_sprite(sprite,3,true);

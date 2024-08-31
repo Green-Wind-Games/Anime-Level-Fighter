@@ -210,26 +210,45 @@ function init_genos_baseform() {
 	dropkick = new state();
 	dropkick.start = function() {
 		if !dropkick_cooldown {
-			change_sprite(spr_genos_special_dropkick,8,false);
+			change_sprite(spr_genos_special_dropkick,2,false);
 			dropkick_cooldown = dropkick_cooldown_duration;
 			xspeed = 10 * facing;
-			yspeed = -10;
+			yspeed = -20;
 		}
 		else {
 			change_state(previous_state);
 		}
 	}
 	dropkick.run = function() {
-		if check_frame(4) {
+		if target_distance_x < 10 {
 			xspeed = 0;
+		}
+		if check_frame(4) {
 			play_sound(snd_punch_whiff_heavy);
 		}
 		if check_frame(6) {
-			yspeed = 10;
+			yspeed = 20;
 		}
 		if on_ground and yspeed > 0 {
-			create_shot(width_half,0,1,-2,spr_explosion,1,100,10,-10,attacktype.unblockable,attackstrength.heavy,hiteffects.fire);
-			create_shot(-width_half,0,-1,-2,spr_explosion,1,100,10,-10,attacktype.unblockable,attackstrength.heavy,hiteffects.fire);
+			xspeed = 0;
+			with(create_shot(
+				0,
+				0,
+				0,
+				-1,
+				spr_explosion,
+				1,
+				100,
+				10,
+				-10,
+				attacktype.unblockable,
+				attackstrength.heavy,
+				hiteffects.fire
+			)) {
+				duration = anim_duration;
+				hit_limit = -1;
+				play_sound(snd_explosion_large);
+			};
 			land();
 		}
 	}

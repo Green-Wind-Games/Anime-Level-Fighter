@@ -107,8 +107,8 @@ function check_hit() {
 		with(b2) {
 			get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect);
 		}
-		if is_shot(a2) {
-			with(a2) {
+		with(a2) {
+			if is_shot(id) {
 				hit_script(b2);
 				hit_count++;
 			}
