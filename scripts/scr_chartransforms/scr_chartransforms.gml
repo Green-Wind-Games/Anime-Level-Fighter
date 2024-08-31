@@ -36,10 +36,10 @@ function transform(_form) {
 }
 
 function auto_levelup() {
-	if !is_char(id) return;
+	if !is_char(id) return false;
 	
-	if level >= max_level return;
-	if hp_percent > transform_min_hp_percent return;
+	if level >= max_level return false;
+	if hp_percent > transform_min_hp_percent return false;
 	
 	if next_form == noone {
 		change_state(levelup_state);
@@ -48,4 +48,5 @@ function auto_levelup() {
 	else {
 		change_state(transform_state);
 	}
+	return true;
 }

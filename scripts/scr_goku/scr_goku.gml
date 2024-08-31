@@ -22,6 +22,63 @@ function init_goku_baseform() {
 
 	//next_form = obj_goku_ssj;
 
+	char_script = function() {
+		kamehameha_cooldown -= 1;
+		var _kaioken_active = kaioken_active;
+		if dead {
+			kaioken_timer = 0;
+		}
+		if kaioken_timer-- > 0 {
+			kaioken_active = true;
+			if kaioken_timer mod 6 == 0 {
+				hp = approach(hp,1,1);
+			}
+			color = kaioken_color;
+			aura_sprite = spr_aura_dbz_red;
+		}
+		else {
+			kaioken_active = false;
+			aura_sprite = noone;
+		}
+		if kaioken_active != _kaioken_active {
+			if kaioken_active {
+				attack_power += kaioken_buff;
+			}
+			else {
+				flash_sprite();
+				attack_power -= kaioken_buff;
+				if color == kaioken_color {
+					color = c_white;
+				}
+			}
+		}
+	}
+
+	ai_script = function() {
+		if kaioken_active {
+			if target_distance < 50 {
+				ai_input_move(autocombo[0],100);
+			}
+			else {
+				ai_input_move(dash_state,50);
+			}
+		}
+		else {
+			ai_input_move(kaioken,10);
+		}
+		if target_distance < 50 {
+			ai_input_move(dragon_fist,10);
+			ai_input_move(meteor_combo,10);
+			ai_input_move(kiai_push,10);
+		}
+		else if target_distance > 150 {
+			ai_input_move(kiblast,10);
+			ai_input_move(kamehameha,10);
+			ai_input_move(super_kamehameha,10);
+			ai_input_move(spirit_bomb,10);
+		}
+	}
+
 	var i = 0;
 	voice_attack[i++] = snd_goku_attack;
 	voice_attack[i++] = snd_goku_attack2;
@@ -48,37 +105,6 @@ function init_goku_baseform() {
 	voice_powerup[i++] = snd_goku_powerup;
 	i = 0;
 	voice_transform[i++] = snd_goku_scream_transform;
-
-	char_script = function() {
-		kamehameha_cooldown -= 1;
-		var _kaioken_active = kaioken_active;
-		if dead {
-			kaioken_timer = 0;
-		}
-		if kaioken_timer-- > 0 {
-			kaioken_active = true;
-			if kaioken_timer mod 6 == 0 {
-				hp = approach(hp,1,1);
-			}
-			color = kaioken_color;
-			aura_sprite = spr_aura_dbz_red;
-		}
-		else {
-			kaioken_active = false;
-		}
-		if kaioken_active != _kaioken_active {
-			if kaioken_active {
-				attack_power += kaioken_buff;
-			}
-			else {
-				flash_sprite();
-				attack_power -= kaioken_buff;
-				if color == kaioken_color {
-					color = c_white;
-				}
-			}
-		}
-	}
 
 	var i = 0;
 	autocombo[i] = new state();
@@ -318,7 +344,7 @@ function init_goku_baseform() {
 
 	kiblast = new state();
 	kiblast.start = function() {
-		change_sprite(spr_goku_special_ki_blast,3,false);
+		change_sprite(spr_goku_special_ki_blast,2,false);
 	}
 	kiblast.run = function() {
 		if check_frame(3) {
@@ -635,19 +661,6 @@ function init_goku_baseform() {
 
 	add_move(kaioken,"D");
 	add_move(spirit_bomb,"ED");
-
-	ai_script = function() {
-		if target_distance < 50 {
-			ai_input_move(meteor_combo,10);
-			ai_input_move(kaioken,10);
-		}
-		else if target_distance > 150 {
-			ai_input_move(kiblast,10);
-			ai_input_move(kamehameha,10);
-			ai_input_move(super_kamehameha,10);
-			ai_input_move(spirit_bomb,10);
-		}
-	}
 
 	victory_state.run = function() {
 		kaioken_timer = 0;

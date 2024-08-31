@@ -4,16 +4,36 @@
 function init_charstates() {
 	idle_state = new state();
 	idle_state.start = function() {
+		if auto_levelup() {
+			exit;
+		}
 		if on_ground {
-			if input != noone {
-				idle_state.run();
-			}
 			face_target();
 			reset_cancels();
 			yspeed = 0;
 			air_moves = 0;
-			
-			auto_levelup();
+			if input != noone {
+				var walk_anim_speed = round(map_value(sprite_get_number(walk_sprite),4,8,6,3));
+				if input.up {
+					change_state(jump_state);
+				}
+				else if input.down {
+					change_state(crouch_state);
+				}
+				else if input.forward {
+					change_sprite(walk_sprite,walk_anim_speed,true);
+					accelerate(move_speed * facing);
+					xscale = abs(xscale);
+				}
+				else if input.back {
+					change_sprite(walk_sprite,walk_anim_speed,true);
+					accelerate(move_speed * -facing);
+					xscale = -abs(xscale);
+				}
+				else {
+					change_sprite(idle_sprite,6,true);
+				}
+			}
 		}
 		else {
 			change_state(air_state);
@@ -27,7 +47,19 @@ function init_charstates() {
 	idle_state.run = function() {
 		if round_state == roundstates.fight {
 			var walk_anim_speed = round(map_value(sprite_get_number(walk_sprite),4,8,6,3));
-			if input.forward {
+			if check_moves() {
+				
+			}
+			else if check_charge() {
+				change_state(charge_state);
+			}
+			else if input.up {
+				change_state(jump_state);
+			}
+			else if input.down {
+				change_state(crouch_state);
+			}
+			else if input.forward {
 				change_sprite(walk_sprite,walk_anim_speed,true);
 				accelerate(move_speed * facing);
 				xscale = abs(xscale);
@@ -36,30 +68,10 @@ function init_charstates() {
 				change_sprite(walk_sprite,walk_anim_speed,true);
 				accelerate(move_speed * -facing);
 				xscale = -abs(xscale);
-				
-				//facing = -facing;
-				//if target_front_enemy() == noone {
-				//	facing = -facing;
-				//}
-				//else {
-				//	xscale = abs(xscale);
-				//	target = target_front_enemy();
-				//}
 			}
 			else {
 				change_sprite(idle_sprite,6,true);
-				face_target();
 			}
-			if input.up {
-				change_state(jump_state);
-			}
-			else if input.down {
-				change_state(crouch_state);
-			}
-			else if check_charge() {
-				change_state(charge_state);
-			}
-			check_moves();
 		}
 		else {
 			change_sprite(idle_sprite,6,true);
@@ -748,6 +760,9 @@ function init_charstates() {
 				change_state(idle_state);
 			}
 		}
+	}
+	charge_state.stop = function() {
+		aura_sprite = noone;
 	}
 	
 	intro_state = new state();

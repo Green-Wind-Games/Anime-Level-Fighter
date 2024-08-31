@@ -13,6 +13,22 @@ function init_genos_baseform() {
 	incinerate_cooldown = 0;
 	incinerate_cooldown_duration = 150;
 
+	char_script = function() {
+		incinerate_cooldown -= 1;
+		dropkick_cooldown -= 1;
+	}
+	
+	ai_script = function() {
+		if target_distance < 100 {
+			ai_input_move(dropkick,10);
+		}
+		else if target_distance > 200 {
+			ai_input_move(fireblast,10);
+			ai_input_move(incinerate,10);
+			ai_input_move(super_incinerate,10);
+		}
+	}
+
 	var i = 0;
 	voice_attack[i++] = snd_genos_attack;
 	voice_attack[i++] = snd_genos_attack2;
@@ -30,11 +46,6 @@ function init_genos_baseform() {
 	voice_hurt_heavy[i++] = snd_genos_hurt_heavy3;
 	//i = 0;
 	//voice_powerup[i++] = snd_genos_powerup;
-
-	char_script = function() {
-		incinerate_cooldown -= 1;
-		dropkick_cooldown -= 1;
-	}
 
 	var i = 0;
 	autocombo[i] = new state();
@@ -342,39 +353,9 @@ function init_genos_baseform() {
 
 	setup_autocombo();
 
-	add_move(dropkick,"EA");
+	add_move(dropkick,"B");
+	add_move(fireblast,"C");
 
-	add_move(fireblast,"B");
-
-	add_move(incinerate,"C");
-
-	add_move(super_incinerate,"D");
-
-	ai_script = function() {
-		if target_distance < 50 {
-			ai_input_move(meteor_combo,10);
-			ai_input_move(kaioken,10);
-		}
-		else if target_distance > 150 {
-			ai_input_move(kiblast,10);
-			ai_input_move(incinerate,10);
-			ai_input_move(super_incinerate,10);
-			ai_input_move(spirit_bomb,10);
-		}
-	}
-
-	victory_state.run = function() {
-		kaioken_timer = 0;
-		if check_frame(4) {
-			yspeed = -5;
-			squash_stretch(0.9,1.1);
-		}
-		if on_ground {
-			if yspeed > 0 {
-				squash_stretch(1.1,0.9);
-				yspeed = 0;
-				frame = 2;
-			}
-		}
-	}
+	add_move(incinerate,"D");
+	add_move(super_incinerate,"ED");
 }
