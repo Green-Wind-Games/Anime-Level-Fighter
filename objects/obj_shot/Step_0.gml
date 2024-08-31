@@ -1,7 +1,5 @@
-if ((superfreeze_active) and (superfreeze_activator != id)) exit;
-if ((timestop_active) and (timestop_activator != id)) exit;
-
-hitstop = 0;
+if (superfreeze_active) exit;
+if (timestop_active) exit;
 		
 var active = true;
 

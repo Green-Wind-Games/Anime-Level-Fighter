@@ -64,12 +64,6 @@ switch(room) {
 		}
 	}
 	
-	with(obj_char) {
-	}
-	
-	chars_update_targeting();
-	chars_update_stats();
-	
 	stop_music();
 	var picked_player = instance_find(obj_char,irandom(instance_number(obj_char)-1));
 	play_music(picked_player.theme);

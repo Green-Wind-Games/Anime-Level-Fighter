@@ -47,7 +47,12 @@ function init_charsprites(_name) {
 	victory_sprite = asset_get_index(prefix + "victory");
 	defeat_sprite = asset_get_index(prefix + "defeat");
 	
-	charge_sprite = asset_get_index(prefix + "energy_charge");
+	charge_start_sprite = asset_get_index(prefix + "energy_charge_start");
+	charge_loop_sprite = asset_get_index(prefix + "energy_charge_loop");
+	charge_stop_sprite = asset_get_index(prefix + "energy_charge_stop");
+	
+	aura_sprite = noone;
+	aura_frame = 0;
 	
 	icon = asset_get_index(prefix + "icon");
 	

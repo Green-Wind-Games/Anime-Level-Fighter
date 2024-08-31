@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_energy_surge",
+  "%Name":"snd_energy_start",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -10,7 +10,7 @@
   "compression":0,
   "conversionMode":0,
   "duration":2.147854,
-  "name":"snd_energy_surge",
+  "name":"snd_energy_start",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_energy_surge.ogg",
+  "soundFile":"snd_energy_start.ogg",
   "type":0,
   "volume":1.0,
 }

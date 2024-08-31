@@ -531,7 +531,7 @@ meteor_combo.run = function() {
 kaioken = new state();
 kaioken.start = function() {
 	if check_mp(1) and (!kaioken_timer) {
-		change_sprite(charge_sprite,3,true);
+		change_sprite(charge_loop_sprite,3,true);
 		flash_sprite();
 		color = kaioken_color;
 		
@@ -539,7 +539,7 @@ kaioken.start = function() {
 		spend_mp(1);
 		kaioken_timer = kaioken_duration;
 		
-		play_sound(snd_energy_surge);
+		play_sound(snd_energy_start);
 		play_voiceline(snd_goku_kaioken);
 	}
 	else {

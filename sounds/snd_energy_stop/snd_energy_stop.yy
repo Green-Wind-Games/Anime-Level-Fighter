@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_energy_wave",
+  "%Name":"snd_energy_stop",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.48,
-  "name":"snd_energy_wave",
+  "duration":1.219062,
+  "name":"snd_energy_stop",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_energy_wave.mp3",
+  "soundFile":"snd_energy_stop.wav",
   "type":0,
-  "volume":1.0,
+  "volume":0.5,
 }

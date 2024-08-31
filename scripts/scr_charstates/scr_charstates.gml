@@ -695,10 +695,10 @@ function init_charstates() {
 	
 	levelup_state = new state();
 	levelup_state.start = function() {
-		change_sprite(charge_sprite,3,true);
+		change_sprite(charge_loop_sprite,3,true);
 		flash_sprite();
 		superfreeze(3 * 60);
-		play_sound(snd_energy_surge);
+		play_sound(snd_energy_start);
 		play_voiceline(voice_powerup);
 		level_up();
 	}
@@ -711,13 +711,13 @@ function init_charstates() {
 	
 	transform_state = new state();
 	transform_state.start = function() {
-		change_sprite(charge_sprite,3,true);
+		change_sprite(charge_loop_sprite,3,true);
 		superfreeze(2 * 60);
 		play_voiceline(voice_transform);
 	}
 	transform_state.run = function() {
 		shake_screen(5,2);
-		loop_sound(snd_energy_wave);
+		loop_sound(snd_energy_loop);
 		if superfreeze_timer <= 5 {
 			transform(next_form);
 		}
@@ -726,9 +726,7 @@ function init_charstates() {
 	charge_state = new state();
 	charge_state.start = function() {
 		if check_charge() {
-			change_sprite(charge_sprite,3,true);
-			flash_sprite();
-			play_sound(snd_energy_surge);
+			change_sprite(charge_start_sprite,3,false);
 			play_voiceline(voice_powerup);
 		}
 		else {
@@ -736,14 +734,34 @@ function init_charstates() {
 		}
 	}
 	charge_state.run = function() {
-		if check_charge() or state_timer < 30 {
-			mp += ceil((mp_stock_size / 60) / 1.5);
-			loop_sound(snd_energy_wave);
-			shake_screen(5,2);
+		if sprite == charge_start_sprite {
+			if anim_finished {
+				change_sprite(charge_loop_sprite,3,true)
+				flash_sprite();
+				play_sound(snd_energy_start);
+			}
+		}
+		else if sprite == charge_loop_sprite {
+			if check_charge() or state_timer < 30 {
+				mp += ceil((mp_stock_size / 60) / 1.5);
+			
+				loop_sound(snd_energy_loop);
+			
+				shake_screen(5,2);
+				aura_sprite = spr_aura_dbz_white;
+			}
+			else {
+				change_sprite(charge_stop_sprite,3,false);
+				flash_sprite();
+				play_sound(snd_energy_stop);
+				stop_sound(voice);
+				aura_sprite = noone;
+			}
 		}
 		else {
-			stop_sound(voice);
-			change_state(idle_state);
+			if anim_finished {
+				change_state(idle_state);
+			}
 		}
 	}
 	
