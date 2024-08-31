@@ -13,12 +13,12 @@ function draw_ground() {
 
 function draw_playerindicators() {
 	for(var i = 0; i < array_length(player_slot); i++) {
-		with(player[i]) {
-			with(obj_helper) {
-				if owner == other {
-					draw_my_playerindicator(i);
-				}
+		with(obj_helper) {
+			if owner == player[i] {
+				draw_my_playerindicator(i);
 			}
+		}
+		with(player[i]) {
 			draw_my_playerindicator(i);
 		}
 	}

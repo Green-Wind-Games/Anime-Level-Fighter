@@ -66,6 +66,7 @@
     {"name":"scr_math","order":13,"path":"scripts/scr_math/scr_math.yy",},
     {"name":"scr_menus","order":14,"path":"scripts/scr_menus/scr_menus.yy",},
     {"name":"scr_movetemplates","order":24,"path":"scripts/scr_movetemplates/scr_movetemplates.yy",},
+    {"name":"scr_naruto_clones","order":3,"path":"scripts/scr_naruto_clones/scr_naruto_clones.yy",},
     {"name":"scr_naruto","order":2,"path":"scripts/scr_naruto/scr_naruto.yy",},
     {"name":"scr_particles","order":15,"path":"scripts/scr_particles/scr_particles.yy",},
     {"name":"scr_physics","order":16,"path":"scripts/scr_physics/scr_physics.yy",},

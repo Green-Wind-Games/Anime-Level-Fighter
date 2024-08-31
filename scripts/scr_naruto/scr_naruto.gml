@@ -322,34 +322,3 @@ function init_naruto_baseform() {
 		gpu_set_blendmode(bm_normal);
 	}
 }
-
-function init_naruto_baseform_clone() {
-	init_charsprites("naruto");
-	
-	max_hp = 10;
-	hp = max_hp;
-	
-	melee_state = new state();
-	melee_state.start = function() {
-		change_sprite(spr_naruto_attack_punch_straight,3,false);
-		play_sound(snd_punch_whiff_light);
-		play_voiceline(voice_attack,50,false);
-	}
-	melee_state.run = function() {
-		basic_attack(2,10,attackstrength.light,hiteffects.hit);
-		return_to_idle();
-		if can_cancel {
-			change_state(melee_state2);
-		}
-	}
-	melee_state2 = new state();
-	melee_state2.start = function() {
-		change_sprite(spr_naruto_attack_punch_hook,3,false);
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	melee_state2.run = function() {
-		basic_attack(2,20,attackstrength.light,hiteffects.hit);
-		return_to_idle();
-	}
-}

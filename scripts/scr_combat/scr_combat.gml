@@ -273,13 +273,18 @@ function take_damage(_attacker,_amount,_kill) {
 			true_attacker = _attacker.owner;
 		}
 		with(true_attacker) {
-			dmg *= attack_power;
-			dmg *= level;
-			for(var i = 0; i < array_length(autocombo); i++) {
-				if active_state == autocombo[i] {
-					dmg /= 3;
-					break;
+			if is_char(id) {
+				dmg *= attack_power;
+				dmg *= level;
+				for(var i = 0; i < array_length(autocombo); i++) {
+					if active_state == autocombo[i] {
+						dmg /= 4;
+						break;
+					}
 				}
+			}
+			else if is_helper(id) {
+				dmg /= 4;
 			}
 		}
 	}

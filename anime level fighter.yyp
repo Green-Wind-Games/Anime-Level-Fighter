@@ -92,6 +92,7 @@
     {"id":{"name":"scr_math","path":"scripts/scr_math/scr_math.yy",},},
     {"id":{"name":"scr_menus","path":"scripts/scr_menus/scr_menus.yy",},},
     {"id":{"name":"scr_movetemplates","path":"scripts/scr_movetemplates/scr_movetemplates.yy",},},
+    {"id":{"name":"scr_naruto_clones","path":"scripts/scr_naruto_clones/scr_naruto_clones.yy",},},
     {"id":{"name":"scr_naruto","path":"scripts/scr_naruto/scr_naruto.yy",},},
     {"id":{"name":"scr_particles","path":"scripts/scr_particles/scr_particles.yy",},},
     {"id":{"name":"scr_physics","path":"scripts/scr_physics/scr_physics.yy",},},
