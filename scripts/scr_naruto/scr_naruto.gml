@@ -324,26 +324,10 @@ function init_naruto_baseform() {
 }
 
 function init_naruto_baseform_clone() {
-	init_naruto_baseform();
+	init_charsprites("naruto");
 	
 	max_hp = 10;
 	hp = max_hp;
-	
-	jump_state = new state();
-	jump_state.start = function() {
-		change_sprite(crouch_sprite,2,false);
-		squash_stretch(1.2,0.8);
-		face_target();
-	}
-	jump_state.run = function() {
-		if state_timer > 5 {
-			yspeed = -5;
-			xspeed = move_speed * choose(1,-1);
-			change_state(air_state);
-			squash_stretch(0.8,1.2);
-			play_sound(snd_jump);
-		}
-	}
 	
 	melee_state = new state();
 	melee_state.start = function() {

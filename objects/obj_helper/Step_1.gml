@@ -1,4 +1,4 @@
-ai_enabled = true;
+//ai_enabled = true;
 
 mp = 0;
 tp = 0;
