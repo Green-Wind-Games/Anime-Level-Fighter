@@ -299,9 +299,9 @@ function take_damage(_attacker,_amount,_kill) {
 	scaling = clamp(scaling,0.1,1);
 	
 	var guts = map_value(
-		hp + combo_damage_taken,
-		max_hp*0.5,
-		0,
+		hp,
+		max_hp*0.75,
+		max_hp*0.25,
 		1,
 		0
 	);

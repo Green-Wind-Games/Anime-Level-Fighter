@@ -19,6 +19,11 @@ function create_helper(_x,_y,_charscript) {
 function init_helperstates() {
 	idle_state.start = function() {
 		if on_ground {
+			if (previous_state != idle_state)
+			and (previous_state != jump_state) {
+				change_state(jump_state);
+				exit;
+			}
 			change_sprite(idle_sprite,6,true);
 			face_target();
 			yspeed = 0;

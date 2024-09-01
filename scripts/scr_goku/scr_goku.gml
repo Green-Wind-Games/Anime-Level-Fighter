@@ -30,15 +30,15 @@ function init_goku_baseform() {
 		}
 		if kaioken_timer-- > 0 {
 			kaioken_active = true;
-			if kaioken_timer mod 6 == 0 {
+			if kaioken_timer mod 12 == 0 {
 				hp = approach(hp,1,1);
 			}
 			color = kaioken_color;
 			aura_sprite = spr_aura_dbz_red;
+			loop_sound(snd_energy_loop);
 		}
 		else {
 			kaioken_active = false;
-			aura_sprite = noone;
 		}
 		if kaioken_active != _kaioken_active {
 			if kaioken_active {
@@ -46,10 +46,12 @@ function init_goku_baseform() {
 			}
 			else {
 				flash_sprite();
+				play_sound(snd_energy_stop);
 				attack_power -= kaioken_buff;
 				if color == kaioken_color {
 					color = c_white;
 				}
+				aura_sprite = noone;
 			}
 		}
 	}
@@ -65,17 +67,17 @@ function init_goku_baseform() {
 		}
 		else {
 			ai_input_move(kaioken,10);
+			ai_input_move(spirit_bomb,10);
 		}
-		if target_distance < 50 {
+		if target_distance < 20 {
 			ai_input_move(dragon_fist,10);
 			ai_input_move(meteor_combo,10);
 			ai_input_move(kiai_push,10);
 		}
-		else if target_distance > 150 {
+		else if target_distance > 200 {
 			ai_input_move(kiblast,10);
 			ai_input_move(kamehameha,10);
 			ai_input_move(super_kamehameha,10);
-			ai_input_move(spirit_bomb,10);
 		}
 	}
 
@@ -121,7 +123,6 @@ function init_goku_baseform() {
 	autocombo[i].run = function() {
 		basic_attack(2,10,attackstrength.light,hiteffects.hit);
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -138,7 +139,6 @@ function init_goku_baseform() {
 			yspeed = 0;
 		}
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -151,7 +151,6 @@ function init_goku_baseform() {
 	autocombo[i].run = function() {
 		basic_attack(2,20,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -164,7 +163,6 @@ function init_goku_baseform() {
 	autocombo[i].run = function() {
 		basic_attack(4,30,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -188,7 +186,6 @@ function init_goku_baseform() {
 	autocombo[i].run = function() {
 		basic_attack(2,10,attackstrength.light,hiteffects.hit);
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -205,7 +202,6 @@ function init_goku_baseform() {
 			yspeed = 0;
 		}
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -218,7 +214,6 @@ function init_goku_baseform() {
 	autocombo[i].run = function() {
 		basic_attack(2,20,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -229,14 +224,11 @@ function init_goku_baseform() {
 	}
 	autocombo[i].run = function() {
 		if check_frame(2) or check_frame(6) {
-			play_sound(snd_punch_whiff_medium);
+			play_sound(snd_punch_whiff_medium2);
 		}
 		basic_attack(4,20,attackstrength.medium,hiteffects.hit);
 		basic_attack(8,20,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
-		if frame >= 10 {
-			check_moves();
-		}
 	}
 	i++;
 
@@ -253,9 +245,6 @@ function init_goku_baseform() {
 		basic_attack(5,10,attackstrength.light,hiteffects.hit);
 		basic_attack(7,10,attackstrength.light,hiteffects.hit);
 		return_to_idle();
-		if frame >= 8 {
-			check_moves();
-		}
 	}
 	i++;
 
@@ -557,6 +546,7 @@ function init_goku_baseform() {
 			change_sprite(charge_loop_sprite,3,true);
 			flash_sprite();
 			color = kaioken_color;
+			aura_sprite = spr_aura_dbz_red;
 		
 			activate_super(100);
 			spend_mp(1);

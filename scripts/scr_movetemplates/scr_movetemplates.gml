@@ -40,13 +40,14 @@ function basic_launcher(_hitframe,_damage,_hiteffect) {
 		create_hitbox(_x,_y,_w,_h,_damage,2,-10,attacktype.normal,attackstrength.heavy,_hiteffect);
 	}
 	if anim_finished {
-		if combo_hits > 0 {
+		if target.is_hit {
 			change_state(homing_dash_state);
 		}
 		else {
 			land();
 		}
 	}
+	can_cancel = false;
 }
 
 function basic_smash(_hitframe,_damage,_hiteffect) {

@@ -22,7 +22,7 @@ if input.button6 { command += "F"; }
 input_buffer += command;
 	
 if input_buffer != _buffer {
-	input_buffer_timer = ceil(60 / 5);
+	input_buffer_timer = 12;
 }
 else {
 	if (!hitstop) and (!timestop_active) and (!superfreeze_active) {

@@ -62,7 +62,6 @@ function init_genos_baseform() {
 	autocombo[i].run = function() {
 		basic_attack(2,10,attackstrength.light,hiteffects.hit);
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -126,7 +125,6 @@ function init_genos_baseform() {
 	autocombo[i].run = function() {
 		basic_attack(2,20,attackstrength.light,hiteffects.hit);
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -139,7 +137,6 @@ function init_genos_baseform() {
 	autocombo[i].run = function() {
 		basic_attack(2,30,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -152,7 +149,6 @@ function init_genos_baseform() {
 	autocombo[i].run = function() {
 		basic_attack(2,30,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 
@@ -165,7 +161,6 @@ function init_genos_baseform() {
 	autocombo[i].run = function() {
 		basic_attack(2,30,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
-		check_moves();
 	}
 	i++;
 

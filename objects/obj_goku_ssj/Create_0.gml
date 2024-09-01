@@ -28,7 +28,6 @@ autocombo[i].start = function() {
 autocombo[i].run = function() {
 	basic_attack(2,10,attackstrength.light,hiteffects.hit);
 	return_to_idle();
-	check_moves();
 }
 i++;
 
@@ -45,7 +44,6 @@ autocombo[i].run = function() {
 		yspeed = 0;
 	}
 	return_to_idle();
-	check_moves();
 }
 i++;
 
@@ -58,7 +56,6 @@ autocombo[i].start = function() {
 autocombo[i].run = function() {
 	basic_attack(2,20,attackstrength.light,hiteffects.hit);
 	return_to_idle();
-	check_moves();
 }
 i++;
 
@@ -71,7 +68,6 @@ autocombo[i].start = function() {
 autocombo[i].run = function() {
 	basic_attack(3,30,attackstrength.light,hiteffects.hit);
 	return_to_idle();
-	check_moves();
 }
 i++;
 
@@ -84,7 +80,6 @@ autocombo[i].start = function() {
 autocombo[i].run = function() {
 	basic_launcher(2,100,hiteffects.hit);
 	return_to_idle();
-	check_moves();
 }
 i++;
 
@@ -96,7 +91,6 @@ autocombo[i].start = function() {
 }
 autocombo[i].run = function() {
 	//standard_attack(2,10,attacktype.normal,hiteffects.hit);
-	check_moves();
 }
 i++;
 
@@ -111,9 +105,6 @@ autocombo[i].run = function() {
 	if check_frame(2) or check_frame(6) {
 		play_sound(snd_punch_whiff_medium);
 	}
-	if frame > 8 {
-		check_moves();
-	}
 	land();
 }
 i++;
@@ -126,7 +117,6 @@ autocombo[i].start = function() {
 }
 autocombo[i].run = function() {
 	//standard_attack(2,30,attacktype.heavy,hiteffects.hit);
-	check_moves();
 	land();
 }
 i++;
@@ -139,7 +129,6 @@ autocombo[i].start = function() {
 }
 autocombo[i].run = function() {
 	//standard_attack(1,30,attacktype.heavy,hiteffects.hit);
-	check_moves();
 	land();
 }
 i++;
@@ -155,9 +144,6 @@ autocombo[i].run = function() {
 	//standard_attack(7,10,attacktype.normal,hiteffects.hit);
 	if check_frame(2) or check_frame(4) or check_frame(6) {
 		play_sound(snd_punch_whiff_light);
-	}
-	if frame > 8 {
-		check_moves();
 	}
 	land();
 }
