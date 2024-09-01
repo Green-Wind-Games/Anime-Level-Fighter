@@ -1,3 +1,4 @@
+if round_state == roundstates.pause exit;
 if !instance_exists(owner) {
 	instance_destroy();
 	exit;

@@ -1,3 +1,4 @@
+if round_state == roundstates.pause exit;
 if ((superfreeze_active) and (superfreeze_activator != id)) exit;
 if ((timestop_active) and (timestop_activator != id)) exit;
 if sprite_exists(aura_sprite) {

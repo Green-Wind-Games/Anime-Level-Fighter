@@ -5,7 +5,6 @@ switch(game_state) {
 	case gamestates.story_battle:
 	case gamestates.versus_battle:
 	case gamestates.training:
-	
 	draw_ground();
 	
 	//draw_player_outlines();

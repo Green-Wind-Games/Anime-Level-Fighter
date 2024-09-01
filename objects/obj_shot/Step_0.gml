@@ -1,3 +1,4 @@
+if round_state == roundstates.pause exit;
 if (superfreeze_active) exit;
 if (timestop_active) exit;
 		

@@ -1,3 +1,5 @@
+if round_state == roundstates.pause exit;
+
 input.forward = sign(input.right - input.left) == (facing);
 input.back = sign(input.right - input.left) == (-facing);
 

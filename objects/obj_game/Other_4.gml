@@ -21,6 +21,10 @@ switch(room) {
 	play_music(mus_umvc3_charselect);
 	break;
 	
+	case rm_versus:
+	play_music(mus_slammasters_versus);
+	break;
+	
 	case stage:
 	round_state = roundstates.intro;
 	round_timer = round_timer_max;
@@ -49,13 +53,12 @@ switch(room) {
 			with(instance_create(_x,_y,get_char_object(player_char[i]))) {
 				player[i] = id;
 				input = player_input[player_slot[i]];
-				if active_players mod 2 == 0 {
-					if x < battle_x team = 1; else team = 2;
+				if x <= battle_x {
+					team = 1;
+					facing = 1;
 				}
 				else {
-					team = spawned_players + 1;
-				}
-				if x > battle_x {
+					team = 2;
 					facing = -1;
 				}
 				change_state(intro_state);

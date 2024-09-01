@@ -1,12 +1,18 @@
 var _gamestate = game_state;
-update_menus();
+var _nextstate = next_game_state;
 
 switch(game_state) {
+	default:
+	game_state++;
+	break;
+	
 	case gamestates.main_menu:
+	if next_game_state != -1 break;
+	
 	if !instance_exists(obj_menu) {
 		open_menu(
-			display_get_gui_width()/2,
-			display_get_gui_height()/2,
+			gui_width/2,
+			gui_height/2,
 			[
 				["Modo História",-1],
 				["Modo Arcade",-1],
@@ -25,13 +31,14 @@ switch(game_state) {
 	update_charselect();
 	break;
 	
+	case gamestates.versus_intro:
+	// check inputs to speed up this screen
+	break;
+	
 	case gamestates.story_battle:
 	case gamestates.versus_battle:
 	case gamestates.training:
-	if round_state != roundstates.pause {
-		update_fight();
-	}
-	if keyboard_check_pressed(vk_enter) {
+	if keyboard_check_pressed(ord("P")) {
 		if round_state == roundstates.fight {
 			round_state = roundstates.pause;
 		}
@@ -39,36 +46,54 @@ switch(game_state) {
 			round_state = roundstates.fight;
 		}
 	}
+	if round_state != roundstates.pause {
+		update_fight();
+	}
 	break;
 }
-	
+
+if _nextstate != next_game_state {
+	if next_game_state != -1 {
+		game_state_timer = 0;
+	}
+}
+
 game_state_timer += 1;
 if game_state_duration != -1 {
 	if game_state_timer >= game_state_duration {
-		switch(game_state) {
-			case gamestates.versus_intro:
-			game_state = gamestates.versus_battle;
-			break;
-		}
+		game_state = next_game_state;
+		next_game_state = -1;
 	}
 }
 
 if _gamestate != game_state {
-	game_state_previous = _gamestate;
+	previous_game_state = _gamestate;
 	game_state_timer = 0;
 	game_state_duration = -1;
-}
-
-if game_state_timer <= 0 {
+	screen_fade_alpha = 1;
 	switch(game_state) {
+		case gamestates.intro:
+		room_goto(rm_intro);
+		break;
+		
+		case gamestates.title:
+		room_goto(rm_titlescreen);
+		break;
+		
+		case gamestates.main_menu:
+		room_goto(rm_mainmenu);
+		break;
+		
+		case gamestates.story_select:
 		case gamestates.versus_select:
+		case gamestates.training_select:
 		room_goto(rm_charselect);
 		break;
 		
 		case gamestates.versus_intro:
-		game_state_duration = 360;
-		stop_music();
-		play_sound(mus_slammasters_versus);
+		room_goto(rm_versus);
+		next_game_state = gamestates.versus_battle;
+		game_state_duration = 60 * 5;
 		break;
 		
 		case gamestates.story_battle:
@@ -79,10 +104,30 @@ if game_state_timer <= 0 {
 	}
 }
 
-update_particles();
+switch(game_state) {
+	default:
+	update_particles();
+	break;
+		
+	case gamestates.story_battle:
+	case gamestates.versus_battle:
+	case gamestates.training:
+	if round_state != roundstates.pause {
+		update_particles();
+	}
+	break;
+}
+
 update_music();
 
 update_view();
+
+var _fade = 0;
+if (game_state_duration != -1) 
+and (game_state_timer >= (game_state_duration - screen_fade_duration)) {
+	_fade = 1;
+}
+screen_fade_alpha = approach(screen_fade_alpha,_fade,1/screen_fade_duration);
 
 with(all) {
 	visible = false;

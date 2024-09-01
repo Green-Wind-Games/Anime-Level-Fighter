@@ -1,4 +1,5 @@
 event_inherited();
+if round_state == roundstates.pause exit;
 
 var active = true;
 if instance_exists(owner) {

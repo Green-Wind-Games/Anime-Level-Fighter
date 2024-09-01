@@ -599,21 +599,10 @@ function draw_menu() {
 				var _str = options[i-_desc][0];
 				if hover == i - _desc {
 					_str = hover_marker + _str;
-					if !player2 {
-						draw_set_color(c_yellow);
-						with(obj_menu) {
-							if id != other {
-								if id == player2 {
-									with(other) {
-										draw_set_color(p1_color);
-									}
-								}
-							}
-						}
-					}
-					else {
-						draw_set_color(p2_color);
-					}
+					draw_set_color(c_yellow);
+				}
+				else {
+					draw_set_color(c_white);
 				}
 				draw_text(x, y + (i * height_line), _str);
 			}

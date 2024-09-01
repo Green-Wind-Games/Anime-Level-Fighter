@@ -3,8 +3,8 @@
 
 //draw_text(0,0,"X " + string(camera_get_view_x(view)) + " / Y " + string(camera_get_view_y(view)));
 
-var _w = display_get_gui_width();
-var _h = display_get_gui_height();
+var _w = gui_width;
+var _h = gui_height;
 var _w2 = _w / 2;
 var _h2 = _h / 2;
 var icon_size = 24;
@@ -40,6 +40,12 @@ switch(game_state) {
 }
 
 draw_menu();
+
+if screen_fade_alpha > 0 {
+	draw_set_alpha(screen_fade_alpha);
+	draw_set_color(screen_fade_color);
+	draw_rectangle(0,0,_w,_h,false);
+}
 
 draw_set_color(c_white);
 draw_set_alpha(1);

@@ -49,7 +49,7 @@ globalvar	player, player_char, player_input,
 			max_mp, max_mp_stocks, mp_stock_size,
 			max_tp, max_tp_stocks, tp_stock_size,
 			
-			game_state, game_state_previous, game_state_timer, game_state_duration,
+			game_state, previous_game_state, next_game_state, game_state_timer, game_state_duration,
 			round_state, round_timer, round_state_timer, round_timer_max, round_countdown_duration, round_is_infinite,
 			stage,
 			
@@ -61,10 +61,12 @@ globalvar	player, player_char, player_input,
 			screen_flash_color, screen_flash_timer,
 			screen_overlay_sprite, screen_overlay_timer,
 			screen_zoom, screen_zoom_target,
-			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha;
+			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha,
+			screen_fade_alpha, screen_fade_color, screen_fade_duration;
 
-game_state = gamestates.versus_select;
-game_state_previous = -1;
+game_state = gamestates.intro;
+previous_game_state = -1;
+next_game_state = -1;
 game_state_duration = -1;
 game_state_timer = -1;
 
@@ -76,7 +78,7 @@ round_timer = round_timer_max;
 round_countdown_duration = (3 * 30) + 30;
 round_is_infinite = false;
 
-for(var i = 0; i < 4; i++) {
+for(var i = 0; i < 8; i++) {
 	player[i] = noone;
 	player_char[i] = 0;
 	player_slot[i] = noone;
@@ -87,7 +89,7 @@ for(var i = 0; i < 8; i++) {
 	gamepad_set_axis_deadzone(i,0.5);
 }
 
-for(var i = 0; i < 11; i++) {
+for(var i = 0; i <= 10; i++) {
 	player_input[i] = instance_create(0,0,obj_input);
 	player_input[i].type = input_types.joystick;
 	player_input[i].pad = i;
@@ -136,6 +138,10 @@ screen_overlay_sprite = noone;
 screen_overlay_timer = 0;
 screen_overlay_alpha = 1;
 
+screen_fade_color = c_black;
+screen_fade_alpha = 1;
+screen_fade_duration = 20;
+
 screen_zoom = 1;
 screen_zoom_target = noone;
 
@@ -155,3 +161,6 @@ for(var i = 0; i <= room_last; i++) {
 		room_set_height(i,game_height*2);
 	}
 }
+
+texture_prefetch("Default");
+texture_prefetch("SpecialEffects");

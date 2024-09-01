@@ -28,11 +28,13 @@ globalvar max_characters;
 max_characters = playerchars.allchars;
 
 function update_charselect() {
-	charselect_joinin();
-	charselect_dropout();
-	charselect_changechars();
-	charselect_readyup();
-	charselect_startgame();
+	if (game_state_duration == -1) {
+		charselect_joinin();
+		charselect_dropout();
+		charselect_changechars();
+		charselect_readyup();
+		charselect_startgame();
+	}
 }
 
 function charselect_joinin() {
@@ -124,7 +126,9 @@ function charselect_startgame() {
 		for(var i = 0; i < array_length(player_slot); i++) {
 			if player_slot[i] != noone {
 				if player_input[player_slot[i]].button1 {
-					game_state = gamestates.versus_intro;
+					next_game_state = gamestates.versus_intro;
+					game_state_duration = screen_fade_duration;
+					
 				}
 			}
 		}
@@ -146,7 +150,9 @@ function draw_charselect() {
 	var _y = _h2;
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
-			draw_sprite(get_char_sprite(player_char[i]),0,_x,_y);
+			var _xscale = 1;
+			if _x > _w2 _xscale *= -1;
+			draw_sprite_ext(get_char_sprite(player_char[i]),0,_x,_y,_xscale,1,0,c_white,1);
 			
 			draw_set_font(fnt_menu);
 			draw_set_halign(fa_center);
