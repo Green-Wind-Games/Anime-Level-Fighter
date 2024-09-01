@@ -92,7 +92,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	if guard_valid and guarding {
 		change_state(guard_state);
 		change_sprite(guard_sprite,6,false);
-		xspeed *= 2;
+		//xspeed *= 2;
 		//yspeed /= 2;
 		yspeed = _yspeed;
 		if on_ground {

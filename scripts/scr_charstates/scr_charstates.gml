@@ -21,7 +21,9 @@ function init_charstates() {
 			air_moves = 0;
 			
 			if input != noone {
+				can_cancel = false;
 				idle_state.run();
+				can_cancel = true;
 			}
 		}
 		else {
@@ -375,10 +377,10 @@ function init_charstates() {
 	}
 	hard_knockdown_state.run = function() {
 		if on_ground and (yspeed > 0) {
-			if yspeed > 2 {
+			if yspeed > 3 {
 				change_sprite(hit_air_sprite,3,false);
-				frame = anim_frames - 1;
-				yoffset = height / 4;
+				frame = anim_frames - 2;
+				yoffset = height / 2;
 				
 				if yspeed >= 12 {
 					take_damage(noone,abs(yspeed / 2),true);
@@ -392,6 +394,7 @@ function init_charstates() {
 				xspeed /= 2;
 			}
 			else {
+				yspeed = 0;
 				change_state(liedown_state);
 				play_voiceline(voice_hurt,50,true);
 			}
@@ -425,10 +428,9 @@ function init_charstates() {
 	liedown_state = new state();
 	liedown_state.start = function() {
 		change_sprite(liedown_sprite,2,false);
-		xspeed *= 0.25;
-		yspeed *= -0.25;
 		dodging_attacks = true;
 		dodging_projectiles = true;
+		yspeed = 0;
 		with(hurtbox) {
 			xoffset *= 2;
 			yoffset /= 2;
@@ -437,26 +439,21 @@ function init_charstates() {
 		}
 	}
 	liedown_state.run = function() {
-		if on_ground {
-			if state_timer >= 60 {
-				if hp > 0 {
-					if sprite != wakeup_sprite {
-						change_sprite(wakeup_sprite,5,false);
-					}
-					return_to_idle();
+		if state_timer >= 40 {
+			if hp > 0 {
+				if sprite != wakeup_sprite {
+					change_sprite(wakeup_sprite,5,false);
 				}
-				else {
-					dead = true;
-					is_hit = false;
-					change_state(dead_state);
-				}
+				return_to_idle();
 			}
 			else {
-				change_sprite(liedown_sprite,2,false);
+				dead = true;
+				is_hit = false;
+				change_state(dead_state);
 			}
 		}
 		else {
-			change_sprite(hit_air_sprite,3,false);
+			change_sprite(liedown_sprite,2,false);
 		}
 	}
 	liedown_state.stop = function() {

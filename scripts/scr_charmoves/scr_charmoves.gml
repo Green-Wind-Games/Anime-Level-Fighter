@@ -38,11 +38,12 @@ function check_moves() {
 			}
 		}
 		if !ds_priority_empty(available_moves) {
-			while(!ds_priority_empty(available_moves)) {
+			for(var i = 0; i < ds_priority_size(available_moves); i++) {
 				var _state = ds_priority_find_max(available_moves);
 				change_state(_state);
 				if (active_state == idle_state) or (active_state == air_state) {
 					ds_priority_delete_max(available_moves);
+					i--;
 				}
 				else {
 					reset_cancels();

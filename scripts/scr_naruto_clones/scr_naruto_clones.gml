@@ -54,8 +54,9 @@ function init_naruto_baseform_clone_barrage() {
 	barrage_kick = new state();
 	barrage_kick.start = function() {
 		change_sprite(spr_naruto_attack_slide_kick_up,5,false);
+		xoffset = width / 3;
 		face_target();
-		xspeed = 10 * facing;
+		xspeed = 15 * facing;
 	}
 	barrage_kick.run = function() {
 		if check_frame(1) {
@@ -65,7 +66,7 @@ function init_naruto_baseform_clone_barrage() {
 				-height_half,
 				width,
 				height_half,
-				20,
+				50,
 				0,
 				-12,
 				attacktype.hard_knockdown,

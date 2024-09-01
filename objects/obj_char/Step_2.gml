@@ -58,8 +58,10 @@ tp_stocks = floor(tp/tp_stock_size);
 		
 dead = (hp <= 0);
 
-if combo_timer-- <= 0 {
-	reset_combo();
+if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
+	if combo_timer-- <= 0 {
+		reset_combo();
+	}
 }
 		
 if (!is_hit) and (!is_guarding) {

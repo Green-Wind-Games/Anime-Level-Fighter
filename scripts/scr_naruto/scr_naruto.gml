@@ -97,7 +97,7 @@ function init_naruto_baseform() {
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_attack_punch_hook,3,false);
+		change_sprite(spr_naruto_attack_punch_hook,4,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -110,7 +110,7 @@ function init_naruto_baseform() {
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_attack_spinkick,3,false);
+		change_sprite(spr_naruto_attack_spinkick,4,false);
 		play_sound(snd_punch_whiff_heavy2);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -123,7 +123,7 @@ function init_naruto_baseform() {
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_attack_slash,2,false);
+		change_sprite(spr_naruto_attack_slash,4,false);
 		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -136,7 +136,7 @@ function init_naruto_baseform() {
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_attack_slash_up,3,false);
+		change_sprite(spr_naruto_attack_slash_up,4,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -172,15 +172,13 @@ function init_naruto_baseform() {
 	autocombo[i].start = function() {
 		change_sprite(spr_naruto_jutsu,3,false);
 		play_sound(snd_jutsu_activate);
-		timestop(30);
-		xspeed = -5 * facing;
+		timestop(10);
+		xspeed = -4 * facing;
 	}
 	autocombo[i].run = function() {
 		if check_frame(3) {
 			create_helper(0,0,init_naruto_baseform_clone_barrage);
-			create_helper(20,0,init_naruto_baseform_clone_barrage);
-			create_helper(120,0,init_naruto_baseform_clone_barrage);
-			create_helper(100,0,init_naruto_baseform_clone_barrage);
+			create_helper(150,0,init_naruto_baseform_clone_barrage);
 		}
 		if anim_finished {
 			change_state(autocombo[7]);
@@ -191,13 +189,14 @@ function init_naruto_baseform() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_naruto_flip,3,true);
+		yoffset = -height_half;
 		rotation_speed = -45;
-		xspeed = 2.5 * facing;
-		yspeed = -10;
+		xspeed = (target_distance_x / 45) * facing;
+		yspeed = target.yspeed * 1.05;
 	}
 	autocombo[i].run = function() {
 		if state_timer == 30 {
-			change_sprite(spr_naruto_attack_smash_kick,3,false);
+			change_sprite(spr_naruto_attack_smash_kick,5,false);
 		}
 		if sprite == spr_naruto_flip {
 			if (state_timer mod 5) == 0 {
