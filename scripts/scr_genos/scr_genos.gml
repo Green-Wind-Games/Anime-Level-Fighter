@@ -81,7 +81,7 @@ function init_genos_baseform() {
 					0,
 					spr_genos_blur_fist,
 					1,
-					10,
+					20,
 					1,
 					0,
 					attacktype.normal,
@@ -107,7 +107,7 @@ function init_genos_baseform() {
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_genos_attack_uppercut,3,false);
+		change_sprite(spr_genos_attack_uppercut,5,false);
 		play_sound(snd_punch_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}

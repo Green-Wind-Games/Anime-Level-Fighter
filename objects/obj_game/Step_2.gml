@@ -24,3 +24,8 @@ if keyboard_check_pressed(vk_f6) {
 		ai_enabled = false;
 	}
 }
+
+with(all) {
+	visible = false;
+}
+visible = true;

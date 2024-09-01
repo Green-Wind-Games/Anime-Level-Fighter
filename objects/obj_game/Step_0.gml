@@ -128,8 +128,3 @@ and (game_state_timer >= (game_state_duration - screen_fade_duration)) {
 	_fade = 1;
 }
 screen_fade_alpha = approach(screen_fade_alpha,_fade,1/screen_fade_duration);
-
-with(all) {
-	visible = false;
-}
-visible = true;

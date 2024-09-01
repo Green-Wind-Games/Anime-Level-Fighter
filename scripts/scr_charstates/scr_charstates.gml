@@ -485,20 +485,24 @@ function init_charstates() {
 		can_cancel = false;
 	}
 	homing_dash_state.run = function() {
-		var _speed = move_speed * 2.5;
-		var _direction = point_direction(x,y,target.x-(width_half*facing),target.y);
+		var _target_x = target_x - (max(target.width_half, width_half) * facing);
+		var _target_y = target_y;
+		var _direction = point_direction(x,y,_target_x,_target_y);
+		var _distance = point_distance(x,y,_target_x,_target_y);
+		
+		var _speed = move_speed * 2;
 		var _xspeed = lengthdir_x(_speed,_direction);
 		var _yspeed = lengthdir_y(_speed,_direction);
+		
+		var stop_distance = _speed * 1.5;
+		 
 		face_target();
-		//xspeed = approach(xspeed,_xspeed,2);
-		//yspeed = approach(yspeed,_yspeed,2);
 		xspeed = _xspeed;
 		yspeed = _yspeed;
 		rotation = point_direction(0,0,abs(xspeed),yspeed);
-		var stop_distance = 15;
-		if target_distance <= stop_distance {
-			xspeed = 3 * facing;
-			yspeed = -5;
+		if _distance <= stop_distance {
+			xspeed /= 2;
+			yspeed /= 2;
 			change_state(air_state);
 		}
 	}
