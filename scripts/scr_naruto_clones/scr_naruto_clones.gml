@@ -47,3 +47,38 @@ function init_naruto_baseform_clone() {
 		}
 	}
 }
+
+function init_naruto_baseform_clone_barrage() {
+	init_naruto_baseform_clone();
+
+	barrage_kick = new state();
+	barrage_kick.start = function() {
+		change_sprite(spr_naruto_attack_slide_kick_up,5,false);
+		face_target();
+		xspeed = 10 * facing;
+	}
+	barrage_kick.run = function() {
+		if check_frame(1) {
+			face_target();
+			create_hitbox(
+				0,
+				-height_half,
+				width,
+				height_half,
+				20,
+				0,
+				-12,
+				attacktype.hard_knockdown,
+				attackstrength.medium,
+				hiteffects.hit
+			);
+			xspeed = 0;
+		}
+		if anim_finished and (state_timer > 40) {
+			create_particles(x,y,x,y,jutsu_smoke_particle);
+			instance_destroy();
+		}
+	}
+	
+	change_state(barrage_kick);
+}

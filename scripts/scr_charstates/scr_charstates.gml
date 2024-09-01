@@ -16,6 +16,7 @@ function init_charstates() {
 		}
 		
 		if on_ground {
+			change_sprite(idle_sprite,6,true);
 			yspeed = 0;
 			air_moves = 0;
 			
@@ -373,19 +374,22 @@ function init_charstates() {
 		can_guard = false;
 	}
 	hard_knockdown_state.run = function() {
-		if on_ground {
+		if on_ground and (yspeed > 0) {
 			if yspeed > 2 {
 				change_sprite(hit_air_sprite,3,false);
 				frame = anim_frames - 1;
 				yoffset = height / 4;
 				
-				if yspeed >= 10 {
+				if yspeed >= 12 {
 					take_damage(noone,abs(yspeed / 2),true);
 					create_particles(x,y,x,y,floor_bang_particle,1);
+					yspeed /= -2;
+				}
+				else {
+					yspeed /= -4;
 				}
 				
 				xspeed /= 2;
-				yspeed /= -4;
 			}
 			else {
 				change_state(liedown_state);

@@ -22,47 +22,46 @@ function init_naruto_baseform() {
 		}
 	}
 
-	airdash_state.start = function() {
-		if air_moves < max_air_moves {
-			change_sprite(dash_sprite,2,true);
-			yoffset = -height/2;
-			rotation = 20;
-			xspeed = move_speed * 1.5 * facing;
-			yspeed = -5;
-			air_moves += 1;
-			play_sound(snd_dash);
-		}
-		else {
-			change_state(air_state);
-		}
-	}
-	airdash_state.run = function() {
-		if state_timer >= 15 {
-			change_state(air_state);
-		}
-	}
+	//airdash_state.start = function() {
+	//	if air_moves < max_air_moves {
+	//		change_sprite(dash_sprite,2,true);
+	//		yoffset = -height/2;
+	//		rotation = 20;
+	//		xspeed = move_speed * 1.5 * facing;
+	//		yspeed = -5;
+	//		air_moves += 1;
+	//		play_sound(snd_dash);
+	//	}
+	//	else {
+	//		change_state(air_state);
+	//	}
+	//}
+	//airdash_state.run = function() {
+	//	if state_timer >= 15 {
+	//		change_state(air_state);
+	//	}
+	//}
 
-	air_backdash_state.start = function() {
-		if air_moves < max_air_moves {
-			change_sprite(dash_sprite,2,true);
-			yoffset = -height/2;
-			xscale = -1;
-			rotation = 20;
-			xspeed = move_speed * 1.5 * -facing;
-			yspeed = -5;
-			air_moves += 1;
-			play_sound(snd_dash);
-		}
-		else {
-			change_state(air_state);
-		}
-	}
-	air_backdash_state.run = function() {
-		if state_timer >= 15 {
-			change_state(air_state);
-		}
-	}
-
+	//air_backdash_state.start = function() {
+	//	if air_moves < max_air_moves {
+	//		change_sprite(dash_sprite,2,true);
+	//		yoffset = -height/2;
+	//		xscale = -1;
+	//		rotation = 20;
+	//		xspeed = move_speed * 1.5 * -facing;
+	//		yspeed = -5;
+	//		air_moves += 1;
+	//		play_sound(snd_dash);
+	//	}
+	//	else {
+	//		change_state(air_state);
+	//	}
+	//}
+	//air_backdash_state.run = function() {
+	//	if state_timer >= 15 {
+	//		change_state(air_state);
+	//	}
+	//}
 
 	var i = 0;
 	autocombo[i] = new state();
@@ -85,128 +84,130 @@ function init_naruto_baseform() {
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_jab2,3,false);
-		play_sound(snd_punch_whiff_light);
-		play_voiceline(voice_attack,50,false);
-	}
-	autocombo[i].run = function() {
-		//standard_attack(2,20,attacktype.normal,hiteffects.hit);
-		check_moves();
-	}
-	i++;
-
-	autocombo[i] = new state();
-	autocombo[i].start = function() {
-		change_sprite(spr_naruto_hookpunch,5,false);
+		change_sprite(spr_naruto_attack_dash_punch,3,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		//standard_attack(2,30,attacktype.normal,hiteffects.hit);
+		basic_attack(2,10,attackstrength.light,hiteffects.hit);
+		return_to_idle();
 		check_moves();
 	}
 	i++;
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_slash,5,false);
-		play_sound(snd_slash_whiff_light);
+		change_sprite(spr_naruto_attack_punch_hook,3,false);
+		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		//standard_attack(2,30,attacktype.normal,hiteffects.slash);
+		basic_attack(2,20,attackstrength.medium,hiteffects.hit);
+		return_to_idle();
 		check_moves();
 	}
 	i++;
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_spinkick_up,2,false);
-		play_sound(snd_punch_whiff_heavy);
+		change_sprite(spr_naruto_attack_spinkick,3,false);
+		play_sound(snd_punch_whiff_heavy2);
+		play_voiceline(voice_attack,50,false);
+	}
+	autocombo[i].run = function() {
+		basic_attack(3,20,attackstrength.medium,hiteffects.hit);
+		return_to_idle();
+		check_moves();
+	}
+	i++;
+
+	autocombo[i] = new state();
+	autocombo[i].start = function() {
+		change_sprite(spr_naruto_attack_slash,2,false);
+		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	autocombo[i].run = function() {
-		//standard_launcher(4,50,hiteffects.hit);
+		basic_attack(2,20,attackstrength.light,hiteffects.slash);
+		return_to_idle();
+		check_moves();
 	}
 	i++;
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_jab,3,false);
+		change_sprite(spr_naruto_attack_slash_up,3,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		//standard_attack(2,10,attacktype.normal,hiteffects.hit);
-		check_moves();
-		land();
-	}
-	i++;
-
-	autocombo[i] = new state();
-	autocombo[i].start = function() {
-		change_sprite(spr_naruto_jab2,3,false);
-		play_sound(snd_punch_whiff_light);
-		play_voiceline(voice_attack,50,false);
-	}
-	autocombo[i].run = function() {
-		//standard_attack(2,20,attacktype.normal,hiteffects.hit);
-		check_moves();
-		land();
-	}
-	i++;
-
-	autocombo[i] = new state();
-	autocombo[i].start = function() {
-		change_sprite(spr_naruto_upperslash,3,false);
-		play_sound(snd_slash_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	autocombo[i].run = function() {
-		//standard_attack(3,30,attacktype.normal,hiteffects.slash);
 		if check_frame(3) {
+			create_hitbox(
+				0,
+				-height,
+				width,
+				height,
+				50,
+				1,
+				-5,
+				attacktype.hard_knockdown,
+				attackstrength.heavy,
+				hiteffects.slash
+			);
 			xspeed = 3 * facing;
-			yspeed = -8;
+			yspeed = -3;
 		}
-		check_moves();
-		land();
+		if on_ground and anim_finished {
+			if target.is_hit {
+				change_state(autocombo[6]);
+			}
+			else {
+				change_state(idle_state);
+			}
+		}
 	}
 	i++;
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_airkick,3,false);
-		play_sound(snd_punch_whiff_light);
-		play_voiceline(voice_attack,50,false);
+		change_sprite(spr_naruto_jutsu,3,false);
+		play_sound(snd_jutsu_activate);
+		timestop(30);
+		xspeed = -5 * facing;
 	}
 	autocombo[i].run = function() {
-		//standard_attack(1,20,attacktype.normal,hiteffects.hit);
-		check_moves();
-		land();
+		if check_frame(3) {
+			create_helper(0,0,init_naruto_baseform_clone_barrage);
+			create_helper(20,0,init_naruto_baseform_clone_barrage);
+			create_helper(120,0,init_naruto_baseform_clone_barrage);
+			create_helper(100,0,init_naruto_baseform_clone_barrage);
+		}
+		if anim_finished {
+			change_state(autocombo[7]);
+		}
 	}
 	i++;
 
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_spinkick,3,false);
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
+		change_sprite(spr_naruto_flip,3,true);
+		rotation_speed = -45;
+		xspeed = 2.5 * facing;
+		yspeed = -10;
 	}
 	autocombo[i].run = function() {
-		//standard_attack(3,30,attacktype.heavy,hiteffects.hit);
-		check_moves();
-		land();
-	}
-	i++;
-
-	autocombo[i] = new state();
-	autocombo[i].start = function() {
-		change_sprite(spr_naruto_dunkkick,5,false);
-		play_sound(snd_punch_whiff_heavy);
-		play_voiceline(voice_heavyattack,100,true);
-	}
-	autocombo[i].run = function() {
-		//standard_smash(3,100,hiteffects.hit);
+		if state_timer == 30 {
+			change_sprite(spr_naruto_attack_smash_kick,3,false);
+		}
+		if sprite == spr_naruto_flip {
+			if (state_timer mod 5) == 0 {
+				play_sound(snd_punch_whiff_light2,1,1.5);
+			}
+		}
+		else if sprite == spr_naruto_attack_smash_kick {
+			basic_smash(3,100,hiteffects.hit);
+			land();
+		}
 	}
 	i++;
 

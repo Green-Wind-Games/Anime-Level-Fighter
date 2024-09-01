@@ -8,7 +8,7 @@ function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 		}
 		else {
 			if target_distance <= 50 {
-				xspeed = (target_distance_x / 8) * facing;
+				xspeed = (target_distance_x / 5) * facing;
 			}
 			else {
 				xspeed = 3 * facing;
