@@ -106,6 +106,8 @@ function draw_chars() {
 	}
 	ds_priority_destroy(draw_order);
 	with(obj_char) {
+		if id == superfreeze_activator continue;
+			
 		draw_script();
 	}
 	with(obj_char) {

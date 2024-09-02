@@ -591,7 +591,7 @@ function init_goku_baseform() {
 			}
 		}
 		if check_frame(2) {
-			spirit_bomb_shot = create_shot(0,-200,0,0,spr_genkidama,0.5,0,0,0,attacktype.unblockable,attackstrength.heavy,hiteffects.none)
+			spirit_bomb_shot = create_shot(0,-200,0,0,spr_genkidama,1,0,0,0,attacktype.unblockable,attackstrength.heavy,hiteffects.none)
 			with(spirit_bomb_shot) {
 				play_sound(snd_activate_super,1,2);
 				duration = -1;
