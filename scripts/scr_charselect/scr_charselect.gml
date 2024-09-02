@@ -151,19 +151,18 @@ function draw_charselect() {
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
 			var _xscale = 1;
-			if _x > _w2 _xscale *= -1;
+			if _x > (_w/2) _xscale *= -1;
 			draw_sprite_ext(get_char_sprite(player_char[i]),0,_x,_y,_xscale,1,0,c_white,1);
 			
 			draw_set_font(fnt_menu);
 			draw_set_halign(fa_center);
 			draw_set_valign(fa_top);
-			draw_set_color(player_color[i]);
 			var _text = "Player " + string(i+1); 
 			_text += "\n" + get_char_name(player_char[i]);
 			if player_ready[i] {
 				_text += "\n" + "OK!";
 			}
-			draw_text(_x,_y,_text);
+			draw_text_outlined(_x,_y,_text,c_black,player_color[i]);
 			_x += _w2;
 		}
 	}
@@ -171,8 +170,7 @@ function draw_charselect() {
 		draw_set_font(fnt_menu);
 		draw_set_halign(fa_center);
 		draw_set_valign(fa_middle);
-		draw_set_color(c_white);
-		draw_text(_w/2,_h/8,"Pronto para iniciar!");
+		draw_text_outlined(_w/2,_h/8,"Pronto para iniciar!",c_black,c_white);
 	}
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);

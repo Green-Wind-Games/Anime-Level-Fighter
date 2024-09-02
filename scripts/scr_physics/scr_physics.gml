@@ -29,8 +29,10 @@ function gravitate(_multiplier = 1) {
 			if is_hit or is_guarding {
 				_multiplier = 1;
 			}
-			if yspeed > 0 {
-				_multiplier += 1/4;
+			else {
+				if yspeed > 0 {
+					_multiplier += 1/2;
+				}
 			}
 		}
 		yspeed += ygravity * _multiplier;

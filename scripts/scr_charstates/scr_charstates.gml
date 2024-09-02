@@ -173,6 +173,7 @@ function init_charstates() {
 			yoffset = -height_half;
 			xspeed = move_speed * 2 * facing;
 			yspeed = 0;
+			can_cancel = true;
 			play_sound(snd_dash);
 			play_sound(snd_dash_loop);
 		}
@@ -485,7 +486,9 @@ function init_charstates() {
 		can_cancel = false;
 	}
 	homing_dash_state.run = function() {
-		var _target_x = target_x - (max(target.width_half, width_half) * facing);
+		
+		var stop_distance = max(target.width_half, width_half) + 2;
+		var _target_x = target_x - (stop_distance * facing);
 		var _target_y = target_y;
 		var _direction = point_direction(x,y,_target_x,_target_y);
 		var _distance = point_distance(x,y,_target_x,_target_y);
@@ -493,8 +496,6 @@ function init_charstates() {
 		var _speed = move_speed * 2;
 		var _xspeed = lengthdir_x(_speed,_direction);
 		var _yspeed = lengthdir_y(_speed,_direction);
-		
-		var stop_distance = _speed * 1.5;
 		 
 		face_target();
 		xspeed = _xspeed;

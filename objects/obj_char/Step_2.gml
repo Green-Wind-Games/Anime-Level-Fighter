@@ -1,3 +1,5 @@
+if round_state == roundstates.pause exit;
+
 if facing == 0 {
 	facing = 1;
 }
@@ -12,6 +14,7 @@ with(obj_char) {
 	if grabbed or other.grabbed continue;
 	if dead or other.dead continue;
 	if team == other.team continue;
+	if is_helper(id) or is_helper(other) continue;
 			
 	if !rectangle_in_rectangle(
 		x-width_half,
@@ -84,8 +87,11 @@ if dead {
 else {
 	death_timer = 0;
 }
-		
-if (!dead) or (xspeed != 0) {
+
+var stay_in = true;
+if (is_helper(id) and (duration != -1)) stay_in = false;
+
+if stay_in {
 	x = clamp(x, left_wall, right_wall);
 }
 y = min(y,ground_height);

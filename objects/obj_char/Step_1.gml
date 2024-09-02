@@ -35,10 +35,7 @@ else {
 	}
 }
 	
-target = target_front_enemy();
-if !target_exists() {
-	target = target_closest_enemy();
-}
+target = target_closest_enemy();
 if target_exists() {
 	target_x = target.x;
 	target_y = target.y;

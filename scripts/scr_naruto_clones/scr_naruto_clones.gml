@@ -8,7 +8,13 @@ function init_naruto_baseform_clone() {
 
 	helper_attack_script = function() {
 		if (target_distance < 20) {
-			change_state(choose(punch,punch2));
+			change_state(
+				choose(
+					choose(punch,punch2),
+					choose(slash,slash2),
+					jump_state
+				)
+			);
 		}
 	}
 	
@@ -30,7 +36,7 @@ function init_naruto_baseform_clone() {
 				change_state(punch2);
 			}
 			else {
-				change_state(jump_state);
+				return_to_idle();
 			}
 		}
 	}
@@ -42,18 +48,63 @@ function init_naruto_baseform_clone() {
 	}
 	punch2.run = function() {
 		basic_attack(2,20,attackstrength.light,hiteffects.hit);
+		return_to_idle();
+	}
+	
+	slash = new state();
+	slash.start = function() {
+		change_sprite(spr_naruto_attack_slash,3,false);
+		play_sound(snd_slash_whiff_light);
+		play_voiceline(voice_attack,50,false);
+	}
+	slash.run = function() {
+		basic_attack(2,20,attackstrength.light,hiteffects.slash);
 		if anim_finished {
-			change_state(jump_state);
+			if can_cancel and choose(true,false) {
+				change_state(slash2);
+			}
+			else {
+				return_to_idle();
+			}
+		}
+	}
+	slash2 = new state();
+	slash2.start = function() {
+		change_sprite(spr_naruto_attack_slash_up,3,false);
+		play_sound(snd_slash_whiff_medium);
+		play_voiceline(voice_attack,50,false);
+	}
+	slash2.run = function() {
+		if check_frame(3) {
+			xspeed = 4 * facing;
+			yspeed = -5;
+			create_hitbox(
+				0,
+				-height,
+				width,
+				height,
+				30,
+				1,
+				-6,
+				attacktype.normal,
+				attackstrength.medium,
+				hiteffects.slash
+			);
+		}
+		if anim_finished {
+			land();
 		}
 	}
 }
 
 function init_naruto_baseform_clone_barrage() {
 	init_naruto_baseform_clone();
+	
+	duration = 60;
 
 	barrage_kick = new state();
 	barrage_kick.start = function() {
-		change_sprite(spr_naruto_attack_slide_kick_up,5,false);
+		change_sprite(spr_naruto_attack_slide_kick_up,8,false);
 		xoffset = width / 3;
 		face_target();
 		xspeed = 15 * facing;
@@ -74,10 +125,6 @@ function init_naruto_baseform_clone_barrage() {
 				hiteffects.hit
 			);
 			xspeed = 0;
-		}
-		if anim_finished and (state_timer > 40) {
-			create_particles(x,y,x,y,jutsu_smoke_particle);
-			instance_destroy();
 		}
 	}
 	

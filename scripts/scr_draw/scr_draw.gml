@@ -1,6 +1,31 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
+function draw_text_outlined(_x,_y,_text,_outlinecolor,_text_color) {
+	draw_set_color(_outlinecolor);
+	draw_text(_x-1,_y,_text);
+	draw_text(_x+1,_y,_text);
+	draw_text(_x,_y-1,_text);
+	draw_text(_x,_y+1,_text);
+	
+	draw_set_color(_text_color);
+	draw_text(_x,_y,_text);
+}
+
+function draw_text_announcer(_x,_y,_text) {
+	draw_set_font(fnt_announcer);
+	draw_set_halign(fa_center);
+	draw_set_valign(fa_middle);
+	draw_set_alpha(0.5);
+	draw_set_color(c_black);
+	draw_text(_x + 10, _y + 15,_text);
+	draw_set_alpha(1);
+	draw_set_color(make_color_rgb(128,0,0));
+	draw_text(_x + 3, _y + 3,_text);
+	draw_set_color(c_white);
+	draw_text(_x,_y,_text);
+}
+
 function draw_ground() {
 	if sprite_exists(ground_sprite) {
 		var ground_w = room_width * 1.5;
@@ -42,13 +67,7 @@ function draw_my_playerindicator(_playerid = 0) {
 	);
 	
 	var text = "[P"+string(_playerid+1)+"]";
-	draw_set_color(c_black);
-	draw_text(indicator_x+1,indicator_y,text);
-	draw_text(indicator_x-1,indicator_y,text);
-	draw_text(indicator_x,indicator_y-1,text);
-	draw_text(indicator_x,indicator_y+1,text);
-	draw_set_color(player_color[_playerid]);
-	draw_text(indicator_x,indicator_y,text);
+	draw_text_outlined(indicator_x,indicator_y,text,c_black,player_color[_playerid]);
 }
 
 function draw_chars() {
@@ -344,7 +363,7 @@ function draw_playerhud() {
 
 					if (combo_damage_taken > 0) {
 						var _dmg_w = map_value(combo_damage_taken, 1, max_hp, 1, hp_bar_width);
-						draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x1+_hp_w+1,hp_bar_y1,_dmg_w,hp_bar_height);
+						draw_sprite_stretched(spr_bar_hp_bar_damage,0,hp_bar_x1+_hp_w,hp_bar_y1,_dmg_w,hp_bar_height);
 					}
 				}
 
@@ -386,7 +405,7 @@ function draw_playerhud() {
 
 					if (combo_damage_taken > 0) {
 						var _dmg_w = map_value(combo_damage_taken, 1, max_hp, 1, hp_bar_width);
-						draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x2-_hp_w-_dmg_w-1,hp_bar_y1,_dmg_w,hp_bar_height);
+						draw_sprite_stretched(spr_bar_hp_bar_damage,0,hp_bar_x2-_hp_w-_dmg_w,hp_bar_y1,_dmg_w,hp_bar_height);
 					}
 				}
 
@@ -432,11 +451,7 @@ function draw_playerhud() {
 				playertext_x1 = playertext_x2 - playertext_width;
 			}
 			
-			draw_set_color(c_black);
-			draw_rectangle(playertext_x1, playertext_y1, playertext_x2, playertext_y2, false);
-			
-			draw_set_color(player_color[i]);
-			draw_text(playertext_x1,playertext_y1,playertext);
+			draw_text_outlined(playertext_x1,playertext_y1,playertext,c_black,player_color[i]);
 			
 			hud_x += hud_w;
 		}
@@ -578,9 +593,6 @@ function draw_pause() {
 }
 
 function draw_countdown() {
-	draw_set_font(fnt_announcer);
-	draw_set_halign(fa_center);
-	draw_set_valign(fa_middle);
 	var text_x = gui_width/2;
 	var text_y = gui_height/2;
 	var _number = map_value(round_state_timer,0,round_countdown_duration,3.9,-1);
@@ -592,20 +604,10 @@ function draw_countdown() {
 			text_y += random_range(-5,5);
 		}
 	}
-	draw_set_alpha(0.5);
-	draw_set_color(c_black);
-	draw_text(text_x + 10, text_y + 15,text);
-	draw_set_alpha(1);
-	draw_set_color(make_color_rgb(192,0,0));
-	draw_text(text_x + 3, text_y + 3,text);
-	draw_set_color(c_white);
-	draw_text(text_x, text_y,text);
+	draw_text_announcer(text_x,text_y,text);
 }
 
 function draw_knockout() {
-	draw_set_font(fnt_announcer);
-	draw_set_halign(fa_center);
-	draw_set_valign(fa_middle);
 	var text_x = gui_width/2;
 	var text_y = gui_height/2;
 	var text = "K.O!";
@@ -613,31 +615,14 @@ function draw_knockout() {
 		text_x += random_range(-5,5);
 		text_y += random_range(-5,5);
 	}
-	draw_set_alpha(0.5);
-	draw_set_color(c_black);
-	draw_text(text_x + 10, text_y + 15,text);
-	draw_set_alpha(1);
-	draw_set_color(make_color_rgb(192,0,0));
-	draw_text(text_x + 3, text_y + 3,text);
-	draw_set_color(c_white);
-	draw_text(text_x, text_y,text);
+	draw_text_announcer(text_x,text_y,text);
 }
 
 function draw_timeover() {
-	draw_set_font(fnt_announcer);
-	draw_set_halign(fa_center);
-	draw_set_valign(fa_middle);
 	var text_x = gui_width/2;
 	var text_y = gui_height/2;
 	var text = "Time over...";
-	draw_set_alpha(0.5);
-	draw_set_color(c_black);
-	draw_text(text_x + 10, text_y + 15,text);
-	draw_set_alpha(1);
-	draw_set_color(make_color_rgb(192,0,0));
-	draw_text(text_x + 3, text_y + 3,text);
-	draw_set_color(c_white);
-	draw_text(text_x, text_y,text);
+	draw_text_announcer(text_x,text_y,text);
 }
 
 function draw_menu() {

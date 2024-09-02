@@ -19,14 +19,14 @@ function create_helper(_x,_y,_charscript) {
 function init_helperstates() {
 	idle_state.start = function() {
 		if on_ground {
-			if (previous_state != idle_state)
-			and (previous_state != jump_state) {
-				change_state(jump_state);
-				exit;
-			}
 			change_sprite(idle_sprite,6,true);
 			face_target();
 			yspeed = 0;
+			if (target_distance_x < 50)
+			and ((target.is_hit) or (target.is_guarding))
+			and (!on_wall) {
+				change_state(jump_state);
+			}
 		}
 		else {
 			change_state(air_state);
@@ -35,11 +35,16 @@ function init_helperstates() {
 	idle_state.run = function() {
 		face_target();
 		if round_state == roundstates.fight {
-			helper_attack_script();
-			if (state_timer mod 30) == 1 {
+			if owner.combo_hits == 0 {
+				helper_attack_script();
 				if active_state == idle_state {
-					helper_script();
+					if (state_timer mod 30) == 1 {
+						helper_script();
+					}
 				}
+			}
+			else {
+				change_sprite(idle_sprite,6,true);
 			}
 		}
 		else {

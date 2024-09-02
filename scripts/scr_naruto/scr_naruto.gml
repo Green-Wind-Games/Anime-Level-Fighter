@@ -12,11 +12,14 @@ function init_naruto_baseform() {
 	shadow_clone_jutsu_cooldown_duration = 300;
 
 	char_script = function() {
+		shadow_clone_jutsu_cooldown--;
 		var me = id;
 		with(obj_helper) {
 			if owner == me {
-				with(me) {
-					shadow_clone_jutsu_cooldown = shadow_clone_jutsu_cooldown_duration;
+				if duration == -1 {
+					with(me) {
+						shadow_clone_jutsu_cooldown = shadow_clone_jutsu_cooldown_duration;
+					}
 				}
 			}
 		}
@@ -173,8 +176,10 @@ function init_naruto_baseform() {
 	}
 	autocombo[i].run = function() {
 		if check_frame(3) {
-			create_helper(0,0,init_naruto_baseform_clone_barrage);
-			create_helper(150,0,init_naruto_baseform_clone_barrage);
+			create_helper(-50,0,init_naruto_baseform_clone_barrage).xoffset = width / 2;
+			create_helper(200,0,init_naruto_baseform_clone_barrage).xoffset = width / 2;
+			create_helper(-30,0,init_naruto_baseform_clone_barrage).xoffset = width;
+			create_helper(180,0,init_naruto_baseform_clone_barrage).xoffset = width;
 		}
 		can_cancel = false;
 		if anim_finished {

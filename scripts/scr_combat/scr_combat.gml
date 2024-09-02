@@ -77,9 +77,12 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	blockstun = round(blockstun);
 	hitstop = round(hitstop);
 			
-	var guarding =	((input.back or input.down)
-					or ((ai_enabled) and (random(100) < map_value(ai_level,1,ai_level_max,10,90)))
-					or (is_guarding));
+	var guarding = is_guarding;
+	if is_char(id) {
+		if input.back or input.down guarding = true;
+		if (ai_enabled) and (random(100) < map_value(ai_level,1,ai_level_max,10,90)) guarding = true;
+	}
+	
 	var guard_valid = (can_guard) and (!is_hit);
 	if _attacktype == attacktype.unblockable
 	or _attacktype == attacktype.grab {
@@ -307,8 +310,8 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	var guts = map_value(
 		hp,
-		max_hp*0.75,
-		max_hp*0.25,
+		max_hp*0.50,
+		1,
 		1,
 		0
 	);
@@ -335,7 +338,6 @@ function reset_combo() {
 	combo_damage = 0;
 	combo_hits_taken = 0;
 	combo_damage_taken = 0;
-	combo_timer = 0;
 }
 
 function init_clash(_char1, _char2) {

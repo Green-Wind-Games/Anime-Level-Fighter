@@ -90,16 +90,16 @@ function update_view() {
 	var _w2 = round(_w/2);
 	var _h2 = round(_h/2);
 	
-	var _view_x = battle_x;
-	var _view_y = battle_y;
+	var _view_x = mean(_x1,_x2);
+	var _view_y = lerp(_y1,_y2,0.25);
 	
 	if screen_zoom_target != noone {
 		_view_x = screen_zoom_target.x;
 		_view_y = screen_zoom_target.y-screen_zoom_target.height_half;
 	}
 	
-	_view_x = median(_view_x,_w2,room_width-_w2);
-	_view_y = median(_view_y,_h2,room_height-_h2);
+	_view_x = clamp(_view_x,_w2,room_width-_w2-1);
+	_view_y = clamp(_view_y,_h2,room_height-_h2-1);
 	
 	_view_x += screen_shake_x;
 	_view_y += screen_shake_y;

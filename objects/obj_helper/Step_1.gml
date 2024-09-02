@@ -7,3 +7,15 @@ tp_stocks = 0;
 
 // Inherit the parent event
 event_inherited();
+
+if round_state == roundstates.pause exit;
+if superfreeze_active exit;
+if timestop_active exit;
+if hitstop exit;
+
+if duration != -1 {
+	if duration-- <= 0 {
+		death_script();
+		instance_destroy();
+	}
+}
