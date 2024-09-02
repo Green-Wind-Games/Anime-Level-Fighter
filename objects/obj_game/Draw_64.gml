@@ -5,9 +5,6 @@
 
 var _w = gui_width;
 var _h = gui_height;
-var _w2 = _w / 2;
-var _h2 = _h / 2;
-var icon_size = 24;
 
 switch(game_state) {
 	case gamestates.story_select:

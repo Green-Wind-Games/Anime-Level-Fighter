@@ -203,8 +203,13 @@ function draw_particles() {
 }
 
 function draw_hud() {
-	var _w = display_get_gui_width();
-	var _h = display_get_gui_height();
+	draw_timer();
+	draw_playerhud();
+}
+
+function draw_playerhud() {
+	var _w = gui_width;
+	var _h = gui_height;
 	var _w2 = _w / 2;
 	var _h2 = _h / 2;
 	var _spacing = 5;
@@ -217,159 +222,213 @@ function draw_hud() {
 			active_players++;
 		}
 	}
-
-	var hp_bar_width = (_w / active_players) - (_spacing * 2);
-	var hp_bar_height = 8;
-	var mp_bar_width = hp_bar_width * 0.8;
-	var mp_bar_height = hp_bar_height * 0.5;
-	var tp_bar_width = mp_bar_width * 0.8;
-	var tp_bar_height = mp_bar_height;
-	
-	draw_set_font(fnt_hud);
-	var playertext = "Player N: Character";
-	var playertext_width = string_width(playertext);
-	var playertext_height = string_height(playertext);
 	
 	var hud_w = _w / active_players;
-	var hud_h = (_spacing * 2) + hp_bar_height + mp_bar_height + tp_bar_height + playertext_height;
+	//var hud_h = (_spacing * 2) + hp_bar_height + mp_bar_height + tp_bar_height + playertext_height;
 	var hud_x = 0;
 	var hud_y = 0;
 
 	var hp_color = make_color_rgb(0, 255, 0);
-	var dmg_color = make_color_rgb(255, 0, 0);
 	var mp_color = make_color_rgb(0, 192, 255);
 	var tp_color = make_color_rgb(255, 192, 0);
+	
+	var dmg_color = make_color_rgb(255, 0, 0);
+
+	var hp_border_width = (_w / active_players) - (_spacing * 2);
+	var mp_border_width = hp_border_width * 0.75;
+	var tp_border_width = mp_border_width * 0.75;
+	
+	var hp_border_height = 24;
+	var mp_border_height = hp_border_height * 0.75;
+	var tp_border_height = mp_border_height * 0.75;
+	
+	var hp_xscale = hp_border_width / sprite_get_width(spr_bar_hp_border);
+	var mp_xscale = mp_border_width / sprite_get_width(spr_bar_mp_border);
+	var tp_xscale = tp_border_width / sprite_get_width(spr_bar_tp_border);
+	
+	var hp_yscale = hp_border_height / sprite_get_height(spr_bar_hp_border);
+	var mp_yscale = mp_border_height / sprite_get_height(spr_bar_mp_border);
+	var tp_yscale = tp_border_height / sprite_get_height(spr_bar_tp_border);
+	
+	var hp_bar_xoffset = 3 * hp_xscale;
+	var hp_bar_yoffset = 3 * hp_yscale;
+	
+	var mp_bar_xoffset = 0 * mp_xscale;
+	var mp_bar_yoffset = 1 * mp_yscale;
+	
+	var tp_bar_xoffset = 2 * tp_xscale;
+	var tp_bar_yoffset = 1 * tp_yscale;
+	
+	var hp_bar_width = hp_border_width - (hp_bar_xoffset * 2);
+	var mp_bar_width = mp_border_width - (mp_bar_xoffset);
+	var tp_bar_width = tp_border_width - (tp_bar_xoffset * 2);
+	
+	var hp_bar_height = hp_border_height - (hp_bar_yoffset * 2);
+	var mp_bar_height = mp_border_height - (mp_bar_yoffset * 2);
+	var tp_bar_height = tp_border_height - (tp_bar_yoffset * 2);
+	
+	var mp_stock_scale = mp_border_height / sprite_get_height(spr_bar_mp_stocks);
+	var mp_stock_width = sprite_get_width(spr_bar_mp_stocks) * mp_stock_scale;
+	var mp_stock_height = sprite_get_height(spr_bar_mp_stocks) * mp_stock_scale;
+	var mp_stock_xoffset = mp_stock_width * 0.69;
+	
+	draw_set_font(fnt_hud);
+	var playertext = "Player N: Anime Character";
+	var playertext_width = string_width(playertext);
+	var playertext_height = string_height(playertext);
 
 	for (var i = 0; i < array_length(player_slot); i++) {
 		var _right = hud_x >= _w2;
-		var hp_x1, hp_x2, hp_y1, hp_y2;
-		var mp_x1, mp_x2, mp_y1, mp_y2;
-		var tp_x1, tp_x2, tp_y1, tp_y2;
+		var hp_border_x1, hp_border_x2, hp_border_y1, hp_border_y2;
+		var mp_border_x1, mp_border_x2, mp_border_y1, mp_border_y2;
+		var tp_border_x1, tp_border_x2, tp_border_y1, tp_border_y2;
+		
+		var hp_bar_x1, hp_bar_x2, hp_bar_y1, hp_bar_y2;
+		var mp_bar_x1, mp_bar_x2, mp_bar_y1, mp_bar_y2;
+		var tp_bar_x1, tp_bar_x2, tp_bar_y1, tp_bar_y2;
 
 		if (!_right) {
-			hp_x1 = hud_x + _spacing;
-			hp_x2 = hp_x1 + hp_bar_width;
+			hp_border_x1 = hud_x + _spacing;
+			hp_border_x2 = hp_border_x1 + hp_border_width;
 			
-			mp_x1 = hp_x1;
-			mp_x2 = mp_x1 + mp_bar_width;
+			mp_border_x1 = hp_border_x1 + mp_stock_xoffset;
+			mp_border_x2 = mp_border_x1 + mp_border_width;
 
-			tp_x1 = hp_x1;
-			tp_x2 = tp_x1 + tp_bar_width;
+			tp_border_x1 = hp_border_x1;
+			tp_border_x2 = tp_border_x1 + tp_border_width;
 		} 
 		else {
-			hp_x2 = hud_x + hud_w - _spacing;
-			hp_x1 = hp_x2 - hp_bar_width;
+			hp_border_x2 = hud_x + hud_w - _spacing;
+			hp_border_x1 = hp_border_x2 - hp_border_width;
 			
-			mp_x2 = hp_x2;
-			mp_x1 = mp_x2 - mp_bar_width;
+			mp_border_x2 = hp_border_x2 - mp_stock_xoffset;
+			mp_border_x1 = mp_border_x2 - mp_border_width;
 			
-			tp_x2 = hp_x2;
-			tp_x1 = tp_x2 - tp_bar_width;
+			tp_border_x2 = hp_border_x2;
+			tp_border_x1 = tp_border_x2 - tp_border_width;
 		}
 
-		hp_y1 = hud_y + _spacing;
-		hp_y2 = hp_y1 + hp_bar_height;
+		hp_border_y1 = hud_y + _spacing;
+		hp_border_y2 = hp_border_y1 + hp_border_height;
 
-		mp_y1 = hp_y2 + 1;
-		mp_y2 = mp_y1 + mp_bar_height;
+		mp_border_y1 = hp_border_y2;
+		mp_border_y2 = mp_border_y1 + mp_border_height;
 		
-		tp_y1 = mp_y2 + 1;
-		tp_y2 = tp_y1 + tp_bar_height;
+		tp_border_y1 = mp_border_y2;
+		tp_border_y2 = tp_border_y1 + tp_border_height;
+		
+		var hp_bar_x1, hp_bar_x2, hp_bar_y1, hp_bar_y2;
+		var mp_bar_x1, mp_bar_x2, mp_bar_y1, mp_bar_y2;
+		var tp_bar_x1, tp_bar_x2, tp_bar_y1, tp_bar_y2;
+			
+		hp_bar_x1 = hp_border_x1 + hp_bar_xoffset;
+		hp_bar_x2 = hp_bar_x1 + hp_bar_width;
+		hp_bar_y1 = hp_border_y1 + hp_bar_yoffset;
+		hp_bar_y2 = hp_bar_y1 + hp_bar_height;
+				
+		mp_bar_x1 = mp_border_x1 + mp_bar_xoffset;
+		mp_bar_x2 = mp_bar_x1 + mp_bar_width;
+		mp_bar_y1 = mp_border_y1 + mp_bar_yoffset;
+		mp_bar_y2 = mp_bar_y1 + mp_bar_height;
+				
+		tp_bar_x1 = tp_border_x1 + tp_bar_xoffset;
+		tp_bar_x2 = tp_bar_x1 + tp_bar_width;
+		tp_bar_y1 = tp_border_y1 + tp_bar_yoffset;
+		tp_bar_y2 = tp_bar_y1 + tp_bar_height;
 
 		with(player[i]) {
-			draw_set_color(c_black);
-			draw_set_alpha(1);
-			draw_rectangle(hp_x1, hp_y1, hp_x2, hp_y2, false);
-			draw_rectangle(mp_x1, mp_y1, mp_x2, mp_y2, false);
-			draw_rectangle(tp_x1, tp_y1, tp_x2, tp_y2, false);
-
 			if (!_right) {
-				if (hp_percent > 0) {
-					draw_set_color(hp_color);
-					var _hp_x = map_value(hp_percent, 0, 100, hp_x1 + 1, hp_x2 - 1);
-					draw_rectangle(hp_x1 + 1, hp_y1 + 1, _hp_x, hp_y2 - 1, false);
+				if (hp > 0) {
+					var _hp_w = map_value(hp, 1, max_hp, 1, hp_bar_width);
+					draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x1,hp_bar_y1,_hp_w,hp_bar_height);
 
 					if (combo_damage_taken > 0) {
-						var _dmg_x = map_value(hp + combo_damage_taken, 0, max_hp, hp_x1 + 1, hp_x2 - 1);
-						draw_set_color(dmg_color);
-						draw_set_alpha(1);
-						draw_rectangle(_hp_x + 1, hp_y1 + 1, _dmg_x, hp_y2 - 1, false);
+						var _dmg_w = map_value(combo_damage_taken, 1, max_hp, 1, hp_bar_width);
+						draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x1+_hp_w+1,hp_bar_y1,_dmg_w,hp_bar_height);
 					}
 				}
 
-				if (mp_percent > 0) {
-					draw_set_color(mp_color);
-					var _mp_x = map_value(mp_percent, 0, 100, mp_x1 + 1, mp_x2 - 1);
-					draw_rectangle(mp_x1 + 1, mp_y1 + 1, _mp_x, mp_y2 - 1, false);
+				if (mp > 0) {
+					var _mp_w = map_value(mp, 1, max_mp, 1, mp_bar_width);
+					draw_sprite_stretched(spr_bar_mp_bar,0,mp_bar_x1,mp_bar_y1,_mp_w,mp_bar_height);
 				}
 				
-				if (tp_percent > 0) {
-					draw_set_color(tp_color);
-					var _tp_x = map_value(tp_percent, 0, 100, tp_x1 + 1, tp_x2 - 1);
-					draw_rectangle(tp_x1 + 1, tp_y1 + 1, _tp_x, tp_y2 - 1, false);
+				if (tp > 0) {
+					var _tp_w = map_value(tp, 1, max_tp, 1, tp_bar_width);
+					draw_sprite_stretched(spr_bar_tp_bar,0,tp_bar_x1,tp_bar_y1,_tp_w,tp_bar_height);
 				}
+				draw_sprite_ext(spr_bar_hp_border,0,hp_border_x1,hp_border_y1,hp_xscale,hp_yscale,0,c_white,1);
+				draw_sprite_ext(spr_bar_mp_border,0,mp_border_x1,mp_border_y1,mp_xscale,mp_yscale,0,c_white,1);
+				draw_sprite_ext(spr_bar_tp_border,0,tp_border_x1,tp_border_y1,tp_xscale,tp_yscale,0,c_white,1);
+				
+				draw_sprite_ext(
+					spr_bar_mp_stocks,
+					0,
+					mp_border_x1 - mp_stock_xoffset,
+					mp_border_y1,
+					mp_stock_scale,
+					mp_stock_scale,
+					0,
+					c_white,
+					1
+				);
+				
+				//draw_set_color(c_yellow);
+				//draw_set_halign(fa_top);
+				//draw_set_valign(fa_right);
+				//draw_set_font(fnt_hud);
+				//draw_text(mp_border_x1,mp_
 			}
 			else {
-				if (hp_percent > 0) {
-					draw_set_color(hp_color);
-					var _hp_x = map_value(hp_percent, 0, 100, hp_x2 - 1, hp_x1 + 1);
-					draw_rectangle(_hp_x, hp_y1 + 1, hp_x2 - 1, hp_y2 - 1, false);
+				if (hp > 0) {
+					var _hp_w = map_value(hp, 1, max_hp, 1, hp_bar_width);
+					draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x2 - _hp_w,hp_bar_y1,_hp_w,hp_bar_height);
 
 					if (combo_damage_taken > 0) {
-						var _dmg_x = map_value(hp + combo_damage_taken, 0, max_hp, hp_x2 - 1, hp_x1 + 1);
-						draw_set_color(dmg_color);
-						draw_set_alpha(1);
-						draw_rectangle(_dmg_x, hp_y1 + 1, _hp_x - 1, hp_y2 - 1, false);
+						var _dmg_w = map_value(combo_damage_taken, 1, max_hp, 1, hp_bar_width);
+						draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x2-_hp_w-_dmg_w-1,hp_bar_y1,_dmg_w,hp_bar_height);
 					}
 				}
 
-				if (mp_percent > 0) {
-					draw_set_color(mp_color);
-					var _mp_x = map_value(mp_percent, 0, 100, mp_x2 - 1, mp_x1 + 1);
-					draw_rectangle(_mp_x, mp_y1 + 1, mp_x2 - 1, mp_y2 - 1, false);
+				if (mp > 0) {
+					var _mp_w = map_value(mp, 1, max_mp, 1, mp_bar_width);
+					draw_sprite_stretched(spr_bar_mp_bar,0,mp_bar_x2-_mp_w,mp_bar_y1,_mp_w,mp_bar_height);
 				}
 				
-				if (tp_percent > 0) {
-					draw_set_color(tp_color);
-					var _tp_x = map_value(tp_percent, 0, 100, tp_x2 - 1, tp_x1 + 1);
-					draw_rectangle(_tp_x, tp_y1 + 1, tp_x2 - 1, tp_y2 - 1, false);
+				if (tp > 0) {
+					var _tp_w = map_value(tp, 1, max_tp, 1, tp_bar_width);
+					draw_sprite_stretched(spr_bar_tp_bar,0,tp_bar_x2-_tp_w,tp_bar_y1,_tp_w,tp_bar_height);
 				}
-			}
-			
-			draw_set_color(c_black);
-			var hp_segments = 4;
-			for(var ii = 0; ii < hp_segments - 1; ii++) {
-				var _x = map_value(ii,-1,hp_segments-1,hp_x1+1,hp_x2-1);
-				var _y1 = hp_y1;
-				var _y2 = hp_y2;
-				draw_line(_x,_y1,_x,_y2);
-			}
-			for(var ii = 0; ii < max_mp_stocks - 1; ii++) {
-				var _x = map_value(ii,-1,max_mp_stocks-1,mp_x1+1,mp_x2-1);
-				var _y1 = mp_y1;
-				var _y2 = mp_y2;
-				draw_line(_x,_y1,_x,_y2);
-			}
-			for(var ii = 0; ii < max_tp_stocks - 1; ii++) {
-				var _x = map_value(ii,-1,max_tp_stocks-1,tp_x1+1,tp_x2-1);
-				var _y1 = tp_y1;
-				var _y2 = tp_y2;
-				draw_line(_x,_y1,_x,_y2);
+				draw_sprite_ext(spr_bar_hp_border,0,hp_border_x2, hp_border_y1,-hp_xscale,hp_yscale,0,c_white,1);
+				draw_sprite_ext(spr_bar_mp_border,0,mp_border_x2, mp_border_y1,-mp_xscale,mp_yscale,0,c_white,1);
+				draw_sprite_ext(spr_bar_tp_border,0,tp_border_x2, tp_border_y1,-tp_xscale,tp_yscale,0,c_white,1);
+				
+				draw_sprite_ext(
+					spr_bar_mp_stocks,
+					0,
+					mp_border_x2 + mp_stock_xoffset,
+					mp_border_y1,
+					-mp_stock_scale,
+					mp_stock_scale,
+					0,
+					c_white,
+					1
+				);
 			}
 			
 			draw_set_font(fnt_hud);
+			draw_set_halign(fa_left);
+			draw_set_valign(fa_top);
 			var playertext = "Player " + string(i+1) + ": " + name;
 			var playertext_width = string_width(playertext);
 			var playertext_height = string_height(playertext);
-			draw_set_halign(fa_left);
-			draw_set_valign(fa_top);
-			var playertext_x1 = hp_x1;
-			var playertext_y1 = tp_y2 + 1;
+			var playertext_x1 = hp_border_x1;
+			var playertext_y1 = tp_border_y2 + 1;
 			var playertext_x2 = playertext_x1 + playertext_width;
 			var playertext_y2 = playertext_y1 + playertext_height;
 			
 			if _right {
-				playertext_x2 = hp_x2;
+				playertext_x2 = hp_border_x2;
 				playertext_x1 = playertext_x2 - playertext_width;
 			}
 			
@@ -382,29 +441,28 @@ function draw_hud() {
 			hud_x += hud_w;
 		}
 	}
-	
+}
+
+function draw_timer() {
 	draw_set_font(fnt_timer);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
-	var clock_text_max = string(round(round_timer_max / 60)*10);
-	var clock_text_width = string_width(clock_text_max);
-	var clock_text_height = string_height(clock_text_max);
-	var clock_text = string(ceil(round_timer / 60));
-	var clock_x = _w2;
-	var clock_y = _h - _spacing - clock_text_height;
-	//if _w - (hp_bar_width * 2) - (_spacing * 2) - (icon_size * 2) > text_width {
-	//	text_y = mean(hp_y1,hp_y2);
-	//}
 	
-	//var clock_x1 = clock_x - (clock_text_width / 2) + 1;
-	//var clock_x2 = clock_x + (clock_text_width / 2) - 1;
-	//var clock_y1 = clock_y - (clock_text_height / 2);
-	//var clock_y2 = clock_y + (clock_text_height / 2);
-	//draw_set_color(c_black);
-	//draw_rectangle(clock_x1,clock_y1,clock_x2,clock_y2,false);
-	draw_sprite(spr_timer,0,clock_x,clock_y);
+	draw_set_color(c_white);
+	
+	var _timer_sprite = spr_timer2;
+	var _timer_x = gui_width/2;
+	var _timer_y = gui_height + 1 - (sprite_get_height(_timer_sprite) - sprite_get_yoffset(_timer_sprite));
+	var _timer_text = string(ceil(round_timer / 60));
+	
+	draw_sprite(_timer_sprite,0,_timer_x,_timer_y);
+	
 	draw_set_color(make_color_rgb(255,255,0));
-	draw_text(clock_x,clock_y,clock_text);
+	draw_text(_timer_x,_timer_y,_timer_text);
+	
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_top);
+	draw_set_color(c_white);
 }
 
 function draw_hitboxes() {
@@ -414,12 +472,12 @@ function draw_hitboxes() {
 }
 
 function draw_portraits() {
-	var _w = display_get_gui_width();
-	var _h = display_get_gui_height();
+	var _w = gui_width;
+	var _h = gui_height;
 	var _x1 = _w * 0.1;
 	var _x2 = _w * 0.9;
 	var _y = _h * 0.5;
-	var size = display_get_gui_height() / 4;
+	var size = gui_height / 4;
 	
 	var p1_portrait = charselect_portrait[p1_selecting_char][p1_selected_form[p1_charselect_id]];
 	if sprite_exists(p1_portrait) {
@@ -510,21 +568,21 @@ function draw_versus() {
 function draw_pause() {
 	draw_set_alpha(0.5);
 	draw_set_color(c_black);
-	draw_rectangle(0,0,display_get_gui_width(),display_get_gui_height(),false);
+	draw_rectangle(0,0,gui_width,gui_height,false);
 	draw_set_alpha(1);
 	draw_set_color(c_white);
 	draw_set_font(fnt_hud);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
-	draw_text(display_get_gui_width()/2,display_get_gui_height()/2,"Jogo Pausado");
+	draw_text(gui_width/2,gui_height/2,"Jogo Pausado");
 }
 
 function draw_countdown() {
 	draw_set_font(fnt_announcer);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
-	var text_x = display_get_gui_width()/2;
-	var text_y = display_get_gui_height()/2;
+	var text_x = gui_width/2;
+	var text_y = gui_height/2;
 	var _number = map_value(round_state_timer,0,round_countdown_duration,3.9,-1);
 	var text = string(floor(_number));
 	if _number < 1 {
@@ -548,8 +606,8 @@ function draw_knockout() {
 	draw_set_font(fnt_announcer);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
-	var text_x = display_get_gui_width()/2;
-	var text_y = display_get_gui_height()/2;
+	var text_x = gui_width/2;
+	var text_y = gui_height/2;
 	var text = "K.O!";
 	if round_state_timer < 10 {
 		text_x += random_range(-5,5);
@@ -569,8 +627,8 @@ function draw_timeover() {
 	draw_set_font(fnt_announcer);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
-	var text_x = display_get_gui_width()/2;
-	var text_y = display_get_gui_height()/2;
+	var text_x = gui_width/2;
+	var text_y = gui_height/2;
 	var text = "Time over...";
 	draw_set_alpha(0.5);
 	draw_set_color(c_black);

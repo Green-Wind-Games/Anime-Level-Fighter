@@ -177,6 +177,7 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 
 function create_hitspark(_target,_strength,_hiteffect,_guard) {
 	var _sound = noone;
+	var _volume = 1;
 	var _p = 1/3;
 	var _x1 = _target.x -						(_target.width_half * _p);
 	var _y1 = _target.y - _target.height_half -	(_target.height_half * _p);
@@ -226,10 +227,11 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 				break;
 			}
 			
-			if meme_enabled {
-				if _strength >= attackstrength.heavy {
-					if irandom(20) == 1 {
-						_sound = choose(snd_meme_hit_punch_gah,snd_meme_hit_fryingpan);
+			if _strength >= attackstrength.heavy {
+				if meme_enabled {
+					if random(100) < meme_chance {
+						_sound = choose(snd_meme_hit_fryingpan);
+						_volume = 3;
 					}
 				}
 			}
@@ -244,5 +246,5 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 		}
 		break;
 	}
-	play_sound(_sound);
+	play_sound(_sound,_volume);
 }

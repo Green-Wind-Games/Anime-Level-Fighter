@@ -6,8 +6,9 @@ if instance_number(object_index) > 1 {
 	exit;
 }
 
-globalvar meme_enabled;
+globalvar meme_enabled, meme_chance;
 meme_enabled = true;
+meme_chance = 5;
 
 enum gamestates {
 	intro,
@@ -163,4 +164,3 @@ for(var i = 0; i <= room_last; i++) {
 }
 
 texture_prefetch("Default");
-texture_prefetch("SpecialEffects");

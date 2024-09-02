@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":2.525,
   "textureGroupId":{
-    "name":"Genos",
-    "path":"texturegroups/Genos",
+    "name":"Portraits",
+    "path":"texturegroups/Portraits",
   },
   "type":0,
   "VTile":false,

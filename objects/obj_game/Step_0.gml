@@ -99,6 +99,7 @@ if _gamestate != game_state {
 		case gamestates.story_battle:
 		case gamestates.versus_battle:
 		case gamestates.training:
+		texture_prefetch("SpecialEffects");
 		room_goto(stage);
 		break;
 	}

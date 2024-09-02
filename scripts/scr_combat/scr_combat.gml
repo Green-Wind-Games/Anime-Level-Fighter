@@ -200,6 +200,13 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 					}
 					if is_heavyattack {
 						play_voiceline(voice_hurt_heavy,50,true);
+			
+						if meme_enabled {
+							if random(100) < meme_chance {
+								stop_sound(voice);
+								voice = play_sound(choose(snd_meme_hit_punch_gah),3);
+							}
+						}
 					}
 					else {
 						play_voiceline(voice_hurt,50,true);
