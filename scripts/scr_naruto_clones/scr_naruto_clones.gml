@@ -16,6 +16,9 @@ function init_naruto_baseform_clone() {
 				)
 			);
 		}
+		else if target_distance > 100 {
+			change_state(choose(shuriken_throw,jump_state));
+		}
 	}
 	
 	death_script = function() {
@@ -76,7 +79,7 @@ function init_naruto_baseform_clone() {
 	}
 	slash2.run = function() {
 		if check_frame(3) {
-			xspeed = 4 * facing;
+			xspeed = 3 * facing;
 			yspeed = -5;
 			create_hitbox(
 				0,
@@ -94,6 +97,48 @@ function init_naruto_baseform_clone() {
 		if anim_finished {
 			land();
 		}
+	}
+	
+	shuriken_throw = new state();
+	shuriken_throw.start = function() {
+		change_sprite(spr_naruto_special_throw_shuriken,3,false);
+	}
+	shuriken_throw.run = function() {
+		if check_frame(3) {
+			shuriken = create_shot(
+				10,
+				-35,
+				8,
+				random_range(2,-2),
+				spr_shuriken,
+				1,
+				30,
+				3,
+				0,
+				attacktype.normal,
+				attackstrength.light,
+				hiteffects.slash
+			);
+			with(shuriken) {
+				blend = false;
+				duration = -1;
+				active_script = function() {
+					if y >= ground_height {
+						yspeed = 0;
+						xspeed /= 2;
+						if duration > 10 {
+							duration = 10;
+						}
+					}
+				}
+				hit_script = function() {
+					xspeed /= 2;
+					yspeed /= 2;
+					affected_by_gravity = true;
+				}
+			}
+		}
+		return_to_idle();
 	}
 }
 

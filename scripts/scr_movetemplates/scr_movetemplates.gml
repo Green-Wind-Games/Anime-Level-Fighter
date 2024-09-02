@@ -104,6 +104,8 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 		facing = owner.facing;
 		target = owner.target;
 		
+		homing_speed = max(abs(xspeed),abs(yspeed));
+		
 		rotation = point_direction(0,0,xspeed,yspeed);
 
 		if xspeed > 0 {

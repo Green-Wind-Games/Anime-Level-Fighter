@@ -258,6 +258,99 @@ function init_naruto_baseform() {
 		if check_frame(1) facing = -facing;
 		forward_throw.run();
 	}
+	
+	shuriken_throw = new state();
+	shuriken_throw.start = function() {
+		change_sprite(spr_naruto_special_throw_shuriken,7,false);
+	}
+	shuriken_throw.run = function() {
+		if check_frame(3) {
+			shuriken = create_shot(
+				10,
+				-35,
+				12,
+				0,
+				spr_shuriken,
+				1,
+				10,
+				3,
+				0,
+				attacktype.normal,
+				attackstrength.light,
+				hiteffects.slash
+			);
+			with(shuriken) {
+				blend = false;
+				homing = true;
+				homing_max_turn = 1;
+				hit_limit = -1;
+				duration = 100;
+				active_script = function() {
+					if y >= ground_height {
+						homing = false;
+						yspeed = 0;
+						xspeed /= 2;
+						if duration > 10 {
+							duration = 10;
+						}
+					}
+				}
+				hit_script = function() {
+					xspeed /= 2;
+					yspeed /= 2;
+					homing = false;
+					affected_by_gravity = true;
+				}
+			}
+		}
+		return_to_idle();
+	}
+	
+	triple_shuriken_throw = new state();
+	triple_shuriken_throw.start = function() {
+		change_sprite(spr_naruto_special_throw_shuriken,8,false);
+	}
+	triple_shuriken_throw.run = function() {
+		if check_frame(3) {
+			repeat(3) {
+				shuriken = create_shot(
+					10,
+					-35,
+					12,
+					random_range(-2,1),
+					spr_shuriken,
+					1,
+					5,
+					3,
+					0,
+					attacktype.normal,
+					attackstrength.light,
+					hiteffects.slash
+				);
+				with(shuriken) {
+					blend = false;
+					hit_limit = -1;
+					active_script = function() {
+						if y >= ground_height {
+							homing = false;
+							yspeed = 0;
+							xspeed /= 2;
+							if duration == -1 {
+								duration = 20;
+							}
+						}
+					}
+					hit_script = function() {
+						xspeed /= 2;
+						yspeed /= 2;
+						homing = false;
+						affected_by_gravity = true;
+					}
+				}
+			}
+		}
+		return_to_idle();
+	}
 
 	shadow_clone_jutsu = new state();
 	shadow_clone_jutsu.start = function() {
@@ -294,6 +387,8 @@ function init_naruto_baseform() {
 
 	setup_autocombo();
 
+	add_move(shuriken_throw,"B");
+	add_move(triple_shuriken_throw,"2B");
 	//add_move(mini_rasengan,"C");
 	add_move(shadow_clone_jutsu,"D");
 

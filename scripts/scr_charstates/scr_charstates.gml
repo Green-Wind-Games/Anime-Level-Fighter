@@ -173,13 +173,13 @@ function init_charstates() {
 			yoffset = -height_half;
 			xspeed = move_speed * 2 * facing;
 			yspeed = 0;
-			can_cancel = true;
 			play_sound(snd_dash);
 			play_sound(snd_dash_loop);
 		}
 	}
 	dash_state.run = function() {
 		var dash_duration = 15;
+		can_cancel = true;
 		if input.forward {
 			if (target.is_airborne) or (target.on_ground and target_distance_x > 10) {
 				dash_duration = abs(left_wall-right_wall) / abs(xspeed);

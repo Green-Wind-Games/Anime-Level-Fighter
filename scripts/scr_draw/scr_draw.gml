@@ -111,9 +111,9 @@ function draw_chars() {
 	with(obj_char) {
 		if sprite_exists(aura_sprite) {
 			gpu_set_blendmode(bm_add);
-			var _scale = min(
-				sprite_get_width(sprite) / sprite_get_width(aura_sprite),
-				sprite_get_height(sprite) / sprite_get_height(aura_sprite),
+			var _scale = mean(
+				width / sprite_get_width(aura_sprite),
+				height / sprite_get_height(aura_sprite),
 			) * 3;
 			draw_sprite_ext(
 				aura_sprite,
