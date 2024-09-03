@@ -45,7 +45,7 @@ function init_naruto_baseform_clone() {
 	}
 	punch2 = new state();
 	punch2.start = function() {
-		change_sprite(spr_naruto_attack_punch_hook,3,false);
+		change_sprite(spr_naruto_attack_punch_hook,5,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -73,7 +73,7 @@ function init_naruto_baseform_clone() {
 	}
 	slash2 = new state();
 	slash2.start = function() {
-		change_sprite(spr_naruto_attack_slash_up,3,false);
+		change_sprite(spr_naruto_attack_slash_up,5,false);
 		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}

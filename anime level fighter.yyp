@@ -41,7 +41,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.6.2.162",
+    "IDEVersion":"2024.8.0.169",
   },
   "name":"anime level fighter",
   "resources":[
@@ -179,6 +179,7 @@
     {"id":{"name":"snd_meme_hit_punch_gah","path":"sounds/snd_meme_hit_punch_gah/snd_meme_hit_punch_gah.yy",},},
     {"id":{"name":"snd_menu_scroll","path":"sounds/snd_menu_scroll/snd_menu_scroll.yy",},},
     {"id":{"name":"snd_menu_select","path":"sounds/snd_menu_select/snd_menu_select.yy",},},
+    {"id":{"name":"snd_parry_sf3","path":"sounds/snd_parry_sf3/snd_parry_sf3.yy",},},
     {"id":{"name":"snd_punch_guard","path":"sounds/snd_punch_guard/snd_punch_guard.yy",},},
     {"id":{"name":"snd_punch_hit_heavy","path":"sounds/snd_punch_hit_heavy/snd_punch_hit_heavy.yy",},},
     {"id":{"name":"snd_punch_hit_heavy2","path":"sounds/snd_punch_hit_heavy2/snd_punch_hit_heavy2.yy",},},

@@ -3,8 +3,9 @@
 globalvar	particle_system,
 			hitspark_light, hitspark_medium, hitspark_heavy,
 			hitspark_super,
-			guardspark,
 			slashspark,
+			guardspark,
+			deflect_spark,
 			explosion_small, explosion_medium, explosion_large,
 			left_wall_bang_particle, floor_bang_particle, right_wall_bang_particle,
 			shockwave_particle,
@@ -14,12 +15,6 @@ particle_system = part_system_create();
 part_system_depth(particle_system,-9999);
 part_system_automatic_update(particle_system,false);
 part_system_automatic_draw(particle_system,false);
-	
-guardspark = part_type_create();
-part_type_sprite(guardspark,spr_guardspark,true,true,false);
-part_type_life(guardspark,25,25);
-part_type_size(guardspark,0.5,0.5,0,0);
-part_type_blend(guardspark,true);
 	
 hitspark_light = part_type_create();
 part_type_sprite(hitspark_light,spr_hitspark,true,true,false);
@@ -59,6 +54,20 @@ part_type_life(slashspark,15,15);
 part_type_size(slashspark,0.5,0.5,0,0);
 part_type_orientation(slashspark,0,360,0,0,true);
 part_type_blend(slashspark,true);
+	
+guardspark = part_type_create();
+part_type_sprite(guardspark,spr_guardspark,true,true,false);
+part_type_life(guardspark,25,25);
+part_type_size(guardspark,0.5,0.5,0,0);
+part_type_blend(guardspark,true);
+	
+deflect_spark = part_type_create();
+part_type_sprite(deflect_spark,spr_hitspark,true,true,false);
+part_type_life(deflect_spark,20,20);
+part_type_size(deflect_spark,1/5,1/5,1/40,0);
+part_type_orientation(deflect_spark,0,360,0,0,true);
+part_type_blend(deflect_spark,true);
+part_type_color1(deflect_spark,make_color_rgb(128,255,128));
 	
 explosion_small = part_type_create();
 part_type_sprite(explosion_small,spr_explosion,true,true,false);
@@ -143,6 +152,10 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 		);
 	}
 	switch(_particle) {
+		case deflect_spark:
+		play_sound(snd_parry_sf3);
+		break;
+		
 		case explosion_small:
 		play_sound(snd_explosion_small);
 		break;

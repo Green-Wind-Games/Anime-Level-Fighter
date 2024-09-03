@@ -288,7 +288,7 @@ function take_damage(_attacker,_amount,_kill) {
 				dmg *= level;
 				for(var i = 0; i < array_length(autocombo); i++) {
 					if active_state == autocombo[i] {
-						dmg /= 4;
+						//dmg /= 4;
 						break;
 					}
 				}
@@ -300,9 +300,9 @@ function take_damage(_attacker,_amount,_kill) {
 		}
 	}
 	var scaling = map_value(
-		combo_hits_taken,
+		combo_damage_taken,
 		0,
-		30,
+		max_hp * 0.25,
 		1,
 		0
 	);

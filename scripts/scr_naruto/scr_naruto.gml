@@ -366,6 +366,7 @@ function init_naruto_baseform() {
 			change_sprite(spr_naruto_special_rasengan,3,false);
 			activate_super(60);
 			spend_mp(1);
+			deflecting_projectiles = true;
 		}
 		else {
 			change_state(previous_state);
@@ -386,6 +387,9 @@ function init_naruto_baseform() {
 		}
 		if check_frame(7) {
 			xspeed = 20 * facing;
+		}
+		if frame > 10 {
+			deflecting_projectiles = false;
 		}
 		if (frame > 12) and (state_timer < 90) and (combo_hits > 0) {
 			frame = 11;
@@ -435,6 +439,9 @@ function init_naruto_baseform() {
 			play_sound(snd_explosion_medium,1,1.25);
 		}
 		return_to_idle();
+	}
+	mini_rasengan.stop = function() {
+		deflecting_projectiles = false;
 	}
 
 	shadow_clone_jutsu = new state();
