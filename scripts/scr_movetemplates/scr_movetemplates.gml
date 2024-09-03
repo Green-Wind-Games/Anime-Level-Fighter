@@ -1,13 +1,13 @@
 function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
 		if is_airborne {
-			if target_distance <= 30 {
-				xspeed = (target_x-x) / 10;
+			if (target_distance <= 30) or (combo_hits > 0) {
+				xspeed = (target_distance_x / 5) * facing;
 				yspeed = min(-1.75,(target_y-y) / 4);
 			}
 		}
 		else {
-			if target_distance <= 30 {
+			if (target_distance <= 30) or (combo_hits > 0) {
 				xspeed = (target_distance_x / 5) * facing;
 			}
 			else {
@@ -20,7 +20,7 @@ function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 		var _h = sprite_get_height(sprite) * 0.69;
 		var _x = 2;
 		var _y = -_h;
-		create_hitbox(_x,_y,_w,_h,_damage,3,0,attacktype.normal,_strength,_hiteffect);
+		create_hitbox(_x,_y,_w,_h,_damage,4,0,attacktype.normal,_strength,_hiteffect);
 	}
 	if frame < _hitframe {
 		can_cancel = false;
@@ -52,9 +52,9 @@ function basic_launcher(_hitframe,_damage,_hiteffect) {
 
 function basic_smash(_hitframe,_damage,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
-		if target_distance <= 30 {
-			xspeed = 3 * facing;
-			yspeed = -2;
+		if target_distance <= 50 {
+			xspeed = (target_distance_x / 3) * facing;
+			yspeed = min(-2,(target_y-y) / 4);
 		}
 	}
 	if check_frame(_hitframe) {

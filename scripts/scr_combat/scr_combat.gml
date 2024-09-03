@@ -94,8 +94,8 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	}
 	if guard_valid and guarding {
 		change_state(guard_state);
-		change_sprite(guard_sprite,6,false);
-		//xspeed *= 2;
+		change_sprite(guard_sprite,3,false);
+		xspeed *= 2;
 		//yspeed /= 2;
 		yspeed = _yspeed;
 		if on_ground {
@@ -165,12 +165,6 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 				change_sprite(spinout_sprite,frame_duration,true);
 				yoffset = -height_half;
 				rotation = point_direction(0,0,abs(xspeed),-yspeed);
-			}
-			
-			if on_wall and on_ground {
-				if is_char(_attacker) or is_helper(_attacker) {
-					_attacker.xspeed = xspeed * -0.5;
-				}
 			}
 			
 			var _hp = hp;
@@ -256,6 +250,12 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			if !super_active {
 				mp += mp_gain * attack_mp_multiplier;
 			}
+		}
+	}
+	
+	if on_wall {
+		if is_char(_attacker) or is_helper(_attacker) {
+			_attacker.xspeed = xspeed * -0.5;
 		}
 	}
 	

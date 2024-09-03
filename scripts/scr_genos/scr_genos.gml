@@ -81,7 +81,7 @@ function init_genos_baseform() {
 					0,
 					spr_genos_blur_fist,
 					1,
-					20,
+					2,
 					1,
 					0,
 					attacktype.normal,
