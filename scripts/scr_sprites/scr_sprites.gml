@@ -23,6 +23,14 @@ function init_sprite(_sprite = sprite_index) {
 	alpha = 1;
 	flash = 0;
 	flash_color = c_white;
+	
+	var _scale = 0.8;
+	width = floor(sprite_get_width(sprite) * _scale);
+	height = floor(sprite_get_height(sprite) * _scale);
+	
+	width_half = floor(width/2);
+	height_half = floor(height/2);
+	
 	change_sprite(_sprite,5,true);
 	reset_sprite();
 }

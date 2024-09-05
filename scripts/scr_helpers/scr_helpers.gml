@@ -23,9 +23,13 @@ function init_helperstates() {
 			face_target();
 			yspeed = 0;
 			if (target_distance_x < 50)
-			and ((target.is_hit) or (target.is_guarding))
-			and (!on_wall) {
-				change_state(jump_state);
+			and ((target.is_hit) or (target.is_guarding) or (combo_timer > -10)) {
+				if (!on_wall) {
+					change_state(jump_back_state);
+				}
+				else {
+					change_state(jump_forward_state);
+				}
 			}
 		}
 		else {
@@ -54,21 +58,35 @@ function init_helperstates() {
 			accelerate(move_speed * facing * xscale);
 		}
 	}
-
-	jump_state.start = function() {
+	
+	jump_forward_state = new state();
+	jump_forward_state.start = function() {
 		change_sprite(crouch_sprite,2,false);
 		squash_stretch(1.2,0.8);
 		face_target();
 	}
-	jump_state.run = function() {
+	jump_forward_state.run = function() {
 		if state_timer > 5 {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -5;
 			xspeed = move_speed * facing;
-			if target_distance_x < 30 {
-				xspeed = -xspeed;
-			}
+			play_sound(snd_jump);
+		}
+	}
+	
+	jump_back_state = new state();
+	jump_back_state.start = function() {
+		change_sprite(crouch_sprite,2,false);
+		squash_stretch(1.2,0.8);
+		face_target();
+	}
+	jump_back_state.run = function() {
+		if state_timer > 5 {
+			change_state(air_state);
+			squash_stretch(0.8,1.2);
+			yspeed = -5;
+			xspeed = -move_speed * facing;
 			play_sound(snd_jump);
 		}
 	}
@@ -103,7 +121,7 @@ function init_helperstates() {
 	}
 	tech_state.run = function() {
 		if state_timer > 10 {
-			change_state(air_state);
+			change_state(idle_state);
 		}
 	}
 	tech_state.stop = function() {

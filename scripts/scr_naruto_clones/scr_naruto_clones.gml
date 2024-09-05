@@ -8,16 +8,10 @@ function init_naruto_baseform_clone() {
 
 	helper_attack_script = function() {
 		if (target_distance < 20) {
-			change_state(
-				choose(
-					choose(punch,punch2),
-					choose(slash,slash2),
-					jump_state
-				)
-			);
+			change_state(choose(punch,punch2,slash,slash2));
 		}
-		else if target_distance > 100 {
-			change_state(choose(shuriken_throw,jump_state));
+		else if (target_distance > 100) {
+			change_state(choose(shuriken_throw,jump_forward_state));
 		}
 	}
 	
@@ -39,7 +33,7 @@ function init_naruto_baseform_clone() {
 				change_state(punch2);
 			}
 			else {
-				return_to_idle();
+				change_state(jump_back_state);
 			}
 		}
 	}
@@ -51,7 +45,9 @@ function init_naruto_baseform_clone() {
 	}
 	punch2.run = function() {
 		basic_attack(2,20,attackstrength.light,hiteffects.hit);
-		return_to_idle();
+		if anim_finished {
+			change_state(jump_back_state);
+		}
 	}
 	
 	slash = new state();
@@ -67,7 +63,7 @@ function init_naruto_baseform_clone() {
 				change_state(slash2);
 			}
 			else {
-				return_to_idle();
+				change_state(jump_back_state);
 			}
 		}
 	}
@@ -94,25 +90,25 @@ function init_naruto_baseform_clone() {
 				hiteffects.slash
 			);
 		}
-		if anim_finished {
-			land();
+		if anim_finished and on_ground {
+			change_state(jump_back_state);
 		}
 	}
 	
 	shuriken_throw = new state();
 	shuriken_throw.start = function() {
-		change_sprite(spr_naruto_special_throw_shuriken,3,false);
+		change_sprite(spr_naruto_special_throw_shuriken,7,false);
 	}
 	shuriken_throw.run = function() {
 		if check_frame(3) {
 			shuriken = create_shot(
 				10,
 				-35,
-				8,
-				random_range(2,-2),
+				12,
+				0,
 				spr_shuriken,
 				1,
-				30,
+				10,
 				3,
 				0,
 				attacktype.normal,
@@ -121,9 +117,11 @@ function init_naruto_baseform_clone() {
 			);
 			with(shuriken) {
 				blend = false;
-				duration = -1;
+				hit_limit = -1;
+				duration = 100;
 				active_script = function() {
 					if y >= ground_height {
+						homing = false;
 						yspeed = 0;
 						xspeed /= 2;
 						if duration > 10 {
@@ -134,6 +132,7 @@ function init_naruto_baseform_clone() {
 				hit_script = function() {
 					xspeed /= 2;
 					yspeed /= 2;
+					homing = false;
 					affected_by_gravity = true;
 				}
 			}

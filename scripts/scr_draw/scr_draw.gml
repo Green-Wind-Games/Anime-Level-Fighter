@@ -136,7 +136,7 @@ function draw_chars() {
 }
 
 function draw_char_shadows() {
-	var shadow_scale = -0.1;
+	var shadow_scale = -0.2;
 	var shadow_alpha = 0.5;
 	with(obj_char) {
 		var _x = x + (xoffset*facing);
@@ -364,7 +364,7 @@ function draw_playerhud() {
 					draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x1,hp_bar_y1,_hp_w,hp_bar_height);
 
 					if (combo_damage_taken > 0) {
-						var _dmg_w = map_value(combo_damage_taken, 1, max_hp, 1, hp_bar_width);
+						var _dmg_w = map_value(combo_damage_taken, 0, max_hp, 0, hp_bar_width);
 						draw_sprite_stretched(spr_bar_hp_bar_damage,0,hp_bar_x1+_hp_w,hp_bar_y1,_dmg_w,hp_bar_height);
 					}
 				}
@@ -406,7 +406,7 @@ function draw_playerhud() {
 					draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x2 - _hp_w,hp_bar_y1,_hp_w,hp_bar_height);
 
 					if (combo_damage_taken > 0) {
-						var _dmg_w = map_value(combo_damage_taken, 1, max_hp, 1, hp_bar_width);
+						var _dmg_w = map_value(combo_damage_taken, 0, max_hp, 0, hp_bar_width);
 						draw_sprite_stretched(spr_bar_hp_bar_damage,0,hp_bar_x2-_hp_w-_dmg_w,hp_bar_y1,_dmg_w,hp_bar_height);
 					}
 				}

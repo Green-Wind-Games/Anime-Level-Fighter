@@ -44,12 +44,12 @@ function init_naruto_baseform() {
 	//		play_sound(snd_dash);
 	//	}
 	//	else {
-	//		change_state(air_state);
+	//		change_state(idle_state);
 	//	}
 	//}
 	//airdash_state.run = function() {
 	//	if state_timer >= 15 {
-	//		change_state(air_state);
+	//		change_state(idle_state);
 	//	}
 	//}
 
@@ -65,12 +65,12 @@ function init_naruto_baseform() {
 	//		play_sound(snd_dash);
 	//	}
 	//	else {
-	//		change_state(air_state);
+	//		change_state(idle_state);
 	//	}
 	//}
 	//air_backdash_state.run = function() {
 	//	if state_timer >= 15 {
-	//		change_state(air_state);
+	//		change_state(idle_state);
 	//	}
 	//}
 

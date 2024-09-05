@@ -58,13 +58,6 @@ function init_charsprites(_name) {
 	
 	init_sprite(idle_sprite);
 	
-	var _scale = 0.8;
-	width = floor(sprite_get_width(sprite) * _scale);
-	height = floor(sprite_get_height(sprite) * _scale);
-	
-	width_half = floor(width/2);
-	height_half = floor(height/2);
-	
 	var _w = max(30,width);
 	var _h = max(40,height);
 	
@@ -75,7 +68,7 @@ function apply_hiteffect(_hiteffect,_strength,_guarding) {
 	switch(_hiteffect) {
 		case hiteffects.fire:
 		if !_guarding {
-			flash_sprite(10,make_color_rgb(255,irandom(100),0));
+			flash_sprite(10,make_color_rgb(255,64,0));
 		}
 		break;
 	}

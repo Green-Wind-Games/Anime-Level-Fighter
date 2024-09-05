@@ -32,7 +32,7 @@ function init_charstates() {
 	}
 	idle_state.run = function() {
 		if round_state == roundstates.fight {
-			var walk_anim_speed = round(map_value(sprite_get_number(walk_sprite),4,8,6,3));
+			var walk_anim_speed = round(map_value(sprite_get_number(walk_sprite),4,8,5,2));
 			face_target();
 			if check_charge() {
 				change_state(charge_state);
@@ -212,6 +212,7 @@ function init_charstates() {
 			change_state(air_backdash_state);
 		}
 		else {
+			can_cancel = false;
 			change_sprite(air_up_sprite,2,true);
 			xspeed = move_speed * 2 * -facing;
 			yspeed = -1.5;
@@ -219,6 +220,7 @@ function init_charstates() {
 		}
 	}
 	backdash_state.run = function() {
+		can_cancel = false;
 		if on_ground {
 			change_state(dash_stop_state);
 		}
@@ -226,10 +228,13 @@ function init_charstates() {
 	
 	dash_stop_state = new state();
 	dash_stop_state.start = function() {
+		can_cancel = false;
 		change_sprite(uncrouch_sprite,3,false);
 	}
 	dash_stop_state.run = function() {
-		if (state_timer > 10) or (xspeed == 0) {
+		can_cancel = false;
+		face_target();
+		if (state_timer > 15) {
 			change_state(idle_state);
 		}
 	}
@@ -245,14 +250,14 @@ function init_charstates() {
 			play_sound(snd_dash);
 		}
 		else {
-			change_state(air_state);
+			change_state(idle_state);
 		}
 	}
 	airdash_state.run = function() {
 		xspeed = move_speed * 2 * facing;
 		yspeed = 0;
 		if state_timer >= 15 {
-			change_state(air_state);
+			change_state(idle_state);
 		}
 	}
 	
@@ -268,14 +273,14 @@ function init_charstates() {
 			play_sound(snd_dash);
 		}
 		else {
-			change_state(air_state);
+			change_state(idle_state);
 		}
 	}
 	air_backdash_state.run = function() {
 		xspeed = -move_speed * 2 * facing;
 		yspeed = 0;
 		if state_timer >= 15 {
-			change_state(air_state);
+			change_state(idle_state);
 		}
 	}
 	
@@ -468,7 +473,7 @@ function init_charstates() {
 	}
 	tech_state.run = function() {
 		if state_timer > 10 {
-			change_state(air_state);
+			change_state(idle_state);
 		}
 	}
 	tech_state.stop = function() {
@@ -504,7 +509,7 @@ function init_charstates() {
 		if _distance <= stop_distance {
 			xspeed /= 2;
 			yspeed /= 2;
-			change_state(air_state);
+			change_state(idle_state);
 		}
 	}
 	

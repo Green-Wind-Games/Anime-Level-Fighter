@@ -5,7 +5,6 @@ enum playerchars {
 	goku,
 	//vegeta,
 	//trunks,
-	
 	//freeza,
 	//cell,
 	//broly,

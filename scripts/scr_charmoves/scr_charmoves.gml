@@ -15,49 +15,49 @@ function add_move(_move,_input) {
 
 function check_moves() {
 	var moved = false;
-	if can_cancel {
-		var available_moves = ds_priority_create();
-		var min_cancel = 0; //floor(combo_hits * 0.5);
-		if ds_list_empty(cancelable_moves) {
-			for(var i = min_cancel; i < array_length(movelist); i++) {
-				if active_state == movelist[i][0]
-				and ds_list_find_index(cancelable_moves,active_state) == -1 {
-					min_cancel = i+1;
-					break;
-				}
-			}
-		}
+			
+	var available_moves = ds_priority_create();
+	var min_cancel = 0; //floor(combo_hits * 0.5);
+	if ds_list_empty(cancelable_moves) {
 		for(var i = min_cancel; i < array_length(movelist); i++) {
-			var move = movelist[i][0];
-			var input = movelist[i][1];
-			if (ds_list_find_index(cancelable_moves,move) != -1)
-			or ds_list_empty(cancelable_moves) {
-				if check_input(input) {
-					ds_priority_add(available_moves,move,string_length(input));
-				}
+			if ((active_state == movelist[i][0])
+			or ((previous_state == movelist[i][0]) and ((active_state != idle_state) and (active_state != air_state))))
+			and (ds_list_find_index(cancelable_moves,active_state) == -1) {
+				min_cancel = i+1;
 			}
 		}
-		if !ds_priority_empty(available_moves) {
-			for(var i = 0; i < ds_priority_size(available_moves); i++) {
-				var _state = ds_priority_find_max(available_moves);
-				change_state(_state);
-				if (active_state == idle_state) or (active_state == air_state) {
-					ds_priority_delete_max(available_moves);
-					i--;
-				}
-				else {
-					reset_cancels();
-					can_guard = false;
-					can_cancel = false;
-					input_buffer = "";
-					input_buffer_timer = 0;
-					moved = true;
-					break;
-				}
-			}
-		}
-		ds_priority_destroy(available_moves);
 	}
+	for(var i = min_cancel; i < array_length(movelist); i++) {
+		var move = movelist[i][0];
+		var input = movelist[i][1];
+		if (ds_list_find_index(cancelable_moves,move) != -1)
+		or ds_list_empty(cancelable_moves) {
+			if check_input(input) {
+				ds_priority_add(available_moves,move,string_length(input));
+			}
+		}
+	}
+	if !ds_priority_empty(available_moves) {
+		for(var i = 0; i < ds_priority_size(available_moves); i++) {
+			var _state = ds_priority_find_max(available_moves);
+			change_state(_state);
+			if (active_state == idle_state) or (active_state == air_state) {
+				ds_priority_delete_max(available_moves);
+				i--;
+			}
+			else {
+				reset_cancels();
+				can_guard = false;
+				can_cancel = false;
+				input_buffer = update_input_buffer_direction() + update_input_buffer_buttons();
+				input_buffer_timer = 0;
+				moved = true;
+				break;
+			}
+		}
+	}
+	ds_priority_destroy(available_moves);
+	
 	return moved;
 }
 

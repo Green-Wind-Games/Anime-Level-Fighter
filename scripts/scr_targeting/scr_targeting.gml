@@ -10,11 +10,15 @@ function target_exists() {
 
 function face_target() {
 	if target_exists() {
+		var _face = facing;
 		if x < target.x {
 			facing = 1;
 		}
 		else if x > target.x {
 			facing = -1;
+		}
+		if facing != _face {
+			input_buffer = update_input_buffer_direction() + update_input_buffer_buttons();
 		}
 	}
 }

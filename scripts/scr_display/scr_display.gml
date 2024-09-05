@@ -25,8 +25,11 @@ game_height = round(game_width / (16 / 9));
 
 game_aspectratio = game_width / game_height;
 
-gui_width = game_width;
-gui_height = game_height;
+gui_width = 640;
+gui_height = 360;
+
+gui_width = round(gui_height * game_aspectratio);
+//gui_height = round(gui_width / game_aspectratio);
 
 window_max_scale = floor(min(screen_width / game_width, screen_height / game_height));
 if (game_width * window_max_scale) >= screen_width
