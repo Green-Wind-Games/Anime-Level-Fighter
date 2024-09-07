@@ -249,39 +249,38 @@ function draw_playerhud() {
 	var hud_x = 0;
 	var hud_y = 0;
 
-	var hp_color = make_color_rgb(0, 255, 0);
-	var mp_color = make_color_rgb(0, 192, 255);
-	var tp_color = make_color_rgb(255, 192, 0);
-	
-	var dmg_color = make_color_rgb(255, 0, 0);
-
 	var hp_border_width = (_w / active_players) - (_spacing * 2);
 	var mp_border_width = hp_border_width * 0.75;
 	var tp_border_width = mp_border_width * 0.75;
-	
-	var hp_border_height = 24;
-	var mp_border_height = hp_border_height * 0.75;
-	var tp_border_height = mp_border_height * 0.75;
-	
 	var hp_xscale = hp_border_width / sprite_get_width(spr_bar_hp_border);
 	var mp_xscale = mp_border_width / sprite_get_width(spr_bar_mp_border);
 	var tp_xscale = tp_border_width / sprite_get_width(spr_bar_tp_border);
 	
-	var hp_yscale = hp_border_height / sprite_get_height(spr_bar_hp_border);
-	var mp_yscale = mp_border_height / sprite_get_height(spr_bar_mp_border);
-	var tp_yscale = tp_border_height / sprite_get_height(spr_bar_tp_border);
+	//var hp_border_height = 24;
+	//var mp_border_height = hp_border_height * 0.75;
+	//var tp_border_height = mp_border_height * 0.75;
+	//var hp_yscale = hp_border_height / sprite_get_height(spr_bar_hp_border);
+	//var mp_yscale = mp_border_height / sprite_get_height(spr_bar_mp_border);
+	//var tp_yscale = tp_border_height / sprite_get_height(spr_bar_tp_border);
 	
-	var hp_bar_xoffset = 3 * hp_xscale;
-	var hp_bar_yoffset = 3 * hp_yscale;
+	var hp_yscale = hp_xscale / 2;
+	var mp_yscale = mp_xscale / 2;
+	var tp_yscale = tp_xscale / 2;
+	var hp_border_height = sprite_get_height(spr_bar_hp_border) * hp_yscale;
+	var mp_border_height = sprite_get_height(spr_bar_mp_border) * mp_yscale;
+	var tp_border_height = sprite_get_height(spr_bar_tp_border) * tp_yscale;
 	
-	var mp_bar_xoffset = 0 * mp_xscale;
-	var mp_bar_yoffset = 1 * mp_yscale;
+	var hp_bar_xoffset = 4 * hp_xscale;
+	var hp_bar_yoffset = 4 * hp_yscale;
 	
-	var tp_bar_xoffset = 2 * tp_xscale;
-	var tp_bar_yoffset = 1 * tp_yscale;
+	var mp_bar_xoffset = 4 * mp_xscale;
+	var mp_bar_yoffset = 4 * mp_yscale;
+	
+	var tp_bar_xoffset = 3 * tp_xscale;
+	var tp_bar_yoffset = 2 * tp_yscale;
 	
 	var hp_bar_width = hp_border_width - (hp_bar_xoffset * 2);
-	var mp_bar_width = mp_border_width - (mp_bar_xoffset);
+	var mp_bar_width = mp_border_width - (mp_bar_xoffset * 2);
 	var tp_bar_width = tp_border_width - (tp_bar_xoffset * 2);
 	
 	var hp_bar_height = hp_border_height - (hp_bar_yoffset * 2);
@@ -291,7 +290,7 @@ function draw_playerhud() {
 	var mp_stock_scale = mp_border_height / sprite_get_height(spr_bar_mp_stocks);
 	var mp_stock_width = sprite_get_width(spr_bar_mp_stocks) * mp_stock_scale;
 	var mp_stock_height = sprite_get_height(spr_bar_mp_stocks) * mp_stock_scale;
-	var mp_stock_xoffset = mp_stock_width * 0.69;
+	var mp_stock_xoffset = 0;
 	
 	draw_set_font(fnt_hud);
 	var playertext = "Player N: Anime Character";
@@ -312,7 +311,7 @@ function draw_playerhud() {
 			hp_border_x1 = hud_x + _spacing;
 			hp_border_x2 = hp_border_x1 + hp_border_width;
 			
-			mp_border_x1 = hp_border_x1 + mp_stock_xoffset;
+			mp_border_x1 = hp_border_x1;
 			mp_border_x2 = mp_border_x1 + mp_border_width;
 
 			tp_border_x1 = hp_border_x1;
@@ -322,7 +321,7 @@ function draw_playerhud() {
 			hp_border_x2 = hud_x + hud_w - _spacing;
 			hp_border_x1 = hp_border_x2 - hp_border_width;
 			
-			mp_border_x2 = hp_border_x2 - mp_stock_xoffset;
+			mp_border_x2 = hp_border_x2;
 			mp_border_x1 = mp_border_x2 - mp_border_width;
 			
 			tp_border_x2 = hp_border_x2;
@@ -452,9 +451,14 @@ function draw_playerhud() {
 			if _right {
 				playertext_x2 = hp_border_x2;
 				playertext_x1 = playertext_x2 - playertext_width;
+				
+				draw_set_halign(fa_right);
+				draw_text_outlined(playertext_x2,playertext_y1,playertext,c_black,player_color[i]);
 			}
-			
-			draw_text_outlined(playertext_x1,playertext_y1,playertext,c_black,player_color[i]);
+			else {
+				draw_set_halign(fa_left);
+				draw_text_outlined(playertext_x1,playertext_y1,playertext,c_black,player_color[i]);
+			}
 			
 			hud_x += hud_w;
 		}
