@@ -2,9 +2,9 @@
   "$GMSprite":"",
   "%Name":"spr_bar_hp_border",
   "bboxMode":0,
-  "bbox_bottom":8,
+  "bbox_bottom":15,
   "bbox_left":0,
-  "bbox_right":79,
+  "bbox_right":63,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -14,9 +14,9 @@
   "frames":[
     {"$GMSpriteFrame":"","%Name":"fab86043-e8f3-49a4-8763-ad55002d8a76","name":"fab86043-e8f3-49a4-8763-ad55002d8a76","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
-  "gridX":20,
+  "gridX":16,
   "gridY":16,
-  "height":9,
+  "height":16,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"cb19733b-8855-4463-8141-4b3e6dd0f736","blendMode":0,"displayName":"default","isLocked":false,"name":"cb19733b-8855-4463-8141-4b3e6dd0f736","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
@@ -29,10 +29,10 @@
     "guideColour":[4294902015,4294902015,4294902015,4294902015,],
     "highlightColour":1728023040,
     "highlightStyle":0,
-    "left":11,
+    "left":9,
     "resourceType":"GMNineSliceData",
     "resourceVersion":"2.0",
-    "right":11,
+    "right":9,
     "tileMode":[
       1,
       1,
@@ -105,5 +105,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":80,
+  "width":64,
 }
