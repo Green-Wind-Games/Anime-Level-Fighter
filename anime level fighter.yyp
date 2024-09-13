@@ -446,8 +446,6 @@
     {"id":{"name":"spr_slashspark","path":"sprites/spr_slashspark/spr_slashspark.yy",},},
     {"id":{"name":"spr_sword_blue","path":"sprites/spr_sword_blue/spr_sword_blue.yy",},},
     {"id":{"name":"spr_sword_green","path":"sprites/spr_sword_green/spr_sword_green.yy",},},
-    {"id":{"name":"spr_timer","path":"sprites/spr_timer/spr_timer.yy",},},
-    {"id":{"name":"spr_timer2","path":"sprites/spr_timer2/spr_timer2.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
