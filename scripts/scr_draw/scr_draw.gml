@@ -1,7 +1,7 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
-function draw_text_outlined(_x,_y,_text,_outlinecolor,_text_color) {
+function draw_text_outlined(_x,_y,_text,_outlinecolor,_text_color,_scale = 1) {
 	draw_set_color(_outlinecolor);
 	draw_text(_x-1,_y,_text);
 	draw_text(_x+1,_y,_text);
@@ -9,7 +9,7 @@ function draw_text_outlined(_x,_y,_text,_outlinecolor,_text_color) {
 	draw_text(_x,_y+1,_text);
 	
 	draw_set_color(_text_color);
-	draw_text(_x,_y,_text);
+	draw_text_transformed(_x,_y,_text,_scale,_scale,0);
 }
 
 function draw_text_announcer(_x,_y,_text) {
@@ -20,7 +20,7 @@ function draw_text_announcer(_x,_y,_text) {
 	draw_set_color(c_black);
 	draw_text(_x + 10, _y + 15,_text);
 	draw_set_alpha(1);
-	draw_set_color(make_color_rgb(128,0,0));
+	draw_set_color(make_color_rgb(192,0,0));
 	draw_text(_x + 3, _y + 3,_text);
 	draw_set_color(c_white);
 	draw_text(_x,_y,_text);
@@ -54,20 +54,21 @@ function draw_my_playerindicator(_playerid = 0) {
 	draw_set_valign(fa_bottom);
 	draw_set_font(fnt_playerindicator);
 	
-	var border = string_height("[]");
+	var _scale = 1/screen_zoom;
+	var _border = string_height("[]") * _scale;
 	
 	var indicator_x = x;
-	var indicator_y = y - 2;
-	//var _height = (sprite_get_bbox_bottom(sprite) - sprite_get_bbox_top(sprite));
-	indicator_y -= height * yscale * ystretch;
+	var indicator_y = y - 5;
+	var _height = sprite_get_height(idle_sprite);
+	indicator_y -= _height * yscale * ystretch;
 	indicator_y = clamp(
 		indicator_y,
-		camera_get_view_y(view)+border,
+		camera_get_view_y(view)+(camera_get_view_height(view)/3)+_border,
 		camera_get_view_y(view)+camera_get_view_height(view)
 	);
 	
 	var text = "[P"+string(_playerid+1)+"]";
-	draw_text_outlined(indicator_x,indicator_y,text,c_black,player_color[_playerid]);
+	draw_text_outlined(indicator_x,indicator_y,text,c_black,player_color[_playerid],_scale);
 }
 
 function draw_chars() {
