@@ -82,16 +82,16 @@ function check_hit() {
 				continue;
 			}
 			if b2.deflecting_projectiles {
-				if a2 != a2.owner.beam {
+				if !is_beam(b2) {
 					var _speed = abs(a2.xspeed) + abs(a2.yspeed) * 2;
 					var _dir = choose(45,135,225,315);
 					a2.xspeed = lengthdir_x(_speed * b2.facing,_dir);
 					a2.yspeed = lengthdir_y(_speed,_dir);
 					a2.homing = false;
 					a2.affected_by_gravity = 10;
-					create_particles(a2.x,a2.y,a2.x,a2.y,deflect_spark);
-					continue;
 				}
+				create_particles(a2.x,a2.y,a2.x,a2.y,deflect_spark);
+				continue;
 			}
 		}
 		else {

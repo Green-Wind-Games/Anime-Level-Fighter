@@ -42,6 +42,7 @@
     {"name":"obj_input","order":7,"path":"objects/obj_input/obj_input.yy",},
     {"name":"obj_menu","order":5,"path":"objects/obj_menu/obj_menu.yy",},
     {"name":"obj_shot","order":6,"path":"objects/obj_shot/obj_shot.yy",},
+    {"name":"obj_specialeffect","order":9,"path":"objects/obj_specialeffect/obj_specialeffect.yy",},
     {"name":"rm_intro","order":5,"path":"rooms/rm_intro/rm_intro.yy",},
     {"name":"rm_mainmenu","order":3,"path":"rooms/rm_mainmenu/rm_mainmenu.yy",},
     {"name":"rm_namek","order":2,"path":"rooms/rm_namek/rm_namek.yy",},
@@ -409,5 +410,6 @@
     {"name":"spr_slashspark","order":16,"path":"sprites/spr_slashspark/spr_slashspark.yy",},
     {"name":"spr_sword_blue","order":17,"path":"sprites/spr_sword_blue/spr_sword_blue.yy",},
     {"name":"spr_sword_green","order":18,"path":"sprites/spr_sword_green/spr_sword_green.yy",},
+    {"name":"spr_timer","order":47,"path":"sprites/spr_timer/spr_timer.yy",},
   ],
 }

@@ -222,6 +222,26 @@ function draw_superfreeze() {
 
 function draw_particles() {
 	part_system_drawit(particle_system);
+	
+	with(obj_specialeffect) {
+		if blend {
+			gpu_set_blendmode(bm_add);
+		}
+		var _x = x + (xoffset*facing);
+		var _y = y + yoffset;
+		draw_sprite_ext(
+			sprite,
+			frame,
+			_x,
+			_y,
+			xscale*xstretch*facing,
+			yscale*ystretch,
+			rotation*facing*sign(xscale)*sign(xstretch),
+			color,
+			alpha
+		);
+		gpu_set_blendmode(bm_normal);
+	}
 }
 
 function draw_hud() {

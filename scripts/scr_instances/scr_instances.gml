@@ -21,3 +21,9 @@ function is_shot(_obj) {
 		return (object_index == obj_shot) or object_is_ancestor(object_index,obj_shot);
 	}
 }
+
+function is_beam(_obj) {
+	with(_obj) {
+		return (is_shot(id)) and (id == owner.beam);
+	}
+}
