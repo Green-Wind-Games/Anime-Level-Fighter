@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.065351,
+  "duration":3.48,
   "name":"snd_activate_ultimate",
   "parent":{
     "name":"Sounds",

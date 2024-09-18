@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_knockout",
+  "%Name":"snd_round_end_knockout",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.536,
-  "name":"snd_knockout",
+  "duration":1.610688,
+  "name":"snd_round_end_knockout",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_knockout.wav",
+  "soundFile":"snd_round_end_knockout.ogg",
   "type":0,
   "volume":1.0,
 }

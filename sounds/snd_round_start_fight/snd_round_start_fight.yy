@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_menu_select",
+  "%Name":"snd_round_start_fight",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":2.064958,
-  "name":"snd_menu_select",
+  "duration":1.346896,
+  "name":"snd_round_start_fight",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_menu_select.ogg",
+  "soundFile":"snd_round_start_fight.ogg",
   "type":0,
   "volume":1.0,
 }
