@@ -73,9 +73,9 @@ function init_charsprites(_name) {
 	grab_sprite[grab_point.body][grab_type.fall] = asset_get_index(prefix + "grab_body_fall");
 	grab_sprite[grab_point.leg][grab_type.fall] = asset_get_index(prefix + "grab_leg_fall");
 	
-	grab_sprite[grab_point.head][grab_type.tilt_forward] = asset_get_index(prefix + "grab_head_tilt_forward);
-	grab_sprite[grab_point.body][grab_type.tilt_forward] = asset_get_index(prefix + "grab_body_tilt_forward);
-	grab_sprite[grab_point.leg][grab_type.tilt_forward] = asset_get_index(prefix + "grab_leg_tilt_forward);
+	grab_sprite[grab_point.head][grab_type.tilt_forward] = asset_get_index(prefix + "grab_head_tilt_forward");
+	grab_sprite[grab_point.body][grab_type.tilt_forward] = asset_get_index(prefix + "grab_body_tilt_forward");
+	grab_sprite[grab_point.leg][grab_type.tilt_forward] = asset_get_index(prefix + "grab_leg_tilt_forward");
 	
 	intro_sprite = asset_get_index(prefix + "intro");
 	victory_sprite = asset_get_index(prefix + "victory");
