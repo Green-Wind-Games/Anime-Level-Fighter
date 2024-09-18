@@ -61,7 +61,7 @@ function init_helperstates() {
 	
 	jump_forward_state = new state();
 	jump_forward_state.start = function() {
-		change_sprite(crouch_sprite,2,false);
+		change_sprite(jumpsquat_sprite,2,false);
 		squash_stretch(1.2,0.8);
 		face_target();
 	}
@@ -77,7 +77,7 @@ function init_helperstates() {
 	
 	jump_back_state = new state();
 	jump_back_state.start = function() {
-		change_sprite(crouch_sprite,2,false);
+		change_sprite(jumpsquat_sprite,2,false);
 		squash_stretch(1.2,0.8);
 		face_target();
 	}

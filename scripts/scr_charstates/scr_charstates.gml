@@ -88,7 +88,7 @@ function init_charstates() {
 
 	jump_state = new state();
 	jump_state.start = function() {
-		change_sprite(crouch_sprite,2,false);
+		change_sprite(jumpsquat_sprite,2,false);
 		squash_stretch(1.2,0.8);
 		face_target();
 	}
@@ -104,7 +104,7 @@ function init_charstates() {
 
 	superjump_state = new state();
 	superjump_state.start = function() {
-		change_sprite(crouch_sprite,2,false);
+		change_sprite(jumpsquat_sprite,2,false);
 		squash_stretch(1.25,0.75);
 		face_target();
 	}

@@ -1,24 +1,33 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
-enum grab_sprites {
-	hold,
-	low,
-	mid,
-	high,
-	hanging,
-	pushed,
-	liedown
+enum grab_point {
+	head,
+	body,
+	leg
+}
+
+enum grab_type {
+	hit_high,
+	hit_low,
+	hit_air,
+	liedown,
+	hang,
+	fall,
+	tilt_forward
 }
 
 function init_charsprites(_name) {
 	var prefix = "spr_" + _name + "_";
 	
 	idle_sprite = asset_get_index(prefix + "idle");
-	walk_sprite = asset_get_index(prefix + "walk");
 	
 	crouch_sprite = asset_get_index(prefix + "crouch");
 	uncrouch_sprite = asset_get_index(prefix + "uncrouch");
+	
+	walk_sprite = asset_get_index(prefix + "walk");
+	
+	jumpsquat_sprite = crouch_sprite;
 	
 	air_up_sprite = asset_get_index(prefix + "air_up");
 	air_peak_sprite = asset_get_index(prefix + "air_peak");
@@ -34,14 +43,39 @@ function init_charsprites(_name) {
 	
 	launch_sprite = asset_get_index(prefix + "hit_launch");
 	spinout_sprite = asset_get_index(prefix + "hit_spinout");
+	
 	liedown_sprite = asset_get_index(prefix + "liedown");
 	wakeup_sprite = asset_get_index(prefix + "wakeup");
+	
 	tech_sprite = asset_get_index(prefix + "air_recover");
 	
-	grabbed_sprite = asset_get_index(prefix + "grabbed");
-	grabbed_head_sprite = asset_get_index(prefix + "grabbed_head");
-	grabbed_body_sprite = asset_get_index(prefix + "grabbed_body");
-	grabbed_leg_sprite = asset_get_index(prefix + "grabbed_leg");
+	grab_sprite[grab_point.head][grab_type.hit_high] = asset_get_index(prefix + "grab_head_hit_high");
+	grab_sprite[grab_point.body][grab_type.hit_high] = asset_get_index(prefix + "grab_body_hit_high");
+	grab_sprite[grab_point.leg][grab_type.hit_high] = asset_get_index(prefix + "grab_leg_hit_high");
+	
+	grab_sprite[grab_point.head][grab_type.hit_low] = asset_get_index(prefix + "grab_head_hit_low");
+	grab_sprite[grab_point.body][grab_type.hit_low] = asset_get_index(prefix + "grab_body_hit_low");
+	grab_sprite[grab_point.leg][grab_type.hit_low] = asset_get_index(prefix + "grab_leg_hit_low");
+	
+	grab_sprite[grab_point.head][grab_type.hit_air] = asset_get_index(prefix + "grab_head_hit_air");
+	grab_sprite[grab_point.body][grab_type.hit_air] = asset_get_index(prefix + "grab_body_hit_air");
+	grab_sprite[grab_point.leg][grab_type.hit_air] = asset_get_index(prefix + "grab_leg_hit_air");
+	
+	grab_sprite[grab_point.head][grab_type.liedown] = asset_get_index(prefix + "grab_head_liedown");
+	grab_sprite[grab_point.body][grab_type.liedown] = asset_get_index(prefix + "grab_body_liedown");
+	grab_sprite[grab_point.leg][grab_type.liedown] = asset_get_index(prefix + "grab_leg_liedown");
+	
+	grab_sprite[grab_point.head][grab_type.hang] = asset_get_index(prefix + "grab_head_hang");
+	grab_sprite[grab_point.body][grab_type.hang] = asset_get_index(prefix + "grab_body_hang");
+	grab_sprite[grab_point.leg][grab_type.hang] = asset_get_index(prefix + "grab_leg_hang");
+	
+	grab_sprite[grab_point.head][grab_type.fall] = asset_get_index(prefix + "grab_head_fall");
+	grab_sprite[grab_point.body][grab_type.fall] = asset_get_index(prefix + "grab_body_fall");
+	grab_sprite[grab_point.leg][grab_type.fall] = asset_get_index(prefix + "grab_leg_fall");
+	
+	grab_sprite[grab_point.head][grab_type.tilt_forward] = asset_get_index(prefix + "grab_head_tilt_forward);
+	grab_sprite[grab_point.body][grab_type.tilt_forward] = asset_get_index(prefix + "grab_body_tilt_forward);
+	grab_sprite[grab_point.leg][grab_type.tilt_forward] = asset_get_index(prefix + "grab_leg_tilt_forward);
 	
 	intro_sprite = asset_get_index(prefix + "intro");
 	victory_sprite = asset_get_index(prefix + "victory");
