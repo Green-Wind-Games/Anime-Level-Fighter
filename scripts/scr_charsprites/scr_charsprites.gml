@@ -8,13 +8,12 @@ enum grab_point {
 }
 
 enum grab_type {
-	hit_high,
-	hit_low,
-	hit_air,
+	hit,
+	tilt_back,
+	tilt_forward,
 	liedown,
 	hang,
-	fall,
-	tilt_forward
+	fall
 }
 
 function init_charsprites(_name) {
@@ -49,17 +48,17 @@ function init_charsprites(_name) {
 	
 	tech_sprite = asset_get_index(prefix + "air_recover");
 	
-	grab_sprite[grab_point.head][grab_type.hit_high] = asset_get_index(prefix + "grab_head_hit_high");
-	grab_sprite[grab_point.body][grab_type.hit_high] = asset_get_index(prefix + "grab_body_hit_high");
-	grab_sprite[grab_point.leg][grab_type.hit_high] = asset_get_index(prefix + "grab_leg_hit_high");
+	grab_sprite[grab_point.head][grab_type.hit] = asset_get_index(prefix + "grab_head_hit");
+	grab_sprite[grab_point.body][grab_type.hit] = asset_get_index(prefix + "grab_body_hit");
+	grab_sprite[grab_point.leg][grab_type.hit] = asset_get_index(prefix + "grab_leg_hit");
 	
-	grab_sprite[grab_point.head][grab_type.hit_low] = asset_get_index(prefix + "grab_head_hit_low");
-	grab_sprite[grab_point.body][grab_type.hit_low] = asset_get_index(prefix + "grab_body_hit_low");
-	grab_sprite[grab_point.leg][grab_type.hit_low] = asset_get_index(prefix + "grab_leg_hit_low");
+	grab_sprite[grab_point.head][grab_type.tilt_back] = asset_get_index(prefix + "grab_head_tilt_back");
+	grab_sprite[grab_point.body][grab_type.tilt_back] = asset_get_index(prefix + "grab_body_tilt_back");
+	grab_sprite[grab_point.leg][grab_type.tilt_back] = asset_get_index(prefix + "grab_leg_tilt_back");
 	
-	grab_sprite[grab_point.head][grab_type.hit_air] = asset_get_index(prefix + "grab_head_hit_air");
-	grab_sprite[grab_point.body][grab_type.hit_air] = asset_get_index(prefix + "grab_body_hit_air");
-	grab_sprite[grab_point.leg][grab_type.hit_air] = asset_get_index(prefix + "grab_leg_hit_air");
+	grab_sprite[grab_point.head][grab_type.tilt_forward] = asset_get_index(prefix + "grab_head_tilt_forward");
+	grab_sprite[grab_point.body][grab_type.tilt_forward] = asset_get_index(prefix + "grab_body_tilt_forward");
+	grab_sprite[grab_point.leg][grab_type.tilt_forward] = asset_get_index(prefix + "grab_leg_tilt_forward");
 	
 	grab_sprite[grab_point.head][grab_type.liedown] = asset_get_index(prefix + "grab_head_liedown");
 	grab_sprite[grab_point.body][grab_type.liedown] = asset_get_index(prefix + "grab_body_liedown");
@@ -72,10 +71,6 @@ function init_charsprites(_name) {
 	grab_sprite[grab_point.head][grab_type.fall] = asset_get_index(prefix + "grab_head_fall");
 	grab_sprite[grab_point.body][grab_type.fall] = asset_get_index(prefix + "grab_body_fall");
 	grab_sprite[grab_point.leg][grab_type.fall] = asset_get_index(prefix + "grab_leg_fall");
-	
-	grab_sprite[grab_point.head][grab_type.tilt_forward] = asset_get_index(prefix + "grab_head_tilt_forward");
-	grab_sprite[grab_point.body][grab_type.tilt_forward] = asset_get_index(prefix + "grab_body_tilt_forward");
-	grab_sprite[grab_point.leg][grab_type.tilt_forward] = asset_get_index(prefix + "grab_leg_tilt_forward");
 	
 	intro_sprite = asset_get_index(prefix + "intro");
 	victory_sprite = asset_get_index(prefix + "victory");

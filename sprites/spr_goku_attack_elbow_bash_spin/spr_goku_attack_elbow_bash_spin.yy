@@ -97,8 +97,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Genos",
-    "path":"texturegroups/Genos",
+    "name":"Goku",
+    "path":"texturegroups/Goku",
   },
   "type":0,
   "VTile":false,

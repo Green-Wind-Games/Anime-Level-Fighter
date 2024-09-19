@@ -101,8 +101,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"NarutoBase",
-    "path":"texturegroups/NarutoBase",
+    "name":"Naruto",
+    "path":"texturegroups/Naruto",
   },
   "type":0,
   "VTile":false,
