@@ -299,22 +299,24 @@ function take_damage(_attacker,_amount,_kill) {
 			}
 		}
 	}
+	
 	var scaling = map_value(
-		combo_damage_taken,
+		combo_hits_taken,
 		0,
-		max_hp * 0.25,
+		50,
 		1,
 		0
 	);
-	scaling = clamp(scaling,0.1,1);
 	
 	var guts = map_value(
-		hp,
-		max_hp*0.50,
-		1,
+		hp+combo_damage_taken,
+		max_hp/5,
+		0,
 		1,
 		0
 	);
+	
+	scaling = clamp(scaling,0.1,1);
 	guts = clamp(guts,0.1,1);
 	
 	dmg /= defender.defense;

@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":4.309138,
+  "duration":4.208866,
   "name":"snd_goku_scream_transform",
   "parent":{
     "name":"Goku Voice",

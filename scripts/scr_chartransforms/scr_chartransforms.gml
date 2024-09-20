@@ -4,8 +4,8 @@ globalvar	max_level, level_scaling,
 max_level = 2;
 level_scaling = 2;
 
-transform_min_hp_percent = 10;
-transform_heal_percent = 69.420;
+transform_min_hp_percent = 15;
+transform_heal_percent = 80;
 
 function level_up() {
 	level++;
@@ -14,6 +14,8 @@ function level_up() {
 	
 	hp += map_value(transform_heal_percent,0,100,0,max_hp);
 	hp = min(round(hp),max_hp);
+	
+	move_speed += 0.75;
 }
 			
 function transform(_form) {
