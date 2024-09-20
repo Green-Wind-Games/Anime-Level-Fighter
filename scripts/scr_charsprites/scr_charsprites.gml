@@ -10,11 +10,11 @@ enum grab_point {
 
 enum grab_frames {
 	justgrabbed,
-	lowered,
-	raised,
-	tiltback,
-	hanging,
-	launchback,
+	low,
+	mid,
+	high,
+	air,
+	launch,
 	liedown
 }
 
