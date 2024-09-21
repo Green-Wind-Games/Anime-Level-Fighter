@@ -9,9 +9,10 @@ switch(game_state) {
 	
 	//draw_player_outlines();
 	draw_chars();
-	draw_particles();
 	draw_shots();
+	draw_particles();
 	draw_superfreeze();
+	draw_char_auras();
 	
 	//draw_hitboxes();
 

@@ -63,7 +63,7 @@ function draw_my_playerindicator(_playerid = 0) {
 	indicator_y -= _height * yscale * ystretch;
 	indicator_y = clamp(
 		indicator_y,
-		camera_get_view_y(view)+(camera_get_view_height(view)/3)+_border,
+		camera_get_view_y(view)+hud_height+_border,
 		camera_get_view_y(view)+camera_get_view_height(view)
 	);
 	
@@ -111,27 +111,6 @@ function draw_chars() {
 			
 		draw_script();
 	}
-	with(obj_char) {
-		if sprite_exists(aura_sprite) {
-			gpu_set_blendmode(bm_add);
-			var _scale = mean(
-				width / sprite_get_width(aura_sprite),
-				height / sprite_get_height(aura_sprite),
-			) * 3;
-			draw_sprite_ext(
-				aura_sprite,
-				floor(aura_frame),
-				x,
-				y + 5,
-				_scale,
-				_scale,
-				0,
-				c_white,
-				alpha
-			)
-		}
-		gpu_set_blendmode(bm_normal);
-	}
 	
 	draw_playerindicators();
 }
@@ -157,6 +136,30 @@ function draw_char_shadows() {
 			c_black,
 			alpha * shadow_alpha
 		);
+	}
+}
+
+function draw_char_auras() {
+	with(obj_char) {
+		if sprite_exists(aura_sprite) {
+			gpu_set_blendmode(bm_add);
+			var _scale = mean(
+				width / sprite_get_width(aura_sprite),
+				height / sprite_get_height(aura_sprite),
+			) * 3;
+			draw_sprite_ext(
+				aura_sprite,
+				floor(aura_frame),
+				x,
+				y + 5,
+				_scale,
+				_scale,
+				0,
+				c_white,
+				alpha
+			)
+		}
+		gpu_set_blendmode(bm_normal);
 	}
 }
 
@@ -254,7 +257,7 @@ function draw_playerhud() {
 	var _h = gui_height;
 	var _w2 = _w / 2;
 	var _h2 = _h / 2;
-	var _spacing = 5;
+	var _spacing = 16;
 	var icon_size = 24;
 	var icon_scale = 0.5;
 	
@@ -266,13 +269,12 @@ function draw_playerhud() {
 	}
 	
 	var hud_w = _w / active_players;
-	//var hud_h = (_spacing * 2) + hp_bar_height + mp_bar_height + tp_bar_height + playertext_height;
 	var hud_x = 0;
 	var hud_y = 0;
 
 	var hp_border_width = (_w / active_players) - (_spacing * 2);
-	var mp_border_width = hp_border_width * 0.75;
-	var tp_border_width = mp_border_width * 0.75;
+	var mp_border_width = hp_border_width * 0.95;
+	var tp_border_width = mp_border_width * 0.25;
 	var hp_xscale = hp_border_width / sprite_get_width(spr_bar_hp_border);
 	var mp_xscale = mp_border_width / sprite_get_width(spr_bar_mp_border);
 	var tp_xscale = tp_border_width / sprite_get_width(spr_bar_tp_border);
@@ -284,7 +286,7 @@ function draw_playerhud() {
 	//var mp_yscale = mp_border_height / sprite_get_height(spr_bar_mp_border);
 	//var tp_yscale = tp_border_height / sprite_get_height(spr_bar_tp_border);
 	
-	var hp_yscale = 2;
+	var hp_yscale = 1;
 	var mp_yscale = 1;
 	var tp_yscale = 1;
 	var hp_border_height = sprite_get_height(spr_bar_hp_border) * hp_yscale;
@@ -464,6 +466,25 @@ function draw_playerhud() {
 				);
 			}
 			
+			var hp_segments = 4;
+			var mp_segments = max_mp_stocks;
+			var tp_segments = max_tp_stocks;
+			for(var ii = 1; ii < hp_segments; ii++) {
+				var hp_segment_x = map_value(ii,0,hp_segments,hp_bar_x1,hp_bar_x2) - _right;
+				draw_set_color(c_black);
+				draw_rectangle(hp_segment_x,hp_bar_y1,hp_segment_x,hp_bar_y2,false);
+			}
+			for(var ii = 1; ii < mp_segments; ii++) {
+				var mp_segment_x = map_value(ii,0,mp_segments,mp_bar_x1,mp_bar_x2) - _right;
+				draw_set_color(c_black);
+				draw_rectangle(mp_segment_x,mp_bar_y1,mp_segment_x,mp_bar_y2,false);
+			}
+			for(var ii = 1; ii < tp_segments; ii++) {
+				var tp_segment_x = map_value(ii,0,tp_segments,tp_bar_x1,tp_bar_x2) - _right;
+				draw_set_color(c_white);
+				draw_rectangle(tp_segment_x,tp_bar_y1,tp_segment_x,tp_bar_y2,false);
+			}
+			
 			draw_set_font(fnt_hud);
 			draw_set_halign(fa_left);
 			draw_set_valign(fa_top);
@@ -491,6 +512,8 @@ function draw_playerhud() {
 			hud_x += hud_w;
 		}
 	}
+	
+	hud_height = (_spacing * 2) + hp_bar_height + mp_bar_height + tp_bar_height + playertext_height;
 }
 
 function draw_timer() {

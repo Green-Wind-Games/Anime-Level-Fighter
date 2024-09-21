@@ -2,15 +2,15 @@ globalvar	max_level, level_scaling,
 			transform_min_hp_percent, transform_heal_percent;
 			
 max_level = 2;
-level_scaling = 2;
+level_scaling = 0;
 
-transform_min_hp_percent = 15;
-transform_heal_percent = 80;
+transform_min_hp_percent = 20;
+transform_heal_percent = 75;
 
 function level_up() {
 	level++;
 	
-	max_hp = round(max_hp * level_scaling);
+	max_hp = round(max_hp * (level_scaling+1));
 	
 	hp += map_value(transform_heal_percent,0,100,0,max_hp);
 	hp = min(round(hp),max_hp);

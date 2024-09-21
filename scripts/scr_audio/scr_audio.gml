@@ -11,6 +11,10 @@ music = noone;
 music_timer = 0;
 music_min_duration = 60*45;
 
+globalvar meme_enabled, meme_chance;
+meme_enabled = true;
+meme_chance = 10;
+
 function set_music_loop(_music,_start,_end) {
 	audio_sound_loop_start(_music,_start);
 	audio_sound_loop_end(_music,_end);

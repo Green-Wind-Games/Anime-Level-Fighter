@@ -6,10 +6,6 @@ if instance_number(object_index) > 1 {
 	exit;
 }
 
-globalvar meme_enabled, meme_chance;
-meme_enabled = true;
-meme_chance = 10;
-
 enum gamestates {
 	intro,
 	title,

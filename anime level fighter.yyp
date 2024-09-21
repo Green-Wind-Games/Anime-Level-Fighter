@@ -217,6 +217,7 @@
     {"id":{"name":"snd_slash_whiff_light","path":"sounds/snd_slash_whiff_light/snd_slash_whiff_light.yy",},},
     {"id":{"name":"snd_slash_whiff_medium","path":"sounds/snd_slash_whiff_medium/snd_slash_whiff_medium.yy",},},
     {"id":{"name":"snd_wall_hit_heavy","path":"sounds/snd_wall_hit_heavy/snd_wall_hit_heavy.yy",},},
+    {"id":{"name":"spr_aura_chakra","path":"sprites/spr_aura_chakra/spr_aura_chakra.yy",},},
     {"id":{"name":"spr_aura_dbz_red","path":"sprites/spr_aura_dbz_red/spr_aura_dbz_red.yy",},},
     {"id":{"name":"spr_aura_dbz_white","path":"sprites/spr_aura_dbz_white/spr_aura_dbz_white.yy",},},
     {"id":{"name":"spr_bar_hp_bar_damage","path":"sprites/spr_bar_hp_bar_damage/spr_bar_hp_bar_damage.yy",},},

@@ -56,7 +56,9 @@ function update_fight() {
 				if sound_is_playing(voice) { ready = false; }
 			}
 			else {
-				change_state(victory_state);
+				if active_state == idle_state {
+					change_state(victory_state);
+				}
 			}
 		}
 		if ready {

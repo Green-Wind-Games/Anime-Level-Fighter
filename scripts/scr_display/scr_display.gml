@@ -3,7 +3,7 @@
 
 globalvar	screen_width, screen_height, screen_aspectratio,
 			game_width, game_height, game_aspectratio,
-			gui_width, gui_height,
+			gui_width, gui_height, hud_height,
 			window_width, window_height, window_scale, window_max_scale,
 			fullscreen_width, fullscreen_height;
 
@@ -26,10 +26,12 @@ game_height = round(game_width / (16 / 9));
 game_aspectratio = game_width / game_height;
 
 gui_width = 640;
-gui_height = 360;
+gui_height = 480;
 
-gui_width = round(gui_height * game_aspectratio);
-//gui_height = round(gui_width / game_aspectratio);
+//gui_width = round(gui_height * game_aspectratio);
+gui_height = round(gui_width / game_aspectratio);
+
+hud_height = gui_height / 3;
 
 window_max_scale = floor(min(screen_width / game_width, screen_height / game_height));
 if (game_width * window_max_scale) >= screen_width

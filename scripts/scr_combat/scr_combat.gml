@@ -292,16 +292,16 @@ function take_damage(_attacker,_amount,_kill) {
 		with(true_attacker) {
 			if is_char(id) {
 				dmg *= attack_power;
-				dmg *= level;
+				dmg *= 1 + (level * level_scaling);
 				for(var i = 0; i < array_length(autocombo); i++) {
 					if active_state == autocombo[i] {
-						//dmg /= 4;
+						dmg /= 4;
 						break;
 					}
 				}
 			}
 			else if is_helper(id) {
-				dmg *= owner.level;
+				dmg *= 1 + (owner.level * level_scaling);
 				dmg /= 4;
 			}
 		}

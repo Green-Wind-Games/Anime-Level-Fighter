@@ -384,8 +384,8 @@ function init_charstates() {
 			}
 			else {
 				yspeed = 0;
-				change_state(liedown_state);
 				play_voiceline(voice_hurt,50,true);
+				change_state(liedown_state);
 			}
 		}
 	}
@@ -618,6 +618,7 @@ function init_charstates() {
 	levelup_state.start = function() {
 		change_sprite(charge_loop_sprite,3,true);
 		flash_sprite();
+		aura_sprite = spr_aura_dbz_white;
 		superfreeze(3 * 60);
 		play_sound(snd_energy_start);
 		play_voiceline(voice_powerup);
@@ -627,6 +628,7 @@ function init_charstates() {
 	levelup_state.run = function() {
 		shake_screen(5,2);
 		if !superfreeze_active {
+			aura_sprite = noone;
 			change_state(idle_state);
 		}
 	}

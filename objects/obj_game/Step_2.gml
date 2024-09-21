@@ -25,6 +25,12 @@ if keyboard_check_pressed(vk_f6) {
 	}
 }
 
+if keyboard_check_pressed(vk_insert) {
+	with(obj_char) {
+		mp = mp_stock_size;
+	}
+}
+
 with(all) {
 	visible = false;
 }

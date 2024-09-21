@@ -187,6 +187,7 @@
     {"name":"snd_slash_whiff_light","order":32,"path":"sounds/snd_slash_whiff_light/snd_slash_whiff_light.yy",},
     {"name":"snd_slash_whiff_medium","order":33,"path":"sounds/snd_slash_whiff_medium/snd_slash_whiff_medium.yy",},
     {"name":"snd_wall_hit_heavy","order":45,"path":"sounds/snd_wall_hit_heavy/snd_wall_hit_heavy.yy",},
+    {"name":"spr_aura_chakra","order":48,"path":"sprites/spr_aura_chakra/spr_aura_chakra.yy",},
     {"name":"spr_aura_dbz_red","order":34,"path":"sprites/spr_aura_dbz_red/spr_aura_dbz_red.yy",},
     {"name":"spr_aura_dbz_white","order":33,"path":"sprites/spr_aura_dbz_white/spr_aura_dbz_white.yy",},
     {"name":"spr_bar_hp_bar_damage","order":42,"path":"sprites/spr_bar_hp_bar_damage/spr_bar_hp_bar_damage.yy",},
