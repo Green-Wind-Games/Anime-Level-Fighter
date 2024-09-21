@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":2.333605,
+  "duration":2.0,
   "name":"snd_meme_scream_disappear_srpelo",
   "parent":{
     "name":"Sounds",

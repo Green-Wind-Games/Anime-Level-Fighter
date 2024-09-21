@@ -2,8 +2,7 @@ function init_naruto_baseform() {
 	init_charsprites("naruto");
 
 	name = "Naruto";
-
-	move_speed *= 1.5;
+	
 	max_air_moves = 1;
 
 	theme = mus_naruto_strongandstrike;
@@ -30,6 +29,9 @@ function init_naruto_baseform() {
 					}
 				}
 			}
+		}
+		if (sprite == dash_sprite) and on_ground {
+			change_sprite(walk_sprite,2,true);
 		}
 	}
 
@@ -453,7 +455,7 @@ function init_naruto_baseform() {
 				0,
 				0,
 				spr_rasengan,
-				1,
+				0.5,
 				5,
 				0,
 				0,
@@ -474,7 +476,7 @@ function init_naruto_baseform() {
 					0,
 					0,
 					spr_rasengan,
-					1,
+					0.5,
 					100,
 					15,
 					-3,
@@ -537,7 +539,7 @@ function init_naruto_baseform() {
 				0,
 				0,
 				spr_rasengan,
-				0.2,
+				0.1,
 				20,
 				0,
 				0,
@@ -558,7 +560,7 @@ function init_naruto_baseform() {
 					0,
 					0,
 					spr_rasengan,
-					0.2,
+					0.1,
 					150,
 					15,
 					-3,
@@ -620,7 +622,7 @@ function init_naruto_baseform() {
 				0,
 				0,
 				spr_rasengan,
-				2,
+				1,
 				20,
 				0,
 				0,
@@ -640,7 +642,7 @@ function init_naruto_baseform() {
 				0,
 				0,
 				spr_rasengan,
-				2,
+				1,
 				100,
 				15,
 				-3,
@@ -832,18 +834,18 @@ function init_naruto_baseform() {
 		}
 		if sprite == spr_naruto_special_rasengan {
 			if value_in_range(frame,4,6) {
-				draw_sprite_ext(spr_naruto_clone_rasengan_charge,frame,x-(width*1.5*facing),y,facing,1,0,c_white,1);
+				draw_sprite_ext(spr_naruto_clone_rasengan_charge,frame mod 2,x-(width*1.5*facing),y,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*0.75*facing),y-(height*0.69),0.1,0.1,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*0.75*facing),y-(height*0.69),0.05,0.05,0,c_white,1);
 			}
 			if value_in_range(frame,7,8) {
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x,y-(height*0.69),0.2,0.2,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x,y-(height*0.69),0.1,0.1,0,c_white,1);
 			}
 			if value_in_range(frame,9,12) {
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(width*1.5*facing),y-(height*0.69),0.3,0.3,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(width*1.5*facing),y-(height*0.69),0.2,0.2,0,c_white,1);
 			}
 			if frame >= 13 {
 				gpu_set_blendmode(bm_add);
@@ -851,7 +853,7 @@ function init_naruto_baseform() {
 					anim_timer,
 					frame_duration * 13,
 					frame_duration * anim_frames,
-					0.3,
+					0.2,
 					1
 				);
 				var _alpha = map_value(
@@ -883,19 +885,19 @@ function init_naruto_baseform() {
 				draw_sprite_ext(spr_naruto_clone_rasengan_air,(frame mod 2) + 1,x-(width*facing),y,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*0.5*facing),y-(height*0.8),0.3,0.3,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*0.5*facing),y-(height*0.8),0.1,0.1,0,c_white,1);
 			}
 			if value_in_range(frame,8,9) {
 				draw_sprite_ext(spr_naruto_clone_rasengan_air,(frame mod 2) + 3,x-(width*facing),y+5,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width_half*facing),y-(height*0.75),0.5,0.5,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width_half*facing),y-(height*0.75),0.3,0.3,0,c_white,1);
 			}
 			if value_in_range(frame,10,11) {
 				draw_sprite_ext(spr_naruto_clone_rasengan_air,(frame mod 2) + 5,x-(width*0.75*facing),y,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*facing/3),y+(height*0.5),1,1,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*facing/3),y+(height*0.5),0.5,0.5,0,c_white,1);
 			}
 			if frame >= 12 {
 				gpu_set_blendmode(bm_add);
@@ -903,8 +905,8 @@ function init_naruto_baseform() {
 					anim_timer,
 					frame_duration * 12,
 					frame_duration * 14,
-					1,
-					2
+					1/2,
+					1
 				);
 				var _alpha = map_value(
 					anim_timer,
@@ -927,6 +929,66 @@ function init_naruto_baseform() {
 				);
 			}
 		}
+		if sprite == spr_naruto_special_doublerasengan {
+			if value_in_range(frame,4,6) {
+				draw_sprite_ext(spr_naruto_clone_rasengan_charge,frame mod 2,x+(width*facing),y,-facing,1,0,c_white,1);
+				draw_sprite_ext(spr_naruto_clone_rasengan_charge,frame mod 2,x-(width*facing),y,facing,1,0,c_white,1);
+				
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(width*0.25*facing),y-(height*0.5),0.1,0.1,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*0.25*facing),y-(height*0.5),0.1,0.1,0,c_white,1);
+			}
+			if value_in_range(frame,7,10) {
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width_half*facing),y-(height*0.69),0.2,0.2,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width_half*facing),y-(height*0.666),0.2,0.2,0,c_white,1);
+			}
+			if value_in_range(frame,11,12) {
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(50*facing),y-30,0.5,0.5,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(45*facing),y-35,0.5,0.5,0,c_white,1);
+			}
+			if frame >= 13 {
+				gpu_set_blendmode(bm_add);
+				var _scale = map_value(
+					anim_timer,
+					frame_duration * 13,
+					frame_duration * anim_frames,
+					0.5,
+					2
+				);
+				var _alpha = map_value(
+					anim_timer,
+					frame_duration * 13,
+					frame_duration * anim_frames,
+					1,
+					0
+				);
+				var _rotation = -anim_timer / 100 * facing;
+				draw_sprite_ext(
+					spr_rasengan,
+					rasengan_frame,
+					x+(50*facing),
+					y-30,
+					_scale,
+					_scale,
+					_rotation,
+					c_white,
+					_alpha
+				);
+				draw_sprite_ext(
+					spr_rasengan,
+					rasengan_frame,
+					x+(45*facing),
+					y-35,
+					_scale,
+					_scale,
+					_rotation,
+					c_white,
+					_alpha
+				);
+			}
+		}
 		if sprite == spr_naruto_special_giantrasengan {
 			if frame == 4 {
 				draw_sprite_ext(spr_naruto_clone_giantrasengan,0,x-(width*1.5*facing),y,facing,1,0,c_white,1);
@@ -935,19 +997,19 @@ function init_naruto_baseform() {
 				draw_sprite_ext(spr_naruto_clone_giantrasengan,(frame mod 2) + 1,x-(width*1.5*facing),y,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*0.5*facing),y-(height*0.64),0.3,0.3,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*0.5*facing),y-(height*0.64),0.2,0.2,0,c_white,1);
 			}
 			if value_in_range(frame,7,10) {
 				draw_sprite_ext(spr_naruto_clone_giantrasengan,(frame mod 4) + 3,x,y,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width_half*facing),y-(height*0.69),0.5,0.5,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width_half*facing),y-(height*0.69),0.3,0.3,0,c_white,1);
 			}
 			if value_in_range(frame,11,12) {
 				draw_sprite_ext(spr_naruto_clone_giantrasengan,(frame mod 2) + 7,x,y,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(100*facing),y-30,2,2,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(100*facing),y-30,1,1,0,c_white,1);
 			}
 			if frame >= 13 {
 				gpu_set_blendmode(bm_add);
@@ -955,8 +1017,8 @@ function init_naruto_baseform() {
 					anim_timer,
 					frame_duration * 13,
 					frame_duration * anim_frames,
-					2,
-					5
+					1,
+					3
 				);
 				var _alpha = map_value(
 					anim_timer,

@@ -32,7 +32,9 @@ function init_charstates() {
 	}
 	idle_state.run = function() {
 		if round_state == roundstates.fight {
-			var walk_anim_speed = round(map_value(sprite_get_number(walk_sprite),4,8,5,2));
+			var walk_anim_speed = width / max(0.1,abs(xspeed));
+			walk_anim_speed /= sprite_get_number(walk_sprite) / 4;
+			walk_anim_speed = max(1,round(walk_anim_speed));
 			face_target();
 			if check_charge() {
 				change_state(charge_state);

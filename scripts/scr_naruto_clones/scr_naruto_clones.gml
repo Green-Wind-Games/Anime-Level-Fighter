@@ -155,7 +155,6 @@ function init_naruto_baseform_clone_barrage() {
 	}
 	barrage_kick.run = function() {
 		if check_frame(1) {
-			face_target();
 			create_hitbox(
 				0,
 				-height_half,

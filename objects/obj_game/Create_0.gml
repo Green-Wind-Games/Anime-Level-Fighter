@@ -43,6 +43,7 @@ globalvar	player, player_char, player_input,
 			
 			ygravity, ground_height, battle_x, battle_y, left_wall, right_wall,
 			
+			base_hp, base_movespeed, base_jumpspeed,
 			max_mp, max_mp_stocks, mp_stock_size,
 			max_tp, max_tp_stocks, tp_stock_size,
 			
@@ -104,6 +105,10 @@ player_color[i++] = make_color_rgb(128,0,255);
 player_color[i++] = make_color_rgb(255,0,255);
 player_color[i++] = make_color_rgb(255,128,0);
 player_color[i++] = make_color_rgb(128,64,32);
+
+base_hp = 1000;
+base_movespeed = 6;
+base_jumpspeed = 8;
 
 mp_stock_size = 1000;
 max_mp_stocks = 5;

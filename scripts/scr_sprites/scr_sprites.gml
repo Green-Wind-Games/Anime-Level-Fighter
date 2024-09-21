@@ -24,7 +24,7 @@ function init_sprite(_sprite = sprite_index) {
 	flash = 0;
 	flash_color = c_white;
 	
-	var _scale = 0.8;
+	var _scale = 0.75;
 	width = floor(sprite_get_width(sprite) * _scale);
 	height = floor(sprite_get_height(sprite) * _scale);
 	
