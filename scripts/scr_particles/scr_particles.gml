@@ -243,7 +243,14 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 			if _strength >= attackstrength.heavy {
 				if meme_enabled {
 					if random(100) < meme_chance {
-						_sound = choose(snd_meme_hit_fryingpan);
+						_sound = choose(
+							snd_meme_hit_dunk,
+							snd_meme_hit_hammer,
+							snd_meme_hit_metal_dayum,
+							snd_meme_hit_tacobell,
+							snd_meme_hit_tf2_critical,
+							snd_meme_hit_tf2_fryingpan
+						);
 						_volume = 3;
 					}
 				}

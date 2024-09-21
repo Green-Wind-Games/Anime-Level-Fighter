@@ -8,7 +8,7 @@ if instance_number(object_index) > 1 {
 
 globalvar meme_enabled, meme_chance;
 meme_enabled = true;
-meme_chance = 5;
+meme_chance = 10;
 
 enum gamestates {
 	intro,

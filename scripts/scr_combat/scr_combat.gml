@@ -201,7 +201,14 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 						if meme_enabled {
 							if random(100) < meme_chance {
 								stop_sound(voice);
-								voice = play_sound(choose(snd_meme_hit_punch_gah),3);
+								voice = play_sound(
+									choose(
+										snd_meme_scream_disappear,
+										snd_meme_scream_disappear_srpelo,
+										snd_meme_scream_disappear_vsauce
+									),
+									3
+								);
 							}
 						}
 					}

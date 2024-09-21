@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_meme_hit_fryingpan",
+  "%Name":"snd_meme_hit_dunk",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.580385,
-  "name":"snd_meme_hit_fryingpan",
+  "duration":2.728345,
+  "name":"snd_meme_hit_dunk",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_meme_hit_fryingpan.wav",
+  "soundFile":"snd_meme_hit_dunk.wav",
   "type":0,
-  "volume":0.5,
+  "volume":1.0,
 }

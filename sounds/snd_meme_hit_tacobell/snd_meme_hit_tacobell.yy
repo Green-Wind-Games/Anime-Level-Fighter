@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_meme_hit_punch_gah",
+  "%Name":"snd_meme_hit_tacobell",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.85,
-  "name":"snd_meme_hit_punch_gah",
+  "duration":1.75,
+  "name":"snd_meme_hit_tacobell",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_meme_hit_punch_gah.wav",
+  "soundFile":"snd_meme_hit_tacobell.wav",
   "type":0,
   "volume":1.0,
 }
