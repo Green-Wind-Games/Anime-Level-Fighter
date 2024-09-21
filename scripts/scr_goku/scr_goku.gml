@@ -414,7 +414,7 @@ function init_goku_baseform() {
 			play_sound(snd_dbz_beam_fire);
 		}
 		if value_in_range(frame,6,9) {
-			fire_beam(20,-25,spr_kamehameha,0.5,0,5);
+			fire_beam(20,-25,spr_kamehameha,1,0,5);
 		}
 		return_to_idle();
 	}
@@ -468,7 +468,7 @@ function init_goku_baseform() {
 			}
 		}
 		if value_in_range(frame,6,9) {
-			fire_beam(20,-25,spr_kamehameha,1,0,5);
+			fire_beam(20,-25,spr_kamehameha,2,0,5);
 			shake_screen(5,3);
 		}
 		if check_frame(3) {

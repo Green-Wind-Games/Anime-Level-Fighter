@@ -3,10 +3,11 @@
 
 function draw_text_outlined(_x,_y,_text,_outlinecolor,_text_color,_scale = 1) {
 	draw_set_color(_outlinecolor);
-	draw_text(_x-1,_y,_text);
-	draw_text(_x+1,_y,_text);
-	draw_text(_x,_y-1,_text);
-	draw_text(_x,_y+1,_text);
+	draw_text_transformed(_x,_y,_text,_scale,_scale,0);
+	draw_text_transformed(_x-1,_y,_text,_scale,_scale,0);
+	draw_text_transformed(_x+1,_y,_text,_scale,_scale,0);
+	draw_text_transformed(_x,_y-1,_text,_scale,_scale,0);
+	draw_text_transformed(_x,_y+1,_text,_scale,_scale,0);
 	
 	draw_set_color(_text_color);
 	draw_text_transformed(_x,_y,_text,_scale,_scale,0);
@@ -493,7 +494,7 @@ function draw_timer() {
 	
 	draw_set_color(c_white);
 	
-	var _timer_sprite = spr_timer2;
+	var _timer_sprite = spr_timer;
 	var _timer_x = gui_width/2;
 	var _timer_y = gui_height + 1 - (sprite_get_height(_timer_sprite) - sprite_get_yoffset(_timer_sprite));
 	var _timer_text = string(ceil(round_timer / 60));

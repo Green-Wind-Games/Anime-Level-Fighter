@@ -362,11 +362,16 @@ function init_naruto_baseform() {
 	
 	mini_rasengan = new state();
 	mini_rasengan.start = function() {
-		if on_ground and check_mp(1) and (!rasengan_cooldown) {
-			change_sprite(spr_naruto_special_rasengan,3,false);
-			activate_super(60);
-			spend_mp(1);
-			deflecting_projectiles = true;
+		if check_mp(1) and (!rasengan_cooldown) {
+			if on_ground {
+				change_sprite(spr_naruto_special_rasengan,3,false);
+				activate_super(60);
+				spend_mp(1);
+				deflecting_projectiles = true;
+			}
+			else {
+				change_state(rasengan_dive);
+			}
 		}
 		else {
 			change_state(previous_state);
@@ -375,15 +380,6 @@ function init_naruto_baseform() {
 	mini_rasengan.run = function() {
 		if (frame > 6) and (superfreeze_active) {
 			frame = 5;
-		}
-		if check_frame(4) or check_frame(7) {
-			create_particles(
-				x-(width*facing),
-				y,
-				x-(width*facing),
-				y,
-				jutsu_smoke_particle
-			);
 		}
 		if check_frame(7) {
 			xspeed = 20 * facing;
@@ -438,10 +434,114 @@ function init_naruto_baseform() {
 			}
 			play_sound(snd_explosion_medium,1,1.25);
 		}
+		if check_frame(4) or check_frame(7) {
+			create_particles(
+				x-(width*facing),
+				y,
+				x-(width*facing),
+				y,
+				jutsu_smoke_particle
+			);
+		}
 		return_to_idle();
 	}
 	mini_rasengan.stop = function() {
 		deflecting_projectiles = false;
+	}
+	
+	rasengan_dive = new state();
+	rasengan_dive.start = function() {
+		if check_mp(1) and (!rasengan_cooldown) {
+			change_sprite(spr_naruto_special_rasengan_dive,3,false);
+			activate_super(30);
+			spend_mp(1);
+			xspeed = 0;
+			yspeed = 0;
+		}
+		else {
+			change_state(previous_state);
+		}
+	}
+	rasengan_dive.run = function() {
+		if (frame > 7) and (superfreeze_active) {
+			frame = 6;
+		}
+		if frame == 10 and (y < (ground_height - 64)) {
+			frame = 8;
+		}
+		if (frame > 11) and (state_timer < 90) and (combo_hits > 0) {
+			frame = 10;
+		}
+		if value_in_range(frame,8,9)  {
+			xspeed = 10 * facing;
+			yspeed = 15;
+		}
+		if value_in_range(frame,10,11) {
+			y = ground_height - 64;
+			if (combo_hits > 0) {
+				x = target_x + (width_half * facing);
+			}
+		}
+		if check_frame(10) {
+			var _ball = create_shot(
+				0,
+				64,
+				0,
+				1,
+				spr_rasengan,
+				1,
+				5,
+				0,
+				0,
+				attacktype.normal,
+				attackstrength.light,
+				hiteffects.hit
+			);
+			with(_ball) {
+				duration = 1;
+				alpha = 0;
+			}
+		}
+		if check_frame(12) {
+			if (combo_hits > 0) {
+				var _ball = create_shot(
+					0,
+					64,
+					0,
+					1,
+					spr_rasengan,
+					1,
+					100,
+					15,
+					-3,
+					attacktype.hard_knockdown,
+					attackstrength.heavy,
+					hiteffects.hit
+				);
+				with(_ball) {
+					duration = 1;
+					alpha = 0;
+				}
+			}
+			play_sound(snd_explosion_medium);
+			
+			xspeed = -5 * facing;
+			yspeed = -10;
+		}
+		if (frame < 8) or value_in_range(frame,10,11) {
+			xspeed = 0;
+			yspeed = 0;
+		}
+		if check_frame(4) or check_frame(12) {
+			create_particles(
+				x-(width_half*facing),
+				y,
+				x-(width_half*facing),
+				y,
+				jutsu_smoke_particle
+			);
+		}
+		return_to_idle();
 	}
 
 	shadow_clone_jutsu = new state();
@@ -481,8 +581,14 @@ function init_naruto_baseform() {
 
 	add_move(shuriken_throw,"B");
 	add_move(triple_shuriken_throw,"2B");
+	
 	add_move(mini_rasengan,"C");
+	//add_move(double_rasengan,"2C");
+	//add_move(giant_rasengan,"EC");
+	//add_move(rasen_shuriken,"EEC");
+	
 	add_move(shadow_clone_jutsu,"D");
+	//add_move(shadow_clone_barrage,"ED");
 
 	//var i = 0;
 	//voice_attack[i++] = snd_naruto_attack1;
@@ -536,14 +642,78 @@ function init_naruto_baseform() {
 			}
 			if frame >= 13 {
 				gpu_set_blendmode(bm_add);
-				var _scale = 0.3 + (anim_timer / 100);
-				var _alpha = map_value(anim_timer,0,100,1,0);
+				var _scale = map_value(
+					anim_timer,
+					frame_duration * 13,
+					frame_duration * anim_frames,
+					0.3,
+					1
+				);
+				var _alpha = map_value(
+					anim_timer,
+					frame_duration * 13,
+					frame_duration * anim_frames,
+					1,
+					0
+				);
 				var _rotation = -anim_timer / 100 * facing;
 				draw_sprite_ext(
 					spr_rasengan,
 					rasengan_frame,
 					x+(width*1.5*facing),
 					y-(height*0.69),
+					_scale,
+					_scale,
+					_rotation,
+					c_white,
+					_alpha
+				);
+			}
+		}
+		if sprite == spr_naruto_special_rasengan_dive {
+			if value_in_range(frame,4,5) {
+				draw_sprite_ext(spr_naruto_clone_rasengan_air,0,x-(width*1.5*facing),y,facing,1,0,c_white,1);
+			}
+			if value_in_range(frame,6,7) {
+				draw_sprite_ext(spr_naruto_clone_rasengan_air,(frame mod 2) + 1,x-(width*facing),y,facing,1,0,c_white,1);
+				
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*0.5*facing),y-(height*0.8),0.3,0.3,0,c_white,1);
+			}
+			if value_in_range(frame,8,9) {
+				draw_sprite_ext(spr_naruto_clone_rasengan_air,(frame mod 2) + 3,x-(width*facing),y+5,facing,1,0,c_white,1);
+				
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width_half*facing),y-(height*0.75),0.5,0.5,0,c_white,1);
+			}
+			if value_in_range(frame,10,11) {
+				draw_sprite_ext(spr_naruto_clone_rasengan_air,(frame mod 2) + 5,x-(width*0.75*facing),y,facing,1,0,c_white,1);
+				
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*facing/3),y+(height*0.5),1,1,0,c_white,1);
+			}
+			if frame >= 12 {
+				gpu_set_blendmode(bm_add);
+				var _scale = map_value(
+					anim_timer,
+					frame_duration * 12,
+					frame_duration * 14,
+					1,
+					2
+				);
+				var _alpha = map_value(
+					anim_timer,
+					frame_duration * 12,
+					frame_duration * 14,
+					1,
+					0
+				);
+				var _rotation = -anim_timer / 100 * facing;
+				draw_sprite_ext(
+					spr_rasengan,
+					rasengan_frame,
+					x,
+					y + 64,
 					_scale,
 					_scale,
 					_rotation,

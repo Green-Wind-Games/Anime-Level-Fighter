@@ -394,7 +394,7 @@
     {"name":"spr_naruto_portrait","order":33,"path":"sprites/spr_naruto_portrait/spr_naruto_portrait.yy",},
     {"name":"spr_naruto_special_doublerasengan","order":44,"path":"sprites/spr_naruto_special_doublerasengan/spr_naruto_special_doublerasengan.yy",},
     {"name":"spr_naruto_special_giantrasengan","order":45,"path":"sprites/spr_naruto_special_giantrasengan/spr_naruto_special_giantrasengan.yy",},
-    {"name":"spr_naruto_special_rasengan_air","order":49,"path":"sprites/spr_naruto_special_rasengan_air/spr_naruto_special_rasengan_air.yy",},
+    {"name":"spr_naruto_special_rasengan_dive","order":49,"path":"sprites/spr_naruto_special_rasengan_dive/spr_naruto_special_rasengan_dive.yy",},
     {"name":"spr_naruto_special_rasengan","order":43,"path":"sprites/spr_naruto_special_rasengan/spr_naruto_special_rasengan.yy",},
     {"name":"spr_naruto_special_rasenshuriken","order":53,"path":"sprites/spr_naruto_special_rasenshuriken/spr_naruto_special_rasenshuriken.yy",},
     {"name":"spr_naruto_special_throw_shuriken","order":34,"path":"sprites/spr_naruto_special_throw_shuriken/spr_naruto_special_throw_shuriken.yy",},
