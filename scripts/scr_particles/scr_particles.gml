@@ -183,7 +183,7 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 		break;
 		
 		case jutsu_smoke_particle:
-		play_sound(choose(snd_jutsu_smoke,snd_jutsu_smoke2));
+		play_sound(choose(snd_jutsu_smoke,snd_jutsu_smoke2),1/2);
 		break;
 	}
 }

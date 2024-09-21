@@ -24,7 +24,7 @@
   "name":"spr_bar_mp_border",
   "nineSlice":{
     "$GMNineSliceData":"",
-    "bottom":4,
+    "bottom":5,
     "enabled":true,
     "guideColour":[4294902015,4294902015,4294902015,4294902015,],
     "highlightColour":1728023040,
@@ -40,7 +40,7 @@
       0,
       0,
     ],
-    "top":4,
+    "top":5,
   },
   "origin":0,
   "parent":{

@@ -49,7 +49,7 @@ function check_moves() {
 				reset_cancels();
 				can_guard = false;
 				can_cancel = false;
-				input_buffer = update_input_buffer_direction() + update_input_buffer_buttons();
+				input_buffer = update_input_buffer_direction();
 				input_buffer_timer = 0;
 				moved = true;
 				break;

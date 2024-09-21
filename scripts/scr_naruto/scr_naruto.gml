@@ -620,8 +620,8 @@ function init_naruto_baseform() {
 	//add_move(giant_rasengan,"EC");
 	//add_move(rasen_shuriken,"EEC");
 	
-	add_move(shadow_clone_jutsu,"D");
-	add_move(shadow_clone_barrage,"ED");
+	add_move(shadow_clone_barrage,"D");
+	add_move(shadow_clone_jutsu,"ED");
 
 	//var i = 0;
 	//voice_attack[i++] = snd_naruto_attack1;

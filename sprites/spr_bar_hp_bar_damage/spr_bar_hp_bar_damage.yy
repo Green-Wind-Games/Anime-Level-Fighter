@@ -2,7 +2,7 @@
   "$GMSprite":"",
   "%Name":"spr_bar_hp_bar_damage",
   "bboxMode":0,
-  "bbox_bottom":7,
+  "bbox_bottom":4,
   "bbox_left":0,
   "bbox_right":0,
   "bbox_top":0,
@@ -16,7 +16,7 @@
   ],
   "gridX":20,
   "gridY":16,
-  "height":8,
+  "height":5,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"4f07d12a-64a6-440f-9488-efdcb195a81a","blendMode":0,"displayName":"Layer 1","isLocked":false,"name":"4f07d12a-64a6-440f-9488-efdcb195a81a","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},

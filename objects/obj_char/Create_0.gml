@@ -72,6 +72,7 @@ max_air_moves = 1;
 ygravity_mod = 1;
 
 level = 1;
+
 attack_power = 1;
 defense = 1;
 
