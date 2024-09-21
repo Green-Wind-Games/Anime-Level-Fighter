@@ -33,47 +33,6 @@ function init_naruto_baseform() {
 		}
 	}
 
-	//airdash_state.start = function() {
-	//	if air_moves < max_air_moves {
-	//		change_sprite(dash_sprite,2,true);
-	//		yoffset = -height/2;
-	//		rotation = 20;
-	//		xspeed = move_speed * 1.5 * facing;
-	//		yspeed = -5;
-	//		air_moves += 1;
-	//		play_sound(snd_dash);
-	//	}
-	//	else {
-	//		change_state(idle_state);
-	//	}
-	//}
-	//airdash_state.run = function() {
-	//	if state_timer >= 15 {
-	//		change_state(idle_state);
-	//	}
-	//}
-
-	//air_backdash_state.start = function() {
-	//	if air_moves < max_air_moves {
-	//		change_sprite(dash_sprite,2,true);
-	//		yoffset = -height/2;
-	//		xscale = -1;
-	//		rotation = 20;
-	//		xspeed = move_speed * 1.5 * -facing;
-	//		yspeed = -5;
-	//		air_moves += 1;
-	//		play_sound(snd_dash);
-	//	}
-	//	else {
-	//		change_state(idle_state);
-	//	}
-	//}
-	//air_backdash_state.run = function() {
-	//	if state_timer >= 15 {
-	//		change_state(idle_state);
-	//	}
-	//}
-
 	var i = 0;
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
@@ -576,6 +535,80 @@ function init_naruto_baseform() {
 		}
 		return_to_idle();
 	}
+	
+	shadow_clone_barrage = new state();
+	shadow_clone_barrage.start = function() {
+		if check_mp(1) {
+			change_sprite(spr_naruto_jutsu,3,false);
+			activate_super();
+			spend_mp(1);
+			play_sound(snd_jutsu_activate);
+		}
+		else {
+			change_state(previous_state);
+		}
+	}
+	shadow_clone_barrage.run = function() {
+		xspeed = 0;
+		yspeed = 0;
+		if (frame > 3) and (superfreeze_active) {
+			frame = 2;
+		}
+		if (frame > 5) and (state_timer < 100) {
+			frame = 4;
+		}
+		if check_frame(4) {
+			repeat(3) {
+				var _clone = create_shot(
+					random_range(-64,128),
+					-random_range(64,128),
+					random_range(10,20),
+					random_range(10,20),
+					choose(spr_naruto_attack_divekick,spr_naruto_attack_divekick2),
+					1,
+					5,
+					3,
+					-3,
+					attacktype.normal,
+					attackstrength.medium,
+					hiteffects.hit
+				);
+				with(_clone) {
+					hit_limit = -1;
+					
+					blend = false;
+					rotation_speed = 0.1;
+					
+					create_particles(
+						x,
+						y,
+						x,
+						y,
+						jutsu_smoke_particle
+					);
+					
+					active_script = function() {
+						rotation = 0;
+						if y >= ground_height {
+							expire_script();
+							instance_destroy();
+						}
+					}
+					
+					expire_script = function() {
+						create_particles(
+							x,
+							y,
+							x,
+							y,
+							jutsu_smoke_particle
+						);
+					}
+				}
+			}
+		}
+		return_to_idle();
+	}
 
 	setup_autocombo();
 
@@ -588,7 +621,7 @@ function init_naruto_baseform() {
 	//add_move(rasen_shuriken,"EEC");
 	
 	add_move(shadow_clone_jutsu,"D");
-	//add_move(shadow_clone_barrage,"ED");
+	add_move(shadow_clone_barrage,"ED");
 
 	//var i = 0;
 	//voice_attack[i++] = snd_naruto_attack1;

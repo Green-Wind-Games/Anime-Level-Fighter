@@ -34,7 +34,7 @@ function update_fight() {
 		}
 		if alldead {
 			round_state = roundstates.knockout;
-			play_sound(snd_knockout);
+			play_sound(snd_round_end_knockout);
 		}
 	}
 	else if round_state == roundstates.time_over or round_state == roundstates.knockout {

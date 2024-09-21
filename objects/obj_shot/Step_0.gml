@@ -58,11 +58,14 @@ if homing {
 
 active_script();
 
+if rotation_speed == 0 {
+	rotation = point_direction(0,0,abs(xspeed),yspeed);
+}
+
 if xspeed != 0 {
 	facing = sign(xspeed);
 }
 
-rotation = point_direction(0,0,xspeed,yspeed);
 run_animation();
 
 run_physics();

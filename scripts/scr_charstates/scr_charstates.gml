@@ -571,16 +571,16 @@ function init_charstates() {
 		xspeed = 0;
 		yspeed = 0;
 		face_target();
-		timestop(10);
+		timestop(20);
 		if sprite == crouch_sprite {
-			alpha -= 0.2;
+			alpha -= 0.1;
 			if alpha <= 0 {
 				change_sprite(uncrouch_sprite,frame_duration,false);
 				reset_sprite();
 				alpha = 0;
 				color = c_black;
 				
-				var dist = (game_width / 3)
+				var dist = (game_width / 3);
 				x += dist * sign(input.right-input.left);
 				y += dist * sign(input.down-input.up);
 				
@@ -605,7 +605,7 @@ function init_charstates() {
 			}
 		}
 		else {
-			alpha += 0.2;
+			alpha += 0.1;
 			if alpha >= 1 {
 				reset_sprite();
 				timestop(0);

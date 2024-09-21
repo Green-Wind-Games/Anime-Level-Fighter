@@ -3,11 +3,10 @@
 
 function draw_text_outlined(_x,_y,_text,_outlinecolor,_text_color,_scale = 1) {
 	draw_set_color(_outlinecolor);
-	draw_text_transformed(_x,_y,_text,_scale,_scale,0);
-	draw_text_transformed(_x-1,_y,_text,_scale,_scale,0);
-	draw_text_transformed(_x+1,_y,_text,_scale,_scale,0);
-	draw_text_transformed(_x,_y-1,_text,_scale,_scale,0);
-	draw_text_transformed(_x,_y+1,_text,_scale,_scale,0);
+	draw_text_transformed(_x-_scale,_y,_text,_scale,_scale,0);
+	draw_text_transformed(_x+_scale,_y,_text,_scale,_scale,0);
+	draw_text_transformed(_x,_y-_scale,_text,_scale,_scale,0);
+	draw_text_transformed(_x,_y+_scale,_text,_scale,_scale,0);
 	
 	draw_set_color(_text_color);
 	draw_text_transformed(_x,_y,_text,_scale,_scale,0);
@@ -172,9 +171,9 @@ function draw_shots() {
 			frame,
 			x,
 			y,
-			xscale,
-			yscale*facing,
-			rotation,
+			xscale*facing,
+			yscale,
+			rotation*facing,
 			color,
 			alpha
 		);
@@ -496,13 +495,17 @@ function draw_timer() {
 	
 	var _timer_sprite = spr_timer;
 	var _timer_x = gui_width/2;
-	var _timer_y = gui_height + 1 - (sprite_get_height(_timer_sprite) - sprite_get_yoffset(_timer_sprite));
+	var _timer_y = gui_height - (sprite_get_height(_timer_sprite) - sprite_get_yoffset(_timer_sprite)) + 1;
 	var _timer_text = string(ceil(round_timer / 60));
 	
 	draw_sprite(_timer_sprite,0,_timer_x,_timer_y);
 	
-	draw_set_color(make_color_rgb(255,255,0));
-	draw_text(_timer_x,_timer_y,_timer_text);
+	draw_set_color(c_white);
+	draw_text(
+		_timer_x,
+		_timer_y,
+		_timer_text
+	);
 	
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);
