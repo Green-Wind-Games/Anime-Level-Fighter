@@ -234,7 +234,7 @@ function draw_particles() {
 			frame,
 			_x,
 			_y,
-			xscale*xstretch*facing,
+			xscale*xstretch,
 			yscale*ystretch,
 			rotation*facing*sign(xscale)*sign(xstretch),
 			color,

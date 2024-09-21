@@ -95,6 +95,9 @@ function init_naruto_baseform() {
 	}
 	autocombo[i].run = function() {
 		basic_attack(2,20,attackstrength.light,hiteffects.slash);
+		if check_frame(2) {
+			char_specialeffect(spr_slash,width_half,-height_half,0.5,-0.5,-45);
+		}
 		return_to_idle();
 	}
 	i++;
@@ -102,7 +105,7 @@ function init_naruto_baseform() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_naruto_attack_slash_up,4,false);
-		play_sound(snd_punch_whiff_light);
+		play_sound(snd_slash_whiff_heavy);
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
@@ -121,6 +124,8 @@ function init_naruto_baseform() {
 			);
 			xspeed = 3 * facing;
 			yspeed = -3;
+			
+			char_specialeffect(spr_slash2,width*0.75,-height*0.75,0.5,-0.5,-45);
 		}
 		can_cancel = false;
 		if on_ground and anim_finished {

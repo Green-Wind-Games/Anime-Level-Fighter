@@ -261,3 +261,34 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 	}
 	play_sound(_sound,_volume);
 }
+
+function create_specialeffect(_sprite,_x,_y,_xscale = 1,_yscale = 1,_rotation = 0,_rotationspeed = 0,_color = c_white,_alpha = 1,_blend = true) {
+	var _effect = instance_create(_x,_y,obj_specialeffect);
+	with(_effect) {
+		init_sprite(_sprite);
+		change_sprite(_sprite,3,false);
+		xscale = _xscale;
+		yscale = _yscale;
+		rotation = _rotation;
+		rotation_speed = _rotationspeed;
+		color = _color;
+		alpha = _alpha;
+		blend = _blend;
+	}
+	return _effect;
+}
+
+function char_specialeffect(_sprite,_x = 0,_y = -height_half,_xscale = 1,_yscale = 1,_rotation = 0,_rotationspeed = 0,_color = c_white,_alpha = 1,_blend = true) {
+	return create_specialeffect(
+		_sprite,
+		x + (_x * facing),
+		y + _y,
+		_xscale * facing,
+		_yscale,
+		_rotation,
+		_rotationspeed,
+		_color,
+		_alpha,
+		_blend
+	);
+}
