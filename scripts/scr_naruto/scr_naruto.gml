@@ -459,7 +459,7 @@ function init_naruto_baseform() {
 				0,
 				0,
 				spr_rasengan,
-				0.5,
+				0.2,
 				10,
 				0,
 				0,
@@ -480,7 +480,7 @@ function init_naruto_baseform() {
 					0,
 					0,
 					spr_rasengan,
-					0.5,
+					0.2,
 					100,
 					15,
 					-3,
@@ -543,7 +543,7 @@ function init_naruto_baseform() {
 				0,
 				0,
 				spr_rasengan,
-				0.1,
+				0.2,
 				15,
 				0,
 				0,
@@ -564,7 +564,7 @@ function init_naruto_baseform() {
 					0,
 					0,
 					spr_rasengan,
-					0.1,
+					0.2,
 					100,
 					15,
 					-3,
@@ -833,7 +833,7 @@ function init_naruto_baseform() {
 	}
 
 	draw_script = function() {
-		rasengan_frame += 1/3;
+		rasengan_frame += 1/2;
 		if rasengan_frame >= sprite_get_number(spr_rasengan) {
 			rasengan_frame = 0;
 		}
@@ -859,7 +859,7 @@ function init_naruto_baseform() {
 					frame_duration * 13,
 					frame_duration * anim_frames,
 					0.2,
-					1
+					0.5
 				);
 				var _alpha = map_value(
 					anim_timer,
@@ -960,7 +960,7 @@ function init_naruto_baseform() {
 					frame_duration * 13,
 					frame_duration * anim_frames,
 					0.5,
-					2
+					1
 				);
 				var _alpha = map_value(
 					anim_timer,
@@ -1023,7 +1023,7 @@ function init_naruto_baseform() {
 					frame_duration * 13,
 					frame_duration * anim_frames,
 					1,
-					3
+					2
 				);
 				var _alpha = map_value(
 					anim_timer,
