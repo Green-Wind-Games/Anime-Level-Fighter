@@ -751,8 +751,8 @@ function return_to_idle() {
 
 function land() {
 	if on_ground and (yspeed > 0) {
-		var stretch = map_value(yspeed,0,8,1,1.25);
-		var squash = map_value(yspeed,0,8,1,0.75);
+		var stretch = 1.2;
+		var squash = 0.8;
 		change_state(idle_state);
 		squash_stretch(stretch,squash);
 		return true;

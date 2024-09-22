@@ -295,7 +295,7 @@ function take_damage(_attacker,_amount,_kill) {
 				dmg *= 1 + (level * level_scaling);
 				for(var i = 0; i < array_length(autocombo); i++) {
 					if active_state == autocombo[i] {
-						dmg /= 4;
+						//dmg /= 4;
 						break;
 					}
 				}
@@ -320,7 +320,7 @@ function take_damage(_attacker,_amount,_kill) {
 		max_hp/5,
 		0,
 		1,
-		0
+		1/2
 	);
 	
 	scaling = clamp(scaling,0.1,1);

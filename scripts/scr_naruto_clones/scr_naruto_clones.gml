@@ -58,6 +58,9 @@ function init_naruto_baseform_clone() {
 	}
 	slash.run = function() {
 		basic_attack(2,20,attackstrength.light,hiteffects.slash);
+		if check_frame(2) {
+			char_specialeffect(spr_slash,width_half,-height_half,0.5,-0.5,-45);
+		}
 		if anim_finished {
 			if can_cancel and choose(true,false) {
 				change_state(slash2);
@@ -89,6 +92,8 @@ function init_naruto_baseform_clone() {
 				attackstrength.medium,
 				hiteffects.slash
 			);
+			
+			char_specialeffect(spr_slash2,width*0.9,-height*0.75,0.5,-0.5,-45);
 		}
 		if anim_finished and on_ground {
 			change_state(jump_back_state);
@@ -151,7 +156,7 @@ function init_naruto_baseform_clone_barrage() {
 		change_sprite(spr_naruto_attack_slide_kick_up,8,false);
 		xoffset = width / 3;
 		face_target();
-		xspeed = 15 * facing;
+		xspeed = 20 * facing;
 	}
 	barrage_kick.run = function() {
 		if check_frame(1) {

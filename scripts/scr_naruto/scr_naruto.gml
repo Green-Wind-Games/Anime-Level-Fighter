@@ -150,10 +150,10 @@ function init_naruto_baseform() {
 	}
 	autocombo[i].run = function() {
 		if check_frame(3) {
-			create_helper(-50,0,init_naruto_baseform_clone_barrage).xoffset = width / 2;
-			create_helper(200,0,init_naruto_baseform_clone_barrage).xoffset = width / 2;
-			create_helper(-30,0,init_naruto_baseform_clone_barrage).xoffset = width;
-			create_helper(180,0,init_naruto_baseform_clone_barrage).xoffset = width;
+			create_helper(-75,0,init_naruto_baseform_clone_barrage);
+			create_helper(235,0,init_naruto_baseform_clone_barrage);
+			create_helper(-65,0,init_naruto_baseform_clone_barrage);
+			create_helper(225,0,init_naruto_baseform_clone_barrage);
 		}
 		can_cancel = false;
 		if anim_finished {
@@ -170,6 +170,10 @@ function init_naruto_baseform() {
 			rotation_speed = -45;
 			xspeed = (target_distance_x / 40) * facing;
 			yspeed = target.yspeed * 1.10;
+			
+			if yspeed > -jump_speed {
+				change_state(idle_state);
+			}
 		}
 		else {
 			change_sprite(spr_naruto_attack_smash_kick,3,false);
@@ -365,7 +369,7 @@ function init_naruto_baseform() {
 				0,
 				spr_rasengan,
 				0.2,
-				5,
+				10,
 				0,
 				0,
 				attacktype.normal,
@@ -456,7 +460,7 @@ function init_naruto_baseform() {
 				0,
 				spr_rasengan,
 				0.5,
-				5,
+				10,
 				0,
 				0,
 				attacktype.normal,
@@ -540,7 +544,7 @@ function init_naruto_baseform() {
 				0,
 				spr_rasengan,
 				0.1,
-				20,
+				15,
 				0,
 				0,
 				attacktype.normal,
@@ -561,7 +565,7 @@ function init_naruto_baseform() {
 					0,
 					spr_rasengan,
 					0.1,
-					150,
+					100,
 					15,
 					-3,
 					attacktype.hard_knockdown,
@@ -610,7 +614,7 @@ function init_naruto_baseform() {
 			frame = 5;
 		}
 		if check_frame(7) {
-			xspeed = 30 * facing;
+			xspeed = 20 * facing;
 		}
 		if (frame > 12) and (state_timer < 120) {
 			frame = 11;
@@ -623,7 +627,7 @@ function init_naruto_baseform() {
 				0,
 				spr_rasengan,
 				1,
-				20,
+				10,
 				0,
 				0,
 				attacktype.normal,
@@ -752,6 +756,7 @@ function init_naruto_baseform() {
 					
 					blend = false;
 					rotation_speed = 0.1;
+					rotation = 0;
 					
 					create_particles(
 						x,

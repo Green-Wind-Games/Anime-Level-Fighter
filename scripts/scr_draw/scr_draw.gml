@@ -57,15 +57,20 @@ function draw_my_playerindicator(_playerid = 0) {
 	var _scale = 1/screen_zoom;
 	var _border = string_height("[]") * _scale;
 	
-	var indicator_x = x;
-	var indicator_y = y - 5;
 	var _height = sprite_get_height(idle_sprite);
-	indicator_y -= _height * yscale * ystretch;
-	indicator_y = clamp(
-		indicator_y,
-		camera_get_view_y(view)+hud_height+_border,
-		camera_get_view_y(view)+camera_get_view_height(view)
-	);
+	var indicator_x = x;
+	var indicator_y = y - _height - 5;
+	repeat(2) {
+		if indicator_y > y - _height {
+			indicator_y = y + _border + 5;
+		}
+		
+		indicator_y = clamp(
+			indicator_y,
+			camera_get_view_y(view)+(hud_height*_scale)+_border,
+			camera_get_view_y(view)+camera_get_view_height(view)
+		);
+	}
 	
 	var text = "[P"+string(_playerid+1)+"]";
 	draw_text_outlined(indicator_x,indicator_y,text,c_black,player_color[_playerid],_scale);
