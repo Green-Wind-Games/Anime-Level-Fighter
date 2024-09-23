@@ -63,9 +63,6 @@ function init_charsprites(_name) {
 	charge_loop_sprite = asset_get_index(prefix + "energy_charge_loop");
 	charge_stop_sprite = asset_get_index(prefix + "energy_charge_stop");
 	
-	aura_sprite = noone;
-	aura_frame = 0;
-	
 	icon = asset_get_index(prefix + "icon");
 	
 	init_sprite(idle_sprite);

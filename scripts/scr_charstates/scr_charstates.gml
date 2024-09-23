@@ -527,6 +527,7 @@ function init_charstates() {
 		yspeed = 0;
 		face_target();
 		timestop(10);
+		color = c_black;
 		if sprite == crouch_sprite {
 			xspeed = facing;
 			
@@ -535,14 +536,7 @@ function init_charstates() {
 				change_sprite(uncrouch_sprite,frame_duration,false);
 				reset_sprite();
 				alpha = 0;
-				color = c_black;
-				x = target_x + (100 * facing);
-				y = target_y;
-				
-				if !value_in_range(x,left_wall,right_wall) {
-					x = target_x;
-					y = target_y - 100;
-				}
+				substitution_teleport()
 			}
 		}
 		else {
@@ -664,27 +658,31 @@ function init_charstates() {
 	charge_state.run = function() {
 		if sprite == charge_start_sprite {
 			if anim_finished {
-				change_sprite(charge_loop_sprite,3,true)
-				flash_sprite();
+				change_sprite(charge_loop_sprite,3,true);
 				play_voiceline(voice_powerup);
-				play_sound(snd_energy_start);
+				if charge_start_sound != noone {
+					flash_sprite();
+					play_sound(charge_start_sound);
+				}
 			}
 		}
 		else if sprite == charge_loop_sprite {
-			deflecting_projectiles = true;
-			if check_charge() or state_timer < 30 {
-				mp += ceil((mp_stock_size / 60) / 1.5);
+			if check_charge() {
+				mp += max(1,round(mp_stock_size / 60));
 			
-				loop_sound(snd_energy_loop);
+				loop_sound(charge_loop_sound);
 			
 				shake_screen(5,2);
-				aura_sprite = spr_aura_dbz_white;
+				aura_sprite = charge_aura;
 			}
 			else {
 				change_sprite(charge_stop_sprite,3,false);
-				flash_sprite();
-				play_sound(snd_energy_stop);
+				stop_sound(sound);
 				stop_sound(voice);
+				if charge_stop_sound != noone {
+					flash_sprite();
+					play_sound(charge_stop_sound);
+				}
 				aura_sprite = noone;
 			}
 		}
@@ -696,7 +694,8 @@ function init_charstates() {
 	}
 	charge_state.stop = function() {
 		aura_sprite = noone;
-		deflecting_projectiles = false;
+		stop_sound(sound);
+		stop_sound(voice);
 	}
 	
 	intro_state = new state();
@@ -758,4 +757,14 @@ function land() {
 		return true;
 	}
 	return false;
+}
+
+function substitution_teleport() {
+	var _dist = 100;
+	x = target_x + (_dist * facing);
+	y = target_y;
+	if !value_in_range(x,left_wall,right_wall) {
+		x = target_x;
+		y = target_y - _dist;
+	}
 }

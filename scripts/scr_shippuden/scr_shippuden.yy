@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_dbz",
+  "%Name":"scr_shippuden",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_dbz",
+  "name":"scr_shippuden",
   "parent":{
-    "name":"Dragon Ball",
-    "path":"folders/Chars/Dragon Ball.yy",
+    "name":"Naruto Shippuden",
+    "path":"folders/Chars/Naruto Shippuden.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

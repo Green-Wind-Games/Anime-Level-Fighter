@@ -13,6 +13,13 @@ function init_naruto_baseform() {
 	
 	shadow_clone_jutsu_cooldown = 0;
 	shadow_clone_jutsu_cooldown_duration = 300;
+	
+	charge_aura = spr_aura_chakra;
+	charge_start_sound = noone;
+	charge_loop_sound = snd_chakra_loop;
+	charge_stop_sound = noone;
+	
+	set_substitution_jutsu();
 
 	char_script = function() {
 		rasengan_cooldown--;
