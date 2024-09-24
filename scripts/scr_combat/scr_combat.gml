@@ -306,30 +306,25 @@ function take_damage(_attacker,_amount,_kill) {
 					
 				for(var i = 0; i < array_length(autocombo); i++) {
 					if active_state == autocombo[i] {
-						_atkscale = 1/5;
+						_atkscale = 1/6;
 						break;
 					}
 				}
 					
 				if is_shot(_attacker) { 
-					_atkscale *= 0.6; 
+					_atkscale *= 2/3; 
 				}
 			}
-			_atkscale = clamp(_atkscale,0.1,1);
+			_atkscale = clamp(_atkscale,1/10,1);
 			dmg *= _atkscale;
 		}
 		else if is_helper(id) {
 			dmg *= 1 + (owner.level * level_scaling);
-			dmg *= 0.2;
+			dmg *= 1/5;
 				
 			with(owner) {
-				if combo_hits > 1 {
-					for(var i = 0; i < array_length(autocombo); i++) {
-						if active_state == autocombo[i] {
-							dmg /= 4;
-							break;
-						}
-					}
+				if combo_hits > 0 {
+					dmg /= 4;
 				}
 			}
 		}

@@ -39,14 +39,14 @@ function update_charselect() {
 function charselect_joinin() {
 	for(var i = 0; i < array_length(player_input); i++) {
 		if (!player_input[i].assigned)
-		and player_input[i].button1 {
+		and player_input[i].confirm {
 			for(var ii = 0; ii < array_length(player_slot); ii++) {
 				if player_slot[ii] != noone continue;
 				player_slot[ii] = i;
 				player_char[ii] = ii;
 				player_ready[ii] = false;
 				player_input[i].assigned = true;
-				player_input[i].button1 = false;
+				player_input[i].confirm = false;
 				play_sound(snd_menu_select);
 				break;
 			}
@@ -57,10 +57,10 @@ function charselect_joinin() {
 function charselect_dropout() {
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
-			if player_input[player_slot[i]].button2
+			if player_input[player_slot[i]].cancel
 			and (!player_ready[i]) {
 				player_input[player_slot[i]].assigned = false;
-				player_input[player_slot[i]].button2 = false;
+				player_input[player_slot[i]].cancel = false;
 				player_slot[i] = noone;
 				player_char[i] = i;
 				player_ready[i] = false;
@@ -81,6 +81,13 @@ function charselect_changechars() {
 					player_char[i]++;
 					play_sound(snd_menu_scroll);
 				}
+				if player_input[player_slot[i]].char_random mod 6 == 1 {
+					var _char = player_char[i];
+					while(player_char[i] == _char) {
+						player_char[i] = irandom(max_characters-1);
+					}
+					play_sound(snd_menu_scroll,0.5,1.25);
+				}
 			}
 			if player_char[i] < 0 {
 				player_char[i] = max_characters-1;
@@ -95,17 +102,20 @@ function charselect_changechars() {
 function charselect_readyup() {
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
-			if (!player_ready[i]) and player_input[player_slot[i]].button1 {
+			if (!player_ready[i]) and player_input[player_slot[i]].confirm {
 				player_ready[i] = true;
-				player_input[i].button1 = false;
+				player_input[i].confirm = false;
 				play_sound(snd_menu_select);
 			}
-			else if player_ready[i] and player_input[player_slot[i]].button2 {
+			else if player_ready[i] and player_input[player_slot[i]].cancel {
 				player_ready[i] = false;
-				player_input[i].button2 = false;
+				player_input[i].cancel = false;
 			}
 		}
 	}
+}
+
+function charselect_startgame() {
 	var active_players = 0;
 	var ready_players = 0;
 	for(var i = 0; i < array_length(player_slot); i++) {
@@ -116,18 +126,16 @@ function charselect_readyup() {
 	}
 	var countdown = false;
 	if active_players >= 2
-	and ready_players == active_players { countdown = true; }
-	if !countdown { ready_timer = 10; } else { ready_timer--; }
-}
-
-function charselect_startgame() {
+	and ready_players == active_players { 
+		countdown = true; 
+	}
+	if countdown { ready_timer--; } else { ready_timer = 20; }
 	if ready_timer <= 0 {
 		for(var i = 0; i < array_length(player_slot); i++) {
 			if player_slot[i] != noone {
-				if player_input[player_slot[i]].button1 {
+				if player_input[player_slot[i]].confirm {
 					next_game_state = gamestates.versus_intro;
 					game_state_duration = screen_fade_duration;
-					
 				}
 			}
 		}

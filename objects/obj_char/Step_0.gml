@@ -21,10 +21,22 @@ if is_char(id) {
 }
 
 run_physics();
+
+var stay_in = true;
+if (is_helper(id) and (duration != -1)) stay_in = false;
+
+if stay_in {
+	x = clamp(x, left_wall, right_wall);
+}
+y = min(y,ground_height);
 	
 if (!superfreeze_active) and (!timestop_active) {
-	decelerate();
-	gravitate(ygravity_mod);
+	if on_ground {
+		decelerate();
+	}
+	else {
+		gravitate(ygravity_mod);
+	}
 
 	char_script();
 	state_timer += 1;

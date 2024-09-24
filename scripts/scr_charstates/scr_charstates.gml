@@ -5,18 +5,19 @@ function init_charstates() {
 	idle_state = new state();
 	idle_state.start = function() {
 		face_target();
+		reset_cancels();
 		can_guard = true;
 		can_cancel = true;
 		is_hit = false;
 		is_guarding = false;
-		reset_cancels();
 		
 		if on_ground {
 			yspeed = 0;
 			air_moves = 0;
 			
-			if input != noone {
-				idle_state.run();
+			if xspeed != 0 {
+				change_sprite(walk_sprite,6,true);
+				xscale = abs(xscale) * sign(xspeed) * facing;
 			}
 			else {
 				change_sprite(idle_sprite,6,true);
@@ -28,14 +29,14 @@ function init_charstates() {
 	}
 	idle_state.run = function() {
 		if round_state == roundstates.fight {
+			can_cancel = true;
+			
 			if auto_levelup() {
 				exit;
 			}
 			
-			var walk_anim_speed = width / max(0.1,abs(xspeed));
-			walk_anim_speed /= sprite_get_number(walk_sprite) / 4;
-			walk_anim_speed = max(1,round(walk_anim_speed));
 			face_target();
+			
 			if check_charge() {
 				change_state(charge_state);
 			}
@@ -45,18 +46,20 @@ function init_charstates() {
 			else if input.down {
 				change_state(crouch_state);
 			}
-			else if input.forward {
-				change_sprite(walk_sprite,walk_anim_speed,true);
-				accelerate(move_speed * move_speed_mod * facing);
-				xscale = abs(xscale);
-			}
-			else if input.back {
-				change_sprite(walk_sprite,walk_anim_speed,true);
-				accelerate(move_speed * move_speed_mod * -facing);
-				xscale = -abs(xscale);
-			}
 			else {
-				change_sprite(idle_sprite,6,true);
+				if input.left or input.right {
+					accelerate(move_speed * move_speed_mod * sign(input.right - input.left));
+				}
+				if xspeed != 0 {
+					var walk_anim_speed = width / abs(xspeed);
+					walk_anim_speed /= max(1,sprite_get_number(walk_sprite) / 6);
+					walk_anim_speed = max(3,round(walk_anim_speed));
+					change_sprite(walk_sprite,walk_anim_speed,true);
+					xscale = abs(xscale) * sign(xspeed) * facing;
+				}
+				else {
+					change_sprite(idle_sprite,6,true);
+				}
 			}
 		}
 		else {
@@ -136,6 +139,14 @@ function init_charstates() {
 			exit;
 		}
 		
+		if previous_state == airdash_state
+		or previous_state == air_backdash_state {
+			if abs(xspeed) > (base_movespeed / 2) {
+				decelerate(1);
+			}
+			can_cancel = state_timer > 10;
+		}
+		
 		if yspeed >= 0 {
 			if input.up {
 				if air_moves < max_air_moves {
@@ -177,21 +188,25 @@ function init_charstates() {
 			yspeed = 0;
 			play_sound(snd_dash);
 			play_sound(snd_dash_loop);
+			if sprite_get_yoffset(walk_sprite) <= sprite_get_height(walk_sprite) {
+				change_sprite(walk_sprite,frame_duration,true);
+			}
 		}
 	}
 	dash_state.run = function() {
-		var dash_duration = 15;
 		can_cancel = true;
-		if input.forward {
-			if (target.is_airborne) or (target.on_ground and target_distance_x > 10) {
-				dash_duration = abs(left_wall-right_wall) / abs(xspeed);
-			}
+		var dash_duration = 10;
+		if ((!ai_enabled) and (input.forward)) 
+		or ((ai_enabled) and (target_distance_x > 20)){
+			dash_duration = 60;
 		}
 		
 		if state_timer <= dash_duration {
 			xspeed = move_speed * move_speed_mod * 2 * facing;
 			yspeed = 0;
-			loop_sound(snd_dash_loop);
+			if sprite == dash_sprite {
+				loop_sound(snd_dash_loop);
+			}
 			if input.up {
 				yspeed = -jump_speed/2;
 				change_state(air_state);
@@ -236,7 +251,7 @@ function init_charstates() {
 	dash_stop_state.run = function() {
 		can_cancel = false;
 		face_target();
-		if (state_timer > 15) {
+		if (state_timer > 10) or (xspeed == 0) {
 			change_state(idle_state);
 		}
 	}
@@ -252,14 +267,14 @@ function init_charstates() {
 			play_sound(snd_dash);
 		}
 		else {
-			change_state(idle_state);
+			change_state(air_state);
 		}
 	}
 	airdash_state.run = function() {
 		xspeed = move_speed * move_speed_mod * 2 * facing;
 		yspeed = 0;
-		if state_timer >= 15 {
-			change_state(idle_state);
+		if state_timer >= 10 {
+			change_state(air_state);
 		}
 	}
 	
@@ -275,14 +290,14 @@ function init_charstates() {
 			play_sound(snd_dash);
 		}
 		else {
-			change_state(idle_state);
+			change_state(air_state);
 		}
 	}
 	air_backdash_state.run = function() {
 		xspeed = -move_speed * move_speed_mod * 2 * facing;
 		yspeed = 0;
-		if state_timer >= 15 {
-			change_state(idle_state);
+		if state_timer >= 10 {
+			change_state(air_state);
 		}
 	}
 	

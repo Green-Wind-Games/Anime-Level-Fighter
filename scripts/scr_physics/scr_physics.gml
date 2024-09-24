@@ -28,29 +28,25 @@ function run_physics() {
 }
 
 function gravitate(_multiplier = 1) {
-	if is_airborne {
-		if is_char(id) or is_helper(id) {
-			if is_hit or is_guarding {
-				_multiplier = 1;
-			}
-			else {
-				if yspeed > 0 {
-					_multiplier += 1/2;
-				}
+	if is_char(id) or is_helper(id) {
+		if is_hit or is_guarding {
+			_multiplier = 1;
+		}
+		else {
+			if yspeed > 0 {
+				_multiplier += 1/2;
 			}
 		}
-		yspeed += ygravity * _multiplier;
 	}
+	yspeed += ygravity * _multiplier;
 }
 
-function accelerate(_desired_speed, _speed = 2) {
-	xspeed = approach(xspeed,_desired_speed,_speed);
+function accelerate(_desired_speed, _speed = 1) {
+	xspeed = approach(xspeed,_desired_speed,_speed * 2);
 }
 
 function decelerate(_speed = 1) {
-	if on_ground {
-		xspeed = approach(xspeed,0,_speed);
-	}
+	xspeed = approach(xspeed,0,_speed);
 }
 
 function bounce_off_wall() {

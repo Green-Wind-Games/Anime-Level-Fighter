@@ -5,6 +5,7 @@ type = input_types.joystick;
 pad = 0;
 
 assigned = false;
+ai_assigned_player = noone;
 
 up = false;
 down = false;

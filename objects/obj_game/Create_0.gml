@@ -61,6 +61,48 @@ globalvar	player, player_char, player_input,
 			screen_zoom, screen_zoom_target,
 			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha,
 			screen_fade_alpha, screen_fade_color, screen_fade_duration;
+			
+for(var i = 0; i < 8; i++) {
+	player[i] = noone;
+	player_char[i] = 0;
+	player_slot[i] = noone;
+	player_ready[i] = false;
+}
+
+for(var i = 0; i < 8; i++) {
+	gamepad_set_axis_deadzone(i,0.5);
+}
+
+for(var i = 0; i <= 10 + array_length(player_slot); i++) {
+	with(instance_create(0,0,obj_input)) {
+		player_input[i] = id;
+		persistent = true;
+		type = input_types.joystick;
+		pad = i;
+		if i == 8 {
+			type = input_types.wasd;
+		}
+		else if i == 9 {
+			type = input_types.numpad;
+		}
+		else if i == 10 {
+			type = input_types.touch;
+		}
+		else if i > 10 {
+			type = input_types.ai;
+		}
+	}
+}
+
+var i = 0;
+player_color[i++] = make_color_rgb(255,64,64);
+player_color[i++] = make_color_rgb(0,160,255);
+player_color[i++] = make_color_rgb(255,192,0);
+player_color[i++] = make_color_rgb(0,224,0);
+player_color[i++] = make_color_rgb(128,0,255);
+player_color[i++] = make_color_rgb(255,0,255);
+player_color[i++] = make_color_rgb(255,128,0);
+player_color[i++] = make_color_rgb(128,64,32);
 
 game_state = gamestates.intro;
 previous_game_state = -1;
@@ -75,36 +117,6 @@ round_timer_max = 400 * 60;
 round_timer = round_timer_max;
 round_countdown_duration = (3 * 30) + 30;
 round_is_infinite = false;
-
-for(var i = 0; i < 8; i++) {
-	player[i] = noone;
-	player_char[i] = 0;
-	player_slot[i] = noone;
-	player_ready[i] = false;
-}
-
-for(var i = 0; i < 8; i++) {
-	gamepad_set_axis_deadzone(i,0.5);
-}
-
-for(var i = 0; i <= 10; i++) {
-	player_input[i] = instance_create(0,0,obj_input);
-	player_input[i].type = input_types.joystick;
-	player_input[i].pad = i;
-}
-player_input[8].type = input_types.wasd;
-player_input[9].type = input_types.numpad;
-player_input[10].type = input_types.touch;
-
-var i = 0;
-player_color[i++] = make_color_rgb(255,0,0);
-player_color[i++] = make_color_rgb(0,128,255);
-player_color[i++] = make_color_rgb(255,192,0);
-player_color[i++] = make_color_rgb(0,192,0);
-player_color[i++] = make_color_rgb(128,0,255);
-player_color[i++] = make_color_rgb(255,0,255);
-player_color[i++] = make_color_rgb(255,128,0);
-player_color[i++] = make_color_rgb(128,64,32);
 
 base_hp = 1000;
 base_movespeed = 6;
@@ -158,7 +170,7 @@ ground_sprite = noone;
 depth = -9999;
 
 for(var i = 0; i <= room_last; i++) {
-	if i != rm_start {
+	if i <= rm_training {
 		room_set_width(i,game_width*2);
 		room_set_height(i,game_height*2);
 	}

@@ -62,7 +62,7 @@ function basic_smash(_hitframe,_damage,_hiteffect) {
 		var _h = sprite_get_height(sprite) / 2;
 		var _x = 2;
 		var _y = -_h * 0.69;
-		create_hitbox(_x,_y,_w,_h,_damage,3,10,attacktype.hard_knockdown,attackstrength.heavy,_hiteffect);
+		create_hitbox(_x,_y,_w,_h,_damage,3,15,attacktype.hard_knockdown,attackstrength.heavy,_hiteffect);
 		
 		xspeed = -3 * facing;
 		yspeed = -3;
@@ -202,7 +202,7 @@ function check_charge() {
 	if !is_char(id) return false;
 	if (previous_state == charge_state) and (state_timer < 30) return false;
 	if (!ai_enabled) {
-		if (input.button5_held >= 10) return true;
+		if (input.charge) return true;
 	}
 	else {
 		if mp >= max_mp return false;

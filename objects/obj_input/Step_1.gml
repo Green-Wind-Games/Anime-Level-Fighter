@@ -1,4 +1,4 @@
-if type == input_types.ai exit;
+if (type == input_types.ai) and (ai_assigned_player == noone) exit;
 
 var u, d, l, r, b1, b2, b3, b4, b5, b6;
 
@@ -15,6 +15,20 @@ switch(type) {
 	b4 = false;
 	b5 = false;
 	b6 = false;
+	break;
+	
+	case input_types.ai:
+	u = player_input[ai_assigned_player].up;
+	d = player_input[ai_assigned_player].down;
+	l = player_input[ai_assigned_player].left;
+	r = player_input[ai_assigned_player].right;
+	
+	b1 = player_input[ai_assigned_player].button1;
+	b2 = player_input[ai_assigned_player].button2;
+	b3 = player_input[ai_assigned_player].button3;
+	b4 = player_input[ai_assigned_player].button4;
+	b5 = player_input[ai_assigned_player].button5;
+	b6 = player_input[ai_assigned_player].button6;
 	break;
 	
 	case input_types.joystick:
@@ -84,11 +98,17 @@ if b4 button4_held++; else button4_held = 0;
 if b5 button5_held++; else button5_held = 0;
 if b6 button6_held++; else button6_held = 0;
 
-confirm = button2;
-cancel = button3;
+if type == input_types.numpad {
+	confirm = button1;
+	cancel = button2;
+}
+else {
+	confirm = button2;
+	cancel = button3;
+}
 
-char_teamswitch = button4;
-char_random = button1_held;
+char_random = button5_held;
+char_teamswitch = button6;
 
 attack = button1;
 alt_attack = button2;
@@ -99,5 +119,5 @@ teleport = button6;
 
 special_hold = button3_held;
 alt_special_held = button4_held;
-charge = button5_held;
+charge = button5_held - 10;
 dodge = button6_held;

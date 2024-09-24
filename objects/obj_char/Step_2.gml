@@ -87,11 +87,3 @@ if dead {
 else {
 	death_timer = 0;
 }
-
-var stay_in = true;
-if (is_helper(id) and (duration != -1)) stay_in = false;
-
-if stay_in {
-	x = clamp(x, left_wall, right_wall);
-}
-y = min(y,ground_height);

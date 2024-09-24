@@ -24,6 +24,8 @@ function init_charaudio() {
 	sound = noone;
 	voice = noone;
 	
+	voice_volume_mine = 1;
+	
 	voice_intro[0] = noone;
 	
 	voice_attack[0] = noone;
@@ -108,7 +110,7 @@ function play_voiceline(_snd,_chance = 100,_interrupt = true) {
 					_voice,
 					1,
 					false,
-					master_volume*voice_volume,
+					master_volume*voice_volume*voice_volume_mine,
 					0,
 					1 + (random(1/100) * choose(1,-1))
 				);

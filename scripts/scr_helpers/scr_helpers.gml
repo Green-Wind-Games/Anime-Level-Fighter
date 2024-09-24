@@ -6,7 +6,6 @@ function create_helper(_x,_y,_charscript) {
 		team = me.team;
 		facing = me.facing;
 		target = me.target;
-		input = owner.input;
 		
 		_charscript();
 		
@@ -23,14 +22,8 @@ function init_helperstates() {
 			change_sprite(idle_sprite,6,true);
 			face_target();
 			yspeed = 0;
-			if (target_distance_x < 50)
-			and ((target.is_hit) or (target.is_guarding) or (combo_timer > -10)) {
-				if (!on_wall) {
-					change_state(jump_back_state);
-				}
-				else {
-					change_state(jump_forward_state);
-				}
+			if ((target.is_hit) or (target.is_guarding) or (combo_timer > -20)) {
+				change_state(jump_back_state);
 			}
 		}
 		else {

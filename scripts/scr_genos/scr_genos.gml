@@ -4,7 +4,7 @@ function init_genos_baseform() {
 	name = "Genos";
 	theme = mus_opm_genos;
 
-	move_speed_mod = 1.5;
+	move_speed_mod = 1.35;
 	max_air_moves = 3;
 
 	dropkick_cooldown = 0;
@@ -28,7 +28,9 @@ function init_genos_baseform() {
 			ai_input_move(super_incinerate,10);
 		}
 	}
-
+	
+	voice_volume_mine = 3;
+	
 	var i = 0;
 	voice_attack[i++] = snd_genos_attack;
 	voice_attack[i++] = snd_genos_attack2;
@@ -71,9 +73,9 @@ function init_genos_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		if state_timer mod 5 == 0 {
+		if state_timer mod 6 == 0 {
 			play_sound(snd_punch_whiff_medium);
-			repeat(3) {
+			repeat(2) {
 				with(create_shot(
 					0,
 					(-height) + random(height_half),
@@ -81,7 +83,7 @@ function init_genos_baseform() {
 					0,
 					spr_genos_blur_fist,
 					1,
-					10,
+					5,
 					1,
 					0,
 					attacktype.normal,
@@ -90,7 +92,7 @@ function init_genos_baseform() {
 				)) {
 					blend = false;
 					duration = 5;
-					hit_limit = 2;
+					hit_limit = -1;
 				}
 			}
 		}

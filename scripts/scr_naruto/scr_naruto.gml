@@ -3,7 +3,7 @@ function init_naruto_baseform() {
 
 	name = "Naruto";
 	
-	move_speed_mod = 1.5;
+	move_speed_mod = 1.25;
 	max_air_moves = 1;
 
 	theme = mus_naruto_strongandstrike;
@@ -38,9 +38,6 @@ function init_naruto_baseform() {
 				}
 			}
 		}
-		if (sprite == dash_sprite) and on_ground {
-			change_sprite(walk_sprite,2,true);
-		}
 	}
 
 	var i = 0;
@@ -52,7 +49,7 @@ function init_naruto_baseform() {
 			play_voiceline(voice_attack,50,false);
 		}
 		else {
-			change_state(autocombo[7]);
+			change_state(autocombo[6]);
 		}
 	}
 	autocombo[i].run = function() {
@@ -140,7 +137,7 @@ function init_naruto_baseform() {
 		can_cancel = false;
 		if on_ground and anim_finished {
 			if target.is_hit {
-				change_state(autocombo[6]);
+				change_state(uzumaki_barrage_start);
 			}
 			else {
 				change_state(idle_state);
@@ -148,59 +145,16 @@ function init_naruto_baseform() {
 		}
 	}
 	i++;
-
+	
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
-		change_sprite(spr_naruto_jutsu,3,false);
-		play_sound(snd_jutsu_activate);
-		timestop(10);
-		xspeed = -4 * facing;
+		change_sprite(spr_naruto_attack_smash_kick,3,false);
+		play_sound(snd_punch_whiff_heavy2);
+		play_voiceline(voice_heavyattack,50,false);
 	}
 	autocombo[i].run = function() {
-		if check_frame(3) {
-			create_helper(-75,0,init_naruto_baseform_clone_barrage);
-			create_helper(235,0,init_naruto_baseform_clone_barrage);
-			create_helper(-65,0,init_naruto_baseform_clone_barrage);
-			create_helper(225,0,init_naruto_baseform_clone_barrage);
-		}
-		can_cancel = false;
-		if anim_finished {
-			change_state(autocombo[7]);
-		}
-	}
-	i++;
-
-	autocombo[i] = new state();
-	autocombo[i].start = function() {
-		if previous_state == autocombo[6] {
-			change_sprite(spr_naruto_flip,3,true);
-			yoffset = -height_half;
-			rotation_speed = -45;
-			xspeed = (target_distance_x / 40) * facing;
-			yspeed = target.yspeed * 1.10;
-			
-			if yspeed > -jump_speed {
-				change_state(idle_state);
-			}
-		}
-		else {
-			change_sprite(spr_naruto_attack_smash_kick,3,false);
-		}
-	}
-	autocombo[i].run = function() {
-		can_cancel = false;
-		if sprite == spr_naruto_flip {
-			if (state_timer mod 5) == 0 {
-				play_sound(snd_punch_whiff_light2,1,1.5);
-			}
-			if state_timer >= 30 {
-				change_sprite(spr_naruto_attack_smash_kick,3,false);
-			}
-		}
-		else if sprite == spr_naruto_attack_smash_kick {
-			basic_smash(3,100,hiteffects.hit);
-			land();
-		}
+		basic_smash(3,100,hiteffects.hit);
+		land();
 	}
 	i++;
 
@@ -243,6 +197,48 @@ function init_naruto_baseform() {
 	back_throw.run = function() {
 		if check_frame(1) facing = -facing;
 		forward_throw.run();
+	}
+	
+	uzumaki_barrage_start = new state();
+	uzumaki_barrage_start.start = function() {
+		change_sprite(spr_naruto_jutsu,3,false);
+		play_sound(snd_jutsu_activate);
+		timestop(5);
+		xspeed = -4 * facing;
+	}
+	uzumaki_barrage_start.run = function() {
+		if check_frame(3) {
+			create_helper(-75,0,init_naruto_baseform_clone_barrage);
+			create_helper(235,0,init_naruto_baseform_clone_barrage);
+			create_helper(-65,0,init_naruto_baseform_clone_barrage);
+			create_helper(225,0,init_naruto_baseform_clone_barrage);
+		}
+		can_cancel = false;
+		if anim_finished {
+			if target.is_hit {
+				change_state(uzumaki_barrage_flip);
+			}
+			else {
+				change_state(idle_state);
+			}
+		}
+	}
+
+	uzumaki_barrage_flip = new state();
+	uzumaki_barrage_flip.start = function() {
+		change_sprite(spr_naruto_flip,3,true);
+		yoffset = -height_half;
+		rotation_speed = -45;
+		xspeed = (target_distance_x / 40) * facing;
+		yspeed = target.yspeed * 1.10;
+	}
+	uzumaki_barrage_flip.run = function() {
+		if (state_timer mod 5) == 0 {
+			play_sound(snd_punch_whiff_light2,1.5,1.25);
+		}
+		if state_timer >= 30 {
+			change_state(autocombo[6])
+		}
 	}
 	
 	shuriken_throw = new state();
