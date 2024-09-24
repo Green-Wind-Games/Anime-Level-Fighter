@@ -204,8 +204,9 @@ function check_charge() {
 function check_substitution(_defender,_cost = 1) {
 	with(_defender) {
 		if !is_char(id) return false;
-		if !check_input("F") return false;
 		if !check_tp(_cost) return false;
+		if combo_timer > 10 return false;
+		if !check_input("F") return false;
 		
 		spend_tp(_cost);
 		change_state(substitution_state);
