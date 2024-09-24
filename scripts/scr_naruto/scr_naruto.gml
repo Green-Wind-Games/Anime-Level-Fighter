@@ -3,6 +3,7 @@ function init_naruto_baseform() {
 
 	name = "Naruto";
 	
+	move_speed_mod = 1.5;
 	max_air_moves = 1;
 
 	theme = mus_naruto_strongandstrike;

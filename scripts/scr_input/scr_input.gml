@@ -53,12 +53,12 @@ function update_input_forward_back() {
 
 function update_input_buffer_buttons() {
 	var _command = "";
-	if input.button1 { _command += "A"; }
-	if input.button2 { _command += "B"; }
-	if input.button3 { _command += "C"; }
-	if input.button4 { _command += "D"; }
-	if input.button5 { _command += "E"; }
-	if input.button6 { _command += "F"; }
+	if input.attack { _command += "A"; }
+	if input.alt_attack { _command += "B"; }
+	if input.special { _command += "C"; }
+	if input.alt_special { _command += "D"; }
+	if input.supercharge { _command += "E"; }
+	if input.teleport { _command += "F"; }
 	
 	if _command != "" {
 		input_buffer += _command;

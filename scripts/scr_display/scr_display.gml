@@ -11,25 +11,23 @@ screen_width = display_get_width();
 screen_height = display_get_height();
 screen_aspectratio = screen_width / screen_height;
 	
-game_width = 640;
-game_height = 480;
-
+game_width = round(1280 / 2);
+game_height = round(720 / 2);
 //game_width = round(game_height * (4 / 3));
 //game_height = round(game_width / (4 / 3));
-
-//game_width = round(game_height * (16 / 9));
-game_height = round(game_width / (16 / 9));
-
+game_width = round(game_height * (16 / 9));
+//game_height = round(game_width / (16 / 9));
 //game_width = round(game_height * screen_aspectratio);
 //game_height = round(game_width / screen_aspectratio);
 
 game_aspectratio = game_width / game_height;
 
 gui_width = 640;
-gui_height = 480;
-
-//gui_width = round(gui_height * game_aspectratio);
-gui_height = round(gui_width / game_aspectratio);
+gui_height = round(768 / 2);
+//gui_width = round(game_width / 2);
+//gui_height = round(game_height / 2);
+gui_width = round(gui_height * game_aspectratio);
+//gui_height = round(gui_width / game_aspectratio);
 
 hud_height = gui_height / 3;
 

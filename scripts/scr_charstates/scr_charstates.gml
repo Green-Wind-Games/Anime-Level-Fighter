@@ -11,10 +11,6 @@ function init_charstates() {
 		is_guarding = false;
 		reset_cancels();
 		
-		if auto_levelup() {
-			exit;
-		}
-		
 		if on_ground {
 			yspeed = 0;
 			air_moves = 0;
@@ -32,6 +28,10 @@ function init_charstates() {
 	}
 	idle_state.run = function() {
 		if round_state == roundstates.fight {
+			if auto_levelup() {
+				exit;
+			}
+			
 			var walk_anim_speed = width / max(0.1,abs(xspeed));
 			walk_anim_speed /= sprite_get_number(walk_sprite) / 4;
 			walk_anim_speed = max(1,round(walk_anim_speed));
@@ -47,12 +47,12 @@ function init_charstates() {
 			}
 			else if input.forward {
 				change_sprite(walk_sprite,walk_anim_speed,true);
-				accelerate(move_speed * facing);
+				accelerate(move_speed * move_speed_mod * facing);
 				xscale = abs(xscale);
 			}
 			else if input.back {
 				change_sprite(walk_sprite,walk_anim_speed,true);
-				accelerate(move_speed * -facing);
+				accelerate(move_speed * move_speed_mod * -facing);
 				xscale = -abs(xscale);
 			}
 			else {
@@ -99,7 +99,7 @@ function init_charstates() {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -jump_speed;
-			xspeed = move_speed * sign(input.right - input.left);
+			xspeed = move_speed * move_speed_mod * sign(input.right - input.left);
 			play_sound(snd_jump);
 		}
 	}
@@ -115,7 +115,7 @@ function init_charstates() {
 			change_state(air_state);
 			squash_stretch(0.75,1.25);
 			yspeed = -jump_speed * 1.5;
-			xspeed = move_speed * sign(input.right - input.left);
+			xspeed = move_speed * move_speed_mod * sign(input.right - input.left);
 			play_sound(snd_jump,1,0.8);
 		}
 	}
@@ -139,7 +139,7 @@ function init_charstates() {
 		if yspeed >= 0 {
 			if input.up {
 				if air_moves < max_air_moves {
-					xspeed = move_speed * sign(input.right - input.left);
+					xspeed = move_speed * move_speed_mod * sign(input.right - input.left);
 					yspeed = -jump_speed * 0.75;
 					air_moves += 1;
 					squash_stretch(0.8,1.2);
@@ -173,7 +173,7 @@ function init_charstates() {
 		else {
 			change_sprite(dash_sprite,2,true);
 			yoffset = -height_half;
-			xspeed = move_speed * 2 * facing;
+			xspeed = move_speed * move_speed_mod * 2 * facing;
 			yspeed = 0;
 			play_sound(snd_dash);
 			play_sound(snd_dash_loop);
@@ -189,7 +189,7 @@ function init_charstates() {
 		}
 		
 		if state_timer <= dash_duration {
-			xspeed = move_speed * 2 * facing;
+			xspeed = move_speed * move_speed_mod * 2 * facing;
 			yspeed = 0;
 			loop_sound(snd_dash_loop);
 			if input.up {
@@ -216,7 +216,7 @@ function init_charstates() {
 		else {
 			can_cancel = false;
 			change_sprite(air_up_sprite,2,true);
-			xspeed = move_speed * 2 * -facing;
+			xspeed = move_speed * move_speed_mod * 2 * -facing;
 			yspeed = -1.5;
 			play_sound(snd_dash);
 		}
@@ -246,7 +246,7 @@ function init_charstates() {
 		if air_moves < max_air_moves {
 			change_sprite(dash_sprite,2,true);
 			yoffset = -height_half;
-			xspeed = move_speed * 2 * facing;
+			xspeed = move_speed * move_speed_mod * 2 * facing;
 			yspeed = 0;
 			air_moves += 1;
 			play_sound(snd_dash);
@@ -256,7 +256,7 @@ function init_charstates() {
 		}
 	}
 	airdash_state.run = function() {
-		xspeed = move_speed * 2 * facing;
+		xspeed = move_speed * move_speed_mod * 2 * facing;
 		yspeed = 0;
 		if state_timer >= 15 {
 			change_state(idle_state);
@@ -269,7 +269,7 @@ function init_charstates() {
 			change_sprite(dash_sprite,2,true);
 			yoffset = -height_half;
 			xscale = -1;
-			xspeed = move_speed * 2 * -facing;
+			xspeed = move_speed * move_speed_mod * 2 * -facing;
 			yspeed = 0;
 			air_moves += 1;
 			play_sound(snd_dash);
@@ -279,7 +279,7 @@ function init_charstates() {
 		}
 	}
 	air_backdash_state.run = function() {
-		xspeed = -move_speed * 2 * facing;
+		xspeed = -move_speed * move_speed_mod * 2 * facing;
 		yspeed = 0;
 		if state_timer >= 15 {
 			change_state(idle_state);
@@ -493,14 +493,13 @@ function init_charstates() {
 		can_cancel = false;
 	}
 	homing_dash_state.run = function() {
-		
-		var stop_distance = max(target.width_half, width_half) + 2;
+		var stop_distance = max(target.width_half, width_half) * 1.1;
 		var _target_x = target_x - (stop_distance * facing);
 		var _target_y = target_y;
 		var _direction = point_direction(x,y,_target_x,_target_y);
 		var _distance = point_distance(x,y,_target_x,_target_y);
 		
-		var _speed = move_speed * 2;
+		var _speed = 12;
 		var _xspeed = lengthdir_x(_speed,_direction);
 		var _yspeed = lengthdir_y(_speed,_direction);
 		 

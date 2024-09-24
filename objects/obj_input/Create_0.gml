@@ -10,6 +10,7 @@ up = false;
 down = false;
 left = false;
 right = false;
+
 forward = false;
 back = false;
 
@@ -17,6 +18,7 @@ up_pressed = false;
 down_pressed = false;
 left_pressed = false;
 right_pressed = false;
+
 forward_pressed = false;
 back_pressed = false;
 
@@ -33,3 +35,21 @@ button3_held = false;
 button4_held = false;
 button5_held = false;
 button6_held = false;
+
+confirm = false;
+cancel = false;
+
+char_teamswitch = false;
+char_random = false;
+
+attack = false;
+alt_attack = false;
+special = false;
+alt_special = false;
+supercharge = false;
+teleport = false;
+
+special_hold = false;
+alt_special_held = false;
+charge = false;
+dodge = false;

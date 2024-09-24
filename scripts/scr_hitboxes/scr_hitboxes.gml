@@ -106,7 +106,12 @@ function check_hit() {
 			}
 		}
 		
-		if check_substitution(b2,2) continue;
+		if check_substitution(b2,2) {
+			spend_tp(2);
+			change_state(substitution_state);
+			hitstop = 0;
+			continue;
+		}
 		
 		with(b2) {
 			get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect);

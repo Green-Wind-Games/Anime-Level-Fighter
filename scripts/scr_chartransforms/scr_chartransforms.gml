@@ -37,6 +37,7 @@ function transform(_form) {
 	var _maxhp = max_hp;
 	var _hp = hp;
 	var _mp = mp;
+	var _tp = tp;
 	var _target = target;
 	
 	instance_change(_form,true);
@@ -45,6 +46,7 @@ function transform(_form) {
 	max_hp = _maxhp;
 	hp = map_value(_hp,0,_maxhp,0,max_hp);
 	mp = _mp;
+	tp = _tp;
 	target = _target;
 	
 	face_target();
@@ -67,5 +69,6 @@ function auto_levelup() {
 	else {
 		change_state(transform_state);
 	}
+	can_cancel = false;
 	return true;
 }

@@ -18,14 +18,14 @@ switch(type) {
 	break;
 	
 	case input_types.joystick:
-	u =	gamepad_axis_value(pad,gp_axislv) < 0 or gamepad_button_check(pad,gp_padu);
-	d =	gamepad_axis_value(pad,gp_axislv) > 0 or gamepad_button_check(pad,gp_padd);
-	l =	gamepad_axis_value(pad,gp_axislh) < 0 or gamepad_button_check(pad,gp_padl);
-	r =	gamepad_axis_value(pad,gp_axislh) > 0 or gamepad_button_check(pad,gp_padr);
+	u =	(gamepad_axis_value(pad,gp_axislv) < 0) or gamepad_button_check(pad,gp_padu);
+	d =	(gamepad_axis_value(pad,gp_axislv) > 0) or gamepad_button_check(pad,gp_padd);
+	l =	(gamepad_axis_value(pad,gp_axislh) < 0) or gamepad_button_check(pad,gp_padl);
+	r =	(gamepad_axis_value(pad,gp_axislh) > 0) or gamepad_button_check(pad,gp_padr);
 	
-	b1 = gamepad_button_check(pad,gp_face1);
-	b2 = gamepad_button_check(pad,gp_face2);
-	b3 = gamepad_button_check(pad,gp_face3);
+	b1 = gamepad_button_check(pad,gp_face3);
+	b2 = gamepad_button_check(pad,gp_face1);
+	b3 = gamepad_button_check(pad,gp_face2);
 	b4 = gamepad_button_check(pad,gp_face4);
 	b5 = gamepad_button_check(pad,gp_shoulderl) or gamepad_button_check(pad,gp_shoulderlb);
 	b6 = gamepad_button_check(pad,gp_shoulderr) or gamepad_button_check(pad,gp_shoulderrb);
@@ -83,3 +83,21 @@ if b3 button3_held++; else button3_held = 0;
 if b4 button4_held++; else button4_held = 0;
 if b5 button5_held++; else button5_held = 0;
 if b6 button6_held++; else button6_held = 0;
+
+confirm = button2;
+cancel = button3;
+
+char_teamswitch = button4;
+char_random = button1_held;
+
+attack = button1;
+alt_attack = button2;
+special = button3;
+alt_special = button4;
+supercharge = button5;
+teleport = button6;
+
+special_hold = button3_held;
+alt_special_held = button4_held;
+charge = button5_held;
+dodge = button6_held;

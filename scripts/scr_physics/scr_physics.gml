@@ -4,8 +4,12 @@
 function init_physics() {
 	xspeed = 0;
 	yspeed = 0;
+	
 	move_speed = base_movespeed;
+	move_speed_mod = 1;
+	
 	jump_speed = base_jumpspeed;
+	
 	on_ground = y >= ground_height and yspeed >= 0;
 	is_airborne = !on_ground;
 	on_left_wall = x <= left_wall;

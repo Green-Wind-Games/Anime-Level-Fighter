@@ -157,8 +157,20 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 				}
 			}
 			hit_script = function(_hit) {
-				with(_hit) {
-					if is_char(_hit) or is_helper(_hit) {
+				if is_beam(_hit) {
+					var _x = mean(x, _hit.x);
+					var _y = mean(y, _hit.y);
+					if height >= _hit.height {
+						xscale = point_distance(x,y,_x,_y) / sprite_get_width(sprite);
+					}
+					if _hit.height >= height {
+						with(_hit) {
+							xscale = point_distance(x,y,_x,_y) / sprite_get_width(sprite);
+						}
+					}
+				}
+				else if is_char(_hit) or is_helper(_hit) {
+					with(_hit) {
 						if (!on_ground) or (other.yspeed <= 0) {
 							x += other.xspeed*4;
 							y += other.yspeed*4;
@@ -206,12 +218,15 @@ function check_substitution(_defender,_cost = 1) {
 		if !is_char(id) return false;
 		if !check_tp(_cost) return false;
 		if combo_timer > 10 return false;
-		if !check_input("F") return false;
 		
-		spend_tp(_cost);
-		change_state(substitution_state);
-		hitstop = 0;
-		return true;
+		if !ai_enabled {
+			if input.dodge return true;
+		}
+		else {
+			if !target_exists() return false;
+			if target.super_active return true;
+			if combo_damage_taken < 50 return false;
+		}
 	}
 	return false;
 }

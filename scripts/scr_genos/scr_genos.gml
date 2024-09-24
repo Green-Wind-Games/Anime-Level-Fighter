@@ -4,7 +4,7 @@ function init_genos_baseform() {
 	name = "Genos";
 	theme = mus_opm_genos;
 
-	move_speed *= 1.5;
+	move_speed_mod = 1.5;
 	max_air_moves = 3;
 
 	dropkick_cooldown = 0;

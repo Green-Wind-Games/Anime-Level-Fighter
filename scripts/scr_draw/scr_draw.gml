@@ -262,7 +262,7 @@ function draw_playerhud() {
 	var _h = gui_height;
 	var _w2 = _w / 2;
 	var _h2 = _h / 2;
-	var _spacing = 16;
+	var _spacing = 8;
 	var icon_size = 24;
 	var icon_scale = 0.5;
 	
@@ -273,27 +273,30 @@ function draw_playerhud() {
 		}
 	}
 	
-	var hud_w = _w / active_players;
+	var hud_w = _w / 2;
+	var hud_h = 0;
 	var hud_x = 0;
 	var hud_y = 0;
+	
+	var hud_yscale = 1 / ceil(active_players / 2);
 
-	var hp_border_width = (_w / active_players) - (_spacing * 2);
-	var mp_border_width = hp_border_width * 0.95;
-	var tp_border_width = mp_border_width * 0.25;
+	var hp_border_width = (hud_w) - (_spacing * 2);
+	var mp_border_width = hp_border_width * 0.9;
+	var tp_border_width = mp_border_width * 0.3;
 	var hp_xscale = hp_border_width / sprite_get_width(spr_bar_hp_border);
 	var mp_xscale = mp_border_width / sprite_get_width(spr_bar_mp_border);
 	var tp_xscale = tp_border_width / sprite_get_width(spr_bar_tp_border);
 	
-	//var hp_border_height = 32;
-	//var mp_border_height = 16;
-	//var tp_border_height = 12;
+	//var hp_border_height = (_h / 20) * hud_yscale;
+	//var mp_border_height = hp_border_height;
+	//var tp_border_height = mp_border_height;
 	//var hp_yscale = hp_border_height / sprite_get_height(spr_bar_hp_border);
 	//var mp_yscale = mp_border_height / sprite_get_height(spr_bar_mp_border);
 	//var tp_yscale = tp_border_height / sprite_get_height(spr_bar_tp_border);
 	
-	var hp_yscale = 1;
-	var mp_yscale = 1;
-	var tp_yscale = 1;
+	var hp_yscale = 2 * hud_yscale;
+	var mp_yscale = 1.5 * hud_yscale;
+	var tp_yscale = hud_yscale;
 	var hp_border_height = sprite_get_height(spr_bar_hp_border) * hp_yscale;
 	var mp_border_height = sprite_get_height(spr_bar_mp_border) * mp_yscale;
 	var tp_border_height = sprite_get_height(spr_bar_tp_border) * tp_yscale;
@@ -331,6 +334,8 @@ function draw_playerhud() {
 	var playertext = "Player N: Anime Character";
 	var playertext_width = string_width(playertext);
 	var playertext_height = string_height(playertext);
+	
+	var drawn_players = 0;
 
 	for (var i = 0; i < array_length(player_slot); i++) {
 		var _right = hud_x >= _w2;
@@ -494,9 +499,10 @@ function draw_playerhud() {
 			draw_set_halign(fa_left);
 			draw_set_valign(fa_top);
 			var playertext = "Player " + string(i+1) + ": " + name;
-			playertext += "\n" + "Level " + string(level); 
-			var playertext_width = string_width(playertext);
-			var playertext_height = string_height(playertext);
+			playertext += " (Level " + string(level) + ")"; 
+			var playertext_scale = 1 * (hud_yscale * 1.25);
+			var playertext_width = string_width(playertext) * playertext_scale;
+			var playertext_height = string_height(playertext) * playertext_scale;
 			var playertext_x1 = hp_border_x1;
 			var playertext_y1 = tp_border_y2 + 1;
 			var playertext_x2 = playertext_x1 + playertext_width;
@@ -507,18 +513,27 @@ function draw_playerhud() {
 				playertext_x1 = playertext_x2 - playertext_width;
 				
 				draw_set_halign(fa_right);
-				draw_text_outlined(playertext_x2,playertext_y1,playertext,c_black,player_color[i]);
+				draw_text_outlined(playertext_x2,playertext_y1,playertext,c_black,player_color[i],playertext_scale);
 			}
 			else {
 				draw_set_halign(fa_left);
-				draw_text_outlined(playertext_x1,playertext_y1,playertext,c_black,player_color[i]);
+				draw_text_outlined(playertext_x1,playertext_y1,playertext,c_black,player_color[i],playertext_scale);
 			}
 			
-			hud_x += hud_w;
+			hud_h = (_spacing * 2) + hp_border_height + mp_border_height + tp_border_height + playertext_height;
+			
+			drawn_players++;
+			if drawn_players == ceil(active_players / 2) {
+				hud_x += hud_w;
+				hud_y = 0;
+			}
+			else {
+				hud_y += hud_h - _spacing;
+			}
 		}
 	}
 	
-	hud_height = (_spacing * 2) + hp_bar_height + mp_bar_height + tp_bar_height + playertext_height;
+	hud_height = hud_h * ceil(active_players / 2);
 }
 
 function draw_timer() {

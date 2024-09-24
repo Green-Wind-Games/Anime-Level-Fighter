@@ -6,6 +6,7 @@ function create_helper(_x,_y,_charscript) {
 		team = me.team;
 		facing = me.facing;
 		target = me.target;
+		input = owner.input;
 		
 		_charscript();
 		
@@ -55,7 +56,7 @@ function init_helperstates() {
 			change_sprite(idle_sprite,6,true);
 		}
 		if sprite == walk_sprite {
-			accelerate(move_speed * facing * xscale);
+			accelerate(move_speed * move_speed_mod * facing * xscale);
 		}
 	}
 	
@@ -70,7 +71,7 @@ function init_helperstates() {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -5;
-			xspeed = move_speed * facing;
+			xspeed = move_speed * move_speed_mod * facing;
 			play_sound(snd_jump);
 		}
 	}
@@ -86,7 +87,7 @@ function init_helperstates() {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -5;
-			xspeed = -move_speed * facing;
+			xspeed = -move_speed * move_speed_mod * facing;
 			play_sound(snd_jump);
 		}
 	}
