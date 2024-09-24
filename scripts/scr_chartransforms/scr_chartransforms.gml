@@ -19,7 +19,7 @@ function level_up() {
 	max_hp = round(base_hp * ((level*level_scaling)+1));
 	
 	var _heal = map_value(
-		transform_heal_percent + (transform_late_heal_percent_increase * (max(0,level_difference))),
+		transform_heal_percent + (transform_late_heal_percent_increase * max(0,level_difference)),
 		0,
 		100,
 		0,
@@ -57,7 +57,7 @@ function auto_levelup() {
 	
 	if level >= max_level return false;
 	
-	var _required_pct = transform_min_hp_percent + (transform_late_hp_percent_increase * (max(0,target.level-level)));
+	var _required_pct = transform_min_hp_percent + (transform_late_hp_percent_increase * max(0,target.level-level));
 	if hp_percent > _required_pct return false;
 	
 	if next_form == noone {

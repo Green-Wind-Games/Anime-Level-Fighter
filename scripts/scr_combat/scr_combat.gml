@@ -289,46 +289,57 @@ function take_damage(_attacker,_amount,_kill) {
 		if (!is_char(true_attacker)) and (!is_helper(true_attacker)) {
 			true_attacker = _attacker.owner;
 		}
-		with(true_attacker) {
-			if is_char(id) {
-				dmg *= attack_power;
-				dmg *= 1 + (level * level_scaling);
+	}
+	else {
+		true_attacker = noone;
+		dmg *= 1/4;
+		_kill = false;
+	}
+	
+	with(true_attacker) {
+		if is_char(id) {
+			dmg *= attack_power + (level * level_scaling);
+				
+			var _atkscale = 1;
+			if !super_active {
+				_atkscale = map_value(_amount,10,100,1,0.5);
+					
 				for(var i = 0; i < array_length(autocombo); i++) {
 					if active_state == autocombo[i] {
-						//dmg /= 4;
+						_atkscale = 1/5;
 						break;
 					}
 				}
+					
+				if is_shot(_attacker) { 
+					_atkscale *= 0.6; 
+				}
 			}
-			else if is_helper(id) {
-				dmg *= 1 + (owner.level * level_scaling);
-				dmg /= 4;
+			_atkscale = clamp(_atkscale,0.1,1);
+			dmg *= _atkscale;
+		}
+		else if is_helper(id) {
+			dmg *= 1 + (owner.level * level_scaling);
+			dmg *= 0.2;
+				
+			with(owner) {
+				if combo_hits > 1 {
+					for(var i = 0; i < array_length(autocombo); i++) {
+						if active_state == autocombo[i] {
+							dmg /= 4;
+							break;
+						}
+					}
+				}
 			}
 		}
 	}
 	
-	var scaling = map_value(
-		combo_hits_taken,
-		0,
-		50,
-		1,
-		0
-	);
+	if is_char(defender){
+		dmg *= get_damage_scaling(defender);
+	}
 	
-	var guts = map_value(
-		hp+combo_damage_taken,
-		max_hp/5,
-		0,
-		1,
-		1/2
-	);
-	
-	scaling = clamp(scaling,0.1,1);
-	guts = clamp(guts,0.1,1);
-	
-	dmg /= defender.defense;
-	dmg *= scaling;
-	dmg *= guts;
+	dmg /= max(defender.defense,0.1);
 	
 	dmg = max(round(dmg),1);
 	
@@ -342,7 +353,36 @@ function take_damage(_attacker,_amount,_kill) {
 	return dmg;
 }
 
+function get_damage_scaling(_defender) {
+	with(_defender) {
+		var scaling = map_value(
+			combo_damage_taken,
+			max_hp * 0.05,
+			max_hp * 0.4,
+			1,
+			0
+		);
+	
+		var guts = map_value(
+			hp+combo_damage_taken,
+			max_hp/5,
+			0,
+			1,
+			3
+		);
+		
+		scaling = clamp(scaling,0.1,1);
+		guts = max(guts,1);
+		
+		return scaling / guts;
+	}
+}
+
 function reset_combo() {
+	if combo_hits_taken > 1 {
+		show_debug_message("combo hits: " + string(combo_hits_taken));
+		show_debug_message("combo damage: " + string(combo_damage_taken));
+	}
 	combo_hits = 0;
 	combo_damage = 0;
 	combo_hits_taken = 0;

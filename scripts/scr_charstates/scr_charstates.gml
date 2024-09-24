@@ -373,8 +373,8 @@ function init_charstates() {
 				frame = anim_frames - 2;
 				yoffset = height / 2;
 				
-				if yspeed >= 12 {
-					take_damage(noone,abs(yspeed / 2),true);
+				if yspeed >= 15 {
+					take_damage(noone,abs(yspeed - 10),false);
 					create_particles(x,y,x,y,floor_bang_particle,1);
 					yspeed /= -2;
 				}
