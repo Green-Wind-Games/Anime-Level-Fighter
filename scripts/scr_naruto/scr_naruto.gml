@@ -6,7 +6,7 @@ function init_naruto_baseform() {
 	move_speed_mod = 1.25;
 	max_air_moves = 1;
 
-	theme = mus_naruto_strongandstrike;
+	theme = mus_naruto_clashofninja_qualifiers;
 
 	rasengan_cooldown = 0;
 	rasengan_cooldown_duration = 100;
