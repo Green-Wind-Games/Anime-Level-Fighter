@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_naruto_",
+  "%Name":"snd_naruto_hurt_heavy",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":2.224444,
-  "name":"snd_naruto_",
+  "duration":0.680272,
+  "name":"snd_naruto_hurt_heavy",
   "parent":{
     "name":"Naruto Voice",
     "path":"folders/Chars/Naruto Shippuden/Naruto/Naruto Voice.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_naruto_.wav",
+  "soundFile":"snd_naruto_hurt_heavy.wav",
   "type":0,
   "volume":1.0,
 }

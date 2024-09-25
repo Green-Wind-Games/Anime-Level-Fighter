@@ -3,7 +3,7 @@ if round_state == roundstates.pause exit;
 if is_char(id) {
 	update_input_buffer();
 }
-	
+
 target = target_closest_enemy();
 if target_exists() {
 	target_x = target.x;

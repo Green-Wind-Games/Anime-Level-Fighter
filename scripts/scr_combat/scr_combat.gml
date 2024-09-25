@@ -238,25 +238,27 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			yspeed = _yspeed;
 		}
 	}
-	var mp_gain = _damage;
-	var attack_mp_multiplier = 3;
-	var defend_mp_multiplier = 2;
-	//if guard_valid {
-	//	mp_gain *= 0.5;
-	//}
-	mp += mp_gain * defend_mp_multiplier;
-	if is_char(_attacker) {
-		with(_attacker) {
-			if !super_active {
-				mp += mp_gain * attack_mp_multiplier;
-			}
-		}
+	
+	var mp_gain = map_value(_damage,0,max_hp,0,mp_stock_size);
+	var attack_mp_multiplier = 2;
+	var defend_mp_multiplier = 1.5;
+	
+	if guard_valid and guarding {
+		mp_gain /= 2;
 	}
-	else {
-		with(_attacker.owner) {
-			if !super_active {
-				mp += mp_gain * attack_mp_multiplier;
-			}
+	if !is_char(_attacker) {
+		mp_gain /= 2;
+	}
+	
+	var _mp_attacker = _attacker;
+	while(!is_char(_mp_attacker)) {
+		_mp_attacker = _mp_attacker.owner;
+	}
+	
+	mp += mp_gain * defend_mp_multiplier;
+	with(_mp_attacker) {
+		if !super_active {
+			mp += mp_gain * attack_mp_multiplier;
 		}
 	}
 	

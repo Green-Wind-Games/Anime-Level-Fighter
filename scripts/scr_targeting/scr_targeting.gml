@@ -30,7 +30,9 @@ function target_closest_enemy() {
 	with(obj_char) {
 		var me2 = id;
 		if me.team == me2.team continue;
-		if me2.dead continue;
+		if round_state == roundstates.fight {
+			if me2.dead continue;
+		}
 		
 		var mydist = point_distance(x,y,other.x,other.y);
 		if mydist > dist continue;

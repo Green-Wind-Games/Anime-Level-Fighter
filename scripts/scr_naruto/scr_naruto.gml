@@ -39,6 +39,33 @@ function init_naruto_baseform() {
 			}
 		}
 	}
+	
+	voice_volume_mine = 2;
+	
+	var i = 0;
+	voice_attack[i++] = snd_naruto_attack;
+	voice_attack[i++] = snd_naruto_attack2;
+	voice_attack[i++] = snd_naruto_attack3;
+	voice_attack[i++] = snd_naruto_attack4;
+	i = 0;
+	voice_heavyattack[i++] = snd_naruto_heavyattack;
+	voice_heavyattack[i++] = snd_naruto_heavyattack2;
+	voice_heavyattack[i++] = snd_naruto_heavyattack3;
+	voice_heavyattack[i++] = snd_naruto_heavyattack4;
+	voice_heavyattack[i++] = snd_naruto_attack4;
+	i = 0;
+	voice_hurt[i++] = snd_naruto_hurt;
+	voice_hurt[i++] = snd_naruto_hurt2;
+	voice_hurt[i++] = snd_naruto_hurt3;
+	voice_hurt[i++] = snd_naruto_hurt4;
+	i = 0;
+	voice_hurt_heavy[i++] = snd_naruto_hurt_heavy;
+	i = 0;
+	voice_powerup[i++] = snd_naruto_powerup;
+	voice_powerup[i++] = snd_naruto_powerup2;
+	voice_powerup[i++] = snd_naruto_powerup3;
+	i = 0;
+	voice_transform[i++] = snd_naruto_powerup;
 
 	var i = 0;
 	autocombo[i] = new state();
@@ -98,10 +125,10 @@ function init_naruto_baseform() {
 	autocombo[i].start = function() {
 		change_sprite(spr_naruto_attack_slash,4,false);
 		play_sound(snd_slash_whiff_medium);
-		play_voiceline(voice_heavyattack,50,false);
+		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		basic_attack(2,20,attackstrength.light,hiteffects.slash);
+		basic_attack(2,30,attackstrength.light,hiteffects.slash);
 		if check_frame(2) {
 			char_specialeffect(spr_slash,width_half,-height_half,0.5,-0.5,-45);
 		}
@@ -113,7 +140,7 @@ function init_naruto_baseform() {
 	autocombo[i].start = function() {
 		change_sprite(spr_naruto_attack_slash_up,4,false);
 		play_sound(snd_slash_whiff_heavy);
-		play_voiceline(voice_attack,50,false);
+		play_voiceline(voice_heavyattack,50,false);
 	}
 	autocombo[i].run = function() {
 		if check_frame(3) {
@@ -244,6 +271,7 @@ function init_naruto_baseform() {
 	shuriken_throw = new state();
 	shuriken_throw.start = function() {
 		change_sprite(spr_naruto_special_throw_shuriken,7,false);
+		play_voiceline(voice_attack,50,false);
 	}
 	shuriken_throw.run = function() {
 		if check_frame(3) {
@@ -291,6 +319,7 @@ function init_naruto_baseform() {
 	triple_shuriken_throw = new state();
 	triple_shuriken_throw.start = function() {
 		change_sprite(spr_naruto_special_throw_shuriken,8,false);
+		play_voiceline(voice_attack,50,false);
 	}
 	triple_shuriken_throw.run = function() {
 		if check_frame(3) {
@@ -344,6 +373,12 @@ function init_naruto_baseform() {
 				deflecting_projectiles = true;
 			}
 			else {
+				if previous_state == autocombo[6] {
+					create_particles(x,y,x,y,jutsu_smoke_particle);
+					x = target_x - (100 * facing);
+					y = ground_height - 500;
+					create_particles(x,y,x,y,jutsu_smoke_particle);
+				}
 				change_state(rasengan_dive);
 			}
 		}
@@ -357,6 +392,7 @@ function init_naruto_baseform() {
 		}
 		if check_frame(7) {
 			xspeed = 20 * facing;
+			play_voiceline(snd_naruto_rasengan);
 		}
 		if frame > 10 {
 			deflecting_projectiles = false;
@@ -432,16 +468,18 @@ function init_naruto_baseform() {
 			spend_mp(1);
 			xspeed = 0;
 			yspeed = 0;
+			play_voiceline(snd_naruto_rasengan);
 		}
 		else {
 			change_state(previous_state);
 		}
 	}
 	rasengan_dive.run = function() {
+		var _target_y = target_y - target.height - 10;
 		if (frame > 7) and (superfreeze_active) {
 			frame = 6;
 		}
-		if frame == 10 and (y < (ground_height - 64)) {
+		if (frame == 10) and (y < _target_y) {
 			frame = 8;
 		}
 		if (frame > 11) and (state_timer < 90) and (combo_hits > 0) {
@@ -451,21 +489,23 @@ function init_naruto_baseform() {
 			xspeed = 10 * facing;
 			yspeed = 15;
 		}
-		if value_in_range(frame,10,11) {
-			y = ground_height - 64;
-			if (combo_hits > 0) {
-				x = target_x + (width_half * facing);
+		if (frame <= 11) and (target_distance_x <= 10) {
+			xspeed = 0;
+			x = target_x;
+			if value_in_range(y,_target_y,target_y) {
+				y = _target_y;
+				yspeed = 0;
 			}
 		}
 		if check_frame(10)
 		or check_frame(11) {
 			var _ball = create_shot(
-				0,
+				-width_half,
 				64,
 				0,
 				0,
 				spr_rasengan,
-				0.2,
+				0.3,
 				10,
 				0,
 				0,
@@ -486,12 +526,12 @@ function init_naruto_baseform() {
 					0,
 					0,
 					spr_rasengan,
-					0.2,
+					0.3,
 					100,
+					1,
 					15,
-					-3,
 					attacktype.hard_knockdown,
-					attackstrength.heavy,
+					attackstrength.super,
 					hiteffects.hit
 				);
 				with(_ball) {
@@ -504,10 +544,6 @@ function init_naruto_baseform() {
 			xspeed = -5 * facing;
 			yspeed = -10;
 		}
-		if (frame < 8) or value_in_range(frame,10,11) {
-			xspeed = 0;
-			yspeed = 0;
-		}
 		if check_frame(4) or check_frame(12) {
 			create_particles(
 				x-(width_half*facing),
@@ -517,7 +553,7 @@ function init_naruto_baseform() {
 				jutsu_smoke_particle
 			);
 		}
-		return_to_idle();
+		land();
 	}
 	
 	double_rasengan = new state();
@@ -537,6 +573,8 @@ function init_naruto_baseform() {
 		}
 		if check_frame(7) {
 			xspeed = 20 * facing;
+			play_voiceline(snd_naruto_rasengan);
+			play_sound(snd_naruto_rasengan,0.75,1.2);
 		}
 		if (frame > 12) and (state_timer < 120) and (combo_hits > 0) {
 			frame = 11;
@@ -574,9 +612,9 @@ function init_naruto_baseform() {
 					0.2,
 					150,
 					15,
-					-3,
-					attacktype.hard_knockdown,
-					attackstrength.heavy,
+					-2,
+					attacktype.wall_bounce,
+					attackstrength.super,
 					hiteffects.hit
 				);
 				with(_ball) {
@@ -622,6 +660,7 @@ function init_naruto_baseform() {
 		}
 		if check_frame(7) {
 			xspeed = 20 * facing;
+			play_voiceline(snd_naruto_giantrasengan);
 		}
 		if (frame > 12) and (state_timer < 120) {
 			frame = 11;
@@ -775,6 +814,8 @@ function init_naruto_baseform() {
 						jutsu_smoke_particle
 					);
 					
+					play_voiceline(owner.voice_attack,10);
+					
 					active_script = function() {
 						rotation = 0;
 						if y >= ground_height {
@@ -918,14 +959,14 @@ function init_naruto_baseform() {
 				var _scale = map_value(
 					anim_timer,
 					frame_duration * 12,
-					frame_duration * 14,
+					frame_duration * 13,
 					1/2,
 					1
 				);
 				var _alpha = map_value(
 					anim_timer,
 					frame_duration * 12,
-					frame_duration * 14,
+					frame_duration * 13,
 					1,
 					0
 				);
@@ -967,14 +1008,14 @@ function init_naruto_baseform() {
 				var _scale = map_value(
 					anim_timer,
 					frame_duration * 13,
-					frame_duration * anim_frames,
+					frame_duration * 14,
 					0.5,
 					1
 				);
 				var _alpha = map_value(
 					anim_timer,
 					frame_duration * 13,
-					frame_duration * anim_frames,
+					frame_duration * 14,
 					1,
 					0
 				);
@@ -1030,14 +1071,14 @@ function init_naruto_baseform() {
 				var _scale = map_value(
 					anim_timer,
 					frame_duration * 13,
-					frame_duration * anim_frames,
+					frame_duration * 14,
 					1,
 					2
 				);
 				var _alpha = map_value(
 					anim_timer,
 					frame_duration * 13,
-					frame_duration * anim_frames,
+					frame_duration * 14,
 					1,
 					0
 				);

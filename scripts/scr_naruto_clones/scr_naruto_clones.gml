@@ -17,6 +17,25 @@ function init_naruto_baseform_clone() {
 		}
 	}
 	
+	var i = 0;
+	voice_attack[i++] = snd_naruto_attack;
+	voice_attack[i++] = snd_naruto_attack2;
+	voice_attack[i++] = snd_naruto_attack3;
+	voice_attack[i++] = snd_naruto_attack4;
+	i = 0;
+	voice_heavyattack[i++] = snd_naruto_heavyattack;
+	voice_heavyattack[i++] = snd_naruto_heavyattack2;
+	voice_heavyattack[i++] = snd_naruto_heavyattack3;
+	voice_heavyattack[i++] = snd_naruto_heavyattack4;
+	voice_heavyattack[i++] = snd_naruto_attack4;
+	i = 0;
+	voice_hurt[i++] = snd_naruto_hurt;
+	voice_hurt[i++] = snd_naruto_hurt2;
+	voice_hurt[i++] = snd_naruto_hurt3;
+	voice_hurt[i++] = snd_naruto_hurt4;
+	i = 0;
+	voice_hurt_heavy[i++] = snd_naruto_hurt_heavy;
+	
 	death_script = function() {
 		create_particles(x,y,x,y,jutsu_smoke_particle);
 		instance_destroy();
@@ -76,7 +95,7 @@ function init_naruto_baseform_clone() {
 	slash2.start = function() {
 		change_sprite(spr_naruto_attack_slash_up,5,false);
 		play_sound(snd_slash_whiff_medium);
-		play_voiceline(voice_attack,50,false);
+		play_voiceline(voice_heavyattack,50,false);
 	}
 	slash2.run = function() {
 		if check_frame(3) {
@@ -105,6 +124,7 @@ function init_naruto_baseform_clone() {
 	shuriken_throw = new state();
 	shuriken_throw.start = function() {
 		change_sprite(spr_naruto_special_throw_shuriken,7,false);
+		play_voiceline(voice_attack,20,false);
 	}
 	shuriken_throw.run = function() {
 		if check_frame(3) {
