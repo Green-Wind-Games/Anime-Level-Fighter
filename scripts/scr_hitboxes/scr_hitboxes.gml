@@ -107,9 +107,11 @@ function check_hit() {
 		}
 		
 		if check_substitution(b2,2) {
-			spend_tp(2);
-			change_state(substitution_state);
-			hitstop = 0;
+			with(b2) {
+				spend_tp(2);
+				change_state(substitution_state);
+				hitstop = 0;
+			}
 			continue;
 		}
 		

@@ -605,10 +605,17 @@ function init_goku_baseform() {
 						duration = 0;
 					}
 					for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
+						if !instance_exists(ds_list_find_value(hitbox.hit_list,i)) {
+							with(hitbox) {
+								ds_list_delete(hit_list,i--);
+							}
+						}
+					}
+					for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
 						with(ds_list_find_value(hitbox.hit_list,i)) {
 							hitstop = 10;
-							x = lerp(x,other.x,0.5);
-							y = lerp(y,other.y + height_half,0.5);
+							x = mean(x,other.x);
+							y = mean(y,other.y + height_half);
 						}
 					}
 					x = clamp(x, left_wall, right_wall);
