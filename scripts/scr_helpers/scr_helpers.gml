@@ -22,9 +22,6 @@ function init_helperstates() {
 			change_sprite(idle_sprite,6,true);
 			face_target();
 			yspeed = 0;
-			if ((target.is_hit) or (target.is_guarding) or (combo_timer > -20)) {
-				change_state(jump_back_state);
-			}
 		}
 		else {
 			change_state(air_state);
@@ -33,16 +30,20 @@ function init_helperstates() {
 	idle_state.run = function() {
 		face_target();
 		if round_state == roundstates.fight {
-			if owner.combo_hits == 0 {
-				helper_attack_script();
-				if active_state == idle_state {
-					if (state_timer mod 30) == 1 {
-						helper_script();
+			var _aitime = 15;
+			if ((state_timer mod _aitime) == floor(_aitime / 2)) {
+				change_sprite(idle_sprite,6,true);
+				helper_script();
+				if (!target.is_guarding) {
+					if (owner.combo_hits == 0) {
+						helper_attack_script();
 					}
 				}
-			}
-			else {
-				change_sprite(idle_sprite,6,true);
+				else {
+					if target_distance_x < 30 {
+						change_state(jump_back_state);
+					}
+				}
 			}
 		}
 		else {

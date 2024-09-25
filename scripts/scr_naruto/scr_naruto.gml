@@ -365,6 +365,7 @@ function init_naruto_baseform() {
 			frame = 11;
 		}
 		if check_frame(9)
+		or check_frame(10)
 		or check_frame(11) {
 			var _ball = create_shot(
 				width*1.5,
@@ -456,7 +457,8 @@ function init_naruto_baseform() {
 				x = target_x + (width_half * facing);
 			}
 		}
-		if check_frame(10) {
+		if check_frame(10)
+		or check_frame(11) {
 			var _ball = create_shot(
 				0,
 				64,
@@ -534,12 +536,13 @@ function init_naruto_baseform() {
 			frame = 5;
 		}
 		if check_frame(7) {
-			xspeed = 30 * facing;
+			xspeed = 20 * facing;
 		}
 		if (frame > 12) and (state_timer < 120) and (combo_hits > 0) {
 			frame = 11;
 		}
-		if check_frame(10)
+		if check_frame(9)
+		or check_frame(10)
 		or check_frame(11) {
 			var _ball = create_shot(
 				width*1.5,
@@ -604,10 +607,10 @@ function init_naruto_baseform() {
 	
 	giant_rasengan = new state();
 	giant_rasengan.start = function() {
-		if (on_ground) and check_mp(2) and (!rasengan_cooldown) {
+		if (on_ground) and check_mp(3) and (!rasengan_cooldown) {
 			change_sprite(spr_naruto_special_giantrasengan,3,false);
 			activate_super(80);
-			spend_mp(2);
+			spend_mp(3);
 		}
 		else {
 			change_state(previous_state);
@@ -623,7 +626,9 @@ function init_naruto_baseform() {
 		if (frame > 12) and (state_timer < 120) {
 			frame = 11;
 		}
-		if check_frame(11) {
+		if check_frame(10)
+		or check_frame(11)
+		or check_frame(12) {
 			var _ball = create_shot(
 				100,
 				-30,
@@ -1006,16 +1011,16 @@ function init_naruto_baseform() {
 				draw_sprite_ext(spr_naruto_clone_giantrasengan,(frame mod 2) + 1,x-(width*1.5*facing),y,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*0.5*facing),y-(height*0.64),0.2,0.2,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width*0.6*facing),y-(height*0.64),0.2,0.2,0,c_white,1);
 			}
 			if value_in_range(frame,7,10) {
-				draw_sprite_ext(spr_naruto_clone_giantrasengan,(frame mod 4) + 3,x,y,facing,1,0,c_white,1);
+				draw_sprite_ext(spr_naruto_clone_giantrasengan,(frame mod 4) + 3,x-(width*facing),y,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x-(width_half*facing),y-(height*0.69),0.3,0.3,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x,y-(height*0.69),0.3,0.3,0,c_white,1);
 			}
 			if value_in_range(frame,11,12) {
-				draw_sprite_ext(spr_naruto_clone_giantrasengan,(frame mod 2) + 7,x,y,facing,1,0,c_white,1);
+				draw_sprite_ext(spr_naruto_clone_giantrasengan,(frame mod 2) + 7,x-(width_half*facing),y,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
 				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(100*facing),y-30,1,1,0,c_white,1);

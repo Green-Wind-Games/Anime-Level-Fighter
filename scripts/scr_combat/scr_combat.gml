@@ -286,8 +286,8 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	var true_attacker = _attacker;
 	if instance_exists(true_attacker) {
-		if (!is_char(true_attacker)) and (!is_helper(true_attacker)) {
-			true_attacker = _attacker.owner;
+		while(!is_char(true_attacker)) {
+			true_attacker = true_attacker.owner;
 		}
 	}
 	else {
@@ -297,44 +297,33 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	
 	with(true_attacker) {
-		if is_char(id) {
-			dmg *= attack_power + (level * level_scaling);
+		dmg *= attack_power + (level * level_scaling);
 				
-			var _atkscale = 1;
-			if !super_active {
-				_atkscale = map_value(_amount,10,100,1,0.5);
-					
-				for(var i = 0; i < array_length(autocombo); i++) {
-					if active_state == autocombo[i] {
-						_atkscale = 1/6;
-						break;
-					}
-				}
-					
-				if is_shot(_attacker) { 
-					_atkscale *= 2/3; 
-				}
+		var _atkscale = 1;
+		if !super_active {
+			_atkscale = map_value(_amount,10,100,1,0.5);
+			
+			if is_shot(_attacker) or is_helper(_attacker) { 
+				_atkscale *= 2/3; 
 			}
-			_atkscale = clamp(_atkscale,1/10,1);
-			dmg *= _atkscale;
-		}
-		else if is_helper(id) {
-			dmg *= 1 + (owner.level * level_scaling);
-			dmg *= 1/5;
-				
-			with(owner) {
-				if combo_hits > 0 {
-					dmg /= 4;
+			
+			for(var i = 0; i < array_length(autocombo); i++) {
+				if active_state == autocombo[i] {
+					_atkscale = 1/5;
+					break;
 				}
 			}
 		}
+		_atkscale = clamp(_atkscale,1/20,1);
+		dmg *= _atkscale;
 	}
 	
 	if is_char(defender){
 		dmg *= get_damage_scaling(defender);
+		dmg *= get_damage_scaling_guts(defender);
 	}
 	
-	dmg /= max(defender.defense,0.1);
+	dmg /= max(defender.defense,1/2);
 	
 	dmg = max(round(dmg),1);
 	
@@ -357,19 +346,22 @@ function get_damage_scaling(_defender) {
 			1,
 			0
 		);
-	
+		scaling = clamp(scaling,0.1,1);
+		return scaling;
+	}
+}
+
+function get_damage_scaling_guts(_defender) {
+	with(_defender) {
 		var guts = map_value(
 			hp+combo_damage_taken,
 			max_hp/5,
 			0,
 			1,
-			3
+			5
 		);
-		
-		scaling = clamp(scaling,0.1,1);
 		guts = max(guts,1);
-		
-		return scaling / guts;
+		return 1 / guts;
 	}
 }
 

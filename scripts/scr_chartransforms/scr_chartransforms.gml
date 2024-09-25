@@ -29,7 +29,7 @@ function level_up() {
 	hp += _heal;
 	hp = min(round(hp),max_hp);
 	
-	move_speed = base_movespeed + (level - 1);
+	move_speed = map_value(level,1,max_level,base_movespeed,base_movespeed+5);
 }
 			
 function transform(_form) {
@@ -69,6 +69,7 @@ function auto_levelup() {
 	else {
 		change_state(transform_state);
 	}
+	play_chartheme(theme);
 	can_cancel = false;
 	return true;
 }

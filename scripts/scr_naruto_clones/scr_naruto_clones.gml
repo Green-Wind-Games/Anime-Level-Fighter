@@ -10,8 +10,10 @@ function init_naruto_baseform_clone() {
 		if (target_distance < 20) {
 			change_state(choose(punch,punch2,slash,slash2));
 		}
-		else if (target_distance > 100) {
-			change_state(choose(shuriken_throw,jump_forward_state));
+		else if (target_distance > 150) {
+			if irandom(1) {
+				change_state(shuriken_throw);
+			}
 		}
 	}
 	
@@ -33,7 +35,7 @@ function init_naruto_baseform_clone() {
 				change_state(punch2);
 			}
 			else {
-				change_state(jump_back_state);
+				change_state(idle_state);
 			}
 		}
 	}
@@ -46,7 +48,7 @@ function init_naruto_baseform_clone() {
 	punch2.run = function() {
 		basic_attack(2,20,attackstrength.light,hiteffects.hit);
 		if anim_finished {
-			change_state(jump_back_state);
+			change_state(idle_state);
 		}
 	}
 	
@@ -66,7 +68,7 @@ function init_naruto_baseform_clone() {
 				change_state(slash2);
 			}
 			else {
-				change_state(jump_back_state);
+				change_state(idle_state);
 			}
 		}
 	}
@@ -96,7 +98,7 @@ function init_naruto_baseform_clone() {
 			char_specialeffect(spr_slash2,width*0.9,-height*0.75,0.5,-0.5,-45);
 		}
 		if anim_finished and on_ground {
-			change_state(jump_back_state);
+			change_state(idle_state);
 		}
 	}
 	

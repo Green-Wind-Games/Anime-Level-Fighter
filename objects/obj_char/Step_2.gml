@@ -14,7 +14,12 @@ with(obj_char) {
 	if grabbed or other.grabbed continue;
 	if dead or other.dead continue;
 	if team == other.team continue;
-	if is_helper(id) or is_helper(other) continue;
+	if is_helper(id) {
+		if duration != -1 continue;
+	}
+	if is_helper(other) {
+		if other.duration != -1 continue;
+	}
 			
 	if !rectangle_in_rectangle(
 		x-width_half,
@@ -31,18 +36,44 @@ with(obj_char) {
 	_dist -= width_half;
 	_dist -= other.width_half;
 	if _dist >= 0 continue;
+	
+	var pushme = true;
+	var pushthem = true;
+	
+	if is_char(id) {
+		if is_helper(other) {
+			pushme = false;
+			pushthem = true;
+		}
+	}
+	else if is_helper(id) {
+		if is_char(other) {
+			pushme = true;
+			pushthem = false;
+		}
+	}
+	
+	if !(pushme or pushthem) {
+		pushme = true;
+		pushthem = true;
+	}
 			
 	var _push = -sign(x-other.x);
 	//if _push == 0 then _push = sign(on_left_wall - on_right_wall) * sign(y - other.y);
 	if _push == 0 then _push = facing;
 	if _push == 0 then _push = 1;
 	_push *= 0.5;
+	
 	var i = 0;
 	while(_dist < 0) {
-		x = clamp(x-_push, left_wall, right_wall);
-		other.x = clamp(other.x+_push, left_wall, right_wall);
+		if pushme {
+			x = clamp(x-_push, left_wall, right_wall);
+		}
+		if pushthem {
+			other.x = clamp(other.x+_push, left_wall, right_wall);
+		}
 		_dist = point_distance(x,0,other.x,0) - (width_half + other.width_half);
-		if i++ > 20 break;
+		if i++ >= max(width_half,other.width_half) break;
 	}
 }
 

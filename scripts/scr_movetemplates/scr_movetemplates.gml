@@ -130,8 +130,8 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 			_sprite,
 			_scale,
 			_damage,
-			_xlength * 10,
-			_ylength * 10,
+			_xlength * 4,
+			_ylength * 4,
 			attacktype.normal,
 			attackstrength.light,
 			hiteffects.none
@@ -171,10 +171,7 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 				}
 				else if is_char(_hit) or is_helper(_hit) {
 					with(_hit) {
-						if (!on_ground) or (other.yspeed <= 0) {
-							x += other.xspeed*4;
-							y += other.yspeed*4;
-						}
+						hitstop = 0;
 					}
 				}
 			}
@@ -190,9 +187,9 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 		x = owner.x + (_x * other.facing);
 		y = owner.y + _y;
 		with(hitbox) {
-			xknockback = _xlength * 10;
-			yknockback = _ylength * 10;
-			if yknockback == 0 then yknockback -= 2;
+			xknockback = _xlength * 4;
+			yknockback = _ylength * 4;
+			if yknockback == 0 then yknockback -= 1/3;
 		}
 	}
 }

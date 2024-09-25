@@ -10,8 +10,8 @@ with(input) {
 duration = -1;
 
 helper_script = function() {
-	if irandom(5) >= 1 {
-		change_sprite(walk_sprite,map_value(sprite_get_number(walk_sprite),4,8,6,3),true);
+	if irandom(3) and (target_distance_x > 10) {
+		change_sprite(walk_sprite,4,true);
 	}
 	else {
 		change_sprite(idle_sprite,6,true);

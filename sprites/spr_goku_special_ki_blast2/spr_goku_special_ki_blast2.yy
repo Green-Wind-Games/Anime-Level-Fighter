@@ -1,11 +1,11 @@
 {
   "$GMSprite":"",
   "%Name":"spr_goku_special_ki_blast2",
-  "bboxMode":0,
+  "bboxMode":2,
   "bbox_bottom":53,
   "bbox_left":0,
   "bbox_right":51,
-  "bbox_top":0,
+  "bbox_top":20,
   "collisionKind":1,
   "collisionTolerance":0,
   "DynamicTexturePage":false,

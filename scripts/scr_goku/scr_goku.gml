@@ -5,10 +5,7 @@ function init_goku_baseform() {
 	theme = mus_dbfz_goku;
 
 	max_air_moves = 3;
-
-	max_kiblasts = 7;
-	kiblast_count = 0;
-
+	
 	kamehameha_cooldown = 0;
 	kamehameha_cooldown_duration = 150;
 
@@ -21,6 +18,13 @@ function init_goku_baseform() {
 	spirit_bomb_shot = noone;
 
 	//next_form = obj_goku_ssj;
+	
+	add_kiblast_state(
+		7,
+		spr_goku_special_ki_blast,
+		spr_goku_special_ki_blast2,
+		spr_kiblast_blue
+	);
 
 	char_script = function() {
 		kamehameha_cooldown -= 1;
@@ -328,41 +332,6 @@ function init_goku_baseform() {
 		}
 		if (state_timer > 60) {
 			return_to_idle();
-		}
-	}
-
-	kiblast = new state();
-	kiblast.start = function() {
-		change_sprite(spr_goku_special_ki_blast,2,false);
-	}
-	kiblast.run = function() {
-		if check_frame(3) {
-			create_kiblast(20,-35,spr_kiblast_blue);
-			if is_airborne {
-				xspeed = -2 * facing;
-				yspeed = -2;
-			}
-			kiblast_count += 1;
-		}
-		if frame > 3 {
-			if kiblast_count < max_kiblasts {
-				if sprite == spr_goku_special_ki_blast {
-					change_sprite(spr_goku_special_ki_blast2,frame_duration,false);
-				}
-				else {
-					change_sprite(spr_goku_special_ki_blast,frame_duration,false);
-				}
-			}
-			else {
-				if state_timer >= 100 {
-					change_state(idle_state);
-				}
-			}
-		}
-	}
-	kiblast.stop = function() {
-		if next_state != kiblast {
-			kiblast_count = 0;
 		}
 	}
 
