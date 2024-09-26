@@ -397,6 +397,9 @@ function init_naruto_baseform() {
 		}
 	}
 	mini_rasengan.run = function() {
+		if check_frame(4) {
+			play_sound(snd_rasengan_charge);
+		}
 		if (frame > 6) and (superfreeze_active) {
 			frame = 5;
 		}
@@ -486,6 +489,9 @@ function init_naruto_baseform() {
 	}
 	rasengan_dive.run = function() {
 		var _target_y = target_y - target.height - 10;
+		if check_frame(5) {
+			play_sound(snd_rasengan_charge,1,1.5);
+		}
 		if (frame > 7) and (superfreeze_active) {
 			frame = 6;
 		}
@@ -578,6 +584,10 @@ function init_naruto_baseform() {
 		}
 	}
 	double_rasengan.run = function() {
+		if check_frame(4) {
+			play_sound(snd_rasengan_charge,1,1.2);
+			play_sound(snd_rasengan_charge,1,0.8);
+		}
 		if (frame > 6) and (superfreeze_active) {
 			frame = 5;
 		}
@@ -665,6 +675,9 @@ function init_naruto_baseform() {
 		}
 	}
 	giant_rasengan.run = function() {
+		if check_frame(4) {
+			play_sound(snd_rasengan_charge,1,0.8);
+		}
 		if (frame > 6) and (superfreeze_active) {
 			frame = 5;
 		}
@@ -872,6 +885,9 @@ function init_naruto_baseform() {
 	}
 	rasen_shuriken.run = function() {
 		if sprite == spr_naruto_special_rasenshuriken {
+			if check_frame(4) {
+				play_sound(snd_rasen_shuriken_spin);
+			}
 			if (frame > 6) and (superfreeze_timer > 100) {
 				frame = 5;
 			}
@@ -939,6 +955,9 @@ function init_naruto_baseform() {
 							}
 						}
 						else {
+							if alpha == 1 {
+								play_sound(snd_rasen_shuriken_end);
+							}
 							alpha = approach(alpha,0,1/30);
 						}
 					}
@@ -949,6 +968,7 @@ function init_naruto_baseform() {
 							}
 						}
 					}
+					play_sound(snd_rasen_shuriken_hit);
 				}
 				rasen_shuriken_explosion = _explosion;
 			}
@@ -957,6 +977,7 @@ function init_naruto_baseform() {
 				change_sprite(launch_sprite,3,true);
 				xspeed = -10 * facing;
 				yspeed = -5;
+				stop_sound(snd_rasen_shuriken_spin);
 				play_voiceline(voice_hurt_heavy);
 			}
 		}

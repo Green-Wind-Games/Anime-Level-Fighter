@@ -381,12 +381,12 @@ function init_charstates() {
 		if (yspeed > 0) {
 			if is_airborne {
 				change_sprite(launch_sprite,3,true);
+				yoffset = -height_half;
 			}
 			else {
 				if yspeed > 3 {
 					change_sprite(hit_air_sprite,3,false);
 					frame = anim_frames - 2;
-					yoffset = height / 2;
 				
 					if yspeed >= 15 {
 						take_damage(noone,abs(yspeed - 10),false);
