@@ -10,7 +10,12 @@ with(input) {
 duration = -1;
 
 helper_script = function() {
-	if irandom(3) and (target_distance_x > 10) {
+	if (owner.combo_hits > 0) {
+		if (target_distance_x < 80) {
+			change_state(jump_back_state);
+		}
+	}
+	else if irandom(3) and (target_distance_x > 10) {
 		change_sprite(walk_sprite,4,true);
 	}
 	else {

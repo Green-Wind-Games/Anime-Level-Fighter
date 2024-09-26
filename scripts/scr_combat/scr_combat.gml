@@ -305,7 +305,7 @@ function take_damage(_attacker,_amount,_kill) {
 		if !super_active {
 			_atkscale = map_value(_amount,10,100,1,0.5);
 			
-			if is_shot(_attacker) or is_helper(_attacker) { 
+			if is_shot(_attacker) { 
 				_atkscale *= 2/3; 
 			}
 			
@@ -318,6 +318,10 @@ function take_damage(_attacker,_amount,_kill) {
 		}
 		_atkscale = clamp(_atkscale,1/20,1);
 		dmg *= _atkscale;
+	}
+	
+	if is_helper(_attacker) {
+		dmg /= 4;
 	}
 	
 	if is_char(defender){

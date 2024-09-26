@@ -232,11 +232,18 @@ function init_naruto_baseform() {
 	uzumaki_barrage_start.start = function() {
 		change_sprite(spr_naruto_jutsu,3,false);
 		play_sound(snd_jutsu_activate);
-		timestop(5);
-		xspeed = -4 * facing;
+		play_voiceline(snd_naruto_uzumaki);
+		if instance_number(obj_char) <= 2 {
+			timestop(60);
+		}
+		xspeed = -8 * facing;
 	}
 	uzumaki_barrage_start.run = function() {
-		if check_frame(3) {
+		decelerate();
+		if (frame > 3) and timestop_active {
+			frame = 2;
+		}
+		if check_frame(4) {
 			create_helper(-75,0,init_naruto_baseform_clone_barrage);
 			create_helper(235,0,init_naruto_baseform_clone_barrage);
 			create_helper(-65,0,init_naruto_baseform_clone_barrage);
@@ -266,7 +273,8 @@ function init_naruto_baseform() {
 			play_sound(snd_punch_whiff_light2,1.5,1.25);
 		}
 		if state_timer >= 30 {
-			change_state(autocombo[6])
+			change_state(autocombo[6]);
+			play_voiceline(snd_naruto_uzumakibarrage);
 		}
 	}
 	
@@ -738,6 +746,7 @@ function init_naruto_baseform() {
 			activate_super();
 			spend_mp(2);
 			play_sound(snd_jutsu_activate);
+			play_voiceline(snd_naruto_shadowclonejutsu);
 		}
 		else {
 			change_state(previous_state);
@@ -771,6 +780,7 @@ function init_naruto_baseform() {
 			activate_super();
 			spend_mp(1);
 			play_sound(snd_jutsu_activate);
+			play_voiceline(snd_naruto_shadowclonejutsu);
 		}
 		else {
 			change_state(previous_state);
@@ -804,6 +814,8 @@ function init_naruto_baseform() {
 				with(_clone) {
 					hit_limit = -1;
 					
+					affected_by_gravity = true;
+					
 					blend = false;
 					rotation_speed = 0.1;
 					rotation = 0;
@@ -815,8 +827,6 @@ function init_naruto_baseform() {
 						y,
 						jutsu_smoke_particle
 					);
-					
-					play_voiceline(owner.voice_attack,10);
 					
 					active_script = function() {
 						rotation = 0;
@@ -835,6 +845,14 @@ function init_naruto_baseform() {
 							jutsu_smoke_particle
 						);
 					}
+					
+					play_sound(
+						choose(
+							owner.voice_attack[0],
+							owner.voice_attack[1],
+						),
+						0.1
+					);
 				}
 			}
 		}

@@ -187,7 +187,7 @@ function init_naruto_baseform_clone_barrage() {
 				-height_half,
 				width,
 				height_half,
-				50,
+				10,
 				0,
 				-12,
 				attacktype.hard_knockdown,

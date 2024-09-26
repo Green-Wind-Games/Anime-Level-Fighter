@@ -7,11 +7,11 @@ function create_helper(_x,_y,_charscript) {
 		facing = me.facing;
 		target = me.target;
 		
-		_charscript();
-		
-		max_hp = round(owner.max_hp / 50);
+		max_hp = max(1,round(owner.max_hp / 50));
 		
 		face_target();
+		
+		_charscript();
 	}
 	return _helper;
 }

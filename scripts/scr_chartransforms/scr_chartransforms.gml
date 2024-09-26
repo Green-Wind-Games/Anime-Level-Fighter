@@ -30,6 +30,8 @@ function level_up() {
 	hp = min(round(hp),max_hp);
 	
 	move_speed = map_value(level,1,max_level,base_movespeed,base_movespeed+5);
+	
+	reset_combo();
 }
 			
 function transform(_form) {

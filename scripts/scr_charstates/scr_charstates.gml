@@ -634,6 +634,8 @@ function init_charstates() {
 		can_cancel = false;
 	}
 	levelup_state.run = function() {
+		xspeed = 0;
+		yspeed = 0;
 		shake_screen(5,2);
 		if !superfreeze_active {
 			aura_sprite = noone;
@@ -649,6 +651,8 @@ function init_charstates() {
 		can_cancel = false;
 	}
 	transform_state.run = function() {
+		xspeed = 0;
+		yspeed = 0;
 		shake_screen(5,2);
 		loop_sound(snd_energy_loop);
 		if superfreeze_timer <= 5 {
