@@ -27,7 +27,12 @@ if keyboard_check_pressed(vk_f6) {
 
 if keyboard_check_pressed(vk_insert) {
 	with(obj_char) {
-		mp = mp_stock_size;
+		mp += mp_stock_size;
+	}
+}
+if keyboard_check_pressed(vk_delete) {
+	with(obj_char) {
+		hp = map_value(transform_min_hp_percent,0,100,0,max_hp) + 1;
 	}
 }
 

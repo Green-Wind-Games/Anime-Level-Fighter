@@ -79,7 +79,21 @@ with(obj_char) {
 
 if hitstop < 0 then hitstop = 0;
 
-hp = clamp(round(hp),0,max_hp);
+if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
+	if combo_timer-- <= 0 {
+		reset_combo();
+	}
+}
+
+if active_state == super_state {
+	super_active = true;
+}
+else {
+	super_state = noone;
+	super_active = false;
+}
+
+hp = min(round(hp),max_hp);
 mp = clamp(round(mp),0,max_mp);
 tp = clamp(round(tp+1),0,max_tp);
 		
@@ -90,24 +104,10 @@ tp_percent = (tp/max_tp)*100;
 mp_stocks = floor(mp/mp_stock_size);
 tp_stocks = floor(tp/tp_stock_size);
 		
-dead = (hp <= 0);
+dead = hp <= 0;
 
-if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
-	if combo_timer-- <= 0 {
-		reset_combo();
-	}
-}
-		
 if (!is_hit) and (!is_guarding) {
 	previous_hp = approach(previous_hp,hp,100);
-}
-
-if active_state == super_state {
-	super_active = true;
-}
-else {
-	super_state = noone;
-	super_active = false;
 }
 
 if dead {

@@ -327,17 +327,18 @@ function init_charstates() {
 		is_hit = true;
 		can_guard = false;
 		can_cancel = false;
+		if dead {
+			change_state(hard_knockdown_state);
+		}
 	}
 	hit_state.run = function() {
 		is_hit = true;
 		can_guard = false;
-		if hp > 0 {
-			if on_ground {
-				if yspeed > 0 {
-					change_state(tech_state);
-				}
-			}
-			if state_timer >= hitstun {
+		if on_ground and (yspeed > 0) and (!dead) {
+			change_state(tech_state);
+		}
+		if state_timer >= hitstun {
+			if !dead {
 				if on_ground {
 					change_state(idle_state);
 				}
@@ -345,16 +346,11 @@ function init_charstates() {
 					change_state(tech_state);
 				}
 			}
-		}
-		else {
-			if on_ground and (yspeed >= 0) {
-				if state_timer >= hitstun {
-					change_state(liedown_state);
+			else {
+				if on_ground {
 					xspeed = -1 * facing;
 					yspeed = -5;
 				}
-			}
-			else {
 				change_state(hard_knockdown_state);
 			}
 		}
@@ -382,27 +378,34 @@ function init_charstates() {
 		can_cancel = false;
 	}
 	hard_knockdown_state.run = function() {
-		if on_ground and (yspeed > 0) {
-			if yspeed > 3 {
-				change_sprite(hit_air_sprite,3,false);
-				frame = anim_frames - 2;
-				yoffset = height / 2;
-				
-				if yspeed >= 15 {
-					take_damage(noone,abs(yspeed - 10),false);
-					create_particles(x,y,x,y,floor_bang_particle,1);
-					yspeed /= -2;
-				}
-				else {
-					yspeed /= -4;
-				}
-				
-				xspeed /= 2;
+		if (yspeed > 0) {
+			if is_airborne {
+				change_sprite(launch_sprite,3,true);
 			}
 			else {
-				yspeed = 0;
-				play_voiceline(voice_hurt,50,true);
-				change_state(liedown_state);
+				if yspeed > 3 {
+					change_sprite(hit_air_sprite,3,false);
+					frame = anim_frames - 2;
+					yoffset = height / 2;
+				
+					if yspeed >= 15 {
+						take_damage(noone,abs(yspeed - 10),false);
+						create_particles(x,y,x,y,floor_bang_particle,1);
+						yspeed /= -2;
+					}
+					else {
+						yspeed /= -4;
+					}
+				
+					xspeed /= 2;
+				}
+				else {
+					yspeed = 0;
+					change_state(liedown_state);
+				}
+				if !dead {
+					play_voiceline(voice_hurt,50,true);
+				}
 			}
 		}
 	}
@@ -447,21 +450,16 @@ function init_charstates() {
 		}
 	}
 	liedown_state.run = function() {
-		if state_timer >= 40 {
-			if hp > 0 {
-				if sprite != wakeup_sprite {
-					change_sprite(wakeup_sprite,5,false);
-				}
-				return_to_idle();
+		if (state_timer >= 30) and (!dead) {
+			if sprite != wakeup_sprite {
+				change_sprite(wakeup_sprite,6,false);
 			}
-			else {
-				dead = true;
-				is_hit = false;
-				change_state(dead_state);
-			}
+			return_to_idle();
 		}
 		else {
-			change_sprite(liedown_sprite,2,false);
+			if sprite != liedown_sprite {
+				change_sprite(liedown_sprite,6,true);
+			}
 		}
 	}
 	liedown_state.stop = function() {
@@ -733,16 +731,6 @@ function init_charstates() {
 	defeat_state.start = function() {
 		change_sprite(defeat_sprite,6,false);
 		play_voiceline(voice_defeat);
-	}
-	
-	dead_state = new state();
-	dead_state.start = function() {
-		change_sprite(liedown_sprite,10,true);
-	}
-	dead_state.run = function() {
-		if hp > 0 {
-			change_state(liedown_state);
-		}
 	}
 	
 	add_move(dash_state,"656");

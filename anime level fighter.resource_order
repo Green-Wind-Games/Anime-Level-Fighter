@@ -431,6 +431,8 @@
     {"name":"spr_naruto_victory","order":2,"path":"sprites/spr_naruto_victory/spr_naruto_victory.yy",},
     {"name":"spr_naruto_wakeup","order":3,"path":"sprites/spr_naruto_wakeup/spr_naruto_wakeup.yy",},
     {"name":"spr_naruto_walk","order":4,"path":"sprites/spr_naruto_walk/spr_naruto_walk.yy",},
+    {"name":"spr_rasen_shuriken_explosion","order":49,"path":"sprites/spr_rasen_shuriken_explosion/spr_rasen_shuriken_explosion.yy",},
+    {"name":"spr_rasen_shuriken","order":50,"path":"sprites/spr_rasen_shuriken/spr_rasen_shuriken.yy",},
     {"name":"spr_rasengan","order":43,"path":"sprites/spr_rasengan/spr_rasengan.yy",},
     {"name":"spr_shockwave","order":28,"path":"sprites/spr_shockwave/spr_shockwave.yy",},
     {"name":"spr_shuriken","order":15,"path":"sprites/spr_shuriken/spr_shuriken.yy",},

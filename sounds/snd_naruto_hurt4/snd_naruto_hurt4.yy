@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.189206,
+  "duration":0.421791,
   "name":"snd_naruto_hurt4",
   "parent":{
     "name":"Naruto Voice",

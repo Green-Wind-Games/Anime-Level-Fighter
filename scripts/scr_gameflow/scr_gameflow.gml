@@ -24,12 +24,10 @@ function update_fight() {
 			round_state = roundstates.time_over;
 		}
 		
-		var alldead = true;
+		var alldead = instance_number(obj_char) - instance_number(obj_helper);
 		with(obj_char) {
 			if !dead {
-				if target_exists() {
-					alldead = false;
-				}
+				alldead -= is_char(id);
 			}
 		}
 		if alldead {
@@ -38,31 +36,57 @@ function update_fight() {
 		}
 	}
 	else if round_state == roundstates.time_over or round_state == roundstates.knockout {
-		var ready = round_state_timer > 100;
+		var ready = true;
 		with(obj_char) {
-			if !dead {
+			if dead {
+				if active_state != liedown_state { ready = false; }
+			}
+			else {
 				if active_state != idle_state { ready = false; }
 			}
+			if state_timer < 60 { ready = false; }
 		}
 		if ready {
 			round_state = roundstates.victory;
 		}
 	}
 	else if round_state == roundstates.victory {
-		var ready = round_state_timer > 200;
+		var team1_score = 100 * max_level * 4;
+		var team2_score = team1_score;
 		with(obj_char) {
-			if active_state == victory_state {
-				if !anim_finished { ready = false; }
-				if sound_is_playing(voice) { ready = false; }
+			if team == 1 {
+				team1_score -= 100 * level;
+				team1_score += clamp(hp_percent,0,100);
+				if dead {
+					team1_score -= 100;
+				}
 			}
 			else {
-				if active_state == idle_state {
-					change_state(victory_state);
+				team2_score -= 100 * level;
+				team2_score += clamp(hp_percent,0,100);
+				if dead {
+					team2_score -= 100;
 				}
 			}
 		}
+		var ready = true;
+		with(obj_char) {
+			if active_state == idle_state {
+				if (team == 1 and (team1_score > team2_score))
+				or (team == 2 and (team2_score > team1_score)) {
+					change_state(victory_state);
+				}
+				else {
+					change_state(defeat_state);
+				}
+			}
+			if !anim_finished { ready = false; }
+			if sound_is_playing(voice) { ready = false; }
+			if state_timer < 60 { ready = false; }
+		}
 		if ready {
-			game_state = gamestates.versus_select;
+			next_game_state = gamestates.versus_select;
+			game_state_duration = screen_fade_duration;
 		}
 	}
 	if round_state != _roundstate {

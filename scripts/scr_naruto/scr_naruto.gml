@@ -15,6 +15,8 @@ function init_naruto_baseform() {
 	shadow_clone_jutsu_cooldown = 0;
 	shadow_clone_jutsu_cooldown_duration = 300;
 	
+	rasen_shuriken_explosion = noone;
+	
 	charge_aura = spr_aura_chakra;
 	charge_start_sound = noone;
 	charge_loop_sound = snd_chakra_loop;
@@ -838,6 +840,119 @@ function init_naruto_baseform() {
 		}
 		return_to_idle();
 	}
+	
+	rasen_shuriken = new state();
+	rasen_shuriken.start = function() {
+		if (on_ground) and check_mp(4) and (!rasengan_cooldown) {
+			change_sprite(spr_naruto_special_rasenshuriken,3,false);
+			activate_ultimate(150);
+			spend_mp(4);
+		}
+		else {
+			change_state(previous_state);
+		}
+	}
+	rasen_shuriken.run = function() {
+		if sprite == spr_naruto_special_rasenshuriken {
+			if (frame > 6) and (superfreeze_timer > 100) {
+				frame = 5;
+			}
+			if check_frame(7) {
+				play_voiceline(snd_naruto_rasenshuriken);
+			}
+			if (frame > 9) and (superfreeze_active) {
+				frame = 8;
+			}
+			if check_frame(4) or check_frame(7) {
+				create_particles(
+					x-(width*facing),
+					y,
+					x-(width*facing),
+					y,
+					jutsu_smoke_particle
+				);
+				create_particles(
+					x+(width*facing),
+					y,
+					x+(width*facing),
+					y,
+					jutsu_smoke_particle
+				);
+			}
+			if check_frame(11) {
+				xspeed = 20 * facing;
+			}
+			if check_frame(15) and (target_distance < 256) {
+				var _explosion = create_shot(
+					width*2,
+					-height_half,
+					1/100,
+					0,
+					spr_rasen_shuriken_explosion,
+					2,
+					20,
+					1,
+					-15,
+					attacktype.hard_knockdown,
+					attackstrength.medium,
+					hiteffects.none
+				);
+				with(_explosion) {
+					change_sprite(sprite,1,true);
+					blend = true;
+					duration = 60 * 3;
+					alpha = 0;
+					hit_limit = -1;
+					active_script = function() {
+						y = ground_height - height_half;
+						if duration > 30 {
+							alpha = approach(alpha,1,1/30);
+							for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
+								var _hit = ds_list_find_value(hitbox.hit_list,i);
+								if instance_exists(_hit) {
+									with(_hit) {
+										x = other.x;
+										y = other.y + height_half;
+									}
+								}
+							}
+							with(hitbox) {
+								ds_list_clear(hit_list);
+							}
+						}
+						else {
+							alpha = approach(alpha,0,1/30);
+						}
+					}
+					hit_script = function(_hit) {
+						if is_char(_hit) or is_helper(_hit) {
+							with(_hit) {
+								change_state(hard_knockdown_state);
+							}
+						}
+					}
+				}
+				rasen_shuriken_explosion = _explosion;
+			}
+			if check_frame(16) {
+				take_damage(noone,50,false);
+				change_sprite(launch_sprite,3,true);
+				xspeed = -10 * facing;
+				yspeed = -5;
+				play_voiceline(voice_hurt_heavy);
+			}
+		}
+		else if sprite == launch_sprite {
+			if on_ground {
+				change_sprite(liedown_sprite,3,true);
+			}
+		}
+		else if sprite == liedown_sprite {
+			if !instance_exists(rasen_shuriken_explosion) {
+				change_state(liedown_state);
+			}
+		}
+	}
 
 	setup_autocombo();
 
@@ -847,7 +962,7 @@ function init_naruto_baseform() {
 	add_move(mini_rasengan,"C");
 	add_move(double_rasengan,"2C");
 	add_move(giant_rasengan,"EC");
-	//add_move(rasen_shuriken,"EEC");
+	add_move(rasen_shuriken,"EEC");
 	
 	add_move(shadow_clone_barrage,"D");
 	add_move(shadow_clone_jutsu,"ED");
@@ -876,9 +991,10 @@ function init_naruto_baseform() {
 	//voice_hurt_heavy[i++] = snd_naruto_hurt_heavy5;
 
 	victory_state.run = function() {
-		if frame >= anim_frames - 1
-		and frame_timer >= frame_duration {
-			frame = 3;
+		if anim_finished {
+			if frame >= anim_frames - 1 {
+				frame = anim_frames - 4;
+			}
 		}
 	}
 
@@ -1094,6 +1210,31 @@ function init_naruto_baseform() {
 					c_white,
 					_alpha
 				);
+			}
+		}
+		if sprite == spr_naruto_special_rasenshuriken {
+			if value_in_range(frame,4,6) {
+				draw_sprite_ext(spr_naruto_clone_rasengan_charge,frame mod 2,x+(width*0.75*facing),y,-facing,1,0,c_white,1);
+				draw_sprite_ext(spr_naruto_clone_rasengan_charge,frame mod 2,x-(width*0.75*facing),y,facing,1,0,c_white,1);
+				
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasen_shuriken,rasengan_frame,x,y-(height*0.5),0.2,0.2,frame_timer * 30,c_white,1);
+			}
+			if frame == 7 {
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasen_shuriken,rasengan_frame,x-(width*0.25*facing),y-(height*0.75),0.4,0.4,frame_timer * 30,c_white,1);
+			}
+			if value_in_range(frame,8,9) {
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasen_shuriken,rasengan_frame,x,y-(height*1.35),0.6,0.6,frame_timer * 30,c_white,1);
+			}
+			if value_in_range(frame,10,12) {
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasen_shuriken,rasengan_frame,x-(width*0.25*facing),y-(height*0.75),0.8,0.8,frame_timer * 30,c_white,1);
+			}
+			if value_in_range(frame,13,15) {
+				gpu_set_blendmode(bm_add);
+				draw_sprite_ext(spr_rasen_shuriken,rasengan_frame,x+(width*1.5*facing),y-(height*0.75),1,1,frame_timer * 30,c_white,1);
 			}
 		}
 		gpu_set_blendmode(bm_normal);

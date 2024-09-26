@@ -330,8 +330,10 @@ function take_damage(_attacker,_amount,_kill) {
 	dmg = max(round(dmg),1);
 	
 	hp -= dmg;
-	if !_kill {
-		hp = max(hp,1);
+	if !dead {
+		if !_kill {
+			hp = max(hp,1);
+		}
 	}
 	
 	combo_damage_taken += dmg;
@@ -344,7 +346,7 @@ function get_damage_scaling(_defender) {
 		var scaling = map_value(
 			combo_damage_taken,
 			max_hp * 0.05,
-			max_hp * 0.4,
+			max_hp * 0.3,
 			1,
 			0
 		);

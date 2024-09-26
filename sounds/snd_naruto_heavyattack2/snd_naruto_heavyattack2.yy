@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.718027,
+  "duration":0.650317,
   "name":"snd_naruto_heavyattack2",
   "parent":{
     "name":"Naruto Voice",

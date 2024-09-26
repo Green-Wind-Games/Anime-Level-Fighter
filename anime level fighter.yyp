@@ -470,6 +470,8 @@
     {"id":{"name":"spr_naruto_victory","path":"sprites/spr_naruto_victory/spr_naruto_victory.yy",},},
     {"id":{"name":"spr_naruto_wakeup","path":"sprites/spr_naruto_wakeup/spr_naruto_wakeup.yy",},},
     {"id":{"name":"spr_naruto_walk","path":"sprites/spr_naruto_walk/spr_naruto_walk.yy",},},
+    {"id":{"name":"spr_rasen_shuriken_explosion","path":"sprites/spr_rasen_shuriken_explosion/spr_rasen_shuriken_explosion.yy",},},
+    {"id":{"name":"spr_rasen_shuriken","path":"sprites/spr_rasen_shuriken/spr_rasen_shuriken.yy",},},
     {"id":{"name":"spr_rasengan","path":"sprites/spr_rasengan/spr_rasengan.yy",},},
     {"id":{"name":"spr_shockwave","path":"sprites/spr_shockwave/spr_shockwave.yy",},},
     {"id":{"name":"spr_shuriken","path":"sprites/spr_shuriken/spr_shuriken.yy",},},

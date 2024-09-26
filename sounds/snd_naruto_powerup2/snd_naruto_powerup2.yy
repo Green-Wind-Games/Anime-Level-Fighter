@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.487937,
+  "duration":1.222086,
   "name":"snd_naruto_powerup2",
   "parent":{
     "name":"Naruto Voice",
