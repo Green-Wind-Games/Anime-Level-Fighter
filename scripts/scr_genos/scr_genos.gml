@@ -18,16 +18,16 @@ function init_genos_baseform() {
 		dropkick_cooldown -= 1;
 	}
 	
-	ai_script = function() {
-		if target_distance < 100 {
-			ai_input_move(dropkick,10);
-		}
-		else if target_distance > 200 {
-			ai_input_move(fireblast,10);
-			ai_input_move(incinerate,10);
-			ai_input_move(super_incinerate,10);
-		}
-	}
+	//ai_script = function() {
+	//	if target_distance < 100 {
+	//		ai_input_move(dropkick,10);
+	//	}
+	//	else if target_distance > 200 {
+	//		ai_input_move(fireblast,10);
+	//		ai_input_move(incinerate,10);
+	//		ai_input_move(super_incinerate,10);
+	//	}
+	//}
 	
 	voice_volume_mine = 3;
 	

@@ -60,30 +60,30 @@ function init_goku_baseform() {
 		}
 	}
 
-	ai_script = function() {
-		if kaioken_active {
-			if target_distance < 50 {
-				ai_input_move(autocombo[0],100);
-			}
-			else {
-				ai_input_move(dash_state,50);
-			}
-		}
-		else {
-			ai_input_move(kaioken,10);
-			ai_input_move(spirit_bomb,10);
-		}
-		if target_distance < 20 {
-			ai_input_move(dragon_fist,10);
-			ai_input_move(meteor_combo,10);
-			ai_input_move(kiai_push,10);
-		}
-		else if target_distance > 200 {
-			ai_input_move(kiblast,10);
-			ai_input_move(kamehameha,10);
-			ai_input_move(super_kamehameha,10);
-		}
-	}
+	//ai_script = function() {
+	//	if kaioken_active {
+	//		if target_distance < 50 {
+	//			ai_input_move(autocombo[0],100);
+	//		}
+	//		else {
+	//			ai_input_move(dash_state,50);
+	//		}
+	//	}
+	//	else {
+	//		ai_input_move(kaioken,10);
+	//		ai_input_move(spirit_bomb,10);
+	//	}
+	//	if target_distance < 20 {
+	//		ai_input_move(dragon_fist,10);
+	//		ai_input_move(meteor_combo,10);
+	//		ai_input_move(kiai_push,10);
+	//	}
+	//	else if target_distance > 200 {
+	//		ai_input_move(kiblast,10);
+	//		ai_input_move(kamehameha,10);
+	//		ai_input_move(super_kamehameha,10);
+	//	}
+	//}
 
 	var i = 0;
 	voice_attack[i++] = snd_goku_attack;

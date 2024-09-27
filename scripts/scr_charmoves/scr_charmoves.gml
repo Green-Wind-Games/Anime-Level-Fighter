@@ -38,15 +38,22 @@ function check_moves() {
 		}
 	}
 	if !ds_priority_empty(available_moves) {
+		var _xspeed = xspeed;
+		var _yspeed = yspeed;
 		for(var i = 0; i < ds_priority_size(available_moves); i++) {
 			var _state = ds_priority_find_max(available_moves);
+			reset_cancels();
 			change_state(_state);
 			if (active_state == idle_state) or (active_state == air_state) {
 				ds_priority_delete_max(available_moves);
 				i--;
+				xspeed = _xspeed;
+				yspeed = _yspeed;
 			}
 			else {
-				reset_cancels();
+				if abs(xspeed) > 15 {
+					show_debug_message(name + "'s " + input_buffer + " has abnormally high xspeed!");
+				}
 				can_guard = false;
 				can_cancel = false;
 				input_buffer = update_input_buffer_direction();

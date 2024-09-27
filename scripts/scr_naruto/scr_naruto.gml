@@ -569,7 +569,9 @@ function init_naruto_baseform() {
 				jutsu_smoke_particle
 			);
 		}
-		land();
+		if anim_finished {
+			land();
+		}
 	}
 	
 	double_rasengan = new state();

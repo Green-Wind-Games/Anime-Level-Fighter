@@ -14,6 +14,6 @@ if target_exists() {
 	target_direction = point_direction(x,y-height_half,target_x,target_y-target.height_half);
 }
 		
-if ai_enabled {
+if (is_char(id)) and (ai_enabled or (input.type == input_types.ai)) {
 	update_ai();
 }

@@ -123,10 +123,10 @@ base_movespeed = 6;
 base_jumpspeed = 8;
 
 mp_stock_size = 1000;
-max_mp_stocks = 5;
+max_mp_stocks = 7;
 max_mp = max_mp_stocks * mp_stock_size;
 
-tp_stock_size = 5 * 60;
+tp_stock_size = 8 * 60;
 max_tp_stocks = 4;
 max_tp = max_tp_stocks * tp_stock_size;
 

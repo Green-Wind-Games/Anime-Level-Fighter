@@ -77,14 +77,6 @@ with(obj_char) {
 	}
 }
 
-if hitstop < 0 then hitstop = 0;
-
-if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
-	if combo_timer-- <= 0 {
-		reset_combo();
-	}
-}
-
 if active_state == super_state {
 	super_active = true;
 }
@@ -93,9 +85,18 @@ else {
 	super_active = false;
 }
 
-hp = min(round(hp),max_hp);
+if hitstop < 0 then hitstop = 0;
+
+if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
+	tp += 1;
+	if combo_timer-- <= 0 {
+		reset_combo();
+	}
+}
+
+hp = clamp(round(hp),0,max_hp);
 mp = clamp(round(mp),0,max_mp);
-tp = clamp(round(tp+1),0,max_tp);
+tp = clamp(round(tp),0,max_tp);
 		
 hp_percent = (hp/max_hp)*100;
 mp_percent = (mp/max_mp)*100;

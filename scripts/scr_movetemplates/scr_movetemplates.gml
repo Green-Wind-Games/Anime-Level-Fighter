@@ -1,13 +1,13 @@
 function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
 		if is_airborne {
-			if (target_distance <= 30) or (combo_hits > 0) {
+			if (target_distance <= 30) {
 				xspeed = (target_distance_x / 5) * facing;
 				yspeed = min(-1.75,(target_y-y) / 4);
 			}
 		}
 		else {
-			if (target_distance <= 30) or (combo_hits > 0) {
+			if (target_distance <= 30) {
 				xspeed = (target_distance_x / 5) * facing;
 			}
 			else {
@@ -203,7 +203,7 @@ function check_charge() {
 	}
 	else {
 		if mp >= max_mp return false;
-		if target_distance_x < 100 return false;
+		if target_distance_x < 200 return false;
 		if active_state == charge_state return true;
 		if random(100) < 5 return true;
 	}

@@ -8,28 +8,25 @@ ai_level_max = 8;
 
 function change_ai_level(_level = ai_level) {
 	ai_level = round(clamp(_level,1,ai_level_max));
-	ai_think_interval = round(map_value(ai_level,1,ai_level_max,10,2));
+	ai_think_interval = round(map_value(ai_level,1,ai_level_max,15,3));
 	//ai_think_interval = 0;
 }
 
-change_ai_level(ai_level_max / 2);
+change_ai_level(ai_level_max);
 
 function update_ai() {
 	if ai_timer-- <= 0 {
-		if !is_helper(id) {
-			ai_default_movement();
-			ai_perform_random_moves();
-			ai_combo();
-		}
-		else {
-			input.up = false;
-			input.down = false;
-			input.left = false;
-			input.right = false;
-			input.forward = false;
-			input.back = false;
-		}
+		input.up = false;
+		input.down = false;
+		input.left = false;
+		input.right = false;
+		input.forward = false;
+		input.back = false;
+		
+		ai_default_movement();
+		ai_perform_random_moves();
 		ai_script();
+		ai_combo();
 		
 		input.left = false;
 		input.right = false;
@@ -59,10 +56,10 @@ function ai_default_movement() {
 	var _x = sign(input.right-input.left);
 	var _y = 0;
 	
-	if irandom(10) == 1 { _y = -1; }
-	if irandom(20) == 1 { _y = 1; }
-	if irandom(6) == 1 { _x = -facing; }
-	if irandom(3) == 1 { _x = facing; }
+	if irandom(8) == 1 { _y = 1; }
+	if irandom(6) == 1 { _y = -1; }
+	if irandom(4) == 1 { _x = -facing; }
+	if irandom(2) == 1 { _x = facing; }
 	
 	input.up = _y > 0;
 	input.down = _y < 0;
@@ -103,6 +100,11 @@ function ai_perform_random_moves() {
 function ai_combo() {
 	if combo_hits > 0 {
 		var _move;
+		for(var i = 0; i < array_length(autocombo); i++) {
+			if active_state == autocombo[i] {
+				_move = autocombo[0];
+			}
+		}
 		if ds_list_empty(cancelable_moves) {
 			_move = movelist[irandom(array_length(movelist)-1)][0];
 		}

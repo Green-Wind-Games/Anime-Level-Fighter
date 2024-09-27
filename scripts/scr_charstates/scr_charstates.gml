@@ -22,6 +22,9 @@ function init_charstates() {
 			else {
 				change_sprite(idle_sprite,6,true);
 			}
+			if input != noone {
+				idle_state.run();
+			}
 		}
 		else {
 			change_state(air_state);
