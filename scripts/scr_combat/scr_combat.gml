@@ -239,26 +239,31 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	}
 	
 	var mp_gain = map_value(_damage,0,max_hp,0,mp_stock_size);
-	var attack_mp_multiplier = 2;
-	var defend_mp_multiplier = 1.5;
+	var xp_gain = map_value(_damage,0,max_hp,0,max_xp) / 1.5;
+	var _attack_multiplier = 2;
+	var _defend_multiplier = 1.5;
 	
 	if guard_valid and guarding {
 		mp_gain /= 2;
+		xp_gain /= 2;
 	}
 	if !is_char(_attacker) {
 		mp_gain /= 2;
+		xp_gain /= 2;
 	}
 	
-	var _mp_attacker = _attacker;
-	while(!is_char(_mp_attacker)) {
-		_mp_attacker = _mp_attacker.owner;
+	var true_attacker = _attacker;
+	while(!is_char(true_attacker)) {
+		true_attacker = true_attacker.owner;
 	}
 	
 	mp += mp_gain * defend_mp_multiplier;
-	with(_mp_attacker) {
+	xp += xp_gain * defend_mp_multiplier;
+	with(true_attacker) {
 		if !super_active {
 			mp += mp_gain * attack_mp_multiplier;
 		}
+		xp += xp_gain * attack_mp_multiplier;
 	}
 	
 	if on_wall {
@@ -326,11 +331,15 @@ function take_damage(_attacker,_amount,_kill) {
 	if is_char(defender){
 		dmg *= get_damage_scaling(defender);
 		dmg *= get_damage_scaling_guts(defender);
+		
+		_kill = defender.level >= 3;
 	}
 	
 	dmg /= max(defender.defense,1/2);
 	
 	dmg = max(round(dmg),1);
+	
+	combo_damage_taken += min(dmg,hp-(!_kill));
 	
 	hp -= dmg;
 	if !dead {
@@ -338,8 +347,6 @@ function take_damage(_attacker,_amount,_kill) {
 			hp = max(hp,1);
 		}
 	}
-	
-	combo_damage_taken += dmg;
 	
 	return dmg;
 }

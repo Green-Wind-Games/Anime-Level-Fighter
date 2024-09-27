@@ -232,6 +232,8 @@
     {"name":"spr_bar_mp_stocks","order":44,"path":"sprites/spr_bar_mp_stocks/spr_bar_mp_stocks.yy",},
     {"name":"spr_bar_tp_bar","order":41,"path":"sprites/spr_bar_tp_bar/spr_bar_tp_bar.yy",},
     {"name":"spr_bar_tp_border","order":40,"path":"sprites/spr_bar_tp_border/spr_bar_tp_border.yy",},
+    {"name":"spr_bar_xp_bar","order":59,"path":"sprites/spr_bar_xp_bar/spr_bar_xp_bar.yy",},
+    {"name":"spr_bar_xp_border","order":60,"path":"sprites/spr_bar_xp_border/spr_bar_xp_border.yy",},
     {"name":"spr_dust_dash","order":57,"path":"sprites/spr_dust_dash/spr_dust_dash.yy",},
     {"name":"spr_electric_aura","order":1,"path":"sprites/spr_electric_aura/spr_electric_aura.yy",},
     {"name":"spr_electric_spark","order":53,"path":"sprites/spr_electric_spark/spr_electric_spark.yy",},

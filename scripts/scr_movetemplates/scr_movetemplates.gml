@@ -96,8 +96,11 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 		height = width;
 		width_half = floor(width / 2);
 		height_half = floor(height / 2);
+		
 		hitbox = create_hitbox(-width/2,-height/2,width,height,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect);
 		hitbox.duration = -1;
+		attack_power = 1;
+		
 		xspeed = _xspeed * owner.facing;
 		yspeed = _yspeed;
 		team = owner.team;

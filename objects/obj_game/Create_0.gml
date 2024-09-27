@@ -46,6 +46,9 @@ globalvar	player, player_char, player_input,
 			base_hp, base_movespeed, base_jumpspeed,
 			max_mp, max_mp_stocks, mp_stock_size,
 			max_tp, max_tp_stocks, tp_stock_size,
+			max_xp, max_level, level_scaling,
+			
+			transform_heal_percent, transform_late_heal_percent_increase,
 			
 			game_state, previous_game_state, next_game_state, game_state_timer, game_state_duration,
 			round_state, round_timer, round_state_timer, round_timer_max, round_countdown_duration, round_is_infinite,
@@ -129,6 +132,13 @@ max_mp = max_mp_stocks * mp_stock_size;
 tp_stock_size = 8 * 60;
 max_tp_stocks = 4;
 max_tp = max_tp_stocks * tp_stock_size;
+
+max_xp = 10000;
+max_level = 5;
+level_scaling = 0.35;
+
+transform_heal_percent = 60;
+transform_late_heal_percent_increase = 10;
 
 superfreeze_active = false;
 superfreeze_activator = noone;

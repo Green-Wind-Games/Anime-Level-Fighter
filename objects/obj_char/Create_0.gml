@@ -72,11 +72,13 @@ max_air_moves = 1;
 ygravity_mod = 1;
 
 level = 1;
+xp = 0;
 
 attack_power = 1;
 defense = 1;
 
 next_form = noone;
+transform_aura = spr_aura_dbz_white;
 	
 aura_sprite = noone;
 aura_frame = 0;

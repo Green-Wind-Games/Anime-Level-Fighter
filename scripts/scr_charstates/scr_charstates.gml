@@ -645,7 +645,7 @@ function init_charstates() {
 	levelup_state.start = function() {
 		change_sprite(charge_loop_sprite,3,true);
 		flash_sprite();
-		aura_sprite = charge_aura;
+		aura_sprite = transform_aura;
 		superfreeze(3 * 60);
 		play_sound(snd_energy_start);
 		level_up();
@@ -667,6 +667,7 @@ function init_charstates() {
 		superfreeze(2 * 60);
 		play_voiceline(voice_transform);
 		can_cancel = false;
+		aura_sprite = transform_aura;
 	}
 	transform_state.run = function() {
 		xspeed = 0;
@@ -702,12 +703,19 @@ function init_charstates() {
 		}
 		else if sprite == charge_loop_sprite {
 			if check_charge() {
+				aura_sprite = charge_aura;
 				mp += max(1,round(mp_stock_size / 60));
+				if mp >= max_mp {
+					aura_sprite = transform_aura;
+					xp += max(1,round(max_xp / (5 * 60)));
+					if xp >= max_xp {
+						auto_levelup();
+					}
+				}
 			
 				loop_sound(charge_loop_sound);
 			
 				shake_screen(5,2);
-				aura_sprite = charge_aura;
 			}
 			else {
 				change_sprite(charge_stop_sprite,3,false);

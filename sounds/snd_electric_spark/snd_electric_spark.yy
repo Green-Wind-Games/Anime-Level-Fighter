@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.117755,
+  "duration":1.108435,
   "name":"snd_electric_spark",
   "parent":{
     "name":"Sounds",

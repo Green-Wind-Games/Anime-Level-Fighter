@@ -14,10 +14,12 @@ function init_goku_baseform() {
 	kaioken_duration = 10 * 60;
 	kaioken_buff = 1.25;
 	kaioken_color = make_color_rgb(255,128,128);
+	kaioken_min_hp = map_value(transform_min_hp_percent+1,0,100,0,max_hp);
 
 	spirit_bomb_shot = noone;
 
 	next_form = obj_goku_ssj;
+	transform_aura = spr_aura_dbz_yellow;
 	
 	add_kiblast_state(
 		7,
@@ -31,13 +33,29 @@ function init_goku_baseform() {
 	char_script = function() {
 		kamehameha_cooldown -= 1;
 		var _kaioken_active = kaioken_active;
-		if dead {
+		kaioken_min_hp = map_value(transform_min_hp_percent+1,0,100,0,max_hp);
+		if target_exists() {
+			var level_difference = target.level - level
+			if level_difference > 0 {
+				kaioken_min_hp += map_value(
+					transform_late_hp_percent_increase*level_difference,
+					0,
+					100,
+					0,
+					max_hp
+				);
+			}
+		}
+		if level >= max_level {
+			kaioken_min_hp = 1;
+		}
+		if dead or hp <= kaioken_min_hp {
 			kaioken_timer = 0;
 		}
 		if kaioken_timer-- > 0 {
 			kaioken_active = true;
-			if kaioken_timer mod 8 == 0 {
-				hp = approach(hp,1,1);
+			if kaioken_timer mod ceil(kaioken_duration / (max_hp / 15)) == 0 {
+				hp = approach(hp,kaioken_min_hp,1);
 			}
 			color = kaioken_color;
 			aura_sprite = spr_aura_dbz_red;
@@ -488,7 +506,7 @@ function init_goku_baseform() {
 
 	kaioken = new state();
 	kaioken.start = function() {
-		if check_mp(1) and (!kaioken_timer) {
+		if check_mp(1) and (!kaioken_timer) and (hp > kaioken_min_hp) {
 			change_sprite(charge_loop_sprite,3,true);
 			flash_sprite();
 			color = kaioken_color;

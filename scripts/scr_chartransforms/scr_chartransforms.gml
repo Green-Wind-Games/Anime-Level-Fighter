@@ -1,16 +1,3 @@
-globalvar	max_level, level_scaling,
-			transform_min_hp_percent, transform_heal_percent,
-			transform_late_hp_percent_increase, transform_late_heal_percent_increase;
-			
-max_level = 2;
-level_scaling = 1/4;
-
-transform_min_hp_percent = 20;
-transform_heal_percent = 60;
-
-transform_late_hp_percent_increase = 20;
-transform_late_heal_percent_increase = 20;
-
 function level_up() {
 	var level_difference = target.level - level;
 	var _hp = (hp / max_hp) * 100;
@@ -52,6 +39,7 @@ function transform(_form) {
 	hp = map_value(_hp,0,_maxhp,0,max_hp);
 	mp = _mp;
 	tp = _tp;
+	xp = 0;
 	target = _target;
 	input = _input;
 	
@@ -65,13 +53,13 @@ function auto_levelup() {
 	
 	if level >= max_level return false;
 	
-	var _required_pct = transform_min_hp_percent + (transform_late_hp_percent_increase * max(0,target.level-level));
-	if hp_percent > _required_pct return false;
+	if xp < max_xp return false;
 	
 	if next_form == noone {
 		change_state(levelup_state);
 		play_voiceline(voice_powerup);
 		play_chartheme(theme);
+		xp = 0;
 	}
 	else {
 		change_state(transform_state);

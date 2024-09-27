@@ -22,6 +22,8 @@ function init_naruto_baseform() {
 	charge_loop_sound = snd_chakra_loop;
 	charge_stop_sound = noone;
 	
+	transform_aura = spr_aura_chakra;
+	
 	set_substitution_jutsu();
 
 	char_script = function() {

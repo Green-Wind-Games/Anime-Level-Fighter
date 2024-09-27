@@ -11,12 +11,12 @@ function init_goku_ssj() {
 
 	ssj2_active = false;
 	ssj2_timer = 0;
-	ssj2_duration = ceil(20 * 60);
-	ssj2_mp_drain = 5;
+	ssj2_duration = 30 * 60;
+	ssj2_mp_drain = ceil(mp_stock_size / (5 * 60))
 	ssj2_buff = 1.10;
 
 	//next_form = obj_goku_ssj3;
-	
+	transform_aura = spr_aura_dbz_yellow;
 	charge_aura = spr_aura_dbz_yellow;
 	
 	add_kiblast_state(
@@ -40,10 +40,6 @@ function init_goku_ssj() {
 			color = ssj2_color;
 			aura_sprite = spr_aura_dbz_yellow;
 			loop_sound(snd_energy_loop);
-			
-			if (active_state == charge_state) and (sprite == charge_loop_sprite) {
-				ssj2_timer += 1.5;
-			}
 		}
 		else {
 			ssj2_active = false;
