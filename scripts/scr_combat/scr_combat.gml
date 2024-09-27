@@ -137,7 +137,6 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 				else {
 					change_state(hit_state);
 				}
-				xspeed = max(40,_xknockback) * _attacker.facing;
 				hitstun = max(hitstun,100);
 				break;
 				

@@ -633,7 +633,7 @@ function init_naruto_baseform() {
 					spr_rasengan,
 					0.2,
 					150,
-					15,
+					30,
 					-2,
 					attacktype.wall_bounce,
 					attackstrength.super,

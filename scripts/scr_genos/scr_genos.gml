@@ -263,19 +263,25 @@ function init_genos_baseform() {
 
 	fireblast = new state();
 	fireblast.start = function() {
-		change_sprite(spr_genos_special_blast,2,false);
+		if check_mp(1/2) {
+			change_sprite(spr_genos_special_blast,2,false);
+		}
+		else {
+			change_state(previous_state);
+		}
 	}
 	fireblast.run = function() {
 		if check_frame(3) {
 			repeat(4) {
 				create_kiblast(20,-35,spr_fireball);
 			}
+			spend_mp(1/2);
 			if is_airborne {
 				xspeed = -2 * facing;
 				yspeed = -2;
 			}
 		}
-		if state_timer > 45 {
+		if state_timer > 50 {
 			return_to_idle();
 		}
 	}

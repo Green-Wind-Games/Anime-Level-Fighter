@@ -11,11 +11,16 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_kiblastsprite) {
 	
 	kiblast = new state();
 	kiblast.start = function() {
-		if sprite == kiblast_sprite {
-			change_sprite(kiblast_sprite2,frame_duration,false);
+		if check_mp(1/max_kiblasts) {
+			if sprite == kiblast_sprite {
+				change_sprite(kiblast_sprite2,frame_duration,false);
+			}
+			else {
+				change_sprite(kiblast_sprite,2,false);
+			}
 		}
 		else {
-			change_sprite(kiblast_sprite,2,false);
+			change_state(previous_state);
 		}
 	}
 	kiblast.run = function() {
@@ -28,10 +33,11 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_kiblastsprite) {
 				yspeed = -2;
 			}
 			kiblast_count += 1;
+			spend_mp(1/max_kiblasts);
 		}
 		if frame > 3 {
 			add_cancel(kiblast);
-			can_cancel = kiblast_count < max_kiblasts;
+			can_cancel = (kiblast_count < max_kiblasts) and (check_mp(1/max_kiblasts));
 		}
 		if state_timer >= 50 {
 			change_state(idle_state);
@@ -71,5 +77,31 @@ function create_kiblast(_x,_y,_sprite) {
 		}
 		play_sound(snd_kiblast_fire);
 		return id;
+	}
+}
+
+function ssj2_sparks() {
+	if irandom(100) == 1 {
+		var _scale = random(1/2);
+		var _spark = char_specialeffect(
+			choose(
+				spr_electric_spark,
+				spr_electric_spark2,
+				spr_electric_spark3,
+				spr_electric_spark4,
+			),
+			random(width*0.25) * choose(1,-1),
+			random_range(height*0.25,height*0.75) * -1,
+			choose(_scale,-_scale),
+			choose(_scale,-_scale),
+			random(360),
+		);
+		with(_spark) {
+			play_sound(
+				snd_electric_spark,
+				random_range(1,0.5),
+				random_range(0.8,1.2)
+			);
+		}
 	}
 }

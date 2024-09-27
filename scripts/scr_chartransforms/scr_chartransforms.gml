@@ -12,11 +12,13 @@ transform_late_hp_percent_increase = 20;
 transform_late_heal_percent_increase = 20;
 
 function level_up() {
+	var level_difference = target.level - level;
+	var _hp = (hp / max_hp) * 100;
+	
 	level++;
 	
-	var level_difference = target.level - level;
-	
 	max_hp = round(base_hp * ((level*level_scaling)+1));
+	hp = map_value(_hp,0,100,0,max_hp);
 	
 	var _heal = map_value(
 		transform_heal_percent + (transform_late_heal_percent_increase * max(0,level_difference)),
@@ -41,6 +43,7 @@ function transform(_form) {
 	var _mp = mp;
 	var _tp = tp;
 	var _target = target;
+	var _input = input;
 	
 	instance_change(_form,true);
 	
@@ -50,6 +53,7 @@ function transform(_form) {
 	mp = _mp;
 	tp = _tp;
 	target = _target;
+	input = _input;
 	
 	face_target();
 	change_state(levelup_state);
@@ -67,11 +71,14 @@ function auto_levelup() {
 	if next_form == noone {
 		change_state(levelup_state);
 		play_voiceline(voice_powerup);
+		play_chartheme(theme);
 	}
 	else {
 		change_state(transform_state);
+		var _nextform = instance_create(0,0,next_form);
+		play_chartheme(_nextform.theme);
+		instance_destroy(_nextform);
 	}
-	play_chartheme(theme);
 	can_cancel = false;
 	return true;
 }

@@ -12,12 +12,12 @@ function init_goku_baseform() {
 	kaioken_active = false;
 	kaioken_timer = 0;
 	kaioken_duration = 10 * 60;
-	kaioken_buff = 1.10;
+	kaioken_buff = 1.25;
 	kaioken_color = make_color_rgb(255,128,128);
 
 	spirit_bomb_shot = noone;
 
-	//next_form = obj_goku_ssj;
+	next_form = obj_goku_ssj;
 	
 	add_kiblast_state(
 		7,
@@ -25,6 +25,8 @@ function init_goku_baseform() {
 		spr_goku_special_ki_blast2,
 		spr_kiblast_blue
 	);
+	
+	init_goku_voice();
 
 	char_script = function() {
 		kamehameha_cooldown -= 1;
@@ -34,7 +36,7 @@ function init_goku_baseform() {
 		}
 		if kaioken_timer-- > 0 {
 			kaioken_active = true;
-			if kaioken_timer mod 12 == 0 {
+			if kaioken_timer mod 8 == 0 {
 				hp = approach(hp,1,1);
 			}
 			color = kaioken_color;
@@ -46,12 +48,14 @@ function init_goku_baseform() {
 		}
 		if kaioken_active != _kaioken_active {
 			if kaioken_active {
-				attack_power += kaioken_buff;
+				attack_power = kaioken_buff;
+				move_speed_buff = kaioken_buff;
 			}
 			else {
 				flash_sprite();
 				play_sound(snd_energy_stop);
-				attack_power -= kaioken_buff;
+				attack_power = 1;
+				move_speed_buff = 1;
 				if color == kaioken_color {
 					color = c_white;
 				}
@@ -84,33 +88,6 @@ function init_goku_baseform() {
 	//		ai_input_move(super_kamehameha,10);
 	//	}
 	//}
-
-	var i = 0;
-	voice_attack[i++] = snd_goku_attack;
-	voice_attack[i++] = snd_goku_attack2;
-	voice_attack[i++] = snd_goku_attack3;
-	voice_attack[i++] = snd_goku_attack4;
-	voice_attack[i++] = snd_goku_attack5;
-	i = 0;
-	voice_heavyattack[i++] = snd_goku_heavyattack;
-	voice_heavyattack[i++] = snd_goku_heavyattack2;
-	voice_heavyattack[i++] = snd_goku_heavyattack3;
-	i = 0;
-	voice_hurt[i++] = snd_goku_hurt;
-	voice_hurt[i++] = snd_goku_hurt2;
-	voice_hurt[i++] = snd_goku_hurt3;
-	voice_hurt[i++] = snd_goku_hurt4;
-	voice_hurt[i++] = snd_goku_hurt5;
-	i = 0;
-	voice_hurt_heavy[i++] = snd_goku_hurt_heavy;
-	voice_hurt_heavy[i++] = snd_goku_hurt_heavy2;
-	voice_hurt_heavy[i++] = snd_goku_hurt_heavy3;
-	voice_hurt_heavy[i++] = snd_goku_hurt_heavy4;
-	voice_hurt_heavy[i++] = snd_goku_hurt_heavy5;
-	i = 0;
-	voice_powerup[i++] = snd_goku_powerup;
-	i = 0;
-	voice_transform[i++] = snd_goku_scream_transform;
 
 	var i = 0;
 	autocombo[i] = new state();
@@ -325,7 +302,7 @@ function init_goku_baseform() {
 		}
 		if check_frame(3) {
 			xspeed = 30 * facing;
-			create_hitbox(0,-height_half,width,height_half,100,20,-2,attacktype.wall_bounce,attackstrength.super,hiteffects.hit);
+			create_hitbox(0,-height_half,width,height_half,100,30,-2,attacktype.wall_bounce,attackstrength.super,hiteffects.hit);
 		}
 		if check_frame(4) {
 			xspeed /= 10;
@@ -642,6 +619,18 @@ function init_goku_baseform() {
 			}
 		}
 	}
+	
+	transform_state.run = function() {
+		kaioken_timer = 0;
+		aura_sprite = spr_aura_dbz_yellow;
+		xspeed = 0;
+		yspeed = 0;
+		shake_screen(5,2);
+		loop_sound(snd_energy_loop);
+		if superfreeze_timer <= 5 {
+			transform(next_form);
+		}
+	}
 
 	draw_script = function() {
 		if sprite == spr_goku_special_ki_blast
@@ -686,4 +675,34 @@ function init_goku_baseform() {
 		}
 		gpu_set_blendmode(bm_normal);
 	}
+}
+
+function init_goku_voice() {
+	var i = 0;
+	voice_attack[i++] = snd_goku_attack;
+	voice_attack[i++] = snd_goku_attack2;
+	voice_attack[i++] = snd_goku_attack3;
+	voice_attack[i++] = snd_goku_attack4;
+	voice_attack[i++] = snd_goku_attack5;
+	i = 0;
+	voice_heavyattack[i++] = snd_goku_heavyattack;
+	voice_heavyattack[i++] = snd_goku_heavyattack2;
+	voice_heavyattack[i++] = snd_goku_heavyattack3;
+	i = 0;
+	voice_hurt[i++] = snd_goku_hurt;
+	voice_hurt[i++] = snd_goku_hurt2;
+	voice_hurt[i++] = snd_goku_hurt3;
+	voice_hurt[i++] = snd_goku_hurt4;
+	voice_hurt[i++] = snd_goku_hurt5;
+	i = 0;
+	voice_hurt_heavy[i++] = snd_goku_hurt_heavy;
+	voice_hurt_heavy[i++] = snd_goku_hurt_heavy2;
+	voice_hurt_heavy[i++] = snd_goku_hurt_heavy3;
+	voice_hurt_heavy[i++] = snd_goku_hurt_heavy4;
+	voice_hurt_heavy[i++] = snd_goku_hurt_heavy5;
+	i = 0;
+	voice_powerup[i++] = snd_goku_powerup;
+	voice_powerup[i++] = snd_goku_powerup2;
+	i = 0;
+	voice_transform[i++] = snd_goku_scream_transform;
 }

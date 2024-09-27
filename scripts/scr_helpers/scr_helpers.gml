@@ -50,7 +50,7 @@ function init_helperstates() {
 			change_sprite(idle_sprite,6,true);
 		}
 		if sprite == walk_sprite {
-			accelerate(move_speed * move_speed_mod * facing * xscale);
+			accelerate(move_speed * move_speed_mod * move_speed_buff * facing * xscale);
 		}
 	}
 	
@@ -65,7 +65,7 @@ function init_helperstates() {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -5;
-			xspeed = move_speed * move_speed_mod * facing;
+			xspeed = move_speed * move_speed_mod * move_speed_buff * facing;
 			play_sound(snd_jump);
 		}
 	}
@@ -81,7 +81,7 @@ function init_helperstates() {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -5;
-			xspeed = -move_speed * move_speed_mod * facing;
+			xspeed = -move_speed * move_speed_mod * move_speed_buff * facing;
 			play_sound(snd_jump);
 		}
 	}

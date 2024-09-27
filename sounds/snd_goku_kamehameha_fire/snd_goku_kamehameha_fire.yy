@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":3.212146,
+  "duration":2.760792,
   "name":"snd_goku_kamehameha_fire",
   "parent":{
     "name":"Goku Voice",

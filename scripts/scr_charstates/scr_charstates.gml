@@ -51,7 +51,7 @@ function init_charstates() {
 			}
 			else {
 				if input.left or input.right {
-					accelerate(move_speed * move_speed_mod * sign(input.right - input.left));
+					accelerate(move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left));
 				}
 				if xspeed != 0 {
 					var walk_anim_speed = width / abs(xspeed);
@@ -105,7 +105,7 @@ function init_charstates() {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -jump_speed;
-			xspeed = move_speed * move_speed_mod * sign(input.right - input.left);
+			xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
 			play_sound(snd_jump);
 		}
 	}
@@ -121,7 +121,7 @@ function init_charstates() {
 			change_state(air_state);
 			squash_stretch(0.75,1.25);
 			yspeed = -jump_speed * 1.5;
-			xspeed = move_speed * move_speed_mod * sign(input.right - input.left);
+			xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
 			play_sound(snd_jump,1,0.8);
 		}
 	}
@@ -153,7 +153,7 @@ function init_charstates() {
 		if yspeed >= 0 {
 			if input.up {
 				if air_moves < max_air_moves {
-					xspeed = move_speed * move_speed_mod * sign(input.right - input.left);
+					xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
 					yspeed = -jump_speed * 0.75;
 					air_moves += 1;
 					squash_stretch(0.8,1.2);
@@ -187,7 +187,7 @@ function init_charstates() {
 		else {
 			change_sprite(dash_sprite,2,true);
 			yoffset = -height_half;
-			xspeed = move_speed * move_speed_mod * 2 * facing;
+			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 			yspeed = 0;
 			play_sound(snd_dash);
 			play_sound(snd_dash_loop);
@@ -203,9 +203,12 @@ function init_charstates() {
 		or ((ai_enabled) and (target_distance_x > 20)){
 			dash_duration = 60;
 		}
+		if state_timer mod 5 == 1 {
+			char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
+		}
 		
 		if state_timer <= dash_duration {
-			xspeed = move_speed * move_speed_mod * 2 * facing;
+			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 			yspeed = 0;
 			if sprite == dash_sprite {
 				loop_sound(snd_dash_loop);
@@ -234,9 +237,10 @@ function init_charstates() {
 		else {
 			can_cancel = false;
 			change_sprite(air_up_sprite,2,true);
-			xspeed = move_speed * move_speed_mod * 2 * -facing;
+			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * -facing;
 			yspeed = -1.5;
 			play_sound(snd_dash);
+			char_specialeffect(spr_dust_dash,0,0,-0.5,0.5);
 		}
 	}
 	backdash_state.run = function() {
@@ -264,7 +268,7 @@ function init_charstates() {
 		if air_moves < max_air_moves {
 			change_sprite(dash_sprite,2,true);
 			yoffset = -height_half;
-			xspeed = move_speed * move_speed_mod * 2 * facing;
+			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 			yspeed = 0;
 			air_moves += 1;
 			play_sound(snd_dash);
@@ -274,7 +278,7 @@ function init_charstates() {
 		}
 	}
 	airdash_state.run = function() {
-		xspeed = move_speed * move_speed_mod * 2 * facing;
+		xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 		yspeed = 0;
 		if state_timer >= 10 {
 			change_state(air_state);
@@ -287,7 +291,7 @@ function init_charstates() {
 			change_sprite(dash_sprite,2,true);
 			yoffset = -height_half;
 			xscale = -1;
-			xspeed = move_speed * move_speed_mod * 2 * -facing;
+			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * -facing;
 			yspeed = 0;
 			air_moves += 1;
 			play_sound(snd_dash);
@@ -297,7 +301,7 @@ function init_charstates() {
 		}
 	}
 	air_backdash_state.run = function() {
-		xspeed = -move_speed * move_speed_mod * 2 * facing;
+		xspeed = -move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 		yspeed = 0;
 		if state_timer >= 10 {
 			change_state(air_state);
@@ -421,6 +425,18 @@ function init_charstates() {
 		can_cancel = false;
 	}
 	wall_bounce_state.run = function() {
+		var _x = sign(xspeed);
+		xspeed = max(30,abs(xspeed)) * _x;
+		if state_timer mod ceil(width / max(1,abs(xspeed))) == 0 {
+			char_specialeffect(
+				spr_launch_wind_spin,
+				0,
+				-height_half,
+				1/3,
+				1/3,
+				point_direction(0,0,abs(xspeed),yspeed)
+			)
+		}
 		if yspeed >= 0 {
 			yspeed = 0;
 		}
@@ -629,10 +645,9 @@ function init_charstates() {
 	levelup_state.start = function() {
 		change_sprite(charge_loop_sprite,3,true);
 		flash_sprite();
-		aura_sprite = spr_aura_dbz_white;
+		aura_sprite = charge_aura;
 		superfreeze(3 * 60);
 		play_sound(snd_energy_start);
-		play_voiceline(voice_powerup);
 		level_up();
 		can_cancel = false;
 	}

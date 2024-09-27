@@ -10,6 +10,19 @@ or sprite == launch_sprite {
 	rotation = point_direction(0,0,abs(xspeed),-yspeed);
 }
 
+//if sprite == spinout_sprite {
+//	if state_timer mod ceil(width / max(1,abs(xspeed))) == 0 {
+//		char_specialeffect(
+//			spr_launch_wind_spin,
+//			0,
+//			-height_half,
+//			1/3,
+//			1/3,
+//			point_direction(0,0,abs(xspeed),yspeed)
+//		)
+//	}
+//}
+
 with(obj_char) {
 	if grabbed or other.grabbed continue;
 	if dead or other.dead continue;

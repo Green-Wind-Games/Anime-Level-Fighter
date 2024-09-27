@@ -119,7 +119,7 @@ round_countdown_duration = (3 * 30) + 30;
 round_is_infinite = false;
 
 base_hp = 1000;
-base_movespeed = 6;
+base_movespeed = 5;
 base_jumpspeed = 8;
 
 mp_stock_size = 1000;

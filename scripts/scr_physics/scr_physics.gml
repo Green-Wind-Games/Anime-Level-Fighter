@@ -7,6 +7,7 @@ function init_physics() {
 	
 	move_speed = base_movespeed;
 	move_speed_mod = 1;
+	move_speed_buff = 1;
 	
 	jump_speed = base_jumpspeed;
 	
