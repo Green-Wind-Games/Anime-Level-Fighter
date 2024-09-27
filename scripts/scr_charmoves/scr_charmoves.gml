@@ -118,6 +118,13 @@ function activate_super(_duration = 30) {
 	super_state = active_state;
 	superfreeze(_duration);
 	play_sound(snd_activate_super);
+	create_particles(
+		x,
+		y-(height*0.75),
+		x,
+		y-(height*0.75),
+		super_particle
+	);
 }
 
 function activate_ultimate(_duration = 60) {
@@ -126,6 +133,13 @@ function activate_ultimate(_duration = 60) {
 	super_state = active_state;
 	superfreeze(_duration);
 	play_sound(snd_activate_ultimate);
+	create_particles(
+		x,
+		y-(height*0.75),
+		x,
+		y-(height*0.75),
+		ultimate_particle
+	);
 }
 
 function deactivate_super() {
