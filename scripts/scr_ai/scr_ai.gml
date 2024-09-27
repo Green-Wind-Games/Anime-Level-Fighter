@@ -7,12 +7,12 @@ globalvar	ai_level, ai_level_max,
 ai_level_max = 8;
 
 function change_ai_level(_level = ai_level) {
-	ai_level = round(clamp(_level,1,ai_level_max));
-	ai_think_interval = round(map_value(ai_level,1,ai_level_max,15,3));
-	//ai_think_interval = 0;
+	ai_level = clamp(round(_level),1,ai_level_max);
+	//ai_think_interval = round(map_value(ai_level,1,ai_level_max,8,2));
+	ai_think_interval = 6;
 }
 
-change_ai_level(ai_level_max);
+change_ai_level(1);
 
 function update_ai() {
 	if ai_timer-- <= 0 {
@@ -23,10 +23,15 @@ function update_ai() {
 		input.forward = false;
 		input.back = false;
 		
-		ai_default_movement();
-		ai_perform_random_moves();
-		ai_script();
-		ai_combo();
+		if active_state == idle_state
+		or active_state == air_state {
+			ai_default_movement();
+			ai_perform_random_moves();
+			ai_script();
+		}
+		else {
+			ai_combo();
+		}
 		
 		input.left = false;
 		input.right = false;
@@ -76,10 +81,10 @@ function ai_default_movement() {
 		}
 	}
 	if target_distance_x < 100 {
-		ai_input_move(backdash_state,5);
+		ai_input_move(backdash_state,1);
 	}
 	if target_distance_x > 50 {
-		ai_input_move(dash_state,5);
+		ai_input_move(dash_state,1);
 	}
 }
 
@@ -92,26 +97,26 @@ function ai_perform_random_moves() {
 	}
 	
 	var _move = ds_list_find_value(_inputs,irandom(ds_list_size(_inputs)-1));
-	ai_input_command(_move,map_value(target_distance,game_width,0,20,60));
+	ai_input_command(_move,map_value(target_distance,right_wall-left_wall,0,1,100));
 	
 	ds_list_destroy(_inputs);
 }
 
 function ai_combo() {
 	if combo_hits > 0 {
-		var _move;
-		for(var i = 0; i < array_length(autocombo); i++) {
+		//var _move;
+		//if ds_list_empty(cancelable_moves) {
+		//	_move = movelist[irandom(array_length(movelist)-1)][0];
+		//}
+		//else {
+		//	_move = ds_list_find_value(cancelable_moves,irandom(ds_list_size(cancelable_moves)-1));
+		//}
+		//ai_input_move(_move,map_value(ai_level,1,ai_level_max,10,50));
+		for(var i = 0; i < array_length(autocombo)-1; i++) {
 			if active_state == autocombo[i] {
-				_move = autocombo[0];
+				ai_input_move(autocombo[0],100);
 			}
 		}
-		if ds_list_empty(cancelable_moves) {
-			_move = movelist[irandom(array_length(movelist)-1)][0];
-		}
-		else {
-			_move = ds_list_find_value(cancelable_moves,irandom(ds_list_size(cancelable_moves)-1));
-		}
-		ai_input_move(_move,100);
 	}
 }
 

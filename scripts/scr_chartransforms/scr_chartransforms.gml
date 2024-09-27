@@ -32,6 +32,8 @@ function transform(_form) {
 	var _target = target;
 	var _input = input;
 	
+	array_delete(movelist,0,array_length(movelist));
+	
 	instance_change(_form,true);
 	
 	level = _level;

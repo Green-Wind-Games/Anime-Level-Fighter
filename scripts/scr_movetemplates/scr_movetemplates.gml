@@ -2,13 +2,13 @@ function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
 		if is_airborne {
 			if (target_distance <= 50) {
-				xspeed = (target_distance_x / 5) * facing;
+				xspeed = max(4,(target_distance_x / 5)) * facing;
 				yspeed = min(-1.75,(target_y-y) / 4);
 			}
 		}
 		else {
 			if (target_distance <= 50) {
-				xspeed = (target_distance_x / 5) * facing;
+				xspeed = max(4,(target_distance_x / 5)) * facing;
 			}
 			else {
 				xspeed = 3 * facing;
@@ -53,7 +53,7 @@ function basic_launcher(_hitframe,_damage,_hiteffect) {
 function basic_smash(_hitframe,_damage,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
 		if target_distance <= 50 {
-			xspeed = (target_distance_x / 3) * facing;
+			xspeed = max(5,(target_distance_x / 5)) * facing;
 			yspeed = min(-2,(target_y-y) / 4);
 		}
 	}

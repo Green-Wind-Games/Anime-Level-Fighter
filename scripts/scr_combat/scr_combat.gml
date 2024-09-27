@@ -238,34 +238,6 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		}
 	}
 	
-	var mp_gain = map_value(_damage,0,max_hp,0,mp_stock_size);
-	var xp_gain = map_value(_damage,0,max_hp,0,max_xp) / 1.5;
-	var _attack_multiplier = 2;
-	var _defend_multiplier = 1.5;
-	
-	if guard_valid and guarding {
-		mp_gain /= 2;
-		xp_gain /= 2;
-	}
-	if !is_char(_attacker) {
-		mp_gain /= 2;
-		xp_gain /= 2;
-	}
-	
-	var true_attacker = _attacker;
-	while(!is_char(true_attacker)) {
-		true_attacker = true_attacker.owner;
-	}
-	
-	mp += mp_gain * _defend_multiplier;
-	xp += xp_gain * _defend_multiplier;
-	with(true_attacker) {
-		if !super_active {
-			mp += mp_gain * _attack_multiplier;
-		}
-		xp += xp_gain * _attack_multiplier;
-	}
-	
 	if on_wall {
 		if is_char(_attacker) or is_helper(_attacker) {
 			_attacker.xspeed = xspeed * -0.5;
@@ -346,6 +318,26 @@ function take_damage(_attacker,_amount,_kill) {
 		if !_kill {
 			hp = max(hp,1);
 		}
+	}
+	
+	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * 1.5;
+	var xp_gain = map_value(dmg,0,max_hp,0,max_xp) * 1.2;
+	
+	var _attack_multiplier = 1;
+	var _defend_multiplier = 0.8;
+	
+	if !is_char(_attacker) {
+		mp_gain /= 2;
+		xp_gain /= 2;
+	}
+	
+	mp += mp_gain * _defend_multiplier;
+	xp += xp_gain * _defend_multiplier;
+	with(true_attacker) {
+		if !super_active {
+			mp += mp_gain * _attack_multiplier;
+		}
+		xp += xp_gain * _attack_multiplier;
 	}
 	
 	return dmg;

@@ -20,10 +20,9 @@ function check_moves() {
 	var min_cancel = 0; //floor(combo_hits * 0.5);
 	if ds_list_empty(cancelable_moves) {
 		for(var i = min_cancel; i < array_length(movelist); i++) {
-			if ((active_state == movelist[i][0])
-			or ((previous_state == movelist[i][0]) and ((active_state != idle_state) and (active_state != air_state))))
-			and (ds_list_find_index(cancelable_moves,active_state) == -1) {
+			if active_state == movelist[i][0] {
 				min_cancel = i+1;
+				break;
 			}
 		}
 	}

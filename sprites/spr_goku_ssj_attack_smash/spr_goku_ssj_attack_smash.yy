@@ -26,7 +26,7 @@
   ],
   "name":"spr_goku_ssj_attack_smash",
   "nineSlice":null,
-  "origin":7,
+  "origin":9,
   "parent":{
     "name":"Goku SSJ Sprites",
     "path":"folders/Chars/Dragon Ball/Goku/Goku Sprites/Goku SSJ Sprites.yy",
@@ -87,7 +87,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":25,
+    "xorigin":20,
     "yorigin":64,
   },
   "swatchColours":null,

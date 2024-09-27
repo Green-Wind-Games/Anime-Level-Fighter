@@ -86,7 +86,7 @@ with(obj_char) {
 			other.x = clamp(other.x+_push, left_wall, right_wall);
 		}
 		_dist = point_distance(x,0,other.x,0) - (width_half + other.width_half);
-		if i++ >= max(width_half,other.width_half) break;
+		if i++ >= 20 break;
 	}
 }
 
@@ -110,10 +110,12 @@ if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
 hp = clamp(round(hp),0,max_hp);
 mp = clamp(round(mp),0,max_mp);
 tp = clamp(round(tp),0,max_tp);
+xp = clamp(round(xp),0,max_xp);
 		
 hp_percent = (hp/max_hp)*100;
 mp_percent = (mp/max_mp)*100;
 tp_percent = (tp/max_tp)*100;
+xp_percent = (xp/max_xp)*100;
 		
 mp_stocks = floor(mp/mp_stock_size);
 tp_stocks = floor(tp/tp_stock_size);

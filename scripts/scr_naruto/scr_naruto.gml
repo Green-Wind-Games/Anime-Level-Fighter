@@ -267,8 +267,8 @@ function init_naruto_baseform() {
 		change_sprite(spr_naruto_flip,3,true);
 		yoffset = -height_half;
 		rotation_speed = -45;
-		xspeed = (target_distance_x / 40) * facing;
-		yspeed = target.yspeed * 1.10;
+		xspeed = (target_distance_x / 30) * facing;
+		yspeed = target.yspeed * 1.05;
 	}
 	uzumaki_barrage_flip.run = function() {
 		if (state_timer mod 5) == 0 {

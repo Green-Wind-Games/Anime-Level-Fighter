@@ -28,7 +28,7 @@ function init_goku_baseform() {
 		spr_kiblast_blue
 	);
 	
-	init_goku_voice();
+	init_goku_voice();	
 
 	char_script = function() {
 		kamehameha_cooldown -= 1;
@@ -299,11 +299,11 @@ function init_goku_baseform() {
 			frame = 0;
 		}
 		if check_frame(1) {
+			play_sound(snd_punch_whiff_heavy);
 			xspeed = -5 * facing;
 		}
 		if check_frame(2) {
 			xspeed = 0;
-			play_sound(snd_punch_whiff_heavy);
 		}
 		if check_frame(3) {
 			xspeed = 30 * facing;
