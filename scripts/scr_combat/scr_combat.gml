@@ -323,13 +323,13 @@ function take_damage(_attacker,_amount,_kill) {
 	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * 1.5;
 	var xp_gain = map_value(dmg,0,max_hp,0,max_xp) * 1.2;
 	
-	var _attack_multiplier = 1;
-	var _defend_multiplier = 0.8;
+	var _attack_multiplier = 0.8;
+	var _defend_multiplier = 1;
 	
-	if !is_char(_attacker) {
-		mp_gain /= 2;
-		xp_gain /= 2;
-	}
+	//if !is_char(_attacker) {
+	//	mp_gain /= 2;
+	//	xp_gain /= 2;
+	//}
 	
 	mp += mp_gain * _defend_multiplier;
 	xp += xp_gain * _defend_multiplier;

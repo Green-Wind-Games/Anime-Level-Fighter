@@ -282,7 +282,7 @@ function init_naruto_baseform() {
 	
 	shuriken_throw = new state();
 	shuriken_throw.start = function() {
-		change_sprite(spr_naruto_special_throw_shuriken,7,false);
+		change_sprite(spr_naruto_special_throw_shuriken,5,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	shuriken_throw.run = function() {
@@ -330,7 +330,7 @@ function init_naruto_baseform() {
 	
 	triple_shuriken_throw = new state();
 	triple_shuriken_throw.start = function() {
-		change_sprite(spr_naruto_special_throw_shuriken,8,false);
+		change_sprite(spr_naruto_special_throw_shuriken,6,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	triple_shuriken_throw.run = function() {

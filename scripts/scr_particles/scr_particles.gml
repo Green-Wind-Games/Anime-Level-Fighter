@@ -9,7 +9,8 @@ globalvar	particle_system,
 			explosion_small, explosion_medium, explosion_large,
 			left_wall_bang_particle, floor_bang_particle, right_wall_bang_particle,
 			shockwave_particle,
-			jutsu_smoke_particle;
+			jutsu_smoke_particle,
+			super_particle, ultimate_particle;
 				
 particle_system = part_system_create();
 part_system_depth(particle_system,-9999);
@@ -136,6 +137,20 @@ part_type_life(jutsu_smoke_particle,30,30);
 part_type_size(jutsu_smoke_particle,0.6,0.6,0,0);
 part_type_blend(jutsu_smoke_particle,true);
 part_type_alpha3(jutsu_smoke_particle,1,1,0);
+
+super_particle = part_type_create();
+part_type_sprite(super_particle,spr_activate_super,true,true,false);
+part_type_life(super_particle,30,30);
+part_type_size(super_particle,0.5,0.5,0.5/60,0);
+part_type_blend(super_particle,true);
+part_type_alpha3(super_particle,1,1,0);
+
+ultimate_particle = part_type_create();
+part_type_sprite(ultimate_particle,spr_activate_ultimate,true,true,false);
+part_type_life(ultimate_particle,30,30);
+part_type_size(ultimate_particle,0.5,0.5,0.5/60,0);
+part_type_blend(ultimate_particle,true);
+part_type_alpha3(ultimate_particle,1,1,0);
 
 function update_particles() {
 	part_system_update(particle_system);

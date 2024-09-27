@@ -89,7 +89,7 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 			owner = owner.owner;
 		}
 		init_sprite(_sprite);
-		change_sprite(sprite,3,true);
+		change_sprite(sprite,max(1,round(60/sprite_get_speed(_sprite))),true);
 		xscale = _scale;
 		yscale = _scale;
 		width = min(sprite_get_width(sprite),sprite_get_height(sprite)) * _scale * 0.69;
@@ -99,7 +99,7 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 		
 		hitbox = create_hitbox(-width/2,-height/2,width,height,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect);
 		hitbox.duration = -1;
-		attack_power = 1;
+		attack_power = owner.attack_power;
 		
 		xspeed = _xspeed * owner.facing;
 		yspeed = _yspeed;
