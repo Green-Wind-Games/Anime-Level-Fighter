@@ -257,13 +257,13 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		true_attacker = true_attacker.owner;
 	}
 	
-	mp += mp_gain * defend_mp_multiplier;
-	xp += xp_gain * defend_mp_multiplier;
+	mp += mp_gain * _defend_multiplier;
+	xp += xp_gain * _defend_multiplier;
 	with(true_attacker) {
 		if !super_active {
-			mp += mp_gain * attack_mp_multiplier;
+			mp += mp_gain * _attack_multiplier;
 		}
-		xp += xp_gain * attack_mp_multiplier;
+		xp += xp_gain * _attack_multiplier;
 	}
 	
 	if on_wall {

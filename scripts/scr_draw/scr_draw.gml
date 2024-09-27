@@ -281,8 +281,8 @@ function draw_playerhud() {
 	var hud_yscale = 1 / ceil(active_players / 2);
 
 	var hp_border_width = (hud_w) - (_spacing * 2);
-	var mp_border_width = hp_border_width * 0.9;
-	var tp_border_width = mp_border_width * 0.3;
+	var mp_border_width = hp_border_width * 0.8;
+	var tp_border_width = mp_border_width * 0.5;
 	var xp_border_width = tp_border_width * 0.5;
 	var hp_xscale = hp_border_width / sprite_get_width(spr_bar_hp_border);
 	var mp_xscale = mp_border_width / sprite_get_width(spr_bar_mp_border);
@@ -534,7 +534,7 @@ function draw_playerhud() {
 			}
 			for(var ii = 1; ii < xp_segments; ii++) {
 				var xp_segment_x = map_value(ii,0,xp_segments,xp_bar_x1,xp_bar_x2) - (_right*2);
-				draw_set_color(c_white);
+				draw_set_color(c_black);
 				draw_rectangle(xp_segment_x,xp_bar_y1,xp_segment_x+1,xp_bar_y2,false);
 			}
 			

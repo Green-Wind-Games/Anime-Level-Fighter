@@ -205,8 +205,13 @@ function check_charge() {
 		if (input.charge) return true;
 	}
 	else {
-		if mp >= max_mp return false;
-		if target_distance_x < 200 return false;
+		if mp >= max_mp {
+			if xp >= (max_xp * 0.8) {
+				return true;
+			}
+			return false;
+		}
+		if target_distance_x < 256 return false;
 		if active_state == charge_state return true;
 		if random(100) < 5 return true;
 	}

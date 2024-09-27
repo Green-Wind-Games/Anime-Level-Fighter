@@ -14,7 +14,7 @@ function init_goku_baseform() {
 	kaioken_duration = 10 * 60;
 	kaioken_buff = 1.25;
 	kaioken_color = make_color_rgb(255,128,128);
-	kaioken_min_hp = map_value(transform_min_hp_percent+1,0,100,0,max_hp);
+	kaioken_min_hp = (max_hp / 10);
 
 	spirit_bomb_shot = noone;
 
@@ -33,22 +33,9 @@ function init_goku_baseform() {
 	char_script = function() {
 		kamehameha_cooldown -= 1;
 		var _kaioken_active = kaioken_active;
-		kaioken_min_hp = map_value(transform_min_hp_percent+1,0,100,0,max_hp);
-		if target_exists() {
-			var level_difference = target.level - level
-			if level_difference > 0 {
-				kaioken_min_hp += map_value(
-					transform_late_hp_percent_increase*level_difference,
-					0,
-					100,
-					0,
-					max_hp
-				);
-			}
-		}
-		if level >= max_level {
-			kaioken_min_hp = 1;
-		}
+		//if level >= max_level {
+		//	kaioken_min_hp = 1;
+		//}
 		if dead or hp <= kaioken_min_hp {
 			kaioken_timer = 0;
 		}
