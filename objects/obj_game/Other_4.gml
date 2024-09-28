@@ -11,8 +11,17 @@ stop_music();
 
 ground_height = room_height - round(game_height * 0.25);
 
+var active_players = 0;
+for(var i = 0; i < array_length(player_slot); i++) {
+	if player_slot[i] != noone {
+		active_players++;
+	}
+}
+var _w = game_width / 3;
+var _w2 = _w / 2;
+
 switch(room) {
-	case rm_charselect:
+	case rm_versus_charselect:
 	for(var i = 0; i < array_length(player_slot); i++) {
 		player_ready[i] = false;
 	}
@@ -35,16 +44,8 @@ switch(room) {
 	left_wall = 0;
 	right_wall = room_width;
 		
-	var _w = game_width / 3;
-	var _w2 = _w / 2;
 	var _x1 = battle_x - _w2;
 	var _x2 = battle_x + _w2;
-	var active_players = 0;
-	for(var i = 0; i < array_length(player_slot); i++) {
-		if player_slot[i] != noone {
-			active_players++;
-		}
-	}
 	var spawned_players = 0;
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
@@ -83,6 +84,35 @@ switch(room) {
 		//case rm_namek:
 		//ground_sprite = spr_namek_ground;
 		//break;
+	}
+	break;
+	
+	case rm_versus_results:
+	var placed_players = 0;
+	var _x1 = (room_width / 2) - _w2;
+	var _x2 = (room_width / 2) + _w2;
+	var team1_score = get_team_score(1);
+	var team2_score = get_team_score(2);
+	with(obj_char) {
+		x = map_value(placed_players,0,active_players-1,_x1,_x2);
+		y = ground_height;
+		placed_players++;
+		reset_sprite();
+		target = target_closest_enemy();
+		face_target();
+		yscale = (game_height / 8) / height;
+		if ((team == 1) and (team1_score > team2_score))
+		or ((team == 2) and (team2_score > team1_score)) {
+			change_state(victory_state);
+			yscale *= 1.5;
+			depth = 0;
+		}
+		else {
+			change_state(defeat_state);
+			depth = 99;
+		}
+		xscale = yscale;
+		yoffset = ((-game_height/2) + (height_half * yscale));
 	}
 	break;
 }

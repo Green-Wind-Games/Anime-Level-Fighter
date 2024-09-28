@@ -17,6 +17,10 @@ enum gamestates {
 	story_battle,
 	story_results,
 	
+	arcade_select,
+	arcade_battle,
+	arcade_results,
+	
 	versus_setup,
 	versus_select,
 	versus_intro,
@@ -24,7 +28,9 @@ enum gamestates {
 	versus_results,
 	
 	training_select,
-	training
+	training,
+	
+	credits
 }
 
 enum roundstates {

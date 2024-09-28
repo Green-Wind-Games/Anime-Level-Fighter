@@ -37,6 +37,15 @@ if keyboard_check_pressed(vk_pageup) {
 		xp = max_xp;
 	}
 }
+if keyboard_check_pressed(vk_delete) {
+	with(player[0]) {
+		dead = true;
+		take_damage(noone,max_hp * 10,true);
+		change_state(hard_knockdown_state);
+		xspeed = -3 * facing;
+		yspeed = -5;
+	}
+}
 
 with(all) {
 	visible = false;

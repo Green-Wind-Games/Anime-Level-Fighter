@@ -49,6 +49,7 @@
     {"name":"rm_start","order":1,"path":"rooms/rm_start/rm_start.yy",},
     {"name":"rm_titlescreen","order":4,"path":"rooms/rm_titlescreen/rm_titlescreen.yy",},
     {"name":"rm_training","order":2,"path":"rooms/rm_training/rm_training.yy",},
+    {"name":"rm_versus_results","order":6,"path":"rooms/rm_versus_results/rm_versus_results.yy",},
     {"name":"rm_versus","order":2,"path":"rooms/rm_versus/rm_versus.yy",},
     {"name":"scr_audio","order":1,"path":"scripts/scr_audio/scr_audio.yy",},
     {"name":"scr_charmoves","order":2,"path":"scripts/scr_charmoves/scr_charmoves.yy",},

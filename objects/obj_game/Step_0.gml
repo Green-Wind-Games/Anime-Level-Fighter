@@ -4,6 +4,9 @@ var _nextstate = next_game_state;
 switch(game_state) {
 	default:
 	game_state++;
+	if game_state > gamestates.credits {
+		game_state = 0;
+	}
 	break;
 	
 	case gamestates.main_menu:
@@ -18,6 +21,7 @@ switch(game_state) {
 				["Modo Arcade",-1],
 				["Modo Versus",goto_versus_select],
 				["Treinamento",-1],
+				["Configurações",-1],
 				["Sair do Jogo",game_end]
 			],
 			"Menu Principal"
@@ -32,10 +36,19 @@ switch(game_state) {
 	break;
 	
 	case gamestates.versus_intro:
-	// check inputs to speed up this screen
+	if screen_fade_alpha == 0 {
+		for(var i = 0; i < array_length(player_slot); i++) {
+			if player_slot[i] != noone {
+				if player_input[player_slot[i]].confirm {
+					game_state_timer = game_state_duration-screen_fade_duration;
+				}
+			}
+		}
+	}
 	break;
 	
 	case gamestates.story_battle:
+	case gamestates.arcade_battle:
 	case gamestates.versus_battle:
 	case gamestates.training:
 	if keyboard_check_pressed(ord("P")) {
@@ -48,6 +61,19 @@ switch(game_state) {
 	}
 	if round_state != roundstates.pause {
 		update_fight();
+	}
+	break;
+	
+	case gamestates.versus_results:
+	if (game_state_timer > (5 * 60)) and (next_game_state == -1) {
+		for(var i = 0; i < array_length(player_slot); i++) {
+			if player_slot[i] != noone {
+				if player_input[player_slot[i]].confirm {
+					next_game_state = gamestates.versus_select;
+					game_state_duration = screen_fade_duration;
+				}
+			}
+		}
 	}
 	break;
 }
@@ -84,10 +110,8 @@ if _gamestate != game_state {
 		room_goto(rm_mainmenu);
 		break;
 		
-		case gamestates.story_select:
 		case gamestates.versus_select:
-		case gamestates.training_select:
-		room_goto(rm_charselect);
+		room_goto(rm_versus_charselect);
 		break;
 		
 		case gamestates.versus_intro:
@@ -101,6 +125,15 @@ if _gamestate != game_state {
 		case gamestates.training:
 		texture_prefetch("SpecialEffects");
 		room_goto(stage);
+		break;
+		
+		case gamestates.versus_results:
+		with(obj_char) {
+			persistent = input.persistent;
+			hp = max_hp;
+			dead = false;
+		}
+		room_goto(rm_versus_results);
 		break;
 	}
 }

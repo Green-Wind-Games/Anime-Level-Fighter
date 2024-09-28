@@ -16,3 +16,17 @@ function map_value(_value, _current_lower_bound, _current_upper_bound, _desired_
 function value_in_range(_value, _min, _max) {
 	return (_value >= _min) and (_value <= _max);
 }
+
+function get_team_score(_team = team) {
+	var team_score = 100 * max_level * 4;
+	with(obj_char) {
+		if team == _team {
+			team_score -= 100 * level;
+			team_score += clamp(hp_percent,0,100);
+			if dead {
+				team_score -= 100;
+			}
+		}
+	}
+	return team_score;
+}

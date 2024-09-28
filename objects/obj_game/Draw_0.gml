@@ -3,8 +3,12 @@
 
 switch(game_state) {
 	case gamestates.story_battle:
+	case gamestates.arcade_battle:
 	case gamestates.versus_battle:
 	case gamestates.training:
+	case gamestates.story_results:
+	case gamestates.arcade_results:
+	case gamestates.versus_results:
 	draw_ground();
 	
 	//draw_player_outlines();

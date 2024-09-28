@@ -69,7 +69,7 @@ function update_view() {
 	var _x2 = 0;
 	var _y2 = 0;
 	with(obj_char) {
-		if ((!dead) or (xspeed != 0) or (yspeed != 0)) and (!is_helper(id)) {
+		if ((!dead) or (xspeed != 0) or (yspeed != 0)) and is_char(id) {
 			_x1 = min(_x1,x-width_half);
 			_y1 = min(_y1,y-height);
 			_x2 = max(_x2,x+width_half);
@@ -79,16 +79,16 @@ function update_view() {
 	
 	var playerdist = abs(_x1 - _x2);
 	var max_dist = (right_wall-left_wall) + 30;
-	var desired_zoom = game_width / (min(playerdist+100,max_dist));
-	desired_zoom = min(desired_zoom,1.2);
+	var desired_zoom = game_width / (min(playerdist+50,max_dist));
+	desired_zoom = min(desired_zoom,1.25);
 	if superfreeze_active {
-		desired_zoom = 1.25;
-		screen_zoom_target = superfreeze_activator;
+		desired_zoom = 1.35;
 	}
-	else {
+	if game_state == gamestates.versus_results {
+		desired_zoom = 1;
 		screen_zoom_target = noone;
 	}
-	screen_zoom = approach(screen_zoom,desired_zoom,1/15);
+	screen_zoom = approach(screen_zoom,desired_zoom,1/10);
 	
 	var _w = round(game_width / screen_zoom);
 	var _h = round(game_height / screen_zoom);
@@ -96,11 +96,11 @@ function update_view() {
 	var _h2 = round(_h/2);
 	
 	var _view_x = mean(_x1,_x2);
-	var _view_y = lerp(_y1,_y2,0.25);
+	var _view_y = lerp(_y1,_y2,0.2);
 	
-	if screen_zoom_target != noone {
-		_view_x = screen_zoom_target.x;
-		_view_y = screen_zoom_target.y-screen_zoom_target.height_half;
+	if superfreeze_active {
+		_view_x = superfreeze_activator.x;
+		_view_y = superfreeze_activator.y-superfreeze_activator.height_half;
 	}
 	
 	_view_x = clamp(_view_x,_w2,room_width-_w2-1);

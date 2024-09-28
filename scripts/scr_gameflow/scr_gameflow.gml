@@ -51,24 +51,8 @@ function update_fight() {
 		}
 	}
 	else if round_state == roundstates.victory {
-		var team1_score = 100 * max_level * 4;
-		var team2_score = team1_score;
-		with(obj_char) {
-			if team == 1 {
-				team1_score -= 100 * level;
-				team1_score += clamp(hp_percent,0,100);
-				if dead {
-					team1_score -= 100;
-				}
-			}
-			else {
-				team2_score -= 100 * level;
-				team2_score += clamp(hp_percent,0,100);
-				if dead {
-					team2_score -= 100;
-				}
-			}
-		}
+		var team1_score = get_team_score(1);
+		var team2_score = get_team_score(2);
 		var ready = true;
 		with(obj_char) {
 			if active_state == idle_state {
@@ -85,7 +69,10 @@ function update_fight() {
 			if state_timer < 60 { ready = false; }
 		}
 		if ready {
-			next_game_state = gamestates.versus_select;
+			next_game_state = game_state + 1;
+			if next_game_state == gamestates.training + 1 {
+				next_game_state = gamestates.training;
+			}
 			game_state_duration = screen_fade_duration;
 		}
 	}
