@@ -77,20 +77,51 @@ function charselect_changechars() {
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
 			if !player_ready[i] {
+				var _previous_char = player_char[i];
 				if player_input[player_slot[i]].left_pressed {
-					player_char[i]--;
-					play_sound(snd_menu_scroll);
+					if (player_char[i] mod chars_per_row) == 0 {
+						player_char[i] += chars_per_row-1;
+					}
+					else {
+						player_char[i] -= 1;
+					}
 				}
 				if player_input[player_slot[i]].right_pressed {
-					player_char[i]++;
-					play_sound(snd_menu_scroll);
+					if (player_char[i] mod chars_per_row) == chars_per_row-1 {
+						player_char[i] -= chars_per_row-1;
+					}
+					else {
+						player_char[i] += 1;
+					}
+				}
+				if player_input[player_slot[i]].up_pressed {
+					if player_char[i] <= chars_per_row {
+						player_char[i] = max_characters - (player_char[i] mod chars_per_row);
+					}
+					else {
+						player_char[i] -= chars_per_row;
+					}
+				}
+				if player_input[player_slot[i]].down_pressed {
+					if player_char[i] >= max_characters - chars_per_row {
+						player_char[i] = player_char[i] mod chars_per_row;
+					}
+					else {
+						player_char[i] += chars_per_row;
+					}
 				}
 				if player_input[player_slot[i]].char_random mod 6 == 1 {
-					var _char = player_char[i];
-					while(player_char[i] == _char) {
+					while(player_char[i] == _previous_char) {
 						player_char[i] = irandom(max_characters-1);
 					}
-					play_sound(snd_menu_scroll,0.5,1.25);
+				}
+				if player_char[i] != _previous_char {
+					if player_input[player_slot[i]].char_random {
+						play_sound(snd_menu_scroll,0.5,1.25);
+					}
+					else {
+						play_sound(snd_menu_scroll);
+					}
 				}
 			}
 			if player_char[i] < 0 {
@@ -168,12 +199,23 @@ function draw_charselect() {
 			draw_set_font(fnt_menu);
 			draw_set_halign(fa_center);
 			draw_set_valign(fa_top);
-			var _text = "Player " + string(i+1); 
+			var _text = "Player " + string(i+1);
+			with(player_input[player_slot[i]]) {
+				_text += " (";
+				switch(type) {
+					case input_types.joystick: _text += "Controle " + string(pad + 1); break;
+					case input_types.wasd: _text += "Teclado WASD"; break;
+					case input_types.numpad: _text += "Teclado Setas"; break;
+					case input_types.touch: _text += "Toque de Tela"; break;
+					case input_types.ai: _text += "Bot"; break;
+				}
+				_text += ")";
+			}
 			_text += "\n" + get_char_name(player_char[i]);
 			if player_ready[i] {
 				_text += "\n" + "OK!";
 			}
-			draw_text_outlined(_x,_y,_text,c_black,player_color[i]);
+			draw_text_outlined(_x,_y,_text,c_black,player_color[i],0.75);
 			_x += _w2;
 		}
 	}

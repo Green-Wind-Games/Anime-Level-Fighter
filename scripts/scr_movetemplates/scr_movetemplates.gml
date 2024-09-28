@@ -198,7 +198,11 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 }
 
 function check_charge() {
-	//if mp >= max_mp return false;
+	if mp >= max_mp {
+		if level >= max_level {
+			return false;
+		}
+	}
 	if !is_char(id) return false;
 	if (previous_state == charge_state) and (state_timer < 30) return false;
 	if (!ai_enabled) {
@@ -206,10 +210,9 @@ function check_charge() {
 	}
 	else {
 		if mp >= max_mp {
-			if xp >= (max_xp * 0.8) {
-				return true;
+			if xp < (max_xp * 0.8) {
+				return false;
 			}
-			return false;
 		}
 		if target_distance_x < 256 return false;
 		if active_state == charge_state return true;

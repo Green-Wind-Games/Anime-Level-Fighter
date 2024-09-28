@@ -10,6 +10,11 @@ init_view();
 stop_music();
 
 ground_height = room_height - round(game_height * 0.25);
+		
+battle_x = room_width / 2;
+battle_y = -game_height;
+left_wall = 0;
+right_wall = room_width;
 
 var active_players = 0;
 for(var i = 0; i < array_length(player_slot); i++) {
@@ -35,42 +40,39 @@ switch(room) {
 	break;
 	
 	case stage:
-	round_state = roundstates.intro;
-	round_timer = round_timer_max;
-	round_state_timer = 0;
+	if round_state != roundstates.fight {
+		round_state = roundstates.intro;
+		round_timer = round_timer_max;
+		round_state_timer = 0;
 		
-	battle_x = room_width / 2;
-	battle_y = -game_height;
-	left_wall = 0;
-	right_wall = room_width;
-		
-	var _x1 = battle_x - _w2;
-	var _x2 = battle_x + _w2;
-	var spawned_players = 0;
-	for(var i = 0; i < array_length(player_slot); i++) {
-		if player_slot[i] != noone {
-			var _x = map_value(spawned_players,0,active_players-1,_x1,_x2);
-			var _y = battle_y;
-			with(instance_create(_x,_y,get_char_object(player_char[i]))) {
-				player[i] = id;
-				input = player_input[player_slot[i]];
-				if x <= battle_x {
-					team = 1;
-					facing = 1;
+		var _x1 = battle_x - _w2;
+		var _x2 = battle_x + _w2;
+		var spawned_players = 0;
+		for(var i = 0; i < array_length(player_slot); i++) {
+			if player_slot[i] != noone {
+				var _x = map_value(spawned_players,0,active_players-1,_x1,_x2);
+				var _y = battle_y;
+				with(instance_create(_x,_y,get_char_object(player_char[i]))) {
+					player[i] = id;
+					input = player_input[player_slot[i]];
+					if x <= battle_x {
+						team = 1;
+						facing = 1;
+					}
+					else {
+						team = 2;
+						facing = -1;
+					}
+					change_state(enter_state);
 				}
-				else {
-					team = 2;
-					facing = -1;
-				}
-				change_state(enter_state);
+				spawned_players++;
 			}
-			spawned_players++;
 		}
-	}
 	
-	stop_music();
-	var picked_player = instance_find(obj_char,irandom(instance_number(obj_char)-1));
-	play_music(picked_player.theme);
+		stop_music();
+		var picked_player = instance_find(obj_char,irandom(instance_number(obj_char)-1));
+		play_music(picked_player.theme);
+	}
 	
 	switch(room) {
 		default:

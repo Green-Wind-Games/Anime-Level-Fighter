@@ -139,7 +139,7 @@ tp_stock_size = 8 * 60;
 max_tp_stocks = 4;
 max_tp = max_tp_stocks * tp_stock_size;
 
-max_xp = 10000;
+max_xp = 1000;
 max_level = 5;
 level_scaling = 0.35;
 

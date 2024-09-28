@@ -365,4 +365,6 @@ function init_genos_voice() {
 	voice_hurt_heavy[i++] = snd_genos_hurt_heavy2;
 	//i = 0;
 	//voice_powerup[i++] = snd_genos_powerup;
+	i = 0;
+	voice_intro[i++] = snd_genos_intro;
 }
