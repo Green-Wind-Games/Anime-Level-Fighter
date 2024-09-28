@@ -9,6 +9,8 @@ init_view();
 
 stop_music();
 
+screen_fade_type = fade_types.normal;
+
 ground_height = room_height - round(game_height * 0.25);
 		
 battle_x = room_width / 2;
@@ -36,11 +38,13 @@ switch(room) {
 	break;
 	
 	case rm_versus:
+	screen_fade_type = fade_types.bottom;
 	play_music(mus_slammasters_versus);
 	break;
 	
 	case stage:
 	if round_state != roundstates.fight {
+		screen_fade_type = fade_types.bottom;
 		round_state = roundstates.intro;
 		round_timer = round_timer_max;
 		round_state_timer = 0;

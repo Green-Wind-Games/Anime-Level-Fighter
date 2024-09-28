@@ -42,11 +42,7 @@ switch(game_state) {
 
 draw_menu();
 
-if screen_fade_alpha > 0 {
-	draw_set_alpha(screen_fade_alpha);
-	draw_set_color(screen_fade_color);
-	draw_rectangle(0,0,_w,_h,false);
-}
+draw_screenfade();
 
 draw_set_color(c_white);
 draw_set_alpha(1);

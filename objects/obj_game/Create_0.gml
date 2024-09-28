@@ -43,6 +43,14 @@ enum roundstates {
 	victory
 }
 
+enum fade_types {
+	normal,
+	bottom,
+	top,
+	left,
+	right
+}
+
 globalvar	player, player_char, player_input,
 			player_slot, player_ready, ready_timer,
 			player_color,
@@ -69,7 +77,7 @@ globalvar	player, player_char, player_input,
 			screen_overlay_sprite, screen_overlay_timer,
 			screen_zoom, screen_zoom_target,
 			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha,
-			screen_fade_alpha, screen_fade_color, screen_fade_duration;
+			screen_fade_color, screen_fade_duration, screen_fade_type;
 			
 for(var i = 0; i < 8; i++) {
 	player[i] = noone;
@@ -169,8 +177,8 @@ screen_overlay_timer = 0;
 screen_overlay_alpha = 1;
 
 screen_fade_color = c_black;
-screen_fade_alpha = 1;
-screen_fade_duration = 20;
+screen_fade_duration = 30;
+screen_fade_type = fade_types.normal;
 
 screen_zoom = 1;
 screen_zoom_target = noone;

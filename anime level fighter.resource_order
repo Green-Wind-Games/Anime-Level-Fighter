@@ -251,6 +251,7 @@
     {"name":"spr_explosion_floor","order":3,"path":"sprites/spr_explosion_floor/spr_explosion_floor.yy",},
     {"name":"spr_explosion","order":2,"path":"sprites/spr_explosion/spr_explosion.yy",},
     {"name":"spr_fade_bottom","order":65,"path":"sprites/spr_fade_bottom/spr_fade_bottom.yy",},
+    {"name":"spr_fade_top","order":66,"path":"sprites/spr_fade_top/spr_fade_top.yy",},
     {"name":"spr_fire_spark","order":5,"path":"sprites/spr_fire_spark/spr_fire_spark.yy",},
     {"name":"spr_fireball","order":45,"path":"sprites/spr_fireball/spr_fireball.yy",},
     {"name":"spr_genkidama","order":27,"path":"sprites/spr_genkidama/spr_genkidama.yy",},

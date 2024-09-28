@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":3.372937,
+  "duration":1.928542,
   "name":"snd_goku_intro2",
   "parent":{
     "name":"Goku Voice",

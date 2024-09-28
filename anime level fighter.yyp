@@ -284,6 +284,7 @@
     {"id":{"name":"spr_explosion_floor","path":"sprites/spr_explosion_floor/spr_explosion_floor.yy",},},
     {"id":{"name":"spr_explosion","path":"sprites/spr_explosion/spr_explosion.yy",},},
     {"id":{"name":"spr_fade_bottom","path":"sprites/spr_fade_bottom/spr_fade_bottom.yy",},},
+    {"id":{"name":"spr_fade_top","path":"sprites/spr_fade_top/spr_fade_top.yy",},},
     {"id":{"name":"spr_fire_spark","path":"sprites/spr_fire_spark/spr_fire_spark.yy",},},
     {"id":{"name":"spr_fireball","path":"sprites/spr_fireball/spr_fireball.yy",},},
     {"id":{"name":"spr_genkidama","path":"sprites/spr_genkidama/spr_genkidama.yy",},},
