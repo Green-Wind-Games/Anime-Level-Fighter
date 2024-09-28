@@ -710,4 +710,6 @@ function init_goku_voice() {
 	voice_powerup[i++] = snd_goku_powerup2;
 	i = 0;
 	voice_transform[i++] = snd_goku_scream_transform;
+	i = 0;
+	voice_intro[i++] = snd_goku_intro;
 }

@@ -534,7 +534,6 @@ function init_goku_ssj() {
 	add_move(angry_kamehameha,"EC");
 
 	add_move(activate_ssj2,"D");
-	add_move(spirit_bomb,"ED");
 
 	victory_state.run = function() {
 		ssj2_timer = 0;

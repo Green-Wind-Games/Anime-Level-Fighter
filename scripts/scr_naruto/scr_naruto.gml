@@ -25,6 +25,8 @@ function init_naruto_baseform() {
 	transform_aura = spr_aura_chakra;
 	
 	set_substitution_jutsu();
+	
+	init_naruto_voice();
 
 	char_script = function() {
 		rasengan_cooldown--;
@@ -44,33 +46,6 @@ function init_naruto_baseform() {
 		}
 	}
 	
-	voice_volume_mine = 2;
-	
-	var i = 0;
-	voice_attack[i++] = snd_naruto_attack;
-	voice_attack[i++] = snd_naruto_attack2;
-	voice_attack[i++] = snd_naruto_attack3;
-	voice_attack[i++] = snd_naruto_attack4;
-	i = 0;
-	voice_heavyattack[i++] = snd_naruto_heavyattack;
-	voice_heavyattack[i++] = snd_naruto_heavyattack2;
-	voice_heavyattack[i++] = snd_naruto_heavyattack3;
-	voice_heavyattack[i++] = snd_naruto_heavyattack4;
-	voice_heavyattack[i++] = snd_naruto_attack4;
-	i = 0;
-	voice_hurt[i++] = snd_naruto_hurt;
-	voice_hurt[i++] = snd_naruto_hurt2;
-	voice_hurt[i++] = snd_naruto_hurt3;
-	voice_hurt[i++] = snd_naruto_hurt4;
-	i = 0;
-	voice_hurt_heavy[i++] = snd_naruto_hurt_heavy;
-	i = 0;
-	voice_powerup[i++] = snd_naruto_powerup;
-	voice_powerup[i++] = snd_naruto_powerup2;
-	voice_powerup[i++] = snd_naruto_powerup3;
-	i = 0;
-	voice_transform[i++] = snd_naruto_powerup;
-
 	var i = 0;
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
@@ -1282,4 +1257,35 @@ function init_naruto_baseform() {
 		}
 		gpu_set_blendmode(bm_normal);
 	}
+}
+
+function init_naruto_voice() {
+	voice_volume_mine = 1.5;
+	
+	var i = 0;
+	voice_attack[i++] = snd_naruto_attack;
+	voice_attack[i++] = snd_naruto_attack2;
+	voice_attack[i++] = snd_naruto_attack3;
+	voice_attack[i++] = snd_naruto_attack4;
+	i = 0;
+	voice_heavyattack[i++] = snd_naruto_heavyattack;
+	voice_heavyattack[i++] = snd_naruto_heavyattack2;
+	voice_heavyattack[i++] = snd_naruto_heavyattack3;
+	voice_heavyattack[i++] = snd_naruto_heavyattack4;
+	voice_heavyattack[i++] = snd_naruto_attack4;
+	i = 0;
+	voice_hurt[i++] = snd_naruto_hurt;
+	voice_hurt[i++] = snd_naruto_hurt2;
+	voice_hurt[i++] = snd_naruto_hurt3;
+	voice_hurt[i++] = snd_naruto_hurt4;
+	i = 0;
+	voice_hurt_heavy[i++] = snd_naruto_hurt_heavy;
+	i = 0;
+	voice_powerup[i++] = snd_naruto_powerup;
+	voice_powerup[i++] = snd_naruto_powerup2;
+	voice_powerup[i++] = snd_naruto_powerup3;
+	i = 0;
+	voice_transform[i++] = snd_naruto_powerup;
+	i = 0;
+	voice_intro[i++] = snd_naruto_intro;
 }

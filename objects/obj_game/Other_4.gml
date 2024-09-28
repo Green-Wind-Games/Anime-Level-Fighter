@@ -40,7 +40,7 @@ switch(room) {
 	round_state_timer = 0;
 		
 	battle_x = room_width / 2;
-	battle_y = ground_height;
+	battle_y = -game_height;
 	left_wall = 0;
 	right_wall = room_width;
 		
@@ -62,7 +62,7 @@ switch(room) {
 					team = 2;
 					facing = -1;
 				}
-				change_state(intro_state);
+				change_state(enter_state);
 			}
 			spawned_players++;
 		}
@@ -90,21 +90,27 @@ switch(room) {
 	case rm_versus_results:
 	var placed_players = 0;
 	var _x1 = (room_width / 2) - _w2;
-	var _x2 = (room_width / 2) + _w2;
+	var _x2 = _x1 + _w;
 	var team1_score = get_team_score(1);
 	var team2_score = get_team_score(2);
 	with(obj_char) {
 		x = map_value(placed_players,0,active_players-1,_x1,_x2);
 		y = ground_height;
 		placed_players++;
+		
 		reset_sprite();
-		target = target_closest_enemy();
-		face_target();
+		if team == 1 {
+			facing = 1;
+		}
+		else {
+			facing = -1;
+		}
+		
 		yscale = (game_height / 8) / height;
 		if ((team == 1) and (team1_score > team2_score))
 		or ((team == 2) and (team2_score > team1_score)) {
 			change_state(victory_state);
-			yscale *= 1.5;
+			yscale *= 2;
 			depth = 0;
 		}
 		else {
@@ -112,7 +118,10 @@ switch(room) {
 			depth = 99;
 		}
 		xscale = yscale;
-		yoffset = ((-game_height/2) + (height_half * yscale));
+		yoffset = (((-game_height/2) + (room_height-ground_height)) + (height_half * yscale));
+		
+		dead = false;
+		hp = max_hp;
 	}
 	break;
 }

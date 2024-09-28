@@ -34,6 +34,10 @@ switch(game_state) {
 		draw_timeover();
 	}
 	break;
+	
+	case gamestates.versus_results:
+	draw_versus_results();
+	break;
 }
 
 draw_menu();

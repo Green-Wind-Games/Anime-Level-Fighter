@@ -110,7 +110,7 @@ if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
 hp = clamp(round(hp),0,max_hp);
 mp = clamp(round(mp),0,max_mp);
 tp = clamp(round(tp),0,max_tp);
-xp = clamp(round(xp),0,max_xp);
+xp = clamp(round(xp),0,max_xp * (level < max_level));
 		
 hp_percent = (hp/max_hp)*100;
 mp_percent = (mp/max_mp)*100;

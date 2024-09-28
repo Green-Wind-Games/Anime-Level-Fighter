@@ -23,8 +23,12 @@ enum playerchars {
 	allchars
 }
 
-globalvar max_characters;
+globalvar	max_characters, 
+			chars_per_row, chars_per_column;
+			
 max_characters = playerchars.allchars;
+chars_per_row = min(max_characters,6);
+chars_per_column = ceil(max_characters / chars_per_row);
 
 function update_charselect() {
 	if (game_state_duration == -1) {
@@ -151,10 +155,10 @@ function draw_charselect() {
 	}
 	var _w = gui_width;
 	var _h = gui_height;
-	var _w2 = _w / (active_players+1);
+	var _w2 = _w / max(2,active_players+1);
 	var _h2 = _h / 2;
 	var _x = _w2;
-	var _y = _h2;
+	var _y = _h * 0.65;
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
 			var _xscale = 1;
@@ -176,12 +180,66 @@ function draw_charselect() {
 	if ready_timer <= 0 {
 		draw_set_font(fnt_menu);
 		draw_set_halign(fa_center);
-		draw_set_valign(fa_middle);
-		draw_text_outlined(_w/2,_h/8,"Pronto para iniciar!",c_black,c_white);
+		draw_set_valign(fa_bottom);
+		draw_text_outlined(_w/2,_h * 0.95,"Pronto para iniciar!",c_black,c_white);
 	}
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);
 	draw_set_color(c_white);
+	
+	draw_charselect_boxes();
+}
+
+function draw_charselect_boxes() {
+	var box_size = ceil(200 / chars_per_row);
+	var icon_size = ceil(box_size * 0.75);
+	
+	var _w = gui_width;
+	var _h = gui_height;
+	var _w2 = _w / 2;
+	var _h2 = _h / 2;
+	var _x = _w2 - (box_size * (chars_per_row / 2));
+	var _y = box_size / 2;
+	
+	var _char_i = 0;
+	
+	for(var i = 0; i < chars_per_column; i++) {
+		for(var ii = 0; ii < chars_per_row; ii++) {
+			var _x1 = _x + (box_size * ii);
+			var _y1 = _y + (box_size * i);
+			var _x2 = _x1 + box_size - 1;
+			var _y2 = _y1 + box_size - 1;
+			
+			draw_set_color(c_black);
+			draw_set_alpha(0.5);
+			for(var iii = 0; iii < array_length(player_slot); iii++) {
+				if player_slot[iii] == noone continue;
+				if player_char[iii] != _char_i continue;
+				
+				if draw_get_color() == c_black {
+					draw_set_color(player_color[iii]);
+				}
+				else {
+					draw_set_color(merge_color(draw_get_color(),player_color[iii],0.5));
+				}
+				draw_set_alpha(1);
+			}
+			draw_rectangle(_x1,_y1,_x2,_y2,false);
+			draw_set_alpha(1);
+			draw_set_color(c_white);
+			draw_rectangle(_x1,_y1,_x2,_y2,true);
+			
+			var _icon = get_char_icon(_char_i);
+			if sprite_exists(_icon) {
+				var _icon_scale = icon_size / min(sprite_get_width(_icon),sprite_get_height(_icon));
+				var _icon_xscale = _icon_scale;
+				if ii >= (chars_per_row / 2) { _icon_xscale *= -1; }
+				draw_sprite_ext(_icon,0,mean(_x1,_x2),mean(_y1,_y2),_icon_xscale,_icon_scale,0,c_white,1);
+			}
+			
+			_char_i++;
+		}
+	}
 }
 
 function get_char_sprite(_id) {
@@ -201,6 +259,16 @@ function get_char_portrait(_id) {
 		case playerchars.naruto: return spr_naruto_portrait; break;
 		
 		case playerchars.genos: return spr_genos_portrait; break;
+	}
+}
+
+function get_char_icon(_id) {
+	switch(_id) {
+		case playerchars.goku: return spr_goku_icon; break;
+		
+		case playerchars.naruto: return spr_naruto_icon; break;
+		
+		case playerchars.genos: return spr_genos_icon; break;
 	}
 }
 

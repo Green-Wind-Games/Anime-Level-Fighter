@@ -34,6 +34,7 @@ function draw_ground() {
 		var ground_y = ground_height-sprite_get_yoffset(ground_sprite);
 		draw_sprite_stretched(ground_sprite,0,ground_x,ground_y,ground_w,ground_h);
 	}
+	draw_char_shadows();
 }
 
 function draw_playerindicators() {
@@ -77,8 +78,6 @@ function draw_my_playerindicator(_playerid = 0) {
 }
 
 function draw_chars() {
-	draw_char_shadows();
-	
 	var draw_order = ds_priority_create();
 	with(obj_char) {
 		ds_priority_add(draw_order,id,depth);
@@ -148,17 +147,14 @@ function draw_char_auras() {
 	with(obj_char) {
 		if sprite_exists(aura_sprite) {
 			gpu_set_blendmode(bm_add);
-			var _scale = mean(
-				width / sprite_get_width(aura_sprite),
-				height / sprite_get_height(aura_sprite),
-			) * 3;
+			var _scale = 3;
 			draw_sprite_ext(
 				aura_sprite,
 				floor(aura_frame),
 				x,
 				y + 5,
-				_scale,
-				_scale,
+				(width / sprite_get_width(aura_sprite)) * _scale,
+				(height / sprite_get_height(aura_sprite)) * _scale,
 				0,
 				c_white,
 				alpha
@@ -681,6 +677,31 @@ function draw_versus() {
 	var _h2 = _h / 2;
 	var _x = _w2;
 	var _y = 0;
+	
+	var _timer = game_state_timer;
+	
+	var _fade_t1 = screen_fade_duration;
+	var _fade_t2 = round(game_state_duration / 2);
+	var _fade_t3 = game_state_duration - screen_fade_duration;
+	var _fade_t4 = game_state_duration;
+	
+	var _t1 = map_value(game_state_timer,0,_fade_t1,0,1);
+	var _t2 = map_value(game_state_timer,_fade_t1,_fade_t2,0,1);
+	var _t3 = map_value(game_state_timer,_fade_t2,_fade_t3,0,1);
+	var _t4 = map_value(game_state_timer,_fade_t3,_fade_t4,0,1);
+	
+	_t1 = clamp(_t1,0,1);
+	_t2 = clamp(_t2,0,1);
+	_t3 = clamp(_t3,0,1);
+	_t4 = clamp(_t4,0,1);
+	
+	if _timer < _fade_t3 {
+		_y -= gui_height * power(map_value(_t2,0,1,1,0),3);
+	}
+	else {
+		_y += gui_height * power(_t4,3);
+	}
+	
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
 			var _portrait = get_char_portrait(player_char[i]);
@@ -691,13 +712,56 @@ function draw_versus() {
 				_xscale *= -1;
 			}
 			
-			draw_sprite_ext(_portrait,0,_x,_y,_xscale,_yscale,0,c_white,1);
+			var _portrait_x = _x;
+			var _portrait_y = _y;
+			
+			if screen_shake_timer > 0 {
+				_portrait_x += random(screen_shake_intensity) * choose(1,-1);
+				_portrait_y += random(screen_shake_intensity) * choose(1,-1);
+			}
+			
+			draw_sprite_ext(
+				_portrait,
+				0,
+				_portrait_x,
+				_portrait_y,
+				_xscale,
+				_yscale,
+				0,
+				c_white,
+				1
+			);
 			_x += _w2;
 		}
 	}
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);
 	draw_set_color(c_white);
+	
+	var vs_scale = (_w / 5) / sprite_get_width(spr_versus);
+	var vs_x = _w / 2;
+	var vs_y = _h * 0.5;
+	if _timer < _fade_t3 {
+		vs_y += gui_height * power(map_value(_t3,0,1,1,0),3);
+	}
+	else {
+		vs_y -= gui_height * power(_t4,3);
+	}
+	if screen_shake_timer > 0 {
+		vs_x += random(screen_shake_intensity) * choose(1,-1);
+		vs_y += random(screen_shake_intensity) * choose(1,-1);
+	}
+	draw_sprite_ext(
+		spr_versus,
+		game_state_timer / 3,
+		vs_x,
+		vs_y,
+		vs_scale,
+		vs_scale,
+		0,
+		c_white,
+		1
+	)
 }
 
 function draw_pause() {
@@ -771,4 +835,52 @@ function draw_menu() {
 			}
 		}
 	}
+}
+
+function draw_versus_results() {
+	var _text = "";
+	var _text_color = c_white;
+	if instance_number(obj_char) == 2 {
+		with(obj_char) {
+			if active_state == victory_state {
+				_text = name + " venceu!";
+				for(var i = 0; i < array_length(player); i++) {
+					if id == player[i] {
+						_text_color = player_color[i];
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+	else {
+		var team_victory = 0;
+		with(obj_char) {
+			if active_state == victory_state {
+				team_victory = team;
+				break;
+			}
+		}
+		if team_victory != 0 {
+			_text = "Time " + string(team_victory) + " venceu!";
+			_text_color = player_color[team_victory*round(array_length(player_color)/2)];
+		}
+	}
+	if _text == "" {
+		_text = "Empate...";
+		_text_color = make_color_rgb(64,64,64);
+	}
+	draw_set_halign(fa_center);
+	draw_set_valign(fa_middle);
+	draw_set_font(fnt_announcer);
+	
+	draw_text_outlined(
+		gui_width / 2,
+		gui_height * 0.8,
+		_text,
+		c_black,
+		_text_color,
+		(gui_height * 0.1) / (string_height(_text))
+	);
 }

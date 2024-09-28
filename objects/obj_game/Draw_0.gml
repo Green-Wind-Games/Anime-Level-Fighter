@@ -6,9 +6,6 @@ switch(game_state) {
 	case gamestates.arcade_battle:
 	case gamestates.versus_battle:
 	case gamestates.training:
-	case gamestates.story_results:
-	case gamestates.arcade_results:
-	case gamestates.versus_results:
 	draw_ground();
 	
 	//draw_player_outlines();
@@ -26,6 +23,15 @@ switch(game_state) {
 	//	draw_set_color(c_white);
 	//	draw_text(x,y,string(dead));
 	//}
+	break;
+	
+	case gamestates.story_results:
+	case gamestates.arcade_results:
+	case gamestates.versus_results:
+	draw_chars();
+	draw_shots();
+	draw_particles();
+	draw_char_auras();
 	break;
 }
 

@@ -746,9 +746,31 @@ function init_charstates() {
 		play_voiceline(voice_intro);
 	}
 	intro_state.run = function() {
-		if !sound_is_playing(voice) 
-		and anim_finished {
+		if !audio_is_playing(voice) and anim_finished {
 			change_state(idle_state);
+		}
+	}
+	
+	enter_state = new state();
+	enter_state.start = function() {
+		change_sprite(air_down_sprite,3,true);
+	}
+	enter_state.run = function() {
+		if sprite == air_down_sprite {
+			if on_ground {
+				yspeed = 0;
+				change_sprite(crouch_sprite,3,false);
+			}
+		}
+		else if sprite == crouch_sprite {
+			if state_timer > 80 {
+				change_sprite(uncrouch_sprite,3,false);
+			}
+		}
+		else if sprite == uncrouch_sprite {
+			if anim_finished {
+				change_state(intro_state);
+			}
 		}
 	}
 	

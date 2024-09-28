@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_genos_hurt_heavy",
+  "%Name":"snd_naruto_intro",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,17 +9,17 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.706313,
-  "name":"snd_genos_hurt_heavy",
+  "duration":2.740723,
+  "name":"snd_naruto_intro",
   "parent":{
-    "name":"Genos Voice",
-    "path":"folders/Chars/One Punch Man/Genos/Genos Voice.yy",
+    "name":"Naruto Voice",
+    "path":"folders/Chars/Naruto Shippuden/Naruto/Naruto Voice.yy",
   },
   "preload":false,
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_genos_hurt_heavy.wav",
+  "soundFile":"snd_naruto_intro.wav",
   "type":0,
   "volume":1.0,
 }

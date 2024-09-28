@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.706313,
+  "duration":0.604646,
   "name":"snd_genos_hurt_heavy2",
   "parent":{
     "name":"Genos Voice",
