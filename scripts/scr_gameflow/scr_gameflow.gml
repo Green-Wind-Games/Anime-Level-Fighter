@@ -1,5 +1,11 @@
 randomize();
 
+function change_gamestate(_gamestate, _wait = 0) {
+	next_game_state = _gamestate;
+	game_state_timer = min(game_state_timer,screen_fade_duration);
+	game_state_duration = _wait + (screen_fade_duration*2);
+}
+
 function update_fight() {
 	round_state_timer += 1;
 	var _roundstate = round_state;
@@ -69,11 +75,10 @@ function update_fight() {
 			if state_timer < 60 { ready = false; }
 		}
 		if ready {
-			next_game_state = game_state + 1;
+			change_gamestate(game_state+1);
 			if next_game_state == gamestates.training + 1 {
-				next_game_state = gamestates.training;
+				change_gamestate(gamestates.training);
 			}
-			game_state_duration = screen_fade_duration;
 		}
 	}
 	if round_state != _roundstate {

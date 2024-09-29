@@ -24,7 +24,7 @@
   "name":"spr_fade_bottom",
   "nineSlice":{
     "$GMNineSliceData":"",
-    "bottom":255,
+    "bottom":0,
     "enabled":true,
     "guideColour":[4294902015,4294902015,4294902015,4294902015,],
     "highlightColour":1728023040,
@@ -40,7 +40,7 @@
       0,
       0,
     ],
-    "top":0,
+    "top":255,
   },
   "origin":0,
   "parent":{

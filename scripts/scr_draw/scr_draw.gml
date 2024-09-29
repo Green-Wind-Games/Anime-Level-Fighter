@@ -263,33 +263,33 @@ function draw_screenfade() {
 	var fade_out_time2 = game_state_duration;
 	
 	var fade_in = (game_state_timer < fade_in_time2);
-	var fade_out = ((game_state_duration != -1) and (game_state_timer > fade_out_time1));
+	var fade_out = ((next_game_state != -1) and (game_state_timer > fade_out_time1));
 	
 	var _fade = 0;
+	if fade_in {
+		_fade = map_value(game_state_timer,fade_in_time1,fade_in_time2,1,0);
+	}
 	if fade_out {
 		_fade = map_value(game_state_timer,fade_out_time1,fade_out_time2,0,1);
 	}
-	else if fade_in {
-		_fade = map_value(game_state_timer,fade_in_time1,fade_in_time2,1,0);
-	}
-	_fade = clamp(_fade*2,0,1);
+	_fade = clamp(_fade,0,1);
 	
 	if fade_in or fade_out {
 		draw_set_color(screen_fade_color);
 		switch(screen_fade_type) {
 			default:
-			draw_set_alpha(_fade);
+			draw_set_alpha(clamp(_fade*2,0,1));
 			draw_rectangle(0,0,_w,_h,false);
 			break;
 			
 			case fade_types.bottom:
 			gpu_set_blendmode(bm_subtract);
 			if fade_out {
-				var _y = _h - (_fade * _h * 2);
+				var _y = map_value(_fade,0,1,_h,-_h);
 				draw_sprite_stretched(spr_fade_bottom,0,0,_y,_w,_h*2);
 			}
 			else {
-				var _y = -_h + (_fade * _h * 2);
+				var _y = map_value(_fade,1,0,0,-_h*2);
 				draw_sprite_stretched(spr_fade_top,0,0,_y,_w,_h*2);
 			}
 			gpu_set_blendmode(bm_normal);
@@ -297,6 +297,7 @@ function draw_screenfade() {
 		}
 	}
 	draw_set_alpha(1);
+	//draw_text_outlined(32,32,string(game_state_timer-fade_in_time2),c_black,c_white);
 }
 
 function draw_hud() {

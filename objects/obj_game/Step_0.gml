@@ -17,11 +17,11 @@ switch(game_state) {
 			gui_width/2,
 			gui_height/2,
 			[
-				["Modo História",-1],
-				["Modo Arcade",-1],
+				//["Modo História",-1],
+				//["Modo Arcade",-1],
 				["Modo Versus",goto_versus_select],
-				["Treinamento",-1],
-				["Configurações",-1],
+				//["Treinamento",-1],
+				//["Configurações",-1],
 				["Sair do Jogo",game_end]
 			],
 			"Menu Principal"
@@ -36,15 +36,16 @@ switch(game_state) {
 	break;
 	
 	case gamestates.versus_intro:
-	if screen_fade_alpha == 0 {
-		for(var i = 0; i < array_length(player_slot); i++) {
-			if player_slot[i] != noone {
-				if player_input[player_slot[i]].confirm {
-					game_state_timer = game_state_duration-screen_fade_duration;
-				}
-			}
-		}
-	}
+	//if (game_state_timer > game_state_duration - screen_fade_duration) {
+	//and (game_state_timer < game_state_duration - screen_fade_duration) {
+	//	for(var i = 0; i < array_length(player_slot); i++) {
+	//		if player_slot[i] != noone {
+	//			if player_input[player_slot[i]].confirm {
+	//				change_gamestate(next_game_state,0);
+	//			}
+	//		}
+	//	}
+	//}
 	break;
 	
 	case gamestates.story_battle:
@@ -65,12 +66,11 @@ switch(game_state) {
 	break;
 	
 	case gamestates.versus_results:
-	if (game_state_timer > (5 * 60)) and (next_game_state == -1) {
+	if (game_state_timer > (3 * 60)) and (next_game_state == -1) {
 		for(var i = 0; i < array_length(player_slot); i++) {
 			if player_slot[i] != noone {
 				if player_input[player_slot[i]].confirm {
-					next_game_state = gamestates.versus_select;
-					game_state_duration = screen_fade_duration;
+					change_gamestate(gamestates.versus_select);
 				}
 			}
 		}
@@ -78,16 +78,11 @@ switch(game_state) {
 	break;
 }
 
-if _nextstate != next_game_state {
-	if next_game_state != -1 {
-		game_state_timer = 0;
-	}
-}
-
 game_state_timer += 1;
-if game_state_duration != -1 {
+if next_game_state != -1 {
 	if game_state_timer >= game_state_duration {
 		game_state = next_game_state;
+		game_state_timer = 0;
 		next_game_state = -1;
 	}
 }
@@ -116,8 +111,7 @@ if _gamestate != game_state {
 		
 		case gamestates.versus_intro:
 		room_goto(rm_versus);
-		next_game_state = gamestates.versus_battle;
-		game_state_duration = 60 * 5;
+		change_gamestate(gamestates.versus_battle,(5*60)-screen_fade_duration);
 		break;
 		
 		case gamestates.story_battle:

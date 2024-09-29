@@ -3,22 +3,25 @@
 
 enum playerchars {
 	goku,
-	//vegeta,
-	//trunks,
-	//freeza,
-	//cell,
-	//broly,
+	vegeta,
+	trunks,
+	freeza,
+	cell,
+	broly,
 	
 	naruto,
-	//sasuke,
-	//kakashi,
+	sasuke,
+	kakashi,
+	orochimaru,
+	pain,
+	madara,
 	
-	//ichigo,
-	//renji,
-	//zaraki,
-	
-	//saitama,
+	saitama,
 	genos,
+	elric,
+	mustang,
+	ichigo,
+	zaraki,
 	
 	allchars
 }
@@ -31,7 +34,7 @@ chars_per_row = min(max_characters,6);
 chars_per_column = ceil(max_characters / chars_per_row);
 
 function update_charselect() {
-	if (game_state_duration == -1) {
+	if (next_game_state == -1) {
 		charselect_joinin();
 		charselect_dropout();
 		charselect_changechars();
@@ -137,14 +140,20 @@ function charselect_changechars() {
 function charselect_readyup() {
 	for(var i = 0; i < array_length(player_slot); i++) {
 		if player_slot[i] != noone {
-			if (!player_ready[i]) and player_input[player_slot[i]].confirm {
-				player_ready[i] = true;
-				player_input[i].confirm = false;
-				play_sound(snd_menu_select);
+			if (!player_ready[i]) {
+				if player_input[player_slot[i]].confirm {
+					if object_exists(get_char_object(player_char[i])) {
+						player_ready[i] = true;
+						player_input[i].confirm = false;
+						play_sound(snd_menu_select);
+					}
+				}
 			}
-			else if player_ready[i] and player_input[player_slot[i]].cancel {
-				player_ready[i] = false;
-				player_input[i].cancel = false;
+			else if player_ready[i] {
+				if player_input[player_slot[i]].cancel {
+					player_ready[i] = false;
+					player_input[i].cancel = false;
+				}
 			}
 		}
 	}
@@ -169,8 +178,7 @@ function charselect_startgame() {
 		for(var i = 0; i < array_length(player_slot); i++) {
 			if player_slot[i] != noone {
 				if player_input[player_slot[i]].confirm {
-					next_game_state = gamestates.versus_intro;
-					game_state_duration = screen_fade_duration;
+					change_gamestate(gamestates.versus_intro);
 				}
 			}
 		}
@@ -194,7 +202,10 @@ function draw_charselect() {
 		if player_slot[i] != noone {
 			var _xscale = 1;
 			if _x > (_w/2) _xscale *= -1;
-			draw_sprite_ext(get_char_sprite(player_char[i]),0,_x,_y,_xscale,1,0,c_white,1);
+			var _sprite = get_char_sprite(player_char[i]);
+			if sprite_exists(_sprite) {
+				draw_sprite_ext(_sprite,0,_x,_y,_xscale,1,0,c_white,1);
+			}
 			
 			draw_set_font(fnt_menu);
 			draw_set_halign(fa_center);
@@ -292,6 +303,7 @@ function get_char_sprite(_id) {
 		
 		case playerchars.genos: return spr_genos_idle; break;
 	}
+	return noone;
 }
 
 function get_char_portrait(_id) {
@@ -302,6 +314,7 @@ function get_char_portrait(_id) {
 		
 		case playerchars.genos: return spr_genos_portrait; break;
 	}
+	return noone;
 }
 
 function get_char_icon(_id) {
@@ -312,6 +325,7 @@ function get_char_icon(_id) {
 		
 		case playerchars.genos: return spr_genos_icon; break;
 	}
+	return noone;
 }
 
 function get_char_name(_id) {
@@ -322,6 +336,7 @@ function get_char_name(_id) {
 		
 		case playerchars.genos: return "Genos"; break;
 	}
+	return "";
 }
 
 function get_char_object(_id) {
@@ -332,4 +347,5 @@ function get_char_object(_id) {
 		
 		case playerchars.genos: return obj_genos; break;
 	}
+	return noone;
 }

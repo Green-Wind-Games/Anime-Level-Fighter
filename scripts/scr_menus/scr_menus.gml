@@ -30,7 +30,5 @@ function open_menu(_x,_y,_options,_description = -1) {
 }
 
 function goto_versus_select() {
-	next_game_state = gamestates.versus_select;
-	game_state_timer = 0;
-	game_state_duration = screen_fade_duration;
+	change_gamestate(gamestates.versus_select);
 }
