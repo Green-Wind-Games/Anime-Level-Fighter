@@ -54,6 +54,10 @@ if keyboard_check_pressed(vk_delete) {
 	}
 }
 
+if keyboard_check_pressed(ord("0")) {
+	round_timer = 0;
+}
+
 with(all) {
 	visible = false;
 }

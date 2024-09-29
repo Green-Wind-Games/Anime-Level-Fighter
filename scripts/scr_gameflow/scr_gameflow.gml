@@ -10,12 +10,13 @@ function update_fight() {
 	round_state_timer += 1;
 	var _roundstate = round_state;
 	if round_state == roundstates.intro {
-		var finished = round_state_timer > 60;
+		var ready = round_state_timer > 60;
 		with(obj_char) {
-			if active_state != idle_state { finished = false; }
-			if sound_is_playing(voice) { finished = false; }
+			if active_state != idle_state { ready = false; }
+			if sound_is_playing(voice) { ready = false; }
+			if state_timer < 60 { ready = false; }
 		}
-		if finished {
+		if ready {
 			round_state = roundstates.countdown;
 		}
 	}
@@ -42,7 +43,7 @@ function update_fight() {
 		}
 	}
 	else if round_state == roundstates.time_over or round_state == roundstates.knockout {
-		var ready = true;
+		var ready = round_state_timer > 60;
 		with(obj_char) {
 			if dead {
 				if active_state != liedown_state { ready = false; }
@@ -59,7 +60,7 @@ function update_fight() {
 	else if round_state == roundstates.victory {
 		var team1_score = get_team_score(1);
 		var team2_score = get_team_score(2);
-		var ready = true;
+		var ready = round_state_timer > 60;
 		with(obj_char) {
 			if active_state == idle_state {
 				if (team == 1 and (team1_score > team2_score))
@@ -75,9 +76,11 @@ function update_fight() {
 			if state_timer < 60 { ready = false; }
 		}
 		if ready {
-			change_gamestate(game_state+1);
-			if next_game_state == gamestates.training + 1 {
-				change_gamestate(gamestates.training);
+			if next_game_state == -1 {
+				change_gamestate(game_state+1);
+				if next_game_state == gamestates.training + 1 {
+					change_gamestate(gamestates.training);
+				}
 			}
 		}
 	}

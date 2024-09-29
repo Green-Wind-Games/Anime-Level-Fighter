@@ -267,10 +267,10 @@ function draw_screenfade() {
 	
 	var _fade = 0;
 	if fade_in {
-		_fade = map_value(game_state_timer,fade_in_time1,fade_in_time2,1,0);
+		_fade = map_value(game_state_timer,fade_in_time1,fade_in_time2,2,0);
 	}
 	if fade_out {
-		_fade = map_value(game_state_timer,fade_out_time1,fade_out_time2,0,1);
+		_fade = map_value(game_state_timer,fade_out_time1,fade_out_time2,0,2);
 	}
 	_fade = clamp(_fade,0,1);
 	
@@ -278,7 +278,7 @@ function draw_screenfade() {
 		draw_set_color(screen_fade_color);
 		switch(screen_fade_type) {
 			default:
-			draw_set_alpha(clamp(_fade*2,0,1));
+			draw_set_alpha(clamp(_fade,0,1));
 			draw_rectangle(0,0,_w,_h,false);
 			break;
 			
