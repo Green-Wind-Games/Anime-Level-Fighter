@@ -156,7 +156,7 @@ function init_naruto_baseform() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_naruto_attack_smash_kick,3,false);
-		play_sound(snd_punch_whiff_heavy);
+		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	autocombo[i].run = function() {

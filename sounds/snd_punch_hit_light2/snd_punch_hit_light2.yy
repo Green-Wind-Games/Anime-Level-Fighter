@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_punch_hit_light2.wav",
   "type":0,
-  "volume":0.75,
+  "volume":0.5,
 }

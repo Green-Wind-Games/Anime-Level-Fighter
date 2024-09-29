@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_parry_sf3",
+  "%Name":"snd_launch",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.975238,
-  "name":"snd_parry_sf3",
+  "duration":2.138413,
+  "name":"snd_launch",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_parry_sf3.wav",
+  "soundFile":"snd_launch.wav",
   "type":0,
   "volume":1.0,
 }

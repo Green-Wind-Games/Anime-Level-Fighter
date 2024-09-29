@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_punch_hit_heavy",
+  "%Name":"snd_parry2",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":2.098812,
-  "name":"snd_punch_hit_heavy",
+  "duration":0.480333,
+  "name":"snd_parry2",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_punch_hit_heavy.wav",
+  "soundFile":"snd_parry2.wav",
   "type":0,
   "volume":1.0,
 }

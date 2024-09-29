@@ -168,7 +168,7 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 	}
 	switch(_particle) {
 		case deflect_spark:
-		play_sound(snd_parry_sf3);
+		play_sound(snd_parry);
 		break;
 		
 		case explosion_small:
@@ -198,7 +198,7 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1) {
 		break;
 		
 		case jutsu_smoke_particle:
-		play_sound(choose(snd_jutsu_smoke,snd_jutsu_smoke2),1/2);
+		play_sound(snd_jutsu_smoke);
 		break;
 	}
 }
@@ -221,19 +221,19 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 				
 				default:
 				if _strength < attackstrength.medium {
-					_sound = choose(snd_punch_hit_light,snd_punch_hit_light2);
+					_sound = snd_punch_hit_light;
 					create_particles(_x1,_y1,_x2,_y2,hitspark_light);
 				}
 				else if _strength < attackstrength.heavy {
-					_sound = choose(snd_punch_hit_medium,snd_punch_hit_medium2);
+					_sound = snd_punch_hit_medium;
 					create_particles(_x1,_y1,_x2,_y2,hitspark_medium);
 				}
 				else if _strength < attackstrength.super {
-					_sound = choose(snd_punch_hit_heavy,snd_punch_hit_heavy2);
+					_sound = snd_punch_hit_heavy;
 					create_particles(_x1,_y1,_x2,_y2,hitspark_heavy);
 				}
 				else {
-					_sound = choose(snd_punch_hit_super);
+					_sound = snd_punch_hit_super;
 					create_particles(_x1,_y1,_x2,_y2,hitspark_super);
 				}
 				break;
@@ -241,16 +241,16 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 				case hiteffects.slash:
 				create_particles(_x1,_y1,_x2,_y2,slashspark);
 				if _strength < attackstrength.medium {
-					_sound = choose(snd_slash_hit_light,snd_slash_hit_light2);
+					_sound = snd_slash_hit_light;
 				}
 				else if _strength < attackstrength.heavy {
-					_sound = choose(snd_slash_hit_medium);
+					_sound = snd_slash_hit_medium;
 				}
 				else if _strength < attackstrength.super {
-					_sound = choose(snd_slash_hit_heavy,snd_slash_hit_heavy2);
+					_sound = snd_slash_hit_heavy;
 				}
 				else if _strength < attackstrength.super {
-					_sound = choose(snd_slash_hit_super);
+					_sound = snd_slash_hit_super;
 				}
 				break;
 			}

@@ -93,7 +93,7 @@ function init_genos_baseform() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_genos_attack_uppercut,5,false);
-		play_sound(snd_punch_whiff_heavy);
+		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	autocombo[i].run = function() {
@@ -152,7 +152,7 @@ function init_genos_baseform() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_genos_attack_smash,4,false);
-		play_sound(snd_punch_whiff_heavy);
+		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
 	autocombo[i].run = function() {
@@ -215,7 +215,7 @@ function init_genos_baseform() {
 			xspeed = 0;
 		}
 		if check_frame(4) {
-			play_sound(snd_punch_whiff_heavy);
+			play_sound(snd_punch_whiff_ultimate);
 		}
 		if check_frame(6) {
 			yspeed = 20;

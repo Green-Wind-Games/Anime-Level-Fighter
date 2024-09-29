@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_punch_whiff_medium2",
+  "%Name":"snd_punch_hit_medium4",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.876563,
-  "name":"snd_punch_whiff_medium2",
+  "duration":1.251833,
+  "name":"snd_punch_hit_medium4",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_punch_whiff_medium2.ogg",
+  "soundFile":"snd_punch_hit_medium4.wav",
   "type":0,
   "volume":1.0,
 }

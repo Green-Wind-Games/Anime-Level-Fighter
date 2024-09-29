@@ -155,7 +155,7 @@ function init_goku_baseform() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_goku_attack_backflip_kick,3,false);
-		play_sound(snd_punch_whiff_heavy);
+		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	autocombo[i].run = function() {
@@ -237,7 +237,7 @@ function init_goku_baseform() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_goku_attack_smash,4,false);
-		play_sound(snd_punch_whiff_heavy);
+		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
 	autocombo[i].run = function() {
@@ -299,7 +299,7 @@ function init_goku_baseform() {
 			frame = 0;
 		}
 		if check_frame(1) {
-			play_sound(snd_punch_whiff_heavy);
+			play_sound(snd_punch_whiff_ultimate);
 			xspeed = -5 * facing;
 		}
 		if check_frame(2) {
@@ -477,7 +477,7 @@ function init_goku_baseform() {
 				if check_frame(2) {
 					xspeed = 3 * facing;
 					yspeed = -5;
-					play_sound(snd_punch_whiff_heavy);
+					play_sound(snd_punch_whiff_super);
 				}
 			}
 			else {

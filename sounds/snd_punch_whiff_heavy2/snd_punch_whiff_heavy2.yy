@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.420317,
+  "duration":0.186667,
   "name":"snd_punch_whiff_heavy2",
   "parent":{
     "name":"Sounds",

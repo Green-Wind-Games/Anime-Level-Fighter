@@ -114,7 +114,7 @@ function charselect_changechars() {
 					}
 				}
 				if player_input[player_slot[i]].char_random mod 6 == 1 {
-					while(player_char[i] == _previous_char) {
+					while((player_char[i] == _previous_char) or (!object_exists(get_char_object(player_char[i])))) {
 						player_char[i] = irandom(max_characters-1);
 					}
 				}
