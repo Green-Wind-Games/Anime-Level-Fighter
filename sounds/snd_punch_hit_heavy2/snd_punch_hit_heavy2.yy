@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":2.098812,
+  "duration":1.019683,
   "name":"snd_punch_hit_heavy2",
   "parent":{
     "name":"Sounds",
