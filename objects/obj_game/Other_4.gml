@@ -1,6 +1,6 @@
 /// @description Insert description here
 // You can write your code in this editor
-	
+
 for(var i = 0; i < array_length(player_slot); i++) {
 	player[i] = noone;
 }
@@ -39,7 +39,7 @@ switch(room) {
 	
 	case rm_versus:
 	screen_fade_type = fade_types.bottom;
-	play_music(mus_slammasters_versus);
+	play_music(mus_slammasters_versus,1,1,false);
 	break;
 	
 	case stage:

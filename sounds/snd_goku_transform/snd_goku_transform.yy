@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_goku_scream_transform",
+  "%Name":"snd_goku_transform",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -10,7 +10,7 @@
   "compression":0,
   "conversionMode":0,
   "duration":4.527479,
-  "name":"snd_goku_scream_transform",
+  "name":"snd_goku_transform",
   "parent":{
     "name":"Goku Voice",
     "path":"folders/Chars/Dragon Ball/Goku/Goku Voice.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_goku_scream_transform.ogg",
+  "soundFile":"snd_goku_transform.ogg",
   "type":0,
   "volume":1.0,
 }

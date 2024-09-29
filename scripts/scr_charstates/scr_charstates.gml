@@ -258,7 +258,7 @@ function init_charstates() {
 	dash_stop_state.run = function() {
 		can_cancel = false;
 		face_target();
-		if (state_timer > 10) or (xspeed == 0) {
+		if (state_timer > 15) or (xspeed == 0) {
 			change_state(idle_state);
 		}
 	}
@@ -280,7 +280,7 @@ function init_charstates() {
 	airdash_state.run = function() {
 		xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 		yspeed = 0;
-		if state_timer >= 10 {
+		if state_timer >= 6 {
 			change_state(air_state);
 		}
 	}
@@ -303,7 +303,7 @@ function init_charstates() {
 	air_backdash_state.run = function() {
 		xspeed = -move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 		yspeed = 0;
-		if state_timer >= 10 {
+		if state_timer >= 6 {
 			change_state(air_state);
 		}
 	}

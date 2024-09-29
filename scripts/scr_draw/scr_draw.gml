@@ -469,7 +469,7 @@ function draw_playerhud() {
 		xp_bar_y1 = xp_border_y1 + xp_bar_yoffset;
 		xp_bar_y2 = xp_bar_y1 + xp_bar_height;
 				
-		var _alpha = 0.5;
+		var _alpha = 1;
 
 		with(player[i]) {
 			if (!_right) {

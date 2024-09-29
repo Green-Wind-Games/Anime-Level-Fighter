@@ -180,9 +180,9 @@
     {"id":{"name":"snd_goku_kamehameha","path":"sounds/snd_goku_kamehameha/snd_goku_kamehameha.yy",},},
     {"id":{"name":"snd_goku_powerup","path":"sounds/snd_goku_powerup/snd_goku_powerup.yy",},},
     {"id":{"name":"snd_goku_powerup2","path":"sounds/snd_goku_powerup2/snd_goku_powerup2.yy",},},
-    {"id":{"name":"snd_goku_scream_transform","path":"sounds/snd_goku_scream_transform/snd_goku_scream_transform.yy",},},
     {"id":{"name":"snd_goku_spiritbomb","path":"sounds/snd_goku_spiritbomb/snd_goku_spiritbomb.yy",},},
     {"id":{"name":"snd_goku_superkamehameha","path":"sounds/snd_goku_superkamehameha/snd_goku_superkamehameha.yy",},},
+    {"id":{"name":"snd_goku_transform","path":"sounds/snd_goku_transform/snd_goku_transform.yy",},},
     {"id":{"name":"snd_grab","path":"sounds/snd_grab/snd_grab.yy",},},
     {"id":{"name":"snd_jump","path":"sounds/snd_jump/snd_jump.yy",},},
     {"id":{"name":"snd_jutsu_activate","path":"sounds/snd_jutsu_activate/snd_jutsu_activate.yy",},},
@@ -541,5 +541,6 @@
     {"$GMTextureGroup":"","%Name":"Grassfield","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Grassfield","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
     {"$GMTextureGroup":"","%Name":"TrainingStage","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"TrainingStage","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
     {"$GMTextureGroup":"","%Name":"Portraits","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Portraits","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
+    {"$GMTextureGroup":"","%Name":"ScreenEffects","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"ScreenEffects","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
   ],
 }

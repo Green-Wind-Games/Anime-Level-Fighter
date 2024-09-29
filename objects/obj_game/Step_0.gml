@@ -86,12 +86,19 @@ if next_game_state != -1 {
 		next_game_state = -1;
 	}
 }
+else {
+	game_state_timer = min(game_state_timer,screen_fade_duration);
+}
 
 if _gamestate != game_state {
 	previous_game_state = _gamestate;
 	game_state_timer = 0;
 	game_state_duration = -1;
 	screen_fade_alpha = 1;
+	
+	draw_texture_flush();
+	texture_prefetch("Default");
+	
 	switch(game_state) {
 		case gamestates.intro:
 		room_goto(rm_intro);
@@ -106,10 +113,12 @@ if _gamestate != game_state {
 		break;
 		
 		case gamestates.versus_select:
+		texture_prefetch("Portraits");
 		room_goto(rm_versus_charselect);
 		break;
 		
 		case gamestates.versus_intro:
+		texture_prefetch("Portraits");
 		room_goto(rm_versus);
 		change_gamestate(gamestates.versus_battle,(5*60)-screen_fade_duration);
 		break;
@@ -122,6 +131,7 @@ if _gamestate != game_state {
 		break;
 		
 		case gamestates.versus_results:
+		texture_prefetch("SpecialEffects");
 		with(obj_char) {
 			persistent = input.persistent;
 			hp = max_hp;

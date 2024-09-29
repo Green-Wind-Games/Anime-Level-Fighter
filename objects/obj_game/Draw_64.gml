@@ -49,4 +49,4 @@ draw_set_alpha(1);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
-draw_text(32,32,string(game_state_timer));
+//draw_text(32,32,string(game_state_timer));

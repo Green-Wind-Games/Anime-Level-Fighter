@@ -13,7 +13,8 @@ function init_genos_baseform() {
 	incinerate_cooldown = 0;
 	incinerate_cooldown_duration = 150;
 	
-	init_genos_voice();
+	init_charaudio("genos");
+	voice_volume_mine = 3;
 
 	char_script = function() {
 		incinerate_cooldown -= 1;
@@ -331,7 +332,7 @@ function init_genos_baseform() {
 			play_sound(snd_dbz_beam_charge_short);
 		}
 		if check_frame(5) {
-			play_sound(snd_dbz_beam_fire2);
+			play_sound(snd_dbz_beam_fire);
 		}
 		return_to_idle();
 	}
@@ -343,28 +344,4 @@ function init_genos_baseform() {
 
 	add_move(incinerate,"D");
 	add_move(super_incinerate,"ED");
-}
-
-function init_genos_voice() {
-	voice_volume_mine = 3;
-	
-	var i = 0;
-	voice_attack[i++] = snd_genos_attack;
-	voice_attack[i++] = snd_genos_attack2;
-	voice_attack[i++] = snd_genos_attack3;
-	i = 0;
-	voice_heavyattack[i++] = snd_genos_heavyattack;
-	voice_heavyattack[i++] = snd_genos_heavyattack2;
-	i = 0;
-	voice_hurt[i++] = snd_genos_hurt;
-	voice_hurt[i++] = snd_genos_hurt2;
-	voice_hurt[i++] = snd_genos_hurt3;
-	voice_hurt[i++] = snd_genos_hurt4;
-	i = 0;
-	voice_hurt_heavy[i++] = snd_genos_hurt_heavy;
-	voice_hurt_heavy[i++] = snd_genos_hurt_heavy2;
-	//i = 0;
-	//voice_powerup[i++] = snd_genos_powerup;
-	i = 0;
-	voice_intro[i++] = snd_genos_intro;
 }

@@ -26,7 +26,7 @@ function init_goku_ssj() {
 		spr_kiblast_yellow
 	);
 	
-	init_goku_voice();
+	init_charaudio("goku");
 
 	char_script = function() {
 		kamehameha_cooldown -= 1;
@@ -231,7 +231,7 @@ function init_goku_ssj() {
 	}
 	autocombo[i].run = function() {
 		if check_frame(2) or check_frame(6) {
-			play_sound(snd_punch_whiff_medium2);
+			play_sound(snd_punch_whiff_medium);
 		}
 		basic_attack(4,20,attackstrength.medium,hiteffects.hit);
 		basic_attack(8,20,attackstrength.medium,hiteffects.hit);
@@ -428,7 +428,7 @@ function init_goku_ssj() {
 		}
 		if check_frame(3) {
 			play_voiceline(snd_goku_kamehameha_fire);
-			play_sound(snd_dbz_beam_fire2);
+			play_sound(snd_dbz_beam_fire);
 		}
 		if frame == 3 {
 			fire_beam(20,-25,spr_kamehameha,2,0,8);
@@ -481,7 +481,7 @@ function init_goku_ssj() {
 				if check_frame(2) {
 					xspeed = 3 * facing;
 					yspeed = -5;
-					play_sound(snd_punch_whiff_heavy2);
+					play_sound(snd_punch_whiff_heavy);
 				}
 			}
 			else {

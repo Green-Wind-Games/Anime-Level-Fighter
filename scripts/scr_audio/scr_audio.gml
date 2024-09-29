@@ -20,29 +20,28 @@ function set_music_loop(_music,_start,_end) {
 	audio_sound_loop_end(_music,_end);
 }
 	
-function init_charaudio() {
+function init_charaudio(_name = "") {
 	sound = noone;
 	voice = noone;
 	
 	voice_volume_mine = 1;
 	
-	voice_intro[0] = noone;
+	var _prefix = "snd_" + _name + "_";
 	
-	voice_attack[0] = noone;
-	voice_heavyattack[0] = noone;
+	voice_attack = asset_get_index(_prefix + "attack");
+	voice_heavyattack = asset_get_index(_prefix + "heavyattack");
 	
-	voice_hurt[0] = noone;
-	voice_hurt_heavy[0] = noone;
+	voice_hurt = asset_get_index(_prefix + "hurt");
+	voice_hurt_heavy = asset_get_index(_prefix + "hurt_heavy");
+	voice_grabbed = asset_get_index(_prefix + "grabbed");
 	
-	voice_grabbed[0] = noone;
+	voice_powerup = asset_get_index(_prefix + "powerup");
+	voice_transform = asset_get_index(_prefix + "transform");
 	
-	voice_powerup[0] = noone;
-	voice_transform[0] = noone;
-	
-	voice_dead[0] = noone;
-	
-	voice_victory[0] = noone;
-	voice_defeat[0] = noone;
+	voice_intro = asset_get_index(_prefix + "intro");
+	voice_victory = asset_get_index(_prefix + "victory");
+	voice_defeat = asset_get_index(_prefix + "defeat");
+	voice_dead = asset_get_index(_prefix + "dead");
 }
 
 function update_music() {
@@ -57,9 +56,9 @@ function update_music() {
 	}
 }
 
-function play_music(_music,_volume = 1,_pitch = 1) {
+function play_music(_music,_volume = 1,_pitch = 1,_loop = true) {
 	stop_music();
-	music = audio_play_sound(_music,1,true,master_volume*music_volume*_volume,0,_pitch);
+	music = audio_play_sound(_music,1,_loop,master_volume*music_volume*_volume,0,_pitch);
 	music_timer = 0;
 	return music;
 }
@@ -70,13 +69,21 @@ function stop_music() {
 
 function play_sound(_snd,_volume = 1,_pitch = 1) {
 	if audio_exists(_snd) {
+		var _audioname = audio_get_name(_snd);
+		var _sounds;
+		_sounds[0] = _snd;
+		var i = 1;
+		while(audio_exists(asset_get_index(_audioname + string(i+1)))) {
+			_sounds[i] = asset_get_index(_audioname + string(i+1));
+			i++;
+		}
 		sound = audio_play_sound(
-			_snd,
+			_sounds[irandom(array_length(_sounds)-1)],
 			1,
 			false,
 			_volume*master_volume*sound_volume,
 			0,
-			_pitch + (random(1/100) * choose(1,-1))
+			_pitch + (random(0.02) * choose(1,-1))
 		);
 		return sound;
 	}
@@ -101,18 +108,22 @@ function play_voiceline(_snd,_chance = 100,_interrupt = true) {
 	if (_interrupt) or ((!_interrupt) and (!sound_is_playing(voice))) {
 		if random(100) < _chance {
 			stop_sound(voice);
-			var _voice = _snd;
-			if is_array(_snd) {
-				_voice = _snd[irandom(array_length(_snd)-1)];
-			}
-			if audio_exists(_voice) {
+			if audio_exists(_snd) {
+				var _audioname = audio_get_name(_snd);
+				var _sounds;
+				_sounds[0] = _snd;
+				var i = 1;
+				while(audio_exists(asset_get_index(_audioname + string(i+1)))) {
+					_sounds[i] = asset_get_index(_audioname + string(i+1));
+					i++;
+				}
 				voice = audio_play_sound(
-					_voice,
+					_sounds[irandom(array_length(_sounds)-1)],
 					1,
 					false,
 					master_volume*voice_volume*voice_volume_mine,
 					0,
-					1 + (random(1/100) * choose(1,-1))
+					1 + (random(0.02) * choose(1,-1))
 				);
 				return voice;
 			}

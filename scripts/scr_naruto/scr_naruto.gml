@@ -26,7 +26,8 @@ function init_naruto_baseform() {
 	
 	set_substitution_jutsu();
 	
-	init_naruto_voice();
+	init_charaudio("naruto");
+	voice_volume_mine = 1.5;
 
 	char_script = function() {
 		rasengan_cooldown--;
@@ -91,7 +92,7 @@ function init_naruto_baseform() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_naruto_attack_spinkick,4,false);
-		play_sound(snd_punch_whiff_heavy2);
+		play_sound(snd_punch_whiff_heavy);
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
@@ -155,7 +156,7 @@ function init_naruto_baseform() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_naruto_attack_smash_kick,3,false);
-		play_sound(snd_punch_whiff_heavy2);
+		play_sound(snd_punch_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	autocombo[i].run = function() {
@@ -247,7 +248,7 @@ function init_naruto_baseform() {
 	}
 	uzumaki_barrage_flip.run = function() {
 		if (state_timer mod 5) == 0 {
-			play_sound(snd_punch_whiff_light2,1.5,1.25);
+			play_sound(snd_punch_whiff_light,1.5,1.25);
 		}
 		if state_timer >= 30 {
 			change_state(autocombo[6]);
@@ -838,13 +839,7 @@ function init_naruto_baseform() {
 						);
 					}
 					
-					play_sound(
-						choose(
-							owner.voice_attack[0],
-							owner.voice_attack[1],
-						),
-						0.1
-					);
+					play_sound(owner.voice_attack,0.2);
 				}
 			}
 		}
@@ -1257,35 +1252,4 @@ function init_naruto_baseform() {
 		}
 		gpu_set_blendmode(bm_normal);
 	}
-}
-
-function init_naruto_voice() {
-	voice_volume_mine = 1.5;
-	
-	var i = 0;
-	voice_attack[i++] = snd_naruto_attack;
-	voice_attack[i++] = snd_naruto_attack2;
-	voice_attack[i++] = snd_naruto_attack3;
-	voice_attack[i++] = snd_naruto_attack4;
-	i = 0;
-	voice_heavyattack[i++] = snd_naruto_heavyattack;
-	voice_heavyattack[i++] = snd_naruto_heavyattack2;
-	voice_heavyattack[i++] = snd_naruto_heavyattack3;
-	voice_heavyattack[i++] = snd_naruto_heavyattack4;
-	voice_heavyattack[i++] = snd_naruto_attack4;
-	i = 0;
-	voice_hurt[i++] = snd_naruto_hurt;
-	voice_hurt[i++] = snd_naruto_hurt2;
-	voice_hurt[i++] = snd_naruto_hurt3;
-	voice_hurt[i++] = snd_naruto_hurt4;
-	i = 0;
-	voice_hurt_heavy[i++] = snd_naruto_hurt_heavy;
-	i = 0;
-	voice_powerup[i++] = snd_naruto_powerup;
-	voice_powerup[i++] = snd_naruto_powerup2;
-	voice_powerup[i++] = snd_naruto_powerup3;
-	i = 0;
-	voice_transform[i++] = snd_naruto_powerup;
-	i = 0;
-	voice_intro[i++] = snd_naruto_intro;
 }

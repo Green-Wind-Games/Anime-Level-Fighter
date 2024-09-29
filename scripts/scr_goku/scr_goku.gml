@@ -28,7 +28,7 @@ function init_goku_baseform() {
 		spr_kiblast_blue
 	);
 	
-	init_goku_voice();	
+	init_charaudio("goku");	
 
 	char_script = function() {
 		kamehameha_cooldown -= 1;
@@ -210,7 +210,7 @@ function init_goku_baseform() {
 	}
 	autocombo[i].run = function() {
 		if check_frame(2) or check_frame(6) {
-			play_sound(snd_punch_whiff_medium2);
+			play_sound(snd_punch_whiff_medium);
 		}
 		basic_attack(4,20,attackstrength.medium,hiteffects.hit);
 		basic_attack(8,20,attackstrength.medium,hiteffects.hit);
@@ -428,7 +428,7 @@ function init_goku_baseform() {
 		}
 		if check_frame(6) {
 			play_voiceline(snd_goku_kamehameha_fire);
-			play_sound(snd_dbz_beam_fire2);
+			play_sound(snd_dbz_beam_fire);
 		}
 		return_to_idle();
 	}
@@ -477,7 +477,7 @@ function init_goku_baseform() {
 				if check_frame(2) {
 					xspeed = 3 * facing;
 					yspeed = -5;
-					play_sound(snd_punch_whiff_heavy2);
+					play_sound(snd_punch_whiff_heavy);
 				}
 			}
 			else {
@@ -680,38 +680,4 @@ function init_goku_baseform() {
 		}
 		gpu_set_blendmode(bm_normal);
 	}
-}
-
-function init_goku_voice() {
-	var i = 0;
-	voice_attack[i++] = snd_goku_attack;
-	voice_attack[i++] = snd_goku_attack2;
-	voice_attack[i++] = snd_goku_attack3;
-	voice_attack[i++] = snd_goku_attack4;
-	voice_attack[i++] = snd_goku_attack5;
-	i = 0;
-	voice_heavyattack[i++] = snd_goku_heavyattack;
-	voice_heavyattack[i++] = snd_goku_heavyattack2;
-	voice_heavyattack[i++] = snd_goku_heavyattack3;
-	i = 0;
-	voice_hurt[i++] = snd_goku_hurt;
-	voice_hurt[i++] = snd_goku_hurt2;
-	voice_hurt[i++] = snd_goku_hurt3;
-	voice_hurt[i++] = snd_goku_hurt4;
-	voice_hurt[i++] = snd_goku_hurt5;
-	i = 0;
-	voice_hurt_heavy[i++] = snd_goku_hurt_heavy;
-	voice_hurt_heavy[i++] = snd_goku_hurt_heavy2;
-	voice_hurt_heavy[i++] = snd_goku_hurt_heavy3;
-	voice_hurt_heavy[i++] = snd_goku_hurt_heavy4;
-	voice_hurt_heavy[i++] = snd_goku_hurt_heavy5;
-	i = 0;
-	voice_powerup[i++] = snd_goku_powerup;
-	voice_powerup[i++] = snd_goku_powerup2;
-	i = 0;
-	voice_transform[i++] = snd_goku_scream_transform;
-	i = 0;
-	voice_intro[i++] = snd_goku_intro;
-	voice_intro[i++] = snd_goku_intro2;
-	voice_intro[i++] = snd_goku_intro3;
 }
