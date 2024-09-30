@@ -13,11 +13,14 @@ switch(game_state) {
 	draw_charselect();
 	break;
 	
-	case gamestates.versus_intro:
+	case gamestates.story_vs:
+	case gamestates.arcade_vs:
+	case gamestates.versus_vs:
 	draw_versus();
 	break;
 	
 	case gamestates.story_battle:
+	case gamestates.arcade_battle:
 	case gamestates.versus_battle:
 	case gamestates.training:
 	draw_hud();

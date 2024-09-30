@@ -29,6 +29,7 @@ function transform(_form) {
 	var _hp = hp;
 	var _mp = mp;
 	var _tp = tp;
+	var _team = team;
 	var _target = target;
 	var _input = input;
 	
@@ -42,6 +43,7 @@ function transform(_form) {
 	mp = _mp;
 	tp = _tp;
 	xp = 0;
+	team = _team;
 	target = _target;
 	input = _input;
 	

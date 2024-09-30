@@ -8,8 +8,8 @@ ai_level_max = 8;
 
 function change_ai_level(_level = ai_level) {
 	ai_level = clamp(round(_level),1,ai_level_max);
-	//ai_think_interval = round(map_value(ai_level,1,ai_level_max,8,2));
-	ai_think_interval = 6;
+	ai_think_interval = round(map_value(ai_level,1,ai_level_max,16,3));
+	//ai_think_interval = 6;
 }
 
 change_ai_level(1);

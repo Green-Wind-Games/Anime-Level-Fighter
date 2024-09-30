@@ -178,7 +178,7 @@ function charselect_startgame() {
 		for(var i = 0; i < array_length(player_slot); i++) {
 			if player_slot[i] != noone {
 				if player_input[player_slot[i]].confirm {
-					change_gamestate(gamestates.versus_intro);
+					change_gamestate(gamestates.versus_vs);
 				}
 			}
 		}

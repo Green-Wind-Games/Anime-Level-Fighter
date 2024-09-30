@@ -14,16 +14,18 @@ enum gamestates {
 	
 	story_select,
 	story_cutscene,
+	story_vs,
 	story_battle,
 	story_results,
 	
 	arcade_select,
+	arcade_vs,
 	arcade_battle,
 	arcade_results,
 	
 	versus_setup,
 	versus_select,
-	versus_intro,
+	versus_vs,
 	versus_battle,
 	versus_results,
 	

@@ -233,7 +233,7 @@ function check_substitution(_defender,_cost = 1) {
 		else {
 			if !target_exists() return false;
 			if target.super_active return true;
-			if combo_damage_taken < 50 return false;
+			if combo_damage_taken < (max_hp / 20) return false;
 		}
 	}
 	return false;

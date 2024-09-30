@@ -35,7 +35,7 @@ switch(game_state) {
 	update_charselect();
 	break;
 	
-	case gamestates.versus_intro:
+	case gamestates.versus_vs:
 	//if (game_state_timer > game_state_duration - screen_fade_duration) {
 	//and (game_state_timer < game_state_duration - screen_fade_duration) {
 	//	for(var i = 0; i < array_length(player_slot); i++) {
@@ -117,7 +117,7 @@ if _gamestate != game_state {
 		room_goto(rm_versus_charselect);
 		break;
 		
-		case gamestates.versus_intro:
+		case gamestates.versus_vs:
 		texture_prefetch("Portraits");
 		room_goto(rm_versus);
 		change_gamestate(gamestates.versus_battle,(5*60)-screen_fade_duration);
