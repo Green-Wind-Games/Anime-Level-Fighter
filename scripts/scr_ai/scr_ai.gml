@@ -97,7 +97,7 @@ function ai_perform_random_moves() {
 	}
 	
 	var _move = ds_list_find_value(_inputs,irandom(ds_list_size(_inputs)-1));
-	ai_input_command(_move,map_value(target_distance,right_wall-left_wall,0,1,100));
+	ai_input_command(_move,map_value(target_distance,right_wall-left_wall,0,10,100));
 	
 	ds_list_destroy(_inputs);
 }

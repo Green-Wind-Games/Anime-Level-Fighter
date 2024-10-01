@@ -12,14 +12,14 @@ screen_height = display_get_height();
 screen_aspectratio = screen_width / screen_height;
 	
 game_width = 640;
-game_height = 480;
+game_height = 360;
 //game_width = floor(screen_width / 2);
-game_height = floor((720 - 48) / 2);
+//game_height = floor((720 / 2) - 48);
 //game_width = round(game_height * (4 / 3));
 //game_height = round(game_width / (4 / 3));
-//game_width = round(game_height * (16 / 9));
+game_width = round(game_height * (16 / 9));
 //game_height = round(game_width / (16 / 9));
-game_width = round(game_height * screen_aspectratio);
+//game_width = round(game_height * screen_aspectratio);
 //game_height = round(game_width / screen_aspectratio);
 
 game_aspectratio = game_width / game_height;
@@ -33,15 +33,15 @@ gui_width = round(gui_height * game_aspectratio);
 
 hud_height = gui_height / 3;
 
-window_max_scale = floor(min(screen_width / game_width, screen_height / game_height));
-if (game_width * window_max_scale) >= screen_width
-or (game_height * window_max_scale) >= (screen_height - 48) {
-	window_max_scale -= 1;
-}
+window_max_scale = min(screen_width / game_width, (screen_height - 80) / game_height);
+//if (game_width * window_max_scale) >= screen_width
+//or (game_height * window_max_scale) >= (screen_height - 48) {
+//	window_max_scale -= 1;
+//}
 window_max_scale = max(1,window_max_scale);
 window_scale = window_max_scale;
-window_width = game_width * window_scale;
-window_height = game_height * window_scale;
+window_width = round(game_width * window_scale);
+window_height = round(game_height * window_scale);
 	
 fullscreen_width = round(screen_height * game_aspectratio);
 fullscreen_height = screen_height;
@@ -114,6 +114,10 @@ function update_view() {
 }
 
 function resize_window(_factor = 0) {
+	_factor = round(_factor);
+	if window_scale >= window_max_scale {
+		window_scale = ceil(window_max_scale);
+	}
 	window_scale += _factor;
 	if window_scale < 1 {
 		window_scale = 1;
@@ -121,15 +125,15 @@ function resize_window(_factor = 0) {
 	else if window_scale > window_max_scale {
 		window_scale = window_max_scale;
 	}
-	window_width = game_width * window_scale;
-	window_height = game_height * window_scale;
+	window_width = round(game_width * window_scale);
+	window_height = round(game_height * window_scale);
 	reposition_window();
 }
 
 function reposition_window() {
 	window_set_rectangle(
-		(screen_width/2)-(window_width/2),
-		(screen_height/2)-(window_height/2),
+		clamp((screen_width/2)-(window_width/2),0,screen_width),
+		clamp(((screen_height-40)/2)-(window_height/2),32,screen_height),
 		window_width,
 		window_height
 	);
@@ -163,10 +167,10 @@ function shake_screen(_duration, _intensity) {
 window_enable_borderless_fullscreen(true);
 display_set_gui_size(gui_width,gui_height);
 resize_window(window_max_scale);
-//if os_type == os_windows {
-//	disable_fullscreen();
-//}
-//else {
-//	enable_fullscreen();
-//}
-enable_fullscreen();
+if os_type == os_windows {
+	disable_fullscreen();
+}
+else {
+	enable_fullscreen();
+}
+//enable_fullscreen();

@@ -103,7 +103,7 @@ function update_fight() {
 	}
 	battle_x = mean(_x1,_x2);
 	battle_y = mean(_y1,_y2);
-	var battle_size = game_width + 100;
+	var battle_size = game_width;
 	left_wall = clamp(battle_x - (battle_size / 2),0,room_width-game_width) + border;
 	right_wall = clamp(battle_x + (battle_size / 2),game_width,room_width) - border;
 	
