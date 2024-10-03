@@ -1,17 +1,19 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-for(var i = 0; i < array_length(player_slot); i++) {
-	player[i] = noone;
-}
-
 init_view();
 
 stop_music();
 
+for(var i = 0; i < max_players; i++) {
+	if (!instance_exists(player[i])) {
+		player[i] = noone;
+	}
+}
+
 screen_fade_type = fade_types.normal;
 
-ground_height = room_height - round(game_height * 0.25);
+ground_height = room_height - floor(game_height * 0.2);
 		
 battle_x = room_width / 2;
 battle_y = -game_height;
@@ -19,7 +21,7 @@ left_wall = 0;
 right_wall = room_width;
 
 var active_players = 0;
-for(var i = 0; i < array_length(player_slot); i++) {
+for(var i = 0; i < max_players; i++) {
 	if player_slot[i] != noone {
 		active_players++;
 	}
@@ -29,7 +31,7 @@ var _w2 = _w / 2;
 
 switch(room) {
 	case rm_versus_charselect:
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for(var i = 0; i < max_players; i++) {
 		player_ready[i] = false;
 	}
 	ready_timer = 100;
@@ -52,7 +54,7 @@ switch(room) {
 		var _x1 = battle_x - _w2;
 		var _x2 = battle_x + _w2;
 		var spawned_players = 0;
-		for(var i = 0; i < array_length(player_slot); i++) {
+		for(var i = 0; i < max_players; i++) {
 			if player_slot[i] != noone {
 				var _x = map_value(spawned_players,0,active_players-1,_x1,_x2);
 				var _y = battle_y;

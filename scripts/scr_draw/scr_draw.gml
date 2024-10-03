@@ -38,7 +38,7 @@ function draw_ground() {
 }
 
 function draw_playerindicators() {
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for(var i = 0; i < max_players; i++) {
 		with(obj_helper) {
 			if owner == player[i] {
 				draw_my_playerindicator(i);
@@ -315,7 +315,7 @@ function draw_playerhud() {
 	var icon_scale = 0.5;
 	
 	var active_players = 0;
-	for (var i = 0; i < array_length(player_slot); i++) {
+	for (var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			active_players++;
 		}
@@ -326,41 +326,43 @@ function draw_playerhud() {
 	var hud_x = 0;
 	var hud_y = 0;
 	
-	var hud_yscale = 1.5 / ceil(active_players / 2);
+	var hud_yscale = 1 / ceil(active_players / 2);
 
 	var hp_border_width = ((hud_w) - (_spacing * 2));
 	var mp_border_width = (hp_border_width * 0.8);
-	var tp_border_width = (mp_border_width * 0.5);
-	var xp_border_width = (tp_border_width * 0.5);
+	var tp_border_width = (mp_border_width * 0.35);
+	var xp_border_width = (tp_border_width * 0.35);
 	var hp_xscale = hp_border_width / sprite_get_width(spr_bar_hp_border);
 	var mp_xscale = mp_border_width / sprite_get_width(spr_bar_mp_border);
 	var tp_xscale = tp_border_width / sprite_get_width(spr_bar_tp_border);
 	var xp_xscale = xp_border_width / sprite_get_width(spr_bar_xp_border);
 	
-	//var hp_border_height = (_h / 20) * hud_yscale;
-	//var mp_border_height = hp_border_height;
-	//var tp_border_height = mp_border_height;
-	//var hp_yscale = hp_border_height / sprite_get_height(spr_bar_hp_border);
-	//var mp_yscale = mp_border_height / sprite_get_height(spr_bar_mp_border);
-	//var tp_yscale = tp_border_height / sprite_get_height(spr_bar_tp_border);
+	var hp_border_height = (_h / 30) * hud_yscale;
+	var mp_border_height = hp_border_height / 2;
+	var tp_border_height = mp_border_height / 2;
+	var xp_border_height = xp_border_height;
+	var hp_yscale = hp_border_height / sprite_get_height(spr_bar_hp_border);
+	var mp_yscale = mp_border_height / sprite_get_height(spr_bar_mp_border);
+	var tp_yscale = tp_border_height / sprite_get_height(spr_bar_tp_border);
+	var xp_yscale = xp_border_height / sprite_get_height(spr_bar_xp_border);
 	
-	var hp_yscale = 1.4 * hud_yscale;
-	var mp_yscale = 1.3 * hud_yscale;
-	var tp_yscale = 1.2 * hud_yscale;
-	var xp_yscale = 1.1 * hud_yscale;
-	var hp_border_height = (sprite_get_height(spr_bar_hp_border) * hp_yscale);
-	var mp_border_height = (sprite_get_height(spr_bar_mp_border) * mp_yscale);
-	var tp_border_height = (sprite_get_height(spr_bar_tp_border) * tp_yscale);
-	var xp_border_height = (sprite_get_height(spr_bar_xp_border) * xp_yscale);
+	//var hp_yscale = 1.4 * hud_yscale;
+	//var mp_yscale = 1.3 * hud_yscale;
+	//var tp_yscale = 1.2 * hud_yscale;
+	//var xp_yscale = 1.1 * hud_yscale;
+	//var hp_border_height = (sprite_get_height(spr_bar_hp_border) * hp_yscale);
+	//var mp_border_height = (sprite_get_height(spr_bar_mp_border) * mp_yscale);
+	//var tp_border_height = (sprite_get_height(spr_bar_tp_border) * tp_yscale);
+	//var xp_border_height = (sprite_get_height(spr_bar_xp_border) * xp_yscale);
 	
-	//var hp_bar_xoffset = 4 * hp_xscale;
-	//var hp_bar_yoffset = 4 * hp_yscale;
-	
-	//var mp_bar_xoffset = 4 * mp_xscale;
-	//var mp_bar_yoffset = 4 * mp_yscale;
-	
-	//var tp_bar_xoffset = 3 * tp_xscale;
-	//var tp_bar_yoffset = 2 * tp_yscale;
+	var hp_border_xoffset = _spacing;
+	var hp_border_yoffset = _spacing;
+	var mp_border_xoffset = hp_border_xoffset;
+	var mp_border_yoffset = hp_border_yoffset + hp_border_height + 1;
+	var tp_border_xoffset = mp_border_xoffset + (mp_border_width / 3);
+	var tp_border_yoffset = mp_border_yoffset + mp_border_height + 1;
+	var xp_border_xoffset = tp_border_xoffset + tp_border_width + 1;
+	var xp_border_yoffset = tp_border_yoffset;
 	
 	var hp_bar_xoffset = 4;
 	var hp_bar_yoffset = 4;
@@ -393,7 +395,7 @@ function draw_playerhud() {
 	
 	var drawn_players = 0;
 
-	for (var i = 0; i < array_length(player_slot); i++) {
+	for (var i = 0; i < max_players; i++) {
 		var _right = hud_x >= _w2;
 		var hp_border_x1, hp_border_x2, hp_border_y1, hp_border_y2;
 		var mp_border_x1, mp_border_x2, mp_border_y1, mp_border_y2;
@@ -727,7 +729,7 @@ function draw_portraits() {
 
 function draw_versus() {
 	var active_players = 0;
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			active_players++;
 		}
@@ -759,7 +761,7 @@ function draw_versus() {
 	_t5 = clamp(_t5,0,1);
 	
 	var drawn_players = 0;
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			var _portrait = get_char_portrait(player_char[i]);
 			var _yscale = _h / sprite_get_height(_portrait);
@@ -917,7 +919,7 @@ function draw_versus_results() {
 		with(obj_char) {
 			if active_state == victory_state {
 				_text = name + " venceu!";
-				for(var i = 0; i < array_length(player); i++) {
+				for(var i = 0; i < max_players; i++) {
 					if id == player[i] {
 						_text_color = player_color[i];
 						break;

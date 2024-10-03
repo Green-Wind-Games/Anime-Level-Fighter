@@ -24,10 +24,12 @@ game_width = round(game_height * (16 / 9));
 
 game_aspectratio = game_width / game_height;
 
-gui_width = round(1280 / 2);
-gui_height = round(720 / 2);
+gui_width = 720;
+gui_height = 405;
 //gui_width = round(game_width / 2);
 //gui_height = round(game_height / 2);
+//gui_width = round(screen_width / 2);
+//gui_height = round(screen_height / 2);
 gui_width = round(gui_height * game_aspectratio);
 //gui_height = round(gui_width / game_aspectratio);
 

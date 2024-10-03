@@ -47,7 +47,7 @@ function charselect_joinin() {
 	for(var i = 0; i < array_length(player_input); i++) {
 		if (!player_input[i].assigned)
 		and player_input[i].confirm {
-			for(var ii = 0; ii < array_length(player_slot); ii++) {
+			for(var ii = 0; ii < max_players; ii++) {
 				if player_slot[ii] != noone continue;
 				player_slot[ii] = i;
 				player_char[ii] = ii;
@@ -62,7 +62,7 @@ function charselect_joinin() {
 }
 
 function charselect_dropout() {
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			if player_input[player_slot[i]].cancel
 			and (!player_ready[i]) {
@@ -77,7 +77,7 @@ function charselect_dropout() {
 }
 
 function charselect_changechars() {
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			if !player_ready[i] {
 				var _previous_char = player_char[i];
@@ -138,7 +138,7 @@ function charselect_changechars() {
 }
 
 function charselect_readyup() {
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			if (!player_ready[i]) {
 				if player_input[player_slot[i]].confirm {
@@ -162,7 +162,7 @@ function charselect_readyup() {
 function charselect_startgame() {
 	var active_players = 0;
 	var ready_players = 0;
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			active_players++;
 			if player_ready[i] { ready_players++; }
@@ -175,7 +175,7 @@ function charselect_startgame() {
 	}
 	if countdown { ready_timer--; } else { ready_timer = 20; }
 	if ready_timer <= 0 {
-		for(var i = 0; i < array_length(player_slot); i++) {
+		for(var i = 0; i < max_players; i++) {
 			if player_slot[i] != noone {
 				if player_input[player_slot[i]].confirm {
 					change_gamestate(gamestates.versus_vs);
@@ -187,7 +187,7 @@ function charselect_startgame() {
 
 function draw_charselect() {
 	var active_players = 0;
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			active_players++;
 		}
@@ -198,7 +198,7 @@ function draw_charselect() {
 	var _h2 = _h / 2;
 	var _x = _w2;
 	var _y = _h * 0.65;
-	for(var i = 0; i < array_length(player_slot); i++) {
+	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			var _xscale = 1;
 			if _x > (_w/2) _xscale *= -1;
@@ -265,7 +265,7 @@ function draw_charselect_boxes() {
 			
 			draw_set_color(c_black);
 			draw_set_alpha(0.5);
-			for(var iii = 0; iii < array_length(player_slot); iii++) {
+			for(var iii = 0; iii < max_players; iii++) {
 				if player_slot[iii] == noone continue;
 				if player_char[iii] != _char_i continue;
 				

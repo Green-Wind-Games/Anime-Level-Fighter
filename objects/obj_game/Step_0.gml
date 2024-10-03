@@ -38,7 +38,7 @@ switch(game_state) {
 	case gamestates.versus_vs:
 	//if (game_state_timer > game_state_duration - screen_fade_duration) {
 	//and (game_state_timer < game_state_duration - screen_fade_duration) {
-	//	for(var i = 0; i < array_length(player_slot); i++) {
+	//	for(var i = 0; i < max_players; i++) {
 	//		if player_slot[i] != noone {
 	//			if player_input[player_slot[i]].confirm {
 	//				change_gamestate(next_game_state,0);
@@ -67,7 +67,7 @@ switch(game_state) {
 	
 	case gamestates.versus_results:
 	if (game_state_timer > (3 * 60)) and (next_game_state == -1) {
-		for(var i = 0; i < array_length(player_slot); i++) {
+		for(var i = 0; i < max_players; i++) {
 			if player_slot[i] != noone {
 				if player_input[player_slot[i]].confirm {
 					change_gamestate(gamestates.versus_select);

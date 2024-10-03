@@ -53,7 +53,7 @@ enum fade_types {
 	right
 }
 
-globalvar	player, player_char, player_input,
+globalvar	max_players, player, player_char, player_input,
 			player_slot, player_ready, ready_timer,
 			player_color,
 			
@@ -81,7 +81,10 @@ globalvar	player, player_char, player_input,
 			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha,
 			screen_fade_color, screen_fade_duration, screen_fade_type;
 			
-for(var i = 0; i < 8; i++) {
+
+max_players = 4;
+
+for(var i = 0; i < max_players; i++) {
 	player[i] = noone;
 	player_char[i] = 0;
 	player_slot[i] = noone;
@@ -92,7 +95,7 @@ for(var i = 0; i < 8; i++) {
 	gamepad_set_axis_deadzone(i,0.5);
 }
 
-for(var i = 0; i <= 10 + array_length(player_slot); i++) {
+for(var i = 0; i <= 10 + max_players; i++) {
 	with(instance_create(0,0,obj_input)) {
 		player_input[i] = id;
 		persistent = true;
