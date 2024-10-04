@@ -52,4 +52,8 @@ draw_set_alpha(1);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
-//draw_text(32,32,string(game_state_timer));
+for(var i = 0; i < max_players; i++) {
+	var _x = 32 * (i+1);
+	var _y = 32;
+	draw_text_outlined(_x,_y,string(player_slot[i]),c_black,c_white);
+}

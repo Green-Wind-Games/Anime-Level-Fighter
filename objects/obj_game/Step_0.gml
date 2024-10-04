@@ -86,9 +86,6 @@ if next_game_state != -1 {
 		next_game_state = -1;
 	}
 }
-else {
-	game_state_timer = min(game_state_timer,screen_fade_duration);
-}
 
 if _gamestate != game_state {
 	previous_game_state = _gamestate;

@@ -337,7 +337,7 @@ function draw_playerhud() {
 	
 	var hud_yscale = 1 / ceil(active_players / 2);
 	
-	var hp_border_height = (_h / 20) * hud_yscale;
+	var hp_border_height = (_h / 15) * hud_yscale;
 	var mp_border_height = hp_border_height / 1.5;
 	var tp_border_height = mp_border_height / 1.5;
 	var xp_border_height = tp_border_height;

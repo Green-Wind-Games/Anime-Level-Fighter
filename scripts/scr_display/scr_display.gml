@@ -5,7 +5,7 @@ globalvar	screen_width, screen_height, screen_aspectratio,
 			game_width, game_height, game_aspectratio,
 			gui_width, gui_height, hud_height,
 			window_width, window_height, window_scale, window_max_scale,
-			fullscreen_width, fullscreen_height;
+			fullscreen_scale, fullscreen_width, fullscreen_height;
 
 screen_width = display_get_width();
 screen_height = display_get_height();
@@ -44,9 +44,10 @@ window_max_scale = max(1,window_max_scale);
 window_scale = window_max_scale;
 window_width = round(game_width * window_scale);
 window_height = round(game_height * window_scale);
-	
-fullscreen_width = round(screen_height * game_aspectratio);
-fullscreen_height = screen_height;
+
+fullscreen_scale = min(screen_width / game_width, screen_height / game_height);
+fullscreen_width = floor(game_width * fullscreen_scale);
+fullscreen_height = floor(game_height * fullscreen_scale);
 
 function init_view() {
 	view_enabled = true;
@@ -80,11 +81,11 @@ function update_view() {
 	}
 	
 	var playerdist = abs(_x1 - _x2);
-	var max_dist = (right_wall-left_wall) + 30;
+	var max_dist = (right_wall-left_wall) + 25;
 	var desired_zoom = game_width / (min(playerdist+50,max_dist));
 	desired_zoom = min(desired_zoom,1.25);
 	if superfreeze_active {
-		desired_zoom = 1.35;
+		desired_zoom = 1.5;
 	}
 	if game_state == gamestates.versus_results {
 		desired_zoom = 1;
@@ -98,7 +99,7 @@ function update_view() {
 	var _h2 = round(_h/2);
 	
 	var _view_x = mean(_x1,_x2);
-	var _view_y = lerp(_y1,_y2,0.2);
+	var _view_y = lerp(_y1,_y2,0.25);
 	
 	if superfreeze_active {
 		_view_x = superfreeze_activator.x;
