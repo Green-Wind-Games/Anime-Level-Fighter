@@ -15,13 +15,17 @@ if keyboard_check_pressed(vk_f4) {
 }
 
 if keyboard_check_pressed(vk_f5) {
-	with(obj_char) {
-		ai_enabled = true;
+	for(var i = 0; i < max_players; i++) {
+		with(player[i]) {
+			input = player_input[i+11];
+		}
 	}
 }
 if keyboard_check_pressed(vk_f6) {
-	with(obj_char) {
-		ai_enabled = false;
+	for(var i = 0; i < max_players; i++) {
+		with(player[i]) {
+			input = player_input[player_slot[i]];
+		}
 	}
 }
 

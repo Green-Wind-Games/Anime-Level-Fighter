@@ -169,10 +169,18 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			var _hp = hp;
 			var dmg = take_damage(_attacker,_damage,!grabbed);
 	
-			combo_timer = hitstun + 10;
+			combo_timer = hitstun + 20;
+			if active_state == hard_knockdown_state
+			or active_state == wall_bounce_state {
+				combo_timer += 60;
+			}
+			
 			combo_hits_taken++;
 			
-			if is_char(_attacker) or is_helper(_attacker) {
+			combo_hits = 0;
+			combo_damage = 0;
+			
+			if is_char(_attacker) {
 				with(_attacker) {
 					combo_timer = other.combo_timer;
 					combo_hits++;
@@ -327,7 +335,7 @@ function take_damage(_attacker,_amount,_kill) {
 	var defend_xp_gain = xp_gain * 1.2;
 	
 	var attack_mp_gain = mp_gain * 1.5;
-	var attack_xp_gain = xp_gain * 0.5;
+	var attack_xp_gain = xp_gain * 0.2;
 	if !is_char(_attacker) {
 		attack_mp_gain /= 2;
 		attack_xp_gain /= 2;

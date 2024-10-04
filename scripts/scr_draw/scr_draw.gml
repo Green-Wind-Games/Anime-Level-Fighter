@@ -302,6 +302,7 @@ function draw_screenfade() {
 
 function draw_hud() {
 	draw_timer();
+	draw_combo_counters();
 	draw_playerhud();
 }
 
@@ -670,6 +671,52 @@ function draw_timer() {
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);
 	draw_set_color(c_white);
+}
+
+function draw_combo_counters() {
+	var active_players = 0;
+	for(var i = 0; i < max_players; i++) {
+		if player_slot[i] != noone {
+			active_players++;
+		}
+	}
+	var _w = gui_width;
+	var _h = gui_height;
+	var _w2 = _w / max(3,active_players+1);
+	var _h2 = _h / 2;
+	
+	var _x = _w2;
+	var _y = hud_height + 10;
+	for(var i = 0; i < max_players; i++) {
+		with(player[i]) {
+			if (combo_timer > 0) and (combo_hits >= 2) {
+				draw_set_halign(fa_center);
+				draw_set_valign(fa_top);
+				draw_set_font(fnt_combo);
+				
+				var _text = string(combo_hits) + " acertos!";
+				_text += "\n" + string(combo_damage) + " de dano!";
+				
+				var _x2 = _x;
+				var _y2 = _y;
+				
+				if (hitstop > 0) and (round_state != roundstates.pause) {
+					_x2 += random(hitstop) * choose(1,-1);
+					_y2 += random(hitstop) * choose(1,-1);
+				}
+				
+				draw_text_outlined(
+					_x2,
+					_y2,
+					_text,
+					c_black,
+					merge_color(player_color[i],c_white,0.5),
+					1
+				);
+			}
+			_x += _w2;
+		}
+	}
 }
 
 function draw_hitboxes() {
