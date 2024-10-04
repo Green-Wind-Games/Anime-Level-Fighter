@@ -476,7 +476,7 @@ function init_goku_ssj() {
 		else {
 			if sprite == spr_goku_attack_backflip_kick {
 				if check_frame(3) {
-					create_hitbox(0,-height,width,height,40,3,-10,attacktype.normal,attackstrength.heavy,hiteffects.hit);
+					create_hitbox(0,-height,width,height,40,3,-10,attacktype.normal,attackstrength.super,hiteffects.hit);
 				}
 				if check_frame(2) {
 					xspeed = 3 * facing;

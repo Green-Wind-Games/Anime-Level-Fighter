@@ -51,9 +51,9 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	xspeed = _xknockback * _attacker.facing;
 	yspeed = _yknockback;
 	
-	hitstun = map_value(_strength,attackstrength.light,attackstrength.heavy,15,20);
+	hitstun = map_value(_strength,attackstrength.light,attackstrength.ultimate,15,30);
 	blockstun = hitstun - 5;
-	hitstop = map_value(_strength,attackstrength.light,attackstrength.heavy,10,15);
+	hitstop = map_value(_strength,attackstrength.light,attackstrength.ultimate,10,20);
 	
 	if !is_char(_attacker) {
 		hitstop *= 0.5;

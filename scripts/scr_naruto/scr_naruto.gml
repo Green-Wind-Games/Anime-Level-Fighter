@@ -426,7 +426,7 @@ function init_naruto_baseform() {
 					15,
 					-3,
 					attacktype.hard_knockdown,
-					attackstrength.heavy,
+					attackstrength.super,
 					hiteffects.hit
 				);
 				with(_ball) {
@@ -702,7 +702,7 @@ function init_naruto_baseform() {
 				15,
 				-3,
 				attacktype.hard_knockdown,
-				attackstrength.heavy,
+				attackstrength.super,
 				hiteffects.hit
 			);
 			with(_ball) {

@@ -325,22 +325,22 @@ function draw_playerhud() {
 	var hud_h = 0;
 	var hud_x = 0;
 	var hud_y = 0;
-	
-	var hud_yscale = 1 / ceil(active_players / 2);
 
 	var hp_border_width = ((hud_w) - (_spacing * 2));
-	var mp_border_width = (hp_border_width * 0.8);
-	var tp_border_width = (mp_border_width * 0.35);
-	var xp_border_width = (tp_border_width * 0.35);
+	var mp_border_width = (hp_border_width * 0.75);
+	var tp_border_width = (hp_border_width * 0.25);
+	var xp_border_width = (tp_border_width * 0.75);
 	var hp_xscale = hp_border_width / sprite_get_width(spr_bar_hp_border);
 	var mp_xscale = mp_border_width / sprite_get_width(spr_bar_mp_border);
 	var tp_xscale = tp_border_width / sprite_get_width(spr_bar_tp_border);
 	var xp_xscale = xp_border_width / sprite_get_width(spr_bar_xp_border);
 	
-	var hp_border_height = (_h / 30) * hud_yscale;
-	var mp_border_height = hp_border_height / 2;
-	var tp_border_height = mp_border_height / 2;
-	var xp_border_height = xp_border_height;
+	var hud_yscale = 1 / ceil(active_players / 2);
+	
+	var hp_border_height = (_h / 20) * hud_yscale;
+	var mp_border_height = hp_border_height / 1.5;
+	var tp_border_height = mp_border_height / 1.5;
+	var xp_border_height = tp_border_height;
 	var hp_yscale = hp_border_height / sprite_get_height(spr_bar_hp_border);
 	var mp_yscale = mp_border_height / sprite_get_height(spr_bar_mp_border);
 	var tp_yscale = tp_border_height / sprite_get_height(spr_bar_tp_border);
@@ -358,9 +358,9 @@ function draw_playerhud() {
 	var hp_border_xoffset = _spacing;
 	var hp_border_yoffset = _spacing;
 	var mp_border_xoffset = hp_border_xoffset;
-	var mp_border_yoffset = hp_border_yoffset + hp_border_height + 1;
-	var tp_border_xoffset = mp_border_xoffset + (mp_border_width / 3);
-	var tp_border_yoffset = mp_border_yoffset + mp_border_height + 1;
+	var mp_border_yoffset = hp_border_yoffset + hp_border_height;
+	var tp_border_xoffset = hp_border_xoffset + (hp_border_width / 5);
+	var tp_border_yoffset = mp_border_yoffset + mp_border_height;
 	var xp_border_xoffset = tp_border_xoffset + tp_border_width + 1;
 	var xp_border_yoffset = tp_border_yoffset;
 	
@@ -386,7 +386,9 @@ function draw_playerhud() {
 	var mp_stock_scale = mp_border_height / sprite_get_height(spr_bar_mp_stocks);
 	var mp_stock_width = sprite_get_width(spr_bar_mp_stocks) * mp_stock_scale;
 	var mp_stock_height = sprite_get_height(spr_bar_mp_stocks) * mp_stock_scale;
-	var mp_stock_xoffset = -mp_stock_width / 2;
+	var mp_stock_xoffset = 0;
+	
+	//mp_border_xoffset += mp_stock_width / 2;
 	
 	draw_set_font(fnt_hud);
 	var playertext = "Player N: Anime Character";
@@ -408,43 +410,43 @@ function draw_playerhud() {
 		var xp_bar_x1, xp_bar_x2, xp_bar_y1, xp_bar_y2;
 
 		if (!_right) {
-			hp_border_x1 = hud_x + _spacing;
+			hp_border_x1 = hud_x + hp_border_xoffset;
 			hp_border_x2 = hp_border_x1 + hp_border_width;
 			
-			mp_border_x1 = hp_border_x1 + (mp_stock_width/2);
+			mp_border_x1 = hud_x + mp_border_xoffset;
 			mp_border_x2 = mp_border_x1 + mp_border_width;
 
-			tp_border_x1 = hp_border_x1;
+			tp_border_x1 = hud_x + tp_border_xoffset;
 			tp_border_x2 = tp_border_x1 + tp_border_width;
 
-			xp_border_x1 = hp_border_x1;
+			xp_border_x1 = hud_x + xp_border_xoffset;
 			xp_border_x2 = xp_border_x1 + xp_border_width;
 		} 
 		else {
-			hp_border_x2 = hud_x + hud_w - _spacing;
+			hp_border_x2 = hud_x + hud_w - hp_border_xoffset;
 			hp_border_x1 = hp_border_x2 - hp_border_width;
 			
-			mp_border_x2 = hp_border_x2 - (mp_stock_width/2);
+			mp_border_x2 = hud_x + hud_w - mp_border_xoffset;
 			mp_border_x1 = mp_border_x2 - mp_border_width;
 			
-			tp_border_x2 = hp_border_x2;
+			tp_border_x2 = hud_x + hud_w - tp_border_xoffset;
 			tp_border_x1 = tp_border_x2 - tp_border_width;
 			
-			xp_border_x2 = hp_border_x2;
+			xp_border_x2 = hud_x + hud_w - xp_border_xoffset;
 			xp_border_x1 = xp_border_x2 - xp_border_width;
 		}
 
-		hp_border_y1 = hud_y + _spacing;
+		hp_border_y1 = hud_y + hp_border_yoffset;
 		hp_border_y2 = hp_border_y1 + hp_border_height;
 
-		mp_border_y1 = hp_border_y2;
+		mp_border_y1 = hud_y + mp_border_yoffset;
 		mp_border_y2 = mp_border_y1 + mp_border_height;
 		
-		tp_border_y1 = mp_border_y2;
+		tp_border_y1 = hud_y + tp_border_yoffset;
 		tp_border_y2 = tp_border_y1 + tp_border_height;
 		
-		xp_border_y1 = tp_border_y2;
-		xp_border_y2 = tp_border_y1 + xp_border_height;
+		xp_border_y1 = hud_y + xp_border_yoffset;
+		xp_border_y2 = xp_border_y1 + xp_border_height;
 		
 		var hp_bar_x1, hp_bar_x2, hp_bar_y1, hp_bar_y2;
 		var mp_bar_x1, mp_bar_x2, mp_bar_y1, mp_bar_y2;
@@ -516,12 +518,6 @@ function draw_playerhud() {
 					c_white,
 					_alpha
 				);
-				
-				//draw_set_color(c_yellow);
-				//draw_set_halign(fa_top);
-				//draw_set_valign(fa_right);
-				//draw_set_font(fnt_hud);
-				//draw_text(mp_border_x1,mp_
 			}
 			else {
 				if (hp > 0) {
@@ -615,6 +611,23 @@ function draw_playerhud() {
 			
 			draw_set_alpha(_alpha);
 			draw_text_outlined(playertext_x1,playertext_y1,playertext,c_black,player_color[i],playertext_scale);
+			
+			draw_set_halign(fa_center);
+			draw_set_valign(fa_middle);
+			var mp_text = string(mp_stocks);
+			var mp_text_x = mp_border_x1 + mp_stock_xoffset + (mp_stock_width / 2);
+			if _right {
+				mp_text_x = mp_border_x2 - mp_stock_xoffset - (mp_stock_width / 2);
+			}
+			var mp_text_y = mp_border_y1 + (mp_stock_height / 2);
+			draw_text_outlined(
+				mp_text_x,
+				mp_text_y,
+				mp_text,
+				make_color_rgb(0,64,0),
+				make_color_rgb(255,255,64),
+				(mp_stock_height / 2) / string_height(mp_text)
+			)
 			
 			hud_h = (_spacing * 2) + hp_border_height + mp_border_height + tp_border_height + playertext_height;
 			
@@ -774,7 +787,7 @@ function draw_versus() {
 			var _portrait_x = _w2 * (drawn_players + 1);
 			var _portrait_y = 0;
 			
-			var _timer_offset = drawn_players * 20;
+			var _timer_offset = map_value(drawn_players,0,active_players,0,20);
 	
 			_portrait_y -= gui_height * power(
 				clamp(

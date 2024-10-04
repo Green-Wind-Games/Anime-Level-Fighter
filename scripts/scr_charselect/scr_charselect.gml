@@ -83,34 +83,26 @@ function charselect_changechars() {
 				var _previous_char = player_char[i];
 				if player_input[player_slot[i]].left_pressed {
 					if (player_char[i] mod chars_per_row) == 0 {
-						player_char[i] += chars_per_row-1;
+						player_char[i] += chars_per_row;
 					}
-					else {
-						player_char[i] -= 1;
-					}
+					player_char[i] -= 1;
 				}
 				if player_input[player_slot[i]].right_pressed {
-					if (player_char[i] mod chars_per_row) == chars_per_row-1 {
-						player_char[i] -= chars_per_row-1;
+					if (player_char[i] mod chars_per_row) == (chars_per_row - 1) {
+						player_char[i] -= chars_per_row;
 					}
-					else {
-						player_char[i] += 1;
-					}
+					player_char[i] += 1;
 				}
 				if player_input[player_slot[i]].up_pressed {
-					if player_char[i] <= chars_per_row {
-						player_char[i] = max_characters - (player_char[i] mod chars_per_row);
-					}
-					else {
-						player_char[i] -= chars_per_row;
+					player_char[i] -= chars_per_row;
+					if player_char[i] < 0 {
+						player_char[i] += max_characters;
 					}
 				}
 				if player_input[player_slot[i]].down_pressed {
-					if player_char[i] >= max_characters - chars_per_row {
-						player_char[i] = player_char[i] mod chars_per_row;
-					}
-					else {
-						player_char[i] += chars_per_row;
+					player_char[i] += chars_per_row;
+					if player_char[i] >= max_characters {
+						player_char[i] -= max_characters;
 					}
 				}
 				if player_input[player_slot[i]].char_random mod 6 == 1 {
