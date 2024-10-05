@@ -34,7 +34,7 @@ if keyboard_check_pressed(vk_f6) {
 
 if keyboard_check(vk_insert) {
 	with(obj_char) {
-		hp = max_hp ;
+		hp = max_hp;
 		mp = max_mp;
 		tp = max_tp;
 	}
@@ -63,6 +63,18 @@ if keyboard_check_pressed(vk_delete) {
 
 if keyboard_check_pressed(ord("0")) {
 	round_timer = 0;
+}
+
+var _fps = game_get_speed(gamespeed_fps);
+
+if keyboard_check_pressed(vk_add) {
+	game_set_speed(game_get_speed(gamespeed_fps) + 5, gamespeed_fps);
+}
+if keyboard_check_pressed(vk_subtract) and (_fps > 10) {
+	game_set_speed(game_get_speed(gamespeed_fps) - 5, gamespeed_fps);
+}
+if keyboard_check_pressed(vk_multiply) {
+	game_set_speed(60, gamespeed_fps);
 }
 
 with(all) {

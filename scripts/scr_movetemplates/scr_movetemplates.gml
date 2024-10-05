@@ -92,12 +92,25 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 		change_sprite(sprite,max(1,round(60/sprite_get_speed(_sprite))),true);
 		xscale = _scale;
 		yscale = _scale;
-		width = min(sprite_get_width(sprite),sprite_get_height(sprite)) * _scale * 0.69;
+		width = min(sprite_get_width(sprite),sprite_get_height(sprite)) * _scale * 0.5;
 		height = width;
 		width_half = floor(width / 2);
 		height_half = floor(height / 2);
 		
-		hitbox = create_hitbox(-width/2,-height/2,width,height,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect);
+		var _offset = min(sprite_get_xoffset(sprite),sprite_get_yoffset(sprite)) * (_scale / 2);
+		
+		hitbox = create_hitbox(
+			-_offset,
+			-_offset,
+			width,
+			height,
+			_damage,
+			_xknockback,
+			_yknockback,
+			_attacktype,
+			_strength,
+			_hiteffect
+		);
 		hitbox.duration = -1;
 		attack_power = owner.attack_power;
 		

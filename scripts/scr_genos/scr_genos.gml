@@ -56,9 +56,9 @@ function init_genos_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		if state_timer mod 6 == 0 {
+		if state_timer mod 3 == 1 {
 			play_sound(snd_punch_whiff_medium);
-			repeat(2) {
+			repeat(3) {
 				with(create_shot(
 					0,
 					(-height) + random(height_half),

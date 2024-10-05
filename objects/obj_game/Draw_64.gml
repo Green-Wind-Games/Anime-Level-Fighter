@@ -52,6 +52,13 @@ draw_set_alpha(1);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
+var _fps = game_get_speed(gamespeed_fps);
+var _speed = _fps / 60;
+
+if _fps != 60 {
+	draw_text(32,32,"Game Speed: x" + string(_speed));
+}
+
 //for(var i = 0; i < max_players; i++) {
 //	var _x = 32 * (i+1);
 //	var _y = 32;

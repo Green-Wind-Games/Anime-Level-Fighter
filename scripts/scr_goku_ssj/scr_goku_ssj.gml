@@ -351,7 +351,7 @@ function init_goku_ssj() {
 		}
 		if check_frame(3) {
 			var _blast = create_shot(
-				80,
+				50,
 				-40,
 				1,
 				0,

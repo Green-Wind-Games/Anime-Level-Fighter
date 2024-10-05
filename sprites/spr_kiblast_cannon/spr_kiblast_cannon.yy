@@ -27,7 +27,7 @@
   ],
   "name":"spr_kiblast_cannon",
   "nineSlice":null,
-  "origin":4,
+  "origin":3,
   "parent":{
     "name":"Sprites",
     "path":"folders/Sprites.yy",
@@ -91,7 +91,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":64,
+    "xorigin":0,
     "yorigin":64,
   },
   "swatchColours":null,
