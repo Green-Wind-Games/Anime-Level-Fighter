@@ -67,10 +67,32 @@ function init_charsprites(_name) {
 	
 	init_sprite(idle_sprite);
 	
-	var _w = max(32,width);
-	var _h = max(48,height);
+	var _w = max(40,width);
+	var _h = max(40,height);
 	
-	create_hurtbox(-_w/2,-_h,_w,_h);
+	var _head_size = round(max(_w,_h) / 3);
+	
+	var _body_w = round(_w);
+	var _body_h = round(_h - min(_head_size,_h/3));
+	
+	with(obj_hurtbox) {
+		if owner == other {
+			instance_destroy();
+		}
+	}
+	
+	create_hurtbox(
+		-_body_w/2,
+		-_body_h,
+		_body_w,
+		_body_h
+	);
+	create_hurtbox(
+		-_head_size/4,
+		-_h,
+		_head_size,
+		_head_size
+	);
 }
 
 function apply_hiteffect(_hiteffect,_strength,_guarding) {

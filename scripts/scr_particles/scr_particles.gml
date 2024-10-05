@@ -255,7 +255,7 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 				break;
 			}
 			
-			if _strength >= attackstrength.heavy {
+			if _strength >= attackstrength.super {
 				if meme_enabled {
 					if random(100) < meme_chance {
 						_sound = choose(

@@ -526,19 +526,25 @@ function init_charstates() {
 		homing_dash_state.run();
 	}
 	homing_dash_state.run = function() {
-		var stop_distance = max(target.width_half, width_half) * 1.1;
-		var _target_x = target_x - (stop_distance * facing);
-		var _target_y = target_y;
-		var _direction = point_direction(x,y,_target_x,_target_y);
-		var _distance = point_distance(x,y,_target_x,_target_y);
+		if !target_exists() {
+			change_state(idle_state);
+			exit;
+		}
+		var stop_distance = 10;
+		var _my_x = x + (width_half * facing);
+		var _my_y = y - height_half;
+		var _target_x = target.x - (target.width_half * facing);
+		var _target_y = target.y - target.height_half;
+		var _direction = point_direction(_my_x,_my_y,_target_x,_target_y);
+		var _distance = point_distance(_my_x,_my_y,_target_x,_target_y);
 		
 		var _speed = 12;
 		var _xspeed = lengthdir_x(_speed,_direction);
 		var _yspeed = lengthdir_y(_speed,_direction);
 		 
 		face_target();
-		xspeed = approach(xspeed,_xspeed,1);
-		yspeed = approach(yspeed,_yspeed,1);
+		xspeed = approach(xspeed,_xspeed,2);
+		yspeed = approach(yspeed,_yspeed,2);
 		rotation = point_direction(0,0,abs(xspeed),yspeed);
 		if _distance <= stop_distance {
 			xspeed /= 2;

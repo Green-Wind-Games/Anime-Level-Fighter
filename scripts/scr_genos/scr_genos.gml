@@ -56,17 +56,17 @@ function init_genos_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		if state_timer mod 3 == 1 {
+		if state_timer mod 5 == 1 {
 			play_sound(snd_punch_whiff_medium);
 			repeat(3) {
 				with(create_shot(
-					0,
-					(-height) + random(height_half),
+					-random(30),
+					-random_range(height*0.8,height_half),
 					10,
 					0,
 					spr_genos_blur_fist,
 					1,
-					5,
+					1,
 					1,
 					0,
 					attacktype.normal,
@@ -79,7 +79,7 @@ function init_genos_baseform() {
 				}
 			}
 		}
-		if state_timer > 60 {
+		if state_timer > 50 {
 			if combo_hits > 0 {
 				change_state(autocombo[2]);
 			}

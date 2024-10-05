@@ -37,9 +37,9 @@ function init_goku_ssj() {
 		if ssj2_timer-- > 0 {
 			ssj2_active = true;
 			mp -= ssj2_mp_drain;
-			color = ssj2_color;
-			aura_sprite = spr_aura_dbz_yellow;
-			loop_sound(snd_energy_loop);
+			if ssj2_timer mod 50 == 1 {
+				ssj2_sparks();
+			}
 		}
 		else {
 			ssj2_active = false;
@@ -54,9 +54,6 @@ function init_goku_ssj() {
 				play_sound(snd_energy_stop);
 				attack_power = 1;
 				move_speed_buff = 1;
-				if color == ssj2_color {
-					color = c_white;
-				}
 				aura_sprite = noone;
 			}
 		}
@@ -124,6 +121,9 @@ function init_goku_ssj() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_goku_ssj_attack_triple_kick,2,false);
+		x = target_x + (50 * facing);
+		face_target();
+		play_sound(snd_dbz_teleport_short);
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
@@ -152,6 +152,9 @@ function init_goku_ssj() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_goku_ssj_attack_spin_kick,2,false);
+		x = target_x + (50 * facing);
+		face_target();
+		play_sound(snd_dbz_teleport_short);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -203,6 +206,9 @@ function init_goku_ssj() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_goku_ssj_attack_kick_air,4,false);
+		x = target_x + (50 * facing);
+		face_target();
+		play_sound(snd_dbz_teleport_short);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -258,6 +264,9 @@ function init_goku_ssj() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_goku_ssj_attack_smash,5,false);
+		x = target_x + (50 * facing);
+		face_target();
+		play_sound(snd_dbz_teleport_short);
 		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
@@ -320,7 +329,7 @@ function init_goku_ssj() {
 			frame = 0;
 		}
 		if check_frame(1) {
-			xspeed = 30 * facing;
+			xspeed = 20 * facing;
 			play_sound(snd_punch_whiff_ultimate);
 		}
 		if check_frame(2) {
@@ -329,7 +338,7 @@ function init_goku_ssj() {
 		if check_frame(3) {
 			xspeed /= 10;
 		}
-		if (state_timer > 60) {
+		if (state_timer > 50) {
 			return_to_idle();
 		}
 	}
@@ -351,8 +360,8 @@ function init_goku_ssj() {
 		}
 		if check_frame(3) {
 			var _blast = create_shot(
-				50,
-				-40,
+				25,
+				-35,
 				1,
 				0,
 				spr_kiblast_cannon,
@@ -435,7 +444,7 @@ function init_goku_ssj() {
 			play_sound(snd_dbz_beam_fire);
 		}
 		if frame == 3 {
-			fire_beam(20,-25,spr_kamehameha,2,0,12);
+			fire_beam(20,-25,spr_kamehameha,2,0,30);
 			shake_screen(5,10);
 		}
 		return_to_idle();
@@ -504,21 +513,26 @@ function init_goku_ssj() {
 		if check_mp(1) and (!ssj2_timer) {
 			change_sprite(charge_loop_sprite,3,true);
 			flash_sprite();
-			color = ssj2_color;
-			aura_sprite = spr_aura_dbz_red;
 		
 			activate_super(100);
 			spend_mp(1);
 			ssj2_timer = ssj2_duration;
 		
 			play_sound(snd_energy_start);
-			play_voiceline(snd_goku_ssj2);
+			play_voiceline(voice_powerup);
+			
+			repeat(20) {
+				ssj2_sparks();
+			}
 		}
 		else {
 			change_state(previous_state);
 		}
 	}
 	activate_ssj2.run = function() {
+		if superfreeze_timer mod 10 == 1 {
+			ssj2_sparks();
+		}
 		xspeed = 0;
 		yspeed = 0;
 		if !superfreeze_active {

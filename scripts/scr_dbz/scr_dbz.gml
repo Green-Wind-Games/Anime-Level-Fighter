@@ -81,27 +81,20 @@ function create_kiblast(_x,_y,_sprite) {
 }
 
 function ssj2_sparks() {
-	if irandom(100) == 1 {
-		var _scale = random(1/2);
-		var _spark = char_specialeffect(
-			choose(
-				spr_electric_spark,
-				spr_electric_spark2,
-				spr_electric_spark3,
-				spr_electric_spark4,
-			),
-			random(width*0.25) * choose(1,-1),
-			random_range(height*0.25,height*0.75) * -1,
-			choose(_scale,-_scale),
-			choose(_scale,-_scale),
-			random(360),
+	var _scale = random_range(1/3,1/2);
+	var _spark = char_specialeffect(
+		spr_electric_spark,
+		random(width*0.25) * choose(1,-1),
+		random_range(height*0.25,height*0.75) * -1,
+		choose(_scale,-_scale),
+		choose(_scale,-_scale),
+		random(360),
+	);
+	with(_spark) {
+		play_sound(
+			snd_electric_spark,
+			random_range(1,0.5),
+			random_range(0.8,1.2)
 		);
-		with(_spark) {
-			play_sound(
-				snd_electric_spark,
-				random_range(1,0.5),
-				random_range(0.8,1.2)
-			);
-		}
 	}
 }

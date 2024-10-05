@@ -313,7 +313,7 @@ function init_goku_baseform() {
 		if check_frame(4) {
 			xspeed /= 10;
 		}
-		if (state_timer > 60) {
+		if (state_timer > 50) {
 			return_to_idle();
 		}
 	}

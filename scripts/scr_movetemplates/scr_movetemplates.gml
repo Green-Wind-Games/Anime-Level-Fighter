@@ -90,18 +90,20 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 		}
 		init_sprite(_sprite);
 		change_sprite(sprite,max(1,round(60/sprite_get_speed(_sprite))),true);
+		var _true_scale = _scale / 2;
 		xscale = _scale;
 		yscale = _scale;
-		width = min(sprite_get_width(sprite),sprite_get_height(sprite)) * _scale * 0.5;
-		height = width;
+		width = sprite_get_width(sprite) * _true_scale;
+		height = sprite_get_height(sprite) * _true_scale;
 		width_half = floor(width / 2);
 		height_half = floor(height / 2);
 		
-		var _offset = min(sprite_get_xoffset(sprite),sprite_get_yoffset(sprite)) * (_scale / 2);
+		var _xoffset = -sprite_get_xoffset(sprite) * _true_scale;
+		var _yoffset = -sprite_get_yoffset(sprite) * _true_scale;
 		
 		hitbox = create_hitbox(
-			-_offset,
-			-_offset,
+			_xoffset,
+			_yoffset,
 			width,
 			height,
 			_damage,

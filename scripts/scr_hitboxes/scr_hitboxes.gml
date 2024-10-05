@@ -1,11 +1,6 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function create_hurtbox(_xoffset, _yoffset, _width, _height) {
-	with(obj_hurtbox) {
-		if owner == other {
-			instance_destroy();
-		}
-	}
 	var _hurtbox = instance_create(x,y,obj_hurtbox);
 	with(_hurtbox) {
 		owner = other;
