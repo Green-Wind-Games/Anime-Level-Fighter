@@ -67,7 +67,7 @@ function stop_music() {
 	audio_stop_sound(music);
 }
 
-function play_sound(_snd,_volume = 1,_pitch = 1) {
+function play_sound(_snd,_volume = 1,_pitch = 1 + (random(0.02) * choose(1,-1))) {
 	if (audio_exists(_snd)) {
 		var _audioname = audio_get_name(_snd);
 		var _sounds;
@@ -83,7 +83,7 @@ function play_sound(_snd,_volume = 1,_pitch = 1) {
 			false,
 			_volume*master_volume*sound_volume,
 			0,
-			_pitch + (random(0.02) * choose(1,-1))
+			_pitch
 		);
 		return sound;
 	}

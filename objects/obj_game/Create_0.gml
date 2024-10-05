@@ -53,7 +53,20 @@ enum fade_types {
 	right
 }
 
-globalvar	max_players, player, player_char, player_input,
+enum vs_screen_substates {
+	fadein,
+	slidein,
+	vs_slidein,
+	slideout,
+	fadeout
+}
+
+globalvar	game_state, previous_game_state, next_game_state, game_state_timer, game_state_duration,
+			game_substate, previous_game_substate, next_game_substate, game_substate_timer, game_substate_duration,
+			round_state, round_timer, round_state_timer, round_timer_max, round_countdown_duration, round_is_infinite,
+			stage,
+			
+			max_players, player, player_char, player_input,
 			player_slot, player_ready, ready_timer,
 			player_color,
 			
@@ -66,10 +79,6 @@ globalvar	max_players, player, player_char, player_input,
 			
 			transform_heal_percent, transform_late_heal_percent_increase,
 			
-			game_state, previous_game_state, next_game_state, game_state_timer, game_state_duration,
-			round_state, round_timer, round_state_timer, round_timer_max, round_countdown_duration, round_is_infinite,
-			stage,
-			
 			timestop_active, timestop_timer, timestop_activator,
 			superfreeze_active, superfreeze_timer, superfreeze_activator,
 			player_super_active,
@@ -79,8 +88,31 @@ globalvar	max_players, player, player_char, player_input,
 			screen_overlay_sprite, screen_overlay_timer,
 			screen_zoom, screen_zoom_target,
 			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha,
-			screen_fade_color, screen_fade_duration, screen_fade_type;
+			screen_fade_color, screen_fade_duration, screen_fade_type,
 			
+			vs_fadein_duration, vs_slidein_duration, vs_slidein2_duration, vs_slideout_duration, vs_fadeout_duration,
+			vs_fadein_time, vs_slidein_time, vs_slidein2_time, vs_slideout_time, vs_fadeout_time;
+			
+
+game_state = gamestates.intro;
+previous_game_state = -1;
+next_game_state = -1;
+game_state_duration = -1;
+game_state_timer = -1;
+
+game_substate = 0;
+previous_game_substate = -1;
+next_game_substate = -1;
+game_substate_duration = -1;
+game_substate_timer = -1;
+
+stage = rm_training;
+round_state = roundstates.intro;
+round_state_timer = 0;
+round_timer_max = 400 * 60;
+round_timer = round_timer_max;
+round_countdown_duration = (3 * 30) + 30;
+round_is_infinite = false;
 
 max_players = 4;
 
@@ -125,20 +157,6 @@ player_color[i++] = make_color_rgb(128,0,255);
 player_color[i++] = make_color_rgb(255,0,255);
 player_color[i++] = make_color_rgb(255,128,0);
 player_color[i++] = make_color_rgb(128,64,32);
-
-game_state = gamestates.intro;
-previous_game_state = -1;
-next_game_state = -1;
-game_state_duration = -1;
-game_state_timer = -1;
-
-stage = rm_training;
-round_state = roundstates.intro;
-round_state_timer = 0;
-round_timer_max = 400 * 60;
-round_timer = round_timer_max;
-round_countdown_duration = (3 * 30) + 30;
-round_is_infinite = false;
 
 base_hp = 1000;
 base_movespeed = 5;
@@ -187,6 +205,18 @@ screen_fade_type = fade_types.normal;
 
 screen_zoom = 1;
 screen_zoom_target = noone;
+
+vs_fadein_duration = screen_fade_duration;
+vs_slidein_duration = 90;
+vs_slidein2_duration = 90;
+vs_slideout_duration = 90;
+vs_fadeout_duration = screen_fade_duration;
+
+vs_fadein_time = vs_fadein_duration;
+vs_slidein_time = vs_fadein_time + vs_slidein_duration;
+vs_slidein2_time = vs_slidein_time + vs_slidein2_duration;
+vs_slideout_time = vs_slidein2_time + vs_slideout_duration;
+vs_fadeout_time = vs_slideout_time + vs_fadeout_duration;
 
 ygravity = 0.35;
 left_wall = 0;

@@ -319,14 +319,14 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	dmg = max(round(dmg),1);
 	
-	combo_damage_taken += min(dmg,hp-(!_kill));
-	
 	hp -= dmg;
 	if !dead {
 		if !_kill {
 			hp = max(hp,1);
 		}
 	}
+	
+	combo_damage_taken += min(dmg,hp-(!_kill));
 	
 	var mp_gain = map_value(dmg,0,max_hp,0,max_mp);
 	var xp_gain = map_value(dmg,0,max_hp,0,max_xp);

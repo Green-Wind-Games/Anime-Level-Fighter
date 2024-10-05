@@ -2,9 +2,9 @@
   "$GMSprite":"",
   "%Name":"spr_namek_ground",
   "bboxMode":0,
-  "bbox_bottom":1023,
+  "bbox_bottom":127,
   "bbox_left":0,
-  "bbox_right":1023,
+  "bbox_right":127,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -17,7 +17,7 @@
   ],
   "gridX":0,
   "gridY":0,
-  "height":1024,
+  "height":128,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"0dcd361b-7bfe-4562-97d7-3ac43d1d189a","blendMode":0,"displayName":"default","isLocked":false,"name":"0dcd361b-7bfe-4562-97d7-3ac43d1d189a","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
@@ -109,5 +109,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":1024,
+  "width":128,
 }

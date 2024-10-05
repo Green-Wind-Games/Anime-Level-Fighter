@@ -3,8 +3,6 @@
 
 init_view();
 
-stop_music();
-
 for(var i = 0; i < max_players; i++) {
 	if (!instance_exists(player[i])) {
 		player[i] = noone;

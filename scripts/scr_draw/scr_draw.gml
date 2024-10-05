@@ -478,28 +478,28 @@ function draw_playerhud() {
 
 		with(player[i]) {
 			if (!_right) {
-				if (hp > 0) {
-					var _hp_w = floor(map_value(hp, 0, max_hp, 0, hp_bar_width));
+				if (hp_percent_visible > 0) {
+					var _hp_w = map_value(hp_percent_visible, 0, 100, 0, hp_bar_width);
 					draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x1,hp_bar_y1,_hp_w,hp_bar_height);
-
-					if (combo_damage_taken > 0) {
-						var _dmg_w = map_value(combo_damage_taken, 0, max_hp, 0, hp_bar_width);
+					
+					if (dmg_percent_visible > 0) {
+						var _dmg_w = map_value(dmg_percent_visible, 0, 100, 0, hp_bar_width);
 						draw_sprite_stretched(spr_bar_hp_bar_damage,0,hp_bar_x1+_hp_w,hp_bar_y1,_dmg_w,hp_bar_height);
 					}
 				}
 
-				if (mp > 0) {
-					var _mp_w = floor(map_value(mp, 0, max_mp, 0, mp_bar_width));
+				if (mp_percent_visible > 0) {
+					var _mp_w = map_value(mp, 0, max_mp, 0, mp_bar_width);
 					draw_sprite_stretched(spr_bar_mp_bar,0,mp_bar_x1,mp_bar_y1,_mp_w,mp_bar_height);
 				}
 				
-				if (tp > 0) {
-					var _tp_w = floor(map_value(tp, 0, max_tp, 0, tp_bar_width));
+				if (tp_percent_visible > 0) {
+					var _tp_w = map_value(tp, 0, max_tp, 0, tp_bar_width);
 					draw_sprite_stretched(spr_bar_tp_bar,0,tp_bar_x1,tp_bar_y1,_tp_w,tp_bar_height);
 				}
 				
-				if (xp > 0) {
-					var _xp_w = floor(map_value(xp, 0, max_xp, 0, xp_bar_width));
+				if (xp_percent_visible > 0) {
+					var _xp_w = map_value(xp, 0, max_xp, 0, xp_bar_width);
 					draw_sprite_stretched(spr_bar_xp_bar,0,xp_bar_x1,xp_bar_y1,_xp_w,xp_bar_height);
 				}
 				
@@ -521,28 +521,28 @@ function draw_playerhud() {
 				);
 			}
 			else {
-				if (hp > 0) {
-					var _hp_w = floor(map_value(hp, 0, max_hp, 0, hp_bar_width));
+				if (hp_percent_visible > 0) {
+					var _hp_w = map_value(hp_percent_visible, 0, 100, 0, hp_bar_width);
 					draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x2 - _hp_w,hp_bar_y1,_hp_w,hp_bar_height);
-
-					if (combo_damage_taken > 0) {
-						var _dmg_w = map_value(combo_damage_taken, 0, max_hp, 0, hp_bar_width);
+					
+					if (dmg_percent_visible > 0) {
+						var _dmg_w = map_value(dmg_percent_visible, 0, 100, 0, hp_bar_width);
 						draw_sprite_stretched(spr_bar_hp_bar_damage,0,hp_bar_x2-_hp_w-_dmg_w,hp_bar_y1,_dmg_w,hp_bar_height);
 					}
 				}
 
-				if (mp > 0) {
-					var _mp_w = floor(map_value(mp, 0, max_mp, 0, mp_bar_width));
+				if (mp_percent_visible > 0) {
+					var _mp_w = map_value(mp_percent_visible, 0, 100, 0, mp_bar_width);
 					draw_sprite_stretched(spr_bar_mp_bar,0,mp_bar_x2-_mp_w,mp_bar_y1,_mp_w,mp_bar_height);
 				}
 				
-				if (tp > 0) {
-					var _tp_w = floor(map_value(tp, 0, max_tp, 0, tp_bar_width));
+				if (tp_percent_visible > 0) {
+					var _tp_w = map_value(tp_percent_visible, 0, 100, 0, tp_bar_width);
 					draw_sprite_stretched(spr_bar_tp_bar,0,tp_bar_x2-_tp_w,tp_bar_y1,_tp_w,tp_bar_height);
 				}
 				
-				if (xp > 0) {
-					var _xp_w = floor(map_value(xp, 0, max_xp, 0, xp_bar_width));
+				if (xp_percent_visible > 0) {
+					var _xp_w = map_value(xp_percent_visible, 0, 100, 0, xp_bar_width);
 					draw_sprite_stretched(spr_bar_xp_bar,0,xp_bar_x2-_xp_w,xp_bar_y1,_xp_w,xp_bar_height);
 				}
 				
@@ -800,19 +800,12 @@ function draw_versus() {
 	var _h2 = _h / 2;
 	
 	var _timer = game_state_timer;
-	var _timer_max = game_state_duration;
 	
-	var _fade_t1 = screen_fade_duration;
-	var _fade_t4 = _timer_max - (screen_fade_duration);
-	
-	var _fade_t2 = _fade_t1 + ((_fade_t4 - _fade_t1) / 3);
-	var _fade_t3 = _fade_t4 - ((_fade_t4 - _fade_t1) / 3);
-	
-	var _t1 = map_value(_timer,0,_fade_t1,0,1);
-	var _t2 = map_value(_timer,_fade_t1,_fade_t2,0,1);
-	var _t3 = map_value(_timer,_fade_t2,_fade_t3,0,1);
-	var _t4 = map_value(_timer,_fade_t3,_fade_t4,0,1);
-	var _t5 = map_value(_timer,_fade_t4,_timer_max,0,1);
+	var _t1 = map_value(_timer,0,vs_fadein_time,0,1);
+	var _t2 = map_value(_timer,vs_fadein_time,vs_slidein_time,0,1);
+	var _t3 = map_value(_timer,vs_slidein_time,vs_slidein2_time,0,1);
+	var _t4 = map_value(_timer,vs_slidein2_time,vs_slideout_time,0,1);
+	var _t5 = map_value(_timer,vs_slideout_time,vs_fadeout_time,0,1);
 	
 	_t1 = clamp(_t1,0,1);
 	_t2 = clamp(_t2,0,1);
@@ -838,7 +831,7 @@ function draw_versus() {
 	
 			_portrait_y -= gui_height * power(
 				clamp(
-					map_value(_timer - _timer_offset,_fade_t1,_fade_t2,1,0),
+					map_value(_timer - _timer_offset,vs_fadein_time,vs_slidein_time,1,0),
 					0,
 					1
 				),
@@ -846,7 +839,7 @@ function draw_versus() {
 			);
 			_portrait_y += gui_height * power(
 				clamp(
-					map_value(_timer - _timer_offset,_fade_t3,_fade_t4,0,1),
+					map_value(_timer - _timer_offset,vs_slidein2_time,vs_slideout_time,0,1),
 					0,
 					1
 				),
@@ -880,7 +873,7 @@ function draw_versus() {
 	var vs_scale = (_w / 5) / sprite_get_width(spr_versus);
 	var vs_x = _w / 2;
 	var vs_y = _h * 0.5;
-	vs_y += gui_height * power(map_value(_t2,0,1,1,0),3);
+	vs_y += gui_height * power(map_value(_t3,0,1,1,0),3);
 	vs_y -= gui_height * power(_t4,3);
 	if screen_shake_timer > 0 {
 		vs_x += random(screen_shake_intensity) * choose(1,-1);

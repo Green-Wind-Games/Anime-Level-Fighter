@@ -28,7 +28,8 @@ function init_goku_baseform() {
 		spr_kiblast_blue
 	);
 	
-	init_charaudio("goku");	
+	init_charaudio("goku");
+	voice_volume_mine = 1.25;
 
 	char_script = function() {
 		kamehameha_cooldown -= 1;

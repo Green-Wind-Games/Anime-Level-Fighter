@@ -4,7 +4,6 @@
 max_hp = 1000;
 hp = max_hp;
 previous_hp = hp;
-hp_percent = 100;
 dead = false;
 
 mp = 0;
@@ -12,6 +11,21 @@ mp_stocks = 0;
 
 tp = max_tp;
 tp_stocks = max_tp_stocks;
+
+level = 1;
+xp = 0;
+
+hp_percent = (hp / max_hp) * 100;
+mp_percent = (mp / max_mp) * 100;
+tp_percent = (tp / max_tp) * 100;
+xp_percent = (xp / max_xp) * 100;
+dmg_percent = 0;
+
+hp_percent_visible = hp_percent;
+mp_percent_visible = mp_percent;
+tp_percent_visible = tp_percent;
+xp_percent_visible = xp_percent;
+dmg_percent_visible = dmg_percent;
 
 team = id;
 target = noone;
@@ -70,9 +84,6 @@ air_moves = 0;
 max_air_moves = 1;
 
 ygravity_mod = 1;
-
-level = 1;
-xp = 0;
 
 attack_power = 1;
 defense = 1;

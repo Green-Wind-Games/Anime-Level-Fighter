@@ -13,7 +13,7 @@ if point_in_rectangle(mx,my,x,y,x+width,y+height) {
 }
 
 if hover != _hover {
-	play_sound(snd_menu_scroll);
+	play_sound(snd_menu_scroll,1,1);
 }
 
 if (mouse_over) and (mouse_check_button_pressed(mb_left)) {
@@ -21,6 +21,6 @@ if (mouse_over) and (mouse_check_button_pressed(mb_left)) {
 		var _func = options[hover][i];
 		if (_func != -1) then _func();
 	}
-	play_sound(snd_menu_select);
+	play_sound(snd_menu_select,1,1);
 	instance_destroy();
 }

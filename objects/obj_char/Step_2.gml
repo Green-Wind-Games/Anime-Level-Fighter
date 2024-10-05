@@ -116,19 +116,43 @@ mp = clamp(round(mp),0,max_mp);
 tp = clamp(round(tp),0,max_tp);
 xp = clamp(round(xp),0,max_xp);
 		
-hp_percent = (hp/max_hp)*100;
-mp_percent = (mp/max_mp)*100;
-tp_percent = (tp/max_tp)*100;
-xp_percent = (xp/max_xp)*100;
-		
 mp_stocks = floor(mp/mp_stock_size);
 tp_stocks = floor(tp/tp_stock_size);
 		
 dead = hp <= 0;
+		
+hp_percent = (hp/max_hp)*100;
+mp_percent = (mp/max_mp)*100;
+tp_percent = (tp/max_tp)*100;
+xp_percent = (xp/max_xp)*100;
+dmg_percent = (combo_damage_taken / max_hp) * 100;
 
-if (!is_hit) and (!is_guarding) {
+hp_percent_visible = lerp(hp_percent_visible,hp_percent,0.5);
+mp_percent_visible = lerp(mp_percent_visible,mp_percent,0.5);
+tp_percent_visible = lerp(tp_percent_visible,tp_percent,0.5);
+xp_percent_visible = lerp(xp_percent_visible,xp_percent,0.5);
+dmg_percent_visible = lerp(dmg_percent_visible, dmg_percent, 0.5);
+
+dmg_percent_visible = max(
+	dmg_percent_visible,
+	map_value(
+		hp_percent_visible,
+		hp_percent + dmg_percent,
+		hp_percent,
+		0,
+		dmg_percent
+	)
+);
+
+if (!is_hit) {
 	previous_hp = approach(previous_hp,hp,100);
 }
+
+//if !value_in_range(hp_percent_visible,0.1,99.9) { hp_percent_visible = round(hp_percent_visible); }
+//if !value_in_range(mp_percent_visible,0.1,99.9) { mp_percent_visible = round(mp_percent_visible); }
+//if !value_in_range(tp_percent_visible,0.1,99.9) { tp_percent_visible = round(tp_percent_visible); }
+//if !value_in_range(xp_percent_visible,0.1,99.9) { xp_percent_visible = round(xp_percent_visible); }
+//if !value_in_range(dmg_percent_visible,0.1,99.9) { dmg_percent_visible = round(dmg_percent_visible); }
 
 if dead {
 	if death_timer++ >= hitstun {

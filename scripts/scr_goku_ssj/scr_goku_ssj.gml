@@ -350,21 +350,25 @@ function init_goku_ssj() {
 			frame = 0;
 		}
 		if check_frame(3) {
-			create_shot(
-				width_half,
-				-height*0.75,
-				0,
+			var _blast = create_shot(
+				80,
+				-40,
 				1,
+				0,
 				spr_kiblast_cannon,
 				1,
 				100,
-				20,
+				30,
 				-2,
 				attacktype.hard_knockdown,
 				attackstrength.super,
 				hiteffects.fire
 			);
-			play_sound(snd_explosion_medium);
+			with(_blast) {
+				duration = anim_duration;
+				hit_limit = -1;
+				play_sound(snd_dbz_beam_fire);
+			}
 		}
 		if state_timer > 60 {
 			return_to_idle();
@@ -403,7 +407,7 @@ function init_goku_ssj() {
 	angry_kamehameha = new state();
 	angry_kamehameha.start = function() {
 		if kamehameha_cooldown <= 0 and check_mp(3) {
-			change_sprite(spr_goku_special_ki_blast,5,false);
+			change_sprite(spr_goku_ssj_special_ki_blast,5,false);
 			activate_ultimate(60);
 			spend_mp(3);
 			xspeed = 0;
@@ -431,7 +435,7 @@ function init_goku_ssj() {
 			play_sound(snd_dbz_beam_fire);
 		}
 		if frame == 3 {
-			fire_beam(20,-25,spr_kamehameha,2,0,8);
+			fire_beam(20,-25,spr_kamehameha,2,0,12);
 			shake_screen(5,10);
 		}
 		return_to_idle();

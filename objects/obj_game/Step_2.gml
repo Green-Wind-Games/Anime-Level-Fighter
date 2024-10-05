@@ -8,6 +8,9 @@ if !window_get_fullscreen() {
 	if keyboard_check_pressed(vk_f2) {
 		resize_window(-1);
 	}
+	if keyboard_check_pressed(vk_f3) {
+		resize_window(window_max_scale);
+	}
 }
 
 if keyboard_check_pressed(vk_f4) {
