@@ -523,6 +523,7 @@ function init_charstates() {
 		yspeed = 0;
 		can_guard = true;
 		can_cancel = false;
+		homing_dash_state.run();
 	}
 	homing_dash_state.run = function() {
 		var stop_distance = max(target.width_half, width_half) * 1.1;
@@ -536,8 +537,8 @@ function init_charstates() {
 		var _yspeed = lengthdir_y(_speed,_direction);
 		 
 		face_target();
-		xspeed = _xspeed;
-		yspeed = _yspeed;
+		xspeed = approach(xspeed,_xspeed,1);
+		yspeed = approach(yspeed,_yspeed,1);
 		rotation = point_direction(0,0,abs(xspeed),yspeed);
 		if _distance <= stop_distance {
 			xspeed /= 2;

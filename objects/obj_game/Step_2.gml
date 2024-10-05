@@ -66,12 +66,13 @@ if keyboard_check_pressed(ord("0")) {
 }
 
 var _fps = game_get_speed(gamespeed_fps);
+var _change = 6;
 
 if keyboard_check_pressed(vk_add) {
-	game_set_speed(game_get_speed(gamespeed_fps) + 5, gamespeed_fps);
+	game_set_speed(game_get_speed(gamespeed_fps) + _change, gamespeed_fps);
 }
-if keyboard_check_pressed(vk_subtract) and (_fps > 10) {
-	game_set_speed(game_get_speed(gamespeed_fps) - 5, gamespeed_fps);
+if keyboard_check_pressed(vk_subtract) and (_fps > _change) {
+	game_set_speed(game_get_speed(gamespeed_fps) - _change, gamespeed_fps);
 }
 if keyboard_check_pressed(vk_multiply) {
 	game_set_speed(60, gamespeed_fps);

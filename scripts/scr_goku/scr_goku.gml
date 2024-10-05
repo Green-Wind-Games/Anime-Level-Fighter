@@ -136,7 +136,7 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		basic_attack(2,20,attackstrength.medium,hiteffects.hit);
+		basic_attack(1,20,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
 	}
 	i++;
@@ -183,7 +183,7 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		basic_attack(2,30,attackstrength.medium,hiteffects.hit);
+		basic_attack(2,20,attackstrength.medium,hiteffects.hit);
 		if check_frame(2) {
 			xspeed = 5 * facing;
 			yspeed = 0;
@@ -199,7 +199,7 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		basic_attack(2,20,attackstrength.medium,hiteffects.hit);
+		basic_attack(1,20,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
 	}
 	i++;
@@ -213,8 +213,8 @@ function init_goku_baseform() {
 		if check_frame(2) or check_frame(6) {
 			play_sound(snd_punch_whiff_medium);
 		}
-		basic_attack(4,20,attackstrength.medium,hiteffects.hit);
-		basic_attack(8,20,attackstrength.medium,hiteffects.hit);
+		basic_attack(4,10,attackstrength.medium,hiteffects.hit);
+		basic_attack(8,10,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
 	}
 	i++;
@@ -308,7 +308,7 @@ function init_goku_baseform() {
 		}
 		if check_frame(3) {
 			xspeed = 30 * facing;
-			create_hitbox(0,-height_half,width,height_half,100,30,-2,attacktype.wall_bounce,attackstrength.super,hiteffects.hit);
+			create_hitbox(0,-height_half,width,height_half,150,30,-2,attacktype.wall_bounce,attackstrength.super,hiteffects.hit);
 		}
 		if check_frame(4) {
 			xspeed /= 10;
@@ -396,7 +396,8 @@ function init_goku_baseform() {
 				frame = 4;
 			}
 			if superfreeze_timer == 15 {
-				if input.forward {
+				if (input.forward) and check_tp(2) {
+					spend_tp(2);
 					play_sound(snd_dbz_teleport_long);
 					x = target_x + ((width + target.width) * facing);
 					y = target_y;

@@ -59,7 +59,7 @@ function basic_smash(_hitframe,_damage,_hiteffect) {
 	}
 	if check_frame(_hitframe) {
 		var _w = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
-		var _h = sprite_get_height(sprite) / 2;
+		var _h = sprite_get_height(sprite);
 		var _x = 2;
 		var _y = -_h * 0.69;
 		create_hitbox(_x,_y,_w,_h,_damage,3,15,attacktype.hard_knockdown,attackstrength.super,_hiteffect);
@@ -146,9 +146,9 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 			_sprite,
 			_scale,
 			_damage,
-			_xlength * 4,
-			_ylength * 4,
-			attacktype.normal,
+			_xlength * 10,
+			_ylength * 10,
+			attacktype.hard_knockdown,
 			attackstrength.light,
 			hiteffects.none
 		);
@@ -159,10 +159,13 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 			duration = 10;
 			xscale = 100 / sprite_get_width(sprite);
 			with(hitbox) {
-				var hitbox_scale = 1/3;
 				xoffset = 0;
-				yoffset *= hitbox_scale;
-				image_yscale *= hitbox_scale;
+				
+				var hitbox_scale = 1/3;
+				
+				image_yscale = (sprite_get_height(other.sprite) / sprite_get_height(spr_hitbox));
+				image_yscale *= hitbox_scale * _scale;
+				yoffset = -(image_yscale * sprite_get_height(spr_hitbox)) / 2;
 			}
 			active_script = function() {
 				xscale += 100 / sprite_get_width(sprite);
@@ -187,7 +190,9 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 				}
 				else if is_char(_hit) or is_helper(_hit) {
 					with(_hit) {
-						hitstop = 0;
+						hitstop = 1;
+						x = clamp(x+other.xspeed,left_wall,right_wall);
+						y = min(y+other.yspeed,ground_height);
 					}
 				}
 			}
@@ -203,9 +208,9 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 		x = owner.x + (_x * other.facing);
 		y = owner.y + _y;
 		with(hitbox) {
-			xknockback = _xlength * 4;
-			yknockback = _ylength * 4;
-			if yknockback == 0 then yknockback -= 1/3;
+			xknockback = _xlength * 10;
+			yknockback = _ylength * 10;
+			if yknockback == 0 then yknockback -= 2;
 		}
 	}
 }
