@@ -14,7 +14,7 @@ function init_genos_baseform() {
 	incinerate_cooldown_duration = 150;
 	
 	init_charaudio("genos");
-	voice_volume_mine = 3;
+	voice_volume_mine = 3.5;
 
 	char_script = function() {
 		incinerate_cooldown -= 1;
@@ -56,11 +56,11 @@ function init_genos_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		if state_timer mod 5 == 1 {
+		if state_timer mod 6 == 1 {
 			play_sound(snd_punch_whiff_medium);
-			repeat(3) {
+			repeat(2) {
 				with(create_shot(
-					-random(30),
+					-random(15),
 					-random_range(height*0.8,height_half),
 					10,
 					0,

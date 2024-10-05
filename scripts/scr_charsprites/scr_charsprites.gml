@@ -67,13 +67,13 @@ function init_charsprites(_name) {
 	
 	init_sprite(idle_sprite);
 	
-	var _w = max(40,width);
+	var _w = max(35,width);
 	var _h = max(40,height);
 	
-	var _head_size = round(max(_w,_h) / 3);
+	var _head_size = round(min(_w,_h) / 2);
 	
 	var _body_w = round(_w);
-	var _body_h = round(_h - min(_head_size,_h/3));
+	var _body_h = round(_h * 0.65);
 	
 	with(obj_hurtbox) {
 		if owner == other {
@@ -88,7 +88,7 @@ function init_charsprites(_name) {
 		_body_h
 	);
 	create_hurtbox(
-		-_head_size/4,
+		-_head_size/3,
 		-_h,
 		_head_size,
 		_head_size

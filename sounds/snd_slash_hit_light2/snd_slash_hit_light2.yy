@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.333787,
+  "duration":0.469524,
   "name":"snd_slash_hit_light2",
   "parent":{
     "name":"Sounds",

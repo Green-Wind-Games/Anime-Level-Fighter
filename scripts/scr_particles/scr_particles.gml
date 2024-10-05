@@ -2,7 +2,7 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 globalvar	particle_system,
 			hitspark_light, hitspark_medium, hitspark_heavy,
-			hitspark_super,
+			hitspark_super, hitspark_ultimate,
 			slashspark,
 			guardspark,
 			deflect_spark,
@@ -20,7 +20,7 @@ part_system_automatic_draw(particle_system,false);
 hitspark_light = part_type_create();
 part_type_sprite(hitspark_light,spr_hitspark,true,true,false);
 part_type_life(hitspark_light,12,12);
-part_type_size(hitspark_light,1/5,1/5,1/60,0);
+part_type_size(hitspark_light,1/4,1/4,1/60,0);
 part_type_orientation(hitspark_light,0,360,0,0,true);
 part_type_blend(hitspark_light,true);
 part_type_color1(hitspark_light,c_white);
@@ -28,7 +28,7 @@ part_type_color1(hitspark_light,c_white);
 hitspark_medium = part_type_create();
 part_type_sprite(hitspark_medium,spr_hitspark,true,true,false);
 part_type_life(hitspark_medium,16,16);
-part_type_size(hitspark_medium,1/5,1/5,1/50,0);
+part_type_size(hitspark_medium,1/3,1/3,1/50,0);
 part_type_orientation(hitspark_medium,0,360,0,0,true);
 part_type_blend(hitspark_medium,true);
 part_type_color1(hitspark_medium,make_color_rgb(255,255,0));
@@ -36,18 +36,26 @@ part_type_color1(hitspark_medium,make_color_rgb(255,255,0));
 hitspark_heavy = part_type_create();
 part_type_sprite(hitspark_heavy,spr_hitspark,true,true,false);
 part_type_life(hitspark_heavy,20,20);
-part_type_size(hitspark_heavy,1/5,1/5,1/40,0);
+part_type_size(hitspark_heavy,1/2,1/2,1/40,0);
 part_type_orientation(hitspark_heavy,0,360,0,0,true);
 part_type_blend(hitspark_heavy,true);
-part_type_color1(hitspark_heavy,make_color_rgb(255,128,0));
+part_type_color1(hitspark_heavy,make_color_rgb(255,192,0));
 	
 hitspark_super = part_type_create();
 part_type_sprite(hitspark_super,spr_hitspark,true,true,false);
 part_type_life(hitspark_super,24,24);
-part_type_size(hitspark_super,1/5,1/5,1/30,0);
+part_type_size(hitspark_super,1,1,1/30,0);
 part_type_orientation(hitspark_super,0,360,0,0,true);
 part_type_blend(hitspark_super,true);
-part_type_color1(hitspark_super,make_color_rgb(255,64,0));
+part_type_color1(hitspark_super,make_color_rgb(255,128,0));
+	
+hitspark_ultimate = part_type_create();
+part_type_sprite(hitspark_ultimate,spr_hitspark,true,true,false);
+part_type_life(hitspark_ultimate,24,24);
+part_type_size(hitspark_ultimate,1,1,1/30,0);
+part_type_orientation(hitspark_ultimate,0,360,0,0,true);
+part_type_blend(hitspark_ultimate,true);
+part_type_color1(hitspark_ultimate,make_color_rgb(255,128,0));
 	
 slashspark = part_type_create();
 part_type_sprite(slashspark,spr_slashspark,true,true,false);
@@ -232,9 +240,13 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 					_sound = snd_punch_hit_heavy;
 					create_particles(_x1,_y1,_x2,_y2,hitspark_heavy);
 				}
-				else {
+				else if _strength < attackstrength.ultimate {
 					_sound = snd_punch_hit_super;
 					create_particles(_x1,_y1,_x2,_y2,hitspark_super);
+				}
+				else {
+					_sound = snd_punch_hit_ultimate;
+					create_particles(_x1,_y1,_x2,_y2,hitspark_ultimate);
 				}
 				break;
 				
@@ -249,8 +261,11 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 				else if _strength < attackstrength.super {
 					_sound = snd_slash_hit_heavy;
 				}
-				else if _strength < attackstrength.super {
+				else if _strength < attackstrength.ultimate {
 					_sound = snd_slash_hit_super;
+				}
+				else {
+					_sound = snd_slash_hit_ultimate;
 				}
 				break;
 			}

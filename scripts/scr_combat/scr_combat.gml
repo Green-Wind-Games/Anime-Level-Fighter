@@ -295,7 +295,7 @@ function take_damage(_attacker,_amount,_kill) {
 			
 			for(var i = 0; i < array_length(autocombo); i++) {
 				if active_state == autocombo[i] {
-					_atkscale = 1/5;
+					_atkscale = 1/6;
 					break;
 				}
 			}
@@ -305,7 +305,7 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	
 	if is_helper(_attacker) {
-		dmg /= 4;
+		dmg /= 6;
 	}
 	
 	if is_char(defender){
