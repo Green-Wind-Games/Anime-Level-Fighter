@@ -72,7 +72,7 @@ function init_naruto_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		basic_attack(2,10,attackstrength.light,hiteffects.hit);
+		basic_attack(2,15,attackstrength.light,hiteffects.hit);
 		return_to_idle();
 	}
 	i++;
@@ -96,7 +96,7 @@ function init_naruto_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	autocombo[i].run = function() {
-		basic_attack(3,20,attackstrength.medium,hiteffects.hit);
+		basic_attack(3,25,attackstrength.medium,hiteffects.hit);
 		return_to_idle();
 	}
 	i++;
@@ -129,7 +129,7 @@ function init_naruto_baseform() {
 				-height,
 				width,
 				height,
-				50,
+				80,
 				1,
 				-5,
 				attacktype.hard_knockdown,

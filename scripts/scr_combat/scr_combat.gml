@@ -287,17 +287,17 @@ function take_damage(_attacker,_amount,_kill) {
 				
 		var _atkscale = 1;
 		if !super_active {
-			_atkscale = map_value(_amount,10,100,1,0.5);
-			
-			if is_shot(_attacker) { 
-				_atkscale *= 2/3; 
-			}
+			//_atkscale = map_value(_amount,10,100,1,0.5);
 			
 			for(var i = 0; i < array_length(autocombo); i++) {
 				if active_state == autocombo[i] {
-					_atkscale = 1/6;
+					_atkscale *= 1/2;
 					break;
 				}
+			}
+			
+			if is_shot(_attacker) { 
+				_atkscale *= 2/3;
 			}
 		}
 		_atkscale = clamp(_atkscale,1/20,1);
@@ -305,7 +305,7 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	
 	if is_helper(_attacker) {
-		dmg /= 6;
+		dmg /= 4;
 	}
 	
 	if is_char(defender){
@@ -331,11 +331,12 @@ function take_damage(_attacker,_amount,_kill) {
 	var mp_gain = map_value(dmg,0,max_hp,0,max_mp);
 	var xp_gain = map_value(dmg,0,max_hp,0,max_xp);
 	
-	var defend_mp_gain = mp_gain * 1.2;
-	var defend_xp_gain = xp_gain * 1.2;
+	var defend_mp_gain = mp_gain * 1.25;
+	var defend_xp_gain = xp_gain * 1.05;
 	
-	var attack_mp_gain = mp_gain * 1.5;
-	var attack_xp_gain = xp_gain * 0.2;
+	var attack_mp_gain = mp_gain * 1.50;
+	var attack_xp_gain = xp_gain * 0.10;
+	
 	if !is_char(_attacker) {
 		attack_mp_gain /= 2;
 		attack_xp_gain /= 2;
