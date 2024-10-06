@@ -399,14 +399,8 @@ function init_goku_baseform() {
 				if (input.forward) and check_tp(2) {
 					spend_tp(2);
 					play_sound(snd_dbz_teleport_long);
-					x = target_x + ((width + target.width) * facing);
-					y = target_y;
+					teleport(target_x + ((width + target.width) * facing), target_y);
 					face_target();
-					if target.on_wall {
-						with(target) {
-							x += (width * other.facing);
-						}
-					}
 				
 					var _frame = frame;
 					change_sprite(spr_goku_special_kamehameha_air,frame_duration,false);
@@ -465,9 +459,9 @@ function init_goku_baseform() {
 		}
 		if sprite == spr_goku_special_kamehameha_air {
 			if check_frame(1) {
+				teleport(target_x - (100 * facing), target_y - 50);
+				face_target();
 				play_sound(snd_dbz_teleport_short);
-				x = target_x - (100 * facing);
-				y = target_y - 50;
 			}
 			kamehameha.run();
 		}
@@ -601,7 +595,7 @@ function init_goku_baseform() {
 	setup_autocombo();
 
 	add_move(dragon_fist,"EA");
-	add_move(meteor_combo,"EEA");
+	//add_move(meteor_combo,"EEA");
 
 	add_move(kiblast,"B");
 	add_move(kiai_push,"EB");

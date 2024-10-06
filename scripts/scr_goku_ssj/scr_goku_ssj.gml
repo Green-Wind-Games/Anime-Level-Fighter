@@ -121,7 +121,7 @@ function init_goku_ssj() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_goku_ssj_attack_triple_kick,2,false);
-		x = target_x + (50 * facing);
+		teleport(target_x + (50 * facing),y);
 		face_target();
 		play_sound(snd_dbz_teleport_short);
 		play_voiceline(voice_attack,50,false);
@@ -152,7 +152,7 @@ function init_goku_ssj() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_goku_ssj_attack_spin_kick,2,false);
-		x = target_x + (50 * facing);
+		teleport(target_x + (50 * facing),y);
 		face_target();
 		play_sound(snd_dbz_teleport_short);
 		play_sound(snd_punch_whiff_medium);
@@ -206,7 +206,7 @@ function init_goku_ssj() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_goku_ssj_attack_kick_air,4,false);
-		x = target_x + (50 * facing);
+		teleport(target_x + (50 * facing),y);
 		face_target();
 		play_sound(snd_dbz_teleport_short);
 		play_sound(snd_punch_whiff_medium);
@@ -264,7 +264,7 @@ function init_goku_ssj() {
 	autocombo[i] = new state();
 	autocombo[i].start = function() {
 		change_sprite(spr_goku_ssj_attack_smash,5,false);
-		x = target_x + (50 * facing);
+		teleport(target_x + (50 * facing),y);
 		face_target();
 		play_sound(snd_dbz_teleport_short);
 		play_sound(snd_punch_whiff_super);
@@ -480,9 +480,9 @@ function init_goku_ssj() {
 		}
 		if sprite == spr_goku_special_kamehameha_air {
 			if check_frame(1) {
+				teleport(target_x - (100 * facing), target_y - 50);
+				face_target();
 				play_sound(snd_dbz_teleport_short);
-				x = target_x - (100 * facing);
-				y = target_y - 50;
 			}
 			kamehameha.run();
 		}
@@ -543,7 +543,7 @@ function init_goku_ssj() {
 	setup_autocombo();
 
 	add_move(dragon_fist,"EA");
-	add_move(meteor_combo,"EEA");
+	//add_move(meteor_combo,"EEA");
 
 	add_move(kiblast,"B");
 	add_move(ki_blast_cannon,"EB");

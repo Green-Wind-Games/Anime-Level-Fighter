@@ -32,6 +32,8 @@ switch(type) {
 	break;
 	
 	case input_types.joystick:
+	gamepad_set_axis_deadzone(pad,0.5);
+	
 	u =	(gamepad_axis_value(pad,gp_axislv) < 0) or gamepad_button_check(pad,gp_padu);
 	d =	(gamepad_axis_value(pad,gp_axislv) > 0) or gamepad_button_check(pad,gp_padd);
 	l =	(gamepad_axis_value(pad,gp_axislh) < 0) or gamepad_button_check(pad,gp_padl);

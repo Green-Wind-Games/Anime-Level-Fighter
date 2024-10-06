@@ -612,27 +612,20 @@ function init_charstates() {
 				color = c_black;
 				
 				var dist = (game_width / 3);
-				x += dist * sign(input.right-input.left);
-				y += dist * sign(input.down-input.up);
+				var _x = x;
+				var _y = y;
+				_x += dist * sign(input.right-input.left);
+				_y += dist * sign(input.down-input.up);
 				
 				if !input.left
 				and !input.right
 				and !input.up
 				and !input.down {
-					x += dist * facing;
+					_x += dist * facing;
 				}
 				
 				face_target();
-				if !value_in_range(x,left_wall,right_wall) {
-					x = clamp(x,left_wall,right_wall);
-					if target_x <= left_wall
-					or target_x >= right_wall {
-						target_x += width * facing;
-					}
-				}
-				if y > ground_height {
-					y = ground_height;
-				}
+				teleport(_x,_y);
 			}
 		}
 		else {
@@ -819,10 +812,5 @@ function land() {
 
 function substitution_teleport() {
 	var _dist = 100;
-	x = target_x + (_dist * facing);
-	y = target_y;
-	if !value_in_range(x,left_wall,right_wall) {
-		x = target_x;
-		y = target_y - _dist;
-	}
+	teleport(target_x + (_dist * facing),target_y - 30);
 }

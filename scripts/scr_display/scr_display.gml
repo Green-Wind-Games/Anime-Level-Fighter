@@ -175,5 +175,9 @@ if os_type == os_windows {
 }
 else {
 	enable_fullscreen();
+	if os_type == os_android {
+		var _flags = 1024|4096;
+		display_set_ui_visibility(_flags);
+	}
 }
 //enable_fullscreen();

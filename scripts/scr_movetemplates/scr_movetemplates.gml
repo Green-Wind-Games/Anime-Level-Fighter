@@ -258,3 +258,19 @@ function check_substitution(_defender,_cost = 1) {
 	}
 	return false;
 }
+
+function teleport(_x,_y) {
+	x = _x;
+	y = _y;
+	if !value_in_range(x,left_wall,right_wall) {
+		x = clamp(x,left_wall,right_wall);
+		with(target) {
+			if value_in_range(x,other.x-other.width_half,other.x+other.width_half) {
+				x = approach(x,room_width/2,width);
+			}
+		}
+	}
+	if y > ground_height {
+		y = ground_height;
+	}
+}

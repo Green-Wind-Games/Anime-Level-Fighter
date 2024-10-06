@@ -123,10 +123,6 @@ for(var i = 0; i < max_players; i++) {
 	player_ready[i] = false;
 }
 
-for(var i = 0; i < 8; i++) {
-	gamepad_set_axis_deadzone(i,0.5);
-}
-
 for(var i = 0; i <= 10 + max_players; i++) {
 	with(instance_create(0,0,obj_input)) {
 		player_input[i] = id;

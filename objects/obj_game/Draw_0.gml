@@ -11,11 +11,10 @@ switch(game_state) {
 	//draw_player_outlines();
 	draw_chars();
 	draw_shots();
-	draw_superfreeze();
 	draw_particles();
-	draw_char_auras();
+	draw_superfreeze();
 	
-	draw_hitboxes();
+	//draw_hitboxes();
 
 	//with(obj_char) {
 	//	draw_set_halign(fa_center);
@@ -31,7 +30,6 @@ switch(game_state) {
 	draw_chars();
 	draw_shots();
 	draw_particles();
-	draw_char_auras();
 	break;
 }
 
