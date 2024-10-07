@@ -34,14 +34,9 @@ function init_genos_baseform() {
 
 	light_attack = new state();
 	light_attack.start = function() {
-		if on_ground {
-			change_sprite(spr_genos_attack_punch_straight,4,false);
-			play_sound(snd_punch_whiff_light);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(light_airattack);
-		}
+		change_sprite(spr_genos_attack_punch_straight,4,false);
+		play_sound(snd_punch_whiff_light);
+		play_voiceline(voice_attack,50,false);
 	}
 	light_attack.run = function() {
 		basic_light_attack(2,hiteffects.hit);
@@ -49,14 +44,9 @@ function init_genos_baseform() {
 
 	medium_attack = new state();
 	medium_attack.start = function() {
-		if on_ground {
-			change_sprite(spr_genos_attack_uppercut,4,false);
-			play_sound(snd_punch_whiff_medium);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(medium_airattack);
-		}
+		change_sprite(spr_genos_attack_uppercut,4,false);
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
 	}
 	medium_attack.run = function() {
 		basic_medium_attack(2,hiteffects.hit);
@@ -64,14 +54,9 @@ function init_genos_baseform() {
 
 	heavy_attack = new state();
 	heavy_attack.start = function() {
-		if on_ground {
-			change_sprite(spr_genos_attack_kick_straight,5,false);
-			play_sound(snd_punch_whiff_heavy);
-			play_voiceline(voice_heavyattack,50,false);
-		}
-		else {
-			change_state(heavy_airattack);
-		}
+		change_sprite(spr_genos_attack_kick_straight,5,false);
+		play_sound(snd_punch_whiff_heavy);
+		play_voiceline(voice_heavyattack,50,false);
 	}
 	heavy_attack.run = function() {
 		basic_heavy_attack(2,hiteffects.hit);
@@ -87,14 +72,9 @@ function init_genos_baseform() {
 
 	medium_lowattack = new state();
 	medium_lowattack.start = function() {
-		if on_ground {
-			change_sprite(spr_genos_attack_kick_up,4,false);
-			play_sound(snd_punch_whiff_medium);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(medium_airattack);
-		}
+		change_sprite(spr_genos_attack_kick_up,4,false);
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
 	}
 	medium_lowattack.run = function() {
 		basic_medium_lowattack(2,hiteffects.hit);
@@ -102,14 +82,9 @@ function init_genos_baseform() {
 
 	heavy_lowattack = new state();
 	heavy_lowattack.start = function() {
-		if on_ground {
-			change_sprite(spr_genos_attack_kick_straight,5,false);
-			play_sound(snd_punch_whiff_heavy);
-			play_voiceline(voice_heavyattack,50,false);
-		}
-		else {
-			change_state(heavy_airattack);
-		}
+		change_sprite(spr_genos_attack_kick_straight,5,false);
+		play_sound(snd_punch_whiff_heavy);
+		play_voiceline(voice_heavyattack,50,false);
 	}
 	heavy_lowattack.run = function() {
 		basic_heavy_lowattack(2,hiteffects.hit);

@@ -51,14 +51,9 @@ function init_naruto_baseform() {
 	
 	light_attack = new state();
 	light_attack.start = function() {
-		if on_ground {
-			change_sprite(spr_naruto_attack_punch_straight,3,false);
-			play_sound(snd_punch_whiff_light);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(light_airattack);
-		}
+		change_sprite(spr_naruto_attack_punch_straight,3,false);
+		play_sound(snd_punch_whiff_light);
+		play_voiceline(voice_attack,50,false);
 	}
 	light_attack.run = function() {
 		basic_light_attack(2,hiteffects.hit);
@@ -81,14 +76,9 @@ function init_naruto_baseform() {
 
 	medium_attack = new state();
 	medium_attack.start = function() {
-		if on_ground {
-			change_sprite(spr_naruto_attack_slash,4,false);
-			play_sound(snd_slash_whiff_medium);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(medium_airattack);
-		}
+		change_sprite(spr_naruto_attack_slash,4,false);
+		play_sound(snd_slash_whiff_medium);
+		play_voiceline(voice_attack,50,false);
 	}
 	medium_attack.run = function() {
 		basic_medium_attack(2,hiteffects.slash);
@@ -96,14 +86,9 @@ function init_naruto_baseform() {
 
 	heavy_attack = new state();
 	heavy_attack.start = function() {
-		if on_ground {
-			change_sprite(spr_naruto_attack_spinkick,2,false);
-			play_sound(snd_punch_whiff_heavy);
-			play_voiceline(voice_heavyattack,50,false);
-		}
-		else {
-			change_state(heavy_airattack);
-		}
+		change_sprite(spr_naruto_attack_spinkick,2,false);
+		play_sound(snd_punch_whiff_heavy);
+		play_voiceline(voice_heavyattack,50,false);
 	}
 	heavy_attack.run = function() {
 		basic_heavy_attack(3,hiteffects.hit);
@@ -111,14 +96,9 @@ function init_naruto_baseform() {
 	
 	light_lowattack = new state();
 	light_lowattack.start = function() {
-		if on_ground {
-			change_sprite(spr_naruto_attack_dash_punch,3,false);
-			play_sound(snd_punch_whiff_light);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(light_airattack);
-		}
+		change_sprite(spr_naruto_attack_dash_punch,3,false);
+		play_sound(snd_punch_whiff_light);
+		play_voiceline(voice_attack,50,false);
 	}
 	light_lowattack.run = function() {
 		basic_light_attack(2,hiteffects.hit);
@@ -126,14 +106,9 @@ function init_naruto_baseform() {
 
 	medium_lowattack = new state();
 	medium_lowattack.start = function() {
-		if on_ground {
-			change_sprite(spr_naruto_attack_slash_up,2,false);
-			play_sound(snd_punch_whiff_medium);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(medium_airattack);
-		}
+		change_sprite(spr_naruto_attack_slash_up,2,false);
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
 	}
 	medium_lowattack.run = function() {
 		basic_medium_lowattack(3,hiteffects.slash);
@@ -141,17 +116,12 @@ function init_naruto_baseform() {
 
 	heavy_lowattack = new state();
 	heavy_lowattack.start = function() {
-		if on_ground {
-			change_sprite(spr_naruto_attack_spinkick_up,5,false);
-			play_sound(snd_punch_whiff_heavy);
-			play_voiceline(voice_heavyattack,50,false);
-		}
-		else {
-			change_state(heavy_airattack);
-		}
+		change_sprite(spr_naruto_attack_uppercut,5,false);
+		play_sound(snd_punch_whiff_heavy);
+		play_voiceline(voice_heavyattack,50,false);
 	}
 	heavy_lowattack.run = function() {
-		basic_heavy_lowattack(2,hiteffects.hit);
+		basic_heavy_lowattack(3,hiteffects.hit);
 	}
 	
 	light_airattack = new state();
@@ -178,7 +148,7 @@ function init_naruto_baseform() {
 
 	heavy_airattack = new state();
 	heavy_airattack.start = function() {
-		change_sprite(spr_genos_attack_smash,4,false);
+		change_sprite(spr_naruto_attack_smash_kick,4,false);
 		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
@@ -272,7 +242,7 @@ function init_naruto_baseform() {
 			play_sound(snd_punch_whiff_light,1.5,1.25);
 		}
 		if state_timer >= 30 {
-			change_state(autocombo[6]);
+			change_state(heavy_airattack);
 			play_voiceline(snd_naruto_uzumakibarrage);
 		}
 	}
@@ -291,7 +261,7 @@ function init_naruto_baseform() {
 				0,
 				spr_shuriken,
 				1,
-				10,
+				100,
 				3,
 				0,
 				attacktype.normal,
@@ -337,10 +307,10 @@ function init_naruto_baseform() {
 					10,
 					-35,
 					12,
-					random_range(-2,1),
+					random_range(-2-on_ground,1+is_airborne),
 					spr_shuriken,
 					1,
-					5,
+					50,
 					3,
 					0,
 					attacktype.normal,
@@ -375,21 +345,10 @@ function init_naruto_baseform() {
 	mini_rasengan = new state();
 	mini_rasengan.start = function() {
 		if check_mp(1) and (!rasengan_cooldown) {
-			if on_ground {
-				change_sprite(spr_naruto_special_rasengan,3,false);
-				activate_super(60);
-				spend_mp(1);
-				deflecting_projectiles = true;
-			}
-			else {
-				if previous_state == autocombo[6] {
-					create_particles(x,y,x,y,jutsu_smoke_particle);
-					x = target_x - (100 * facing);
-					y = ground_height - 500;
-					create_particles(x,y,x,y,jutsu_smoke_particle);
-				}
-				change_state(rasengan_dive);
-			}
+			change_sprite(spr_naruto_special_rasengan,3,false);
+			activate_super(60);
+			spend_mp(1);
+			deflecting_projectiles = true;
 		}
 		else {
 			change_state(previous_state);
@@ -422,7 +381,7 @@ function init_naruto_baseform() {
 				0,
 				spr_rasengan,
 				0.2,
-				10,
+				50,
 				0,
 				0,
 				attacktype.normal,
@@ -443,7 +402,7 @@ function init_naruto_baseform() {
 					0,
 					spr_rasengan,
 					0.2,
-					100,
+					500,
 					15,
 					-3,
 					attacktype.hard_knockdown,
@@ -521,7 +480,7 @@ function init_naruto_baseform() {
 				0,
 				spr_rasengan,
 				0.3,
-				10,
+				50,
 				0,
 				0,
 				attacktype.normal,
@@ -542,7 +501,7 @@ function init_naruto_baseform() {
 					0,
 					spr_rasengan,
 					0.3,
-					100,
+					500,
 					1,
 					15,
 					attacktype.hard_knockdown,
@@ -575,7 +534,7 @@ function init_naruto_baseform() {
 	
 	double_rasengan = new state();
 	double_rasengan.start = function() {
-		if (on_ground) and check_mp(2) and (!rasengan_cooldown) {
+		if check_mp(2) and (!rasengan_cooldown) {
 			change_sprite(spr_naruto_special_doublerasengan,3,false);
 			activate_super(80);
 			spend_mp(2);
@@ -610,7 +569,7 @@ function init_naruto_baseform() {
 				0,
 				spr_rasengan,
 				0.2,
-				15,
+				50,
 				0,
 				0,
 				attacktype.normal,
@@ -631,7 +590,7 @@ function init_naruto_baseform() {
 					0,
 					spr_rasengan,
 					0.2,
-					150,
+					800,
 					30,
 					-2,
 					attacktype.wall_bounce,
@@ -699,7 +658,7 @@ function init_naruto_baseform() {
 				0,
 				spr_rasengan,
 				1,
-				12,
+				80,
 				0,
 				0,
 				attacktype.normal,
@@ -719,7 +678,7 @@ function init_naruto_baseform() {
 				0,
 				spr_rasengan,
 				1,
-				120,
+				690,
 				15,
 				-3,
 				attacktype.hard_knockdown,
@@ -993,13 +952,13 @@ function init_naruto_baseform() {
 	add_move(shuriken_throw,"B");
 	add_move(triple_shuriken_throw,"2B");
 	
-	add_move(mini_rasengan,"C");
-	add_move(double_rasengan,"2C");
-	add_move(giant_rasengan,"EC");
-	add_move(rasen_shuriken,"EEC");
+	add_ground_move(mini_rasengan,"C");
+	add_ground_move(double_rasengan,"2C");
+	add_ground_move(giant_rasengan,"EC");
+	add_ground_move(rasen_shuriken,"EEC");
 	
-	add_move(shadow_clone_barrage,"D");
-	add_move(shadow_clone_jutsu,"ED");
+	add_air_move(shadow_clone_barrage,"D");
+	add_ground_move(shadow_clone_jutsu,"ED");
 
 	//var i = 0;
 	//voice_attack[i++] = snd_naruto_attack1;

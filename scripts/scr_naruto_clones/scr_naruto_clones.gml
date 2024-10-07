@@ -31,7 +31,7 @@ function init_naruto_baseform_clone() {
 		play_voiceline(voice_attack,50,false);
 	}
 	punch.run = function() {
-		basic_attack(2,10,attackstrength.light,hiteffects.hit);
+		basic_light_attack(2,hiteffects.hit);
 		if anim_finished {
 			if can_cancel and choose(true,false) {
 				change_state(punch2);
@@ -48,7 +48,7 @@ function init_naruto_baseform_clone() {
 		play_voiceline(voice_attack,50,false);
 	}
 	punch2.run = function() {
-		basic_attack(2,20,attackstrength.light,hiteffects.hit);
+		basic_medium_attack(2,hiteffects.hit);
 		if anim_finished {
 			change_state(idle_state);
 		}
@@ -61,7 +61,7 @@ function init_naruto_baseform_clone() {
 		play_voiceline(voice_attack,50,false);
 	}
 	slash.run = function() {
-		basic_attack(2,20,attackstrength.light,hiteffects.slash);
+		basic_light_attack(2,hiteffects.slash);
 		if check_frame(2) {
 			char_specialeffect(spr_slash,width_half,-height_half,0.5,-0.5,-45);
 		}
@@ -84,18 +84,7 @@ function init_naruto_baseform_clone() {
 		if check_frame(3) {
 			xspeed = 3 * facing;
 			yspeed = -5;
-			create_hitbox(
-				0,
-				-height,
-				width,
-				height,
-				30,
-				1,
-				-6,
-				attacktype.normal,
-				attackstrength.medium,
-				hiteffects.slash
-			);
+			basic_medium_lowattack(3,hiteffects.slash);
 			
 			char_specialeffect(spr_slash2,width*0.9,-height*0.75,0.5,-0.5,-45);
 		}
@@ -170,7 +159,7 @@ function init_naruto_baseform_clone_barrage() {
 				-height_half,
 				width,
 				height_half,
-				10,
+				100,
 				0,
 				-12,
 				attacktype.hard_knockdown,

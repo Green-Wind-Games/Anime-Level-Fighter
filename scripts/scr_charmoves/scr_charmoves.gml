@@ -1,16 +1,37 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
-function add_move(_move,_input) {
-	if (movelist[0][0] == noone) {
-		movelist[0][0] = _move;
-		movelist[0][1] = _input;
+function add_move(_move,_input,_ground = true,_air = true) {
+	if _ground {
+		if (ground_movelist[0][0] == noone) {
+			ground_movelist[0][0] = _move;
+			ground_movelist[0][1] = _input;
+		}
+		else {
+			var n = array_length(movelist);
+			ground_movelist[n][0] = _move;
+			ground_movelist[n][1] = _input;
+		}
 	}
-	else {
-		var n = array_length(movelist);
-		movelist[n][0] = _move;
-		movelist[n][1] = _input;
+	if _air {
+		if (air_movelist[0][0] == noone) {
+			air_movelist[0][0] = _move;
+			air_movelist[0][1] = _input;
+		}
+		else {
+			var n = array_length(movelist);
+			air_movelist[n][0] = _move;
+			air_movelist[n][1] = _input;
+		}
 	}
+}
+
+function add_ground_move(_move,_input) {
+	add_move(_move,_input,true,false);
+}
+
+function add_air_move(_move,_input) {
+	add_move(_move,_input,false,true);
 }
 
 function check_moves() {
@@ -18,21 +39,43 @@ function check_moves() {
 			
 	var available_moves = ds_priority_create();
 	var min_cancel = 0; //floor(combo_hits * 0.5);
-	if (ds_list_empty(cancelable_moves)) {
-		for(var i = min_cancel; i < array_length(movelist); i++) {
-			if (active_state == movelist[i][0]) {
-				min_cancel = i+1;
-				break;
+	if on_ground {
+		if (ds_list_empty(cancelable_moves)) {
+			for(var i = min_cancel; i < array_length(ground_movelist); i++) {
+				if (active_state == ground_movelist[i][0]) {
+					min_cancel = i+1;
+					break;
+				}
+			}
+		}
+		for(var i = min_cancel; i < array_length(ground_movelist); i++) {
+			var move = ground_movelist[i][0];
+			var input = ground_movelist[i][1];
+			if (ds_list_find_index(cancelable_moves,move) != -1)
+			or ds_list_empty(cancelable_moves) {
+				if (check_input(input)) {
+					ds_priority_add(available_moves,move,string_length(input));
+				}
 			}
 		}
 	}
-	for(var i = min_cancel; i < array_length(movelist); i++) {
-		var move = movelist[i][0];
-		var input = movelist[i][1];
-		if (ds_list_find_index(cancelable_moves,move) != -1)
-		or ds_list_empty(cancelable_moves) {
-			if (check_input(input)) {
-				ds_priority_add(available_moves,move,string_length(input));
+	else {
+		if (ds_list_empty(cancelable_moves)) {
+			for(var i = min_cancel; i < array_length(air_movelist); i++) {
+				if (active_state == air_movelist[i][0]) {
+					min_cancel = i+1;
+					break;
+				}
+			}
+		}
+		for(var i = min_cancel; i < array_length(air_movelist); i++) {
+			var move = air_movelist[i][0];
+			var input = air_movelist[i][1];
+			if (ds_list_find_index(cancelable_moves,move) != -1)
+			or ds_list_empty(cancelable_moves) {
+				if (check_input(input)) {
+					ds_priority_add(available_moves,move,string_length(input));
+				}
 			}
 		}
 	}
@@ -131,12 +174,16 @@ function setup_autocombo() {
 }
 
 function setup_basicmoves() {
-	add_move(light_attack,"A");
-	add_move(medium_attack,"B");
-	add_move(heavy_attack,"C");
-	add_move(light_lowattack,"2A");
-	add_move(medium_lowattack,"2B");
-	add_move(heavy_lowattack,"2C");
+	add_ground_move(light_attack,"A");
+	add_ground_move(medium_attack,"B");
+	add_ground_move(heavy_attack,"C");
+	add_ground_move(light_lowattack,"2A");
+	add_ground_move(medium_lowattack,"2B");
+	add_ground_move(heavy_lowattack,"2C");
+	
+	add_air_move(light_airattack,"A");
+	add_air_move(medium_airattack,"B");
+	add_air_move(heavy_airattack,"C");
 }
 
 function timestop(_duration = 30) {

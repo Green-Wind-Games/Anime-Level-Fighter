@@ -435,6 +435,7 @@
     {"name":"spr_naruto_attack_smash_kick","order":17,"path":"sprites/spr_naruto_attack_smash_kick/spr_naruto_attack_smash_kick.yy",},
     {"name":"spr_naruto_attack_spinkick_up","order":37,"path":"sprites/spr_naruto_attack_spinkick_up/spr_naruto_attack_spinkick_up.yy",},
     {"name":"spr_naruto_attack_spinkick","order":36,"path":"sprites/spr_naruto_attack_spinkick/spr_naruto_attack_spinkick.yy",},
+    {"name":"spr_naruto_attack_uppercut","order":57,"path":"sprites/spr_naruto_attack_uppercut/spr_naruto_attack_uppercut.yy",},
     {"name":"spr_naruto_clone_giantrasengan","order":47,"path":"sprites/spr_naruto_clone_giantrasengan/spr_naruto_clone_giantrasengan.yy",},
     {"name":"spr_naruto_clone_rasengan_air","order":50,"path":"sprites/spr_naruto_clone_rasengan_air/spr_naruto_clone_rasengan_air.yy",},
     {"name":"spr_naruto_clone_rasengan_charge","order":46,"path":"sprites/spr_naruto_clone_rasengan_charge/spr_naruto_clone_rasengan_charge.yy",},

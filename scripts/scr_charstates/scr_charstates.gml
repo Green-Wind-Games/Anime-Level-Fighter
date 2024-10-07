@@ -181,19 +181,14 @@ function init_charstates() {
 	
 	dash_state = new state();
 	dash_state.start = function() {
-		if is_airborne {
-			change_state(airdash_state);
-		}
-		else {
-			change_sprite(dash_sprite,2,true);
-			yoffset = -height_half;
-			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
-			yspeed = 0;
-			play_sound(snd_dash);
-			play_sound(snd_dash_loop);
-			if sprite_get_yoffset(walk_sprite) <= sprite_get_height(walk_sprite) {
-				change_sprite(walk_sprite,frame_duration,true);
-			}
+		change_sprite(dash_sprite,2,true);
+		yoffset = -height_half;
+		xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
+		yspeed = 0;
+		play_sound(snd_dash);
+		play_sound(snd_dash_loop);
+		if sprite_get_yoffset(walk_sprite) <= sprite_get_height(walk_sprite) {
+			change_sprite(walk_sprite,frame_duration,true);
 		}
 	}
 	dash_state.run = function() {
@@ -231,17 +226,12 @@ function init_charstates() {
 	
 	backdash_state = new state();
 	backdash_state.start = function() {
-		if is_airborne {
-			change_state(air_backdash_state);
-		}
-		else {
-			can_cancel = false;
-			change_sprite(air_up_sprite,2,true);
-			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * -facing;
-			yspeed = -1.5;
-			play_sound(snd_dash);
-			char_specialeffect(spr_dust_dash,0,0,-0.5,0.5);
-		}
+		change_sprite(air_up_sprite,2,true);
+		can_cancel = false;
+		xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * -facing;
+		yspeed = -1.5;
+		play_sound(snd_dash);
+		char_specialeffect(spr_dust_dash,0,0,-0.5,0.5);
 	}
 	backdash_state.run = function() {
 		can_cancel = false;
@@ -341,9 +331,6 @@ function init_charstates() {
 	hit_state.run = function() {
 		is_hit = true;
 		can_guard = false;
-		if on_ground and (yspeed > 0) and (!dead) {
-			change_state(tech_state);
-		}
 		if state_timer >= hitstun {
 			if !dead {
 				if on_ground {
@@ -360,6 +347,9 @@ function init_charstates() {
 				}
 				change_state(hard_knockdown_state);
 			}
+		}
+		if on_ground and (yspeed > 0) and (!dead) {
+			change_state(tech_state);
 		}
 	}
 	hit_state.stop = function() {
@@ -782,11 +772,11 @@ function init_charstates() {
 		play_voiceline(voice_defeat);
 	}
 	
-	add_move(dash_state,"656");
-	add_move(backdash_state,"454");
+	add_ground_move(dash_state,"656");
+	add_ground_move(backdash_state,"454");
 	
-	add_move(dash_state,"956");
-	add_move(backdash_state,"754");
+	add_air_move(dash_state,"956");
+	add_air_move(backdash_state,"754");
 	
 	add_move(teleport_state,"F");
 	

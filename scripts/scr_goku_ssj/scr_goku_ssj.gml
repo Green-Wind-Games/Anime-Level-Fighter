@@ -86,14 +86,9 @@ function init_goku_ssj() {
 
 	light_attack = new state();
 	light_attack.start = function() {
-		if on_ground {
-			change_sprite(spr_goku_ssj_attack_punch_straight,2,false);
-			play_sound(snd_punch_whiff_light);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(light_airattack);
-		}
+		change_sprite(spr_goku_ssj_attack_punch_straight,2,false);
+		play_sound(snd_punch_whiff_light);
+		play_voiceline(voice_attack,50,false);
 	}
 	light_attack.run = function() {
 		basic_light_attack(2,hiteffects.hit);
@@ -101,14 +96,9 @@ function init_goku_ssj() {
 
 	medium_attack = new state();
 	medium_attack.start = function() {
-		if on_ground {
-			change_sprite(spr_goku_ssj_attack_elbow_bash,4,false);
-			play_sound(snd_punch_whiff_medium);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(medium_airattack);
-		}
+		change_sprite(spr_goku_ssj_attack_elbow_bash,4,false);
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
 	}
 	medium_attack.run = function() {
 		basic_medium_attack(2,hiteffects.hit);
@@ -116,14 +106,9 @@ function init_goku_ssj() {
 
 	heavy_attack = new state();
 	heavy_attack.start = function() {
-		if on_ground {
-			change_sprite(spr_goku_ssj_attack_kick_side,5,false);
-			play_sound(snd_punch_whiff_heavy);
-			play_voiceline(voice_heavyattack,50,false);
-		}
-		else {
-			change_state(heavy_airattack);
-		}
+		change_sprite(spr_goku_ssj_attack_kick_side,5,false);
+		play_sound(snd_punch_whiff_heavy);
+		play_voiceline(voice_heavyattack,50,false);
 	}
 	heavy_attack.run = function() {
 		basic_heavy_attack(2,hiteffects.hit);
@@ -131,16 +116,11 @@ function init_goku_ssj() {
 	
 	light_lowattack = new state();
 	light_lowattack.start = function() {
-		if on_ground {
-			change_sprite(spr_goku_ssj_attack_kick_air,2,false);
-			xspeed = 5 * facing;
-			yspeed = -8;
-			play_sound(snd_punch_whiff_light);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(light_airattack);
-		}
+		change_sprite(spr_goku_ssj_attack_kick_air,2,false);
+		xspeed = 5 * facing;
+		yspeed = -8;
+		play_sound(snd_punch_whiff_light);
+		play_voiceline(voice_attack,50,false);
 	}
 	light_lowattack.run = function() {
 		basic_light_airattack(2,hiteffects.hit)
@@ -148,14 +128,9 @@ function init_goku_ssj() {
 
 	medium_lowattack = new state();
 	medium_lowattack.start = function() {
-		if on_ground {
-			change_sprite(spr_goku_ssj_attack_spin_kick_double,5,false);
-			play_sound(snd_punch_whiff_medium);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(medium_airattack);
-		}
+		change_sprite(spr_goku_ssj_attack_spin_kick_double,5,false);
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
 	}
 	medium_lowattack.run = function() {
 		basic_medium_attack(4,hiteffects.hit);
@@ -164,14 +139,9 @@ function init_goku_ssj() {
 
 	heavy_lowattack = new state();
 	heavy_lowattack.start = function() {
-		if on_ground {
-			change_sprite(spr_goku_ssj_attack_backflip_kick,3,false);
-			play_sound(snd_punch_whiff_heavy);
-			play_voiceline(voice_heavyattack,50,false);
-		}
-		else {
-			change_state(heavy_airattack);
-		}
+		change_sprite(spr_goku_ssj_attack_backflip_kick,3,false);
+		play_sound(snd_punch_whiff_heavy);
+		play_voiceline(voice_heavyattack,50,false);
 	}
 	heavy_lowattack.run = function() {
 		basic_heavy_lowattack(3,hiteffects.hit);
@@ -557,7 +527,8 @@ function init_goku_ssj() {
 	setup_basicmoves();
 	
 	add_move(kiblast,"D");
-	add_move(ki_blast_cannon,"236D");
+	
+	add_ground_move(ki_blast_cannon,"236D");
 
 	//add_move(dragon_fist,"");
 	//add_move(meteor_combo,"EEA");
@@ -571,7 +542,7 @@ function init_goku_ssj() {
 	
 	add_move(angry_kamehameha,"214C");
 	
-	add_move(activate_ssj2,"2D");
+	add_ground_move(activate_ssj2,"2D");
 
 	victory_state.run = function() {
 		ssj2_timer = 0;
