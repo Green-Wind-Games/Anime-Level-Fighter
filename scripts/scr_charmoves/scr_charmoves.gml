@@ -137,9 +137,6 @@ function setup_basicmoves() {
 	add_move(light_lowattack,"2A");
 	add_move(medium_lowattack,"2B");
 	add_move(heavy_lowattack,"2C");
-	add_move(light_forwardattack,"6A");
-	add_move(medium_forwardattack,"6B");
-	add_move(heavy_forwardattack,"6C");
 }
 
 function timestop(_duration = 30) {

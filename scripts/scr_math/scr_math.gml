@@ -18,14 +18,20 @@ function value_in_range(_value, _min, _max) {
 }
 
 function get_team_score(_team = team) {
-	var team_score = 100 * max_level * 4;
+	var team_score = 0;
+	var team_score_divider = 0;
 	with(obj_char) {
 		if team == _team {
-			team_score -= 100 * level;
 			team_score += clamp(hp_percent,0,100);
 			if dead {
 				team_score -= 100;
 			}
+			team_score_divider++;
+		}
+	}
+	if team_score_divider > 0 {
+		if team_score > 0 {
+			team_score /= team_score_divider;
 		}
 	}
 	return team_score;

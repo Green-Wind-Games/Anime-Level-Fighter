@@ -35,7 +35,7 @@ function init_genos_baseform() {
 	light_attack = new state();
 	light_attack.start = function() {
 		if on_ground {
-			change_sprite(spr_genos_attack_punch_straight,3,false);
+			change_sprite(spr_genos_attack_punch_straight,4,false);
 			play_sound(snd_punch_whiff_light);
 			play_voiceline(voice_attack,50,false);
 		}
@@ -79,17 +79,10 @@ function init_genos_baseform() {
 	
 	light_lowattack = new state();
 	light_lowattack.start = function() {
-		if on_ground {
-			change_sprite(spr_genos_attack_punch_straight,3,false);
-			play_sound(snd_punch_whiff_light);
-			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(light_airattack);
-		}
+		light_attack.start();
 	}
 	light_lowattack.run = function() {
-		basic_light_attack(2,hiteffects.hit);
+		light_attack.run();
 	}
 
 	medium_lowattack = new state();
@@ -151,7 +144,6 @@ function init_genos_baseform() {
 	heavy_airattack.run = function() {
 		basic_heavy_airattack(2,hiteffects.hit);
 	}
-	i++;
 
 	forward_throw = new state();
 	forward_throw.start = function() {
@@ -261,38 +253,16 @@ function init_genos_baseform() {
 		}
 	}
 
-	incinerate = new state();
-	incinerate.start = function() {
-		if !incinerate_cooldown {
-			change_sprite(spr_genos_special_incinerate,8,false);
-			xspeed = 0;
-			yspeed = 0;
-			incinerate_cooldown = incinerate_cooldown_duration;
-			play_voiceline(snd_genos_incinerate);
-			play_sound(snd_dbz_beam_charge_short);
-		}
-		else {
-			change_state(previous_state);
-		}
-	}
-	incinerate.run = function() {
-		xspeed = 0;
-		yspeed = 0;
-		if check_frame(3) {
-			play_sound(snd_dbz_beam_fire);
-		}
-		if value_in_range(frame,3,4) {
-			fire_beam(5,-25,spr_incinerate,0.8,0,50);
-		}
-		return_to_idle();
-	}
-
 	machinegun_blows = new state();
 	machinegun_blows.start = function() {
 		change_sprite(spr_genos_attack_punch_straight,2,true);
 		play_voiceline(voice_attack,50,false);
+		xspeed = 0;
+		yspeed = 0;
 	}
 	machinegun_blows.run = function() {
+		xspeed = 0;
+		yspeed = 0;
 		if state_timer mod 6 == 1 {
 			play_sound(snd_punch_whiff_medium);
 			repeat(2) {
@@ -317,15 +287,67 @@ function init_genos_baseform() {
 			}
 		}
 		if state_timer > 50 {
-			change_state(idle_state);
+			if combo_timer > 10 {
+				change_state(heavy_attack);
+			}
+			else {
+				change_state(idle_state);
+			}
 		}
 	}
-	i++;
 
-	super_incinerate = new state();
-	super_incinerate.start = function() {
+	incinerate_light = new state();
+	incinerate_light.start = function() {
+		if !incinerate_cooldown {
+			change_sprite(spr_genos_special_incinerate,6,false);
+			xspeed = 0;
+			yspeed = 0;
+			incinerate_cooldown = incinerate_cooldown_duration;
+			play_voiceline(snd_genos_incinerate);
+			play_sound(snd_dbz_beam_charge_short);
+		}
+		else {
+			change_state(previous_state);
+		}
+	}
+	incinerate_light.run = function() {
+		xspeed = 0;
+		yspeed = 0;
+		if check_frame(3) {
+			play_sound(snd_dbz_beam_fire);
+		}
+		if value_in_range(frame,3,4) {
+			fire_beam(5,-25,spr_incinerate,0.8,0,50);
+		}
+		return_to_idle();
+	}
+	
+	incinerate_medium = new state();
+	incinerate_medium.start = function() {
+		incinerate_light.start();
+		if active_state == incinerate_medium {
+			change_sprite(sprite,frame_duration + 2,false);
+		}
+	}
+	incinerate_medium.run = function() {
+		incinerate_light.run();
+	}
+	
+	incinerate_heavy = new state();
+	incinerate_heavy.start = function() {
+		incinerate_light.start();
+		if active_state == incinerate_heavy {
+			change_sprite(sprite,frame_duration + 3,false);
+		}
+	}
+	incinerate_heavy.run = function() {
+		incinerate_light.run();
+	}
+
+	super_incinerate_light = new state();
+	super_incinerate_light.start = function() {
 		if (!incinerate_cooldown) and check_mp(2) {
-			change_sprite(spr_genos_special_incinerate2,10,false);
+			change_sprite(spr_genos_special_incinerate2,12,false);
 			activate_super(60);
 			spend_mp(2);
 			xspeed = 0;
@@ -336,7 +358,7 @@ function init_genos_baseform() {
 			change_state(previous_state);
 		}
 	}
-	super_incinerate.run = function() {
+	super_incinerate_light.run = function() {
 		xspeed = 0;
 		yspeed = 0;
 		if superfreeze_active {
@@ -366,12 +388,19 @@ function init_genos_baseform() {
 
 	setup_basicmoves();
 
-	add_move(dropkick,"B");
-	add_move(fireblast,"C");
-
-	add_move(incinerate,"D");
-	add_move(super_incinerate,"ED");
+	add_move(fireblast,"D");
+	add_move(dropkick,"2D");
 	
-	signature_move = incinerate;
+	add_move(machinegun_blows,"AAA");
+
+	add_move(incinerate_light,"236A");
+	add_move(incinerate_medium,"236B");
+	add_move(incinerate_heavy,"236C");
+	
+	add_move(super_incinerate,"214A");
+	add_move(super_incinerate,"214B");
+	add_move(super_incinerate,"214C");
+	
+	signature_move = incinerate_medium;
 	finisher_move = super_incinerate;
 }

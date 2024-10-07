@@ -68,7 +68,7 @@ function basic_launcher(_hitframe,_damage,_hiteffect) {
 		var _h = sprite_get_height(sprite);
 		var _x = 2;
 		var _y = -_h;
-		create_hitbox(_x,_y,_w,_h,_damage,2,-10,attacktype.normal,attackstrength.super,_hiteffect);
+		create_hitbox(_x,_y,_w,_h,_damage,2,-10,attacktype.antiair,attackstrength.super,_hiteffect);
 	}
 	can_cancel = false;
 }

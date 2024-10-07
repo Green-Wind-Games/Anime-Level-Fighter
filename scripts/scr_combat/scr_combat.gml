@@ -51,9 +51,9 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	xspeed = _xknockback * _attacker.facing;
 	yspeed = _yknockback;
 	
-	hitstun = map_value(_strength,attackstrength.light,attackstrength.ultimate,15,30);
+	hitstun = map_value(_strength,attackstrength.light,attackstrength.heavy,20,40);
 	blockstun = hitstun - 5;
-	hitstop = map_value(_strength,attackstrength.light,attackstrength.ultimate,10,20);
+	hitstop = map_value(_strength,attackstrength.light,attackstrength.heavy,15,25);
 	
 	if !is_char(_attacker) {
 		hitstop *= 0.5;
@@ -66,11 +66,11 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		target = _attacker;
 	}
 	
-	hitstun = max(hitstun - (combo_hits_taken / 5), 10);
+	hitstun = max(hitstun - (combo_hits_taken / 4), 10);
 		
 	if abs(_xknockback) >= 10
 	or abs(_yknockback) >= 10 {
-		hitstun = max(hitstun,40);
+		hitstun = max(hitstun,50);
 	}
 	
 	hitstun = round(hitstun);
@@ -79,7 +79,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			
 	var guarding = is_guarding;
 	if is_char(id) {
-		if input.back or input.down guarding = true;
+		if input.back guarding = true;
 		if (ai_enabled) and (random(100) < map_value(ai_level,1,ai_level_max,10,90)) guarding = true;
 	}
 	
@@ -283,7 +283,7 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	
 	with(true_attacker) {
-		dmg *= attack_power + ((level * level_scaling) + 1);
+		dmg *= attack_power + (level * level_scaling);
 	}
 	
 	if is_char(defender){
@@ -323,14 +323,14 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	combo_damage_taken += min(dmg,hp-(!_kill));
 	
-	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * 10;
-	var xp_gain = map_value(dmg,0,max_hp,0,max_xp) * max_level;
+	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * max_level;
+	var xp_gain = map_value(dmg,0,max_hp,0,max_xp);
 	
 	var defend_mp_gain = mp_gain * 1.25;
-	var defend_xp_gain = xp_gain * 0.50;
+	var defend_xp_gain = xp_gain * 1.00;
 	
 	var attack_mp_gain = mp_gain * 1.50;
-	var attack_xp_gain = xp_gain * 1.00;
+	var attack_xp_gain = xp_gain * 1.00 * max_level;
 	
 	if !is_char(_attacker) {
 		attack_mp_gain /= 2;
@@ -352,11 +352,11 @@ function take_damage(_attacker,_amount,_kill) {
 function get_damage_scaling(_defender) {
 	with(_defender) {
 		var scaling = map_value(
-			combo_damage_taken,
-			max_hp * 0.05,
-			max_hp * 0.3,
+			combo_hits_taken,
+			0,
+			50,
 			1,
-			0
+			0.1
 		);
 		scaling = clamp(scaling,0.1,1);
 		return scaling;
