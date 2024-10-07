@@ -14,7 +14,7 @@ function init_goku_baseform() {
 	kaioken_duration = 10 * 60;
 	kaioken_buff = 1.25;
 	kaioken_color = make_color_rgb(255,128,128);
-	kaioken_min_hp = (max_hp / 10);
+	kaioken_min_hp = 100;
 
 	spirit_bomb_shot = noone;
 
@@ -479,8 +479,8 @@ function init_goku_baseform() {
 		return_to_idle();
 	}
 
-	kaioken = new state();
-	kaioken.start = function() {
+	activate_kaioken = new state();
+	activate_kaioken.start = function() {
 		if check_mp(1) and (!kaioken_timer) and (hp > kaioken_min_hp) {
 			change_sprite(charge_loop_sprite,3,true);
 			flash_sprite();
@@ -498,7 +498,7 @@ function init_goku_baseform() {
 			change_state(previous_state);
 		}
 	}
-	kaioken.run = function() {
+	activate_kaioken.run = function() {
 		xspeed = 0;
 		yspeed = 0;
 		if !superfreeze_active {
@@ -531,7 +531,7 @@ function init_goku_baseform() {
 			}
 		}
 		if check_frame(2) {
-			spirit_bomb_shot = create_shot(0,-200,0,0,spr_genkidama,1,0,0,0,attacktype.unblockable,attackstrength.ultimate,hiteffects.none)
+			spirit_bomb_shot = create_shot(0,-200,0,0,spr_genkidama,2,0,0,0,attacktype.unblockable,attackstrength.ultimate,hiteffects.none)
 			with(spirit_bomb_shot) {
 				play_sound(snd_activate_super,1,2);
 				duration = -1;
@@ -563,7 +563,7 @@ function init_goku_baseform() {
 						duration = 0;
 						for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
 							with(ds_list_find_value(hitbox.hit_list,i)) {
-								get_hit(other,5200,1,-12,attacktype.hard_knockdown,attackstrength.ultimate,hiteffects.none);
+								get_hit(other,8000,1,-12,attacktype.hard_knockdown,attackstrength.ultimate,hiteffects.none);
 								x = other.x;
 								y = ground_height - 1;
 								shake_screen(20,5);
@@ -585,20 +585,29 @@ function init_goku_baseform() {
 		return_to_idle();
 	}
 
-	setup_autocombo();
+	setup_basicmoves();
+	
+	add_move(kiblast,"D");
+	add_move(kiai_push,"236D");
 
-	add_move(dragon_fist,"EA");
+	//add_move(dragon_fist,"");
 	//add_move(meteor_combo,"EEA");
 
-	add_move(kiblast,"B");
-	add_move(kiai_push,"EB");
-
-	add_move(kamehameha,"C");
-	add_move(super_kamehameha,"EC");
-
-	add_move(kaioken,"D");
-	add_move(spirit_bomb,"ED");
-
+	add_move(kamehameha_light,"236A");
+	add_move(kamehameha_medium,"236B");
+	add_move(kamehameha_heavy,"236C");
+	
+	add_move(super_kamehameha,"214A");
+	add_move(super_kamehameha,"214B");
+	add_move(super_kamehameha,"214C");
+	
+	add_move(activate_kaioken,"2D");
+	
+	add_move(spirit_bomb,"214D");
+	
+	signature_move = super_kamehameha;
+	finisher_move = spirit_bomb;
+	
 	victory_state.run = function() {
 		kaioken_timer = 0;
 		if check_frame(4) {
