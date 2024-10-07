@@ -304,8 +304,8 @@ function draw_screenfade() {
 
 function draw_hud() {
 	draw_timer();
-	draw_combo_counters();
 	draw_playerhud();
+	draw_combo_counters();
 }
 
 function draw_playerhud() {
@@ -338,9 +338,9 @@ function draw_playerhud() {
 	var tp_xscale = tp_border_width / sprite_get_width(spr_bar_tp_border);
 	var xp_xscale = xp_border_width / sprite_get_width(spr_bar_xp_border);
 	
-	var hud_yscale = 1 / ceil(active_players / 2);
+	var hud_yscale = 2 / ceil(active_players / 2);
 	
-	var hp_border_height = (_h / 15) * hud_yscale;
+	var hp_border_height = 16 * hud_yscale;
 	var mp_border_height = hp_border_height / 1.5;
 	var tp_border_height = mp_border_height / 1.5;
 	var xp_border_height = tp_border_height;

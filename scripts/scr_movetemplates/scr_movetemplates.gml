@@ -118,6 +118,27 @@ function basic_heavy_attack(_hitframe,_hiteffect) {
 	return_to_idle();
 }
 
+function basic_light_lowattack(_hitframe,_hiteffect) {
+	if state_timer == 1 {
+		xspeed = 5 * facing;
+		yspeed = -5;
+	}
+	if !on_ground {
+		frame = 0;
+	}
+	basic_light_attack(_hitframe,_hiteffect);
+}
+
+function basic_medium_lowattack(_hitframe,_hiteffect) {
+	basic_attack(_hitframe,200,attackstrength.medium,_hiteffect);
+	return_to_idle();
+}
+
+function basic_heavy_lowattack(_hitframe,_hiteffect) {
+	basic_wallsplat(_hitframe,300,_hiteffect);
+	return_to_idle();
+}
+
 function basic_light_airattack(_hitframe,_hiteffect) {
 	basic_attack(_hitframe,160,attackstrength.light,_hiteffect);
 	return_to_idle();

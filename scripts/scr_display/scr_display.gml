@@ -13,19 +13,29 @@ screen_aspectratio = screen_width / screen_height;
 	
 game_width = 640;
 game_height = 360;
-//game_width = floor(screen_width / 2);
-//game_height = floor((720 / 2) - 48);
+
+if os_type == os_android {
+	game_width = floor(game_width / 2);
+	game_height = floor(game_height / 2);
+}
+
 //game_width = round(game_height * (4 / 3));
 //game_height = round(game_width / (4 / 3));
-game_width = round(game_height * (16 / 9));
+//game_width = round(game_height * (16 / 9));
 //game_height = round(game_width / (16 / 9));
-//game_width = round(game_height * screen_aspectratio);
+game_width = round(game_height * screen_aspectratio);
 //game_height = round(game_width / screen_aspectratio);
 
 game_aspectratio = game_width / game_height;
 
-gui_width = 720;
-gui_height = 405;
+gui_width = 640;
+gui_height = 360;
+
+if os_type == os_android {
+	gui_width = floor(gui_width / 2);
+	gui_height = floor(gui_height / 2);
+}
+
 //gui_width = round(game_width / 2);
 //gui_height = round(game_height / 2);
 //gui_width = round(screen_width / 2);

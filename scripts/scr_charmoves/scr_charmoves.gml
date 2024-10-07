@@ -87,6 +87,36 @@ function check_input(_input) {
 		if (!string_ends_with(_input_dir,cmd_dir)) and (!string_ends_with(_input_dir,cmd_dir + "5")) {
 			valid = false;
 		}
+		switch(cmd_dir) {
+			case "2":
+			if (!string_ends_with(_input_dir,"1")) 
+			and (!string_ends_with(_input_dir,"2")) 
+			and (!string_ends_with(_input_dir,"3")) { 
+				valid = false;
+			}
+			break;
+			case "4":
+			if (!string_ends_with(_input_dir,"1")) 
+			and (!string_ends_with(_input_dir,"4")) 
+			and (!string_ends_with(_input_dir,"7")) { 
+				valid = false;
+			}
+			break;
+			case "6":
+			if (!string_ends_with(_input_dir,"3")) 
+			and (!string_ends_with(_input_dir,"6")) 
+			and (!string_ends_with(_input_dir,"9")) { 
+				valid = false;
+			}
+			break;
+			case "8":
+			if (!string_ends_with(_input_dir,"7")) 
+			and (!string_ends_with(_input_dir,"8")) 
+			and (!string_ends_with(_input_dir,"9")) { 
+				valid = false;
+			}
+			break;
+		}
 	}
 	if !string_ends_with(_input_btn,cmd_btn) {
 		valid = false;
@@ -98,6 +128,18 @@ function setup_autocombo() {
 	for(var i = 0; i < array_length(autocombo); i++) {
 		add_move(autocombo[i],"A");
 	}
+}
+
+function setup_basicmoves() {
+	add_move(light_attack,"A");
+	add_move(medium_attack,"B");
+	add_move(heavy_attack,"C");
+	add_move(light_lowattack,"2A");
+	add_move(medium_lowattack,"2B");
+	add_move(heavy_lowattack,"2C");
+	add_move(light_forwardattack,"6A");
+	add_move(medium_forwardattack,"6B");
+	add_move(heavy_forwardattack,"6C");
 }
 
 function timestop(_duration = 30) {
