@@ -283,39 +283,17 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	
 	with(true_attacker) {
-		dmg *= attack_power + (level * level_scaling);
-				
-		var _atkscale = 1;
-		if !super_active {
-			//_atkscale = map_value(_amount,10,100,1,0.5);
-			
-			for(var i = 0; i < array_length(autocombo); i++) {
-				if active_state == autocombo[i] {
-					_atkscale *= 1/2;
-					break;
-				}
-			}
-			
-			if is_shot(_attacker) { 
-				_atkscale *= 2/3;
-			}
-		}
-		_atkscale = clamp(_atkscale,1/20,1);
-		dmg *= _atkscale;
-	}
-	
-	if is_helper(_attacker) {
-		dmg /= 4;
+		dmg *= attack_power + ((level * level_scaling) + 1);
 	}
 	
 	if is_char(defender){
 		dmg *= get_damage_scaling(defender);
 		dmg *= get_damage_scaling_guts(defender);
 		
-		_kill = defender.level >= 3;
+		//_kill = defender.level >= 3;
 	}
 	
-	dmg /= max(defender.defense,1/2);
+	dmg /= max(defender.defense,0.35);
 	
 	dmg = max(round(dmg),1);
 	

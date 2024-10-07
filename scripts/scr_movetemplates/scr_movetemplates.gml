@@ -27,6 +27,35 @@ function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 	}
 }
 
+function basic_wallsplat(_hitframe,_damage,_hiteffect) {
+	if check_frame(max(_hitframe-1,1)) {
+		xspeed = 3 * facing;
+		yspeed = -5;
+	}
+	if check_frame(_hitframe) {
+		var _w = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
+		var _h = sprite_get_height(sprite);
+		var _x = 2;
+		var _y = -_h;
+		create_hitbox(_x,_y,_w,_h,_damage,20,-5,attacktype.normal,attackstrength.super,_hiteffect);
+	}
+	if anim_finished {
+		if combo_timer > 10 {
+			if on_ground {
+				xspeed = 24 * facing;
+				yspeed = -8;
+				char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
+				play_sound(snd_jump);
+				change_state(air_state);
+			}
+		}
+		else {
+			return_to_idle();
+		}
+	}
+	can_cancel = false;
+}
+
 function basic_launcher(_hitframe,_damage,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
 		xspeed = 3 * facing;
@@ -40,11 +69,15 @@ function basic_launcher(_hitframe,_damage,_hiteffect) {
 		create_hitbox(_x,_y,_w,_h,_damage,2,-10,attacktype.normal,attackstrength.super,_hiteffect);
 	}
 	if anim_finished {
-		if target.is_hit {
-			change_state(homing_dash_state);
+		if combo_timer > 10 {
+			if on_ground {
+				xspeed = 3 * facing;
+				yspeed = -10;
+				change_state(air_state);
+			}
 		}
 		else {
-			land();
+			return_to_idle();
 		}
 	}
 	can_cancel = false;
@@ -70,14 +103,34 @@ function basic_smash(_hitframe,_damage,_hiteffect) {
 	land();
 }
 
-function air_chase() {
-	var _factor = 0.2;
-	xspeed = (target_x-x) * _factor;
-	yspeed = min(-2.25,(target_y-y) * _factor);
-	//xspeed += target.xspeed;
-	//yspeed += target.yspeed;
-	//xspeed = 3 * facing;
-	//yspeed = -2.5;
+function basic_light_attack(_hitframe,_hiteffect) {
+	basic_attack(_hitframe,100,attackstrength.light,_hiteffect);
+	return_to_idle();
+}
+
+function basic_medium_attack(_hitframe,_hiteffect) {
+	basic_attack(_hitframe,200,attackstrength.medium,_hiteffect);
+	return_to_idle();
+}
+
+function basic_heavy_attack(_hitframe,_hiteffect) {
+	basic_wallsplat(_hitframe,300,_hiteffect);
+	return_to_idle();
+}
+
+function basic_light_airattack(_hitframe,_hiteffect) {
+	basic_attack(_hitframe,160,attackstrength.light,_hiteffect);
+	return_to_idle();
+}
+
+function basic_medium_airattack(_hitframe,_hiteffect) {
+	basic_attack(_hitframe,240,attackstrength.medium,_hiteffect);
+	return_to_idle();
+}
+
+function basic_heavy_airattack(_hitframe,_hiteffect) {
+	basic_smash(_hitframe,400,attackstrength.super,_hiteffect);
+	return_to_idle();
 }
 
 function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect) {
