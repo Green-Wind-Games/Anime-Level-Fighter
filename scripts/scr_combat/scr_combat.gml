@@ -287,10 +287,27 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	
 	if is_char(defender){
-		dmg *= get_damage_scaling(defender);
-		dmg *= get_damage_scaling_guts(defender);
+		_kill = (defender.level >= 3);
 		
-		//_kill = defender.level >= 3;
+		var _scale = true;
+		var _guts = true;
+		with(true_attacker) {
+			if active_state == finisher_move {
+				_scale = false;
+				_guts = false;
+				_kill = true;
+			}
+			if active_state == signature_move {
+				_scale = false;
+				_kill = true;
+			}
+		}
+		if _scale {
+			dmg *= get_damage_scaling(defender);
+		}
+		if _guts {
+			dmg *= get_damage_scaling_guts(defender);
+		}
 	}
 	
 	dmg /= max(defender.defense,0.35);
@@ -306,14 +323,14 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	combo_damage_taken += min(dmg,hp-(!_kill));
 	
-	var mp_gain = map_value(dmg,0,max_hp,0,max_mp);
-	var xp_gain = map_value(dmg,0,max_hp,0,max_xp);
+	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * 10;
+	var xp_gain = map_value(dmg,0,max_hp,0,max_xp) * max_level;
 	
 	var defend_mp_gain = mp_gain * 1.25;
-	var defend_xp_gain = xp_gain * 1.05;
+	var defend_xp_gain = xp_gain * 0.50;
 	
 	var attack_mp_gain = mp_gain * 1.50;
-	var attack_xp_gain = xp_gain * 0.10;
+	var attack_xp_gain = xp_gain * 1.00;
 	
 	if !is_char(_attacker) {
 		attack_mp_gain /= 2;

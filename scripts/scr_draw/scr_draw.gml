@@ -566,10 +566,10 @@ function draw_playerhud() {
 				);
 			}
 			
-			var hp_segments = 4;
+			var hp_segments = max_level;
 			var mp_segments = max_mp_stocks;
 			var tp_segments = max_tp_stocks;
-			var xp_segments = hp_segments;
+			var xp_segments = 4;
 			for(var ii = 1; ii < hp_segments; ii++) {
 				var hp_segment_x = map_value(ii,0,hp_segments,hp_bar_x1,hp_bar_x2);
 				draw_set_color(c_black);

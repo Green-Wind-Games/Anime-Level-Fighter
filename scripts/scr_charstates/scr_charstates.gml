@@ -791,6 +791,9 @@ function init_charstates() {
 	add_move(teleport_state,"F");
 	
 	init_states(idle_state);
+	
+	signature_move = noone;
+	finisher_move = noone;
 }
 
 function return_to_idle() {

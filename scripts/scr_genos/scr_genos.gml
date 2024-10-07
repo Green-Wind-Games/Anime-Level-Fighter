@@ -44,14 +44,13 @@ function init_genos_baseform() {
 		}
 	}
 	light_attack.run = function() {
-		basic_attack(2,100,attackstrength.light,hiteffects.hit);
-		return_to_idle();
+		basic_light_attack(2,hiteffects.hit);
 	}
 
 	medium_attack = new state();
 	medium_attack.start = function() {
 		if on_ground {
-			change_sprite(spr_genos_attack_kick_straight,5,false);
+			change_sprite(spr_genos_attack_uppercut,4,false);
 			play_sound(snd_punch_whiff_medium);
 			play_voiceline(voice_attack,50,false);
 		}
@@ -60,14 +59,13 @@ function init_genos_baseform() {
 		}
 	}
 	medium_attack.run = function() {
-		basic_attack(2,200,attackstrength.medium,hiteffects.hit);
-		return_to_idle();
+		basic_medium_attack(2,hiteffects.hit);
 	}
 
 	heavy_attack = new state();
 	heavy_attack.start = function() {
 		if on_ground {
-			change_sprite(spr_genos_attack_uppercut,4,false);
+			change_sprite(spr_genos_attack_kick_straight,5,false);
 			play_sound(snd_punch_whiff_heavy);
 			play_voiceline(voice_heavyattack,50,false);
 		}
@@ -76,7 +74,52 @@ function init_genos_baseform() {
 		}
 	}
 	heavy_attack.run = function() {
-		basic_launcher(2,300,hiteffects.hit);
+		basic_heavy_attack(2,hiteffects.hit);
+	}
+	
+	light_lowattack = new state();
+	light_lowattack.start = function() {
+		if on_ground {
+			change_sprite(spr_genos_attack_punch_straight,3,false);
+			play_sound(snd_punch_whiff_light);
+			play_voiceline(voice_attack,50,false);
+		}
+		else {
+			change_state(light_airattack);
+		}
+	}
+	light_lowattack.run = function() {
+		basic_light_attack(2,hiteffects.hit);
+	}
+
+	medium_lowattack = new state();
+	medium_lowattack.start = function() {
+		if on_ground {
+			change_sprite(spr_genos_attack_kick_up,4,false);
+			play_sound(snd_punch_whiff_medium);
+			play_voiceline(voice_attack,50,false);
+		}
+		else {
+			change_state(medium_airattack);
+		}
+	}
+	medium_lowattack.run = function() {
+		basic_medium_lowattack(2,hiteffects.hit);
+	}
+
+	heavy_lowattack = new state();
+	heavy_lowattack.start = function() {
+		if on_ground {
+			change_sprite(spr_genos_attack_kick_straight,5,false);
+			play_sound(snd_punch_whiff_heavy);
+			play_voiceline(voice_heavyattack,50,false);
+		}
+		else {
+			change_state(heavy_airattack);
+		}
+	}
+	heavy_lowattack.run = function() {
+		basic_heavy_lowattack(2,hiteffects.hit);
 	}
 	
 	light_airattack = new state();
@@ -86,8 +129,7 @@ function init_genos_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	light_attack.run = function() {
-		basic_attack(2,150,attackstrength.light,hiteffects.hit);
-		return_to_idle();
+		basic_light_airattack(2,hiteffects.hit);
 	}
 
 	medium_airattack = new state();
@@ -97,8 +139,7 @@ function init_genos_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	medium_airattack.run = function() {
-		basic_attack(2,250,attackstrength.medium,hiteffects.hit);
-		return_to_idle();
+		basic_medium_airattack(2,hiteffects.hit);
 	}
 
 	heavy_airattack = new state();
@@ -108,8 +149,7 @@ function init_genos_baseform() {
 		play_voiceline(voice_heavyattack,100,true);
 	}
 	heavy_airattack.run = function() {
-		basic_smash(2,500,hiteffects.hit);
-		land();
+		basic_heavy_airattack(2,hiteffects.hit);
 	}
 	i++;
 
@@ -181,7 +221,7 @@ function init_genos_baseform() {
 				-1,
 				spr_explosion,
 				1,
-				100,
+				1000,
 				10,
 				-10,
 				attacktype.unblockable,
@@ -242,7 +282,7 @@ function init_genos_baseform() {
 			play_sound(snd_dbz_beam_fire);
 		}
 		if value_in_range(frame,3,4) {
-			fire_beam(5,-25,spr_incinerate,0.8,0,5);
+			fire_beam(5,-25,spr_incinerate,0.8,0,50);
 		}
 		return_to_idle();
 	}
@@ -262,7 +302,7 @@ function init_genos_baseform() {
 					10,
 					0,
 					spr_genos_blur_fist,
-					1,
+					10,
 					1,
 					1,
 					0,
@@ -311,7 +351,7 @@ function init_genos_baseform() {
 			}
 		}
 		if value_in_range(frame,5,6) {
-			fire_beam(10,-25,spr_incinerate,1,0,5);
+			fire_beam(10,-25,spr_incinerate,1,0,50);
 			shake_screen(5,3);
 		}
 		if check_frame(3) {
@@ -331,4 +371,7 @@ function init_genos_baseform() {
 
 	add_move(incinerate,"D");
 	add_move(super_incinerate,"ED");
+	
+	signature_move = incinerate;
+	finisher_move = super_incinerate;
 }

@@ -4,9 +4,6 @@ function level_up() {
 	
 	level++;
 	
-	max_hp = round(base_hp * ((level*level_scaling)+1));
-	hp = map_value(_hp,0,100,0,max_hp);
-	
 	var _heal = map_value(
 		transform_heal_percent + (transform_late_heal_percent_increase * max(0,level_difference)),
 		0,
@@ -15,7 +12,12 @@ function level_up() {
 		max_hp
 	);
 	
-	hp += _heal;
+	max_hp = base_hp;
+	//max_hp = round(max_hp * ((level*level_scaling)+1));
+	
+	hp = map_value(_hp,0,100,0,max_hp);
+	
+	//hp += _heal;
 	hp = min(round(hp),max_hp);
 	
 	move_speed = map_value(level,1,max_level,base_movespeed,base_movespeed+5);

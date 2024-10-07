@@ -58,7 +58,7 @@ function create_kiblast(_x,_y,_sprite) {
 		random_range(-2,2),
 		_sprite,
 		32 / sprite_get_height(_sprite),
-		10,
+		100,
 		3,
 		-3,
 		attacktype.normal,

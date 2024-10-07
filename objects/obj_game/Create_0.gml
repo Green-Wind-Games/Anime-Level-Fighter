@@ -154,7 +154,11 @@ player_color[i++] = make_color_rgb(255,0,255);
 player_color[i++] = make_color_rgb(255,128,0);
 player_color[i++] = make_color_rgb(128,64,32);
 
-base_hp = 10000;
+max_xp = 10000;
+max_level = 5;
+level_scaling = 0.35;
+
+base_hp = 10000 * max_level;
 base_movespeed = 5;
 base_jumpspeed = 8;
 
@@ -166,12 +170,8 @@ tp_stock_size = 8 * 60;
 max_tp_stocks = 4;
 max_tp = max_tp_stocks * tp_stock_size;
 
-max_xp = 10000;
-max_level = 5;
-level_scaling = 0.35;
-
-transform_heal_percent = 0;
-transform_late_heal_percent_increase = 0;
+transform_heal_percent = 60;
+transform_late_heal_percent_increase = 10;
 
 superfreeze_active = false;
 superfreeze_activator = noone;
