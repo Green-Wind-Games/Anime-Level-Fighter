@@ -399,10 +399,10 @@ function init_goku_ssj() {
 
 	angry_kamehameha = new state();
 	angry_kamehameha.start = function() {
-		if kamehameha_cooldown <= 0 and check_mp(3) {
+		if kamehameha_cooldown <= 0 and check_mp(5) {
 			change_sprite(spr_goku_ssj_special_ki_blast,5,false);
 			activate_ultimate(60);
-			spend_mp(3);
+			spend_mp(5);
 			xspeed = 0;
 			yspeed = 0;
 			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
@@ -527,7 +527,6 @@ function init_goku_ssj() {
 	setup_basicmoves();
 	
 	add_move(kiblast,"D");
-	
 	add_ground_move(ki_blast_cannon,"236D");
 
 	//add_move(dragon_fist,"");
@@ -543,6 +542,9 @@ function init_goku_ssj() {
 	add_move(angry_kamehameha,"214C");
 	
 	add_ground_move(activate_ssj2,"2D");
+	
+	signature_move = kamehameha_heavy;
+	finisher_move = angry_kamehameha;
 
 	victory_state.run = function() {
 		ssj2_timer = 0;

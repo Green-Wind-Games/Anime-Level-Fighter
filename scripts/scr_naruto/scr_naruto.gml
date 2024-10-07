@@ -202,7 +202,7 @@ function init_naruto_baseform() {
 		change_sprite(spr_naruto_jutsu,3,false);
 		play_sound(snd_jutsu_activate);
 		play_voiceline(snd_naruto_uzumaki);
-		if instance_number(obj_char) <= 2 {
+		if (instance_number(obj_char) <= 2) and (combo_timer > 20) {
 			timestop(60);
 		}
 		xspeed = -8 * facing;
@@ -878,7 +878,7 @@ function init_naruto_baseform() {
 					0,
 					spr_rasen_shuriken_explosion,
 					2,
-					20,
+					300,
 					1,
 					-15,
 					attacktype.hard_knockdown,
@@ -927,8 +927,9 @@ function init_naruto_baseform() {
 				rasen_shuriken_explosion = _explosion;
 			}
 			if check_frame(16) {
-				take_damage(noone,50,false);
+				take_damage(noone,300,false);
 				change_sprite(launch_sprite,3,true);
+				yoffset = -height_half;
 				xspeed = -10 * facing;
 				yspeed = -5;
 				stop_sound(snd_rasen_shuriken_spin);
@@ -947,18 +948,20 @@ function init_naruto_baseform() {
 		}
 	}
 
-	setup_autocombo();
+	setup_basicmoves();
+	
+	add_ground_move(uzumaki_barrage_start,"4C");
 
-	add_move(shuriken_throw,"B");
-	add_move(triple_shuriken_throw,"2B");
+	add_move(shuriken_throw,"D");
+	add_move(triple_shuriken_throw,"2D");
 	
-	add_ground_move(mini_rasengan,"C");
-	add_ground_move(double_rasengan,"2C");
-	add_ground_move(giant_rasengan,"EC");
-	add_ground_move(rasen_shuriken,"EEC");
+	add_move(shadow_clone_barrage,"6D");
+	add_ground_move(shadow_clone_jutsu,"4B");
 	
-	add_air_move(shadow_clone_barrage,"D");
-	add_ground_move(shadow_clone_jutsu,"ED");
+	add_ground_move(mini_rasengan,"236A");
+	add_ground_move(double_rasengan,"236B");
+	add_ground_move(giant_rasengan,"236C");
+	add_ground_move(rasen_shuriken,"236D");
 
 	//var i = 0;
 	//voice_attack[i++] = snd_naruto_attack1;
