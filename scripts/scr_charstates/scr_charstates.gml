@@ -772,14 +772,6 @@ function init_charstates() {
 		play_voiceline(voice_defeat);
 	}
 	
-	add_ground_move(dash_state,"656");
-	add_ground_move(backdash_state,"454");
-	
-	add_air_move(dash_state,"956");
-	add_air_move(backdash_state,"754");
-	
-	add_move(teleport_state,"F");
-	
 	init_states(idle_state);
 	
 	signature_move = noone;

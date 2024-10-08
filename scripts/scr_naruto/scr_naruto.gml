@@ -206,7 +206,7 @@ function init_naruto_baseform() {
 		}
 		can_cancel = false;
 		if anim_finished {
-			if combo_timer > 10 {
+			if combo_timer > 20 {
 				change_state(uzumaki_barrage_flip);
 			}
 			else {

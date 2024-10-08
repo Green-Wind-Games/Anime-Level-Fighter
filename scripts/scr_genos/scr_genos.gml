@@ -82,7 +82,7 @@ function init_genos_baseform() {
 
 	heavy_lowattack = new state();
 	heavy_lowattack.start = function() {
-		change_sprite(spr_genos_attack_kick_straight,5,false);
+		change_sprite(spr_genos_attack_uppercut,4,false);
 		play_sound(snd_punch_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -262,7 +262,7 @@ function init_genos_baseform() {
 			}
 		}
 		if state_timer > 50 {
-			if combo_timer > 10 {
+			if combo_timer > 0 {
 				change_state(heavy_attack);
 			}
 			else {

@@ -174,16 +174,25 @@ function setup_autocombo() {
 }
 
 function setup_basicmoves() {
+	add_ground_move(dash_state,"656");
+	add_ground_move(backdash_state,"454");
+	
+	add_air_move(airdash_state,"656");
+	add_air_move(air_backdash_state,"454");
+	
 	add_ground_move(light_attack,"A");
 	add_ground_move(light_lowattack,"2A");
+	add_air_move(light_airattack,"A");
+	
 	add_ground_move(medium_attack,"B");
 	add_ground_move(medium_lowattack,"2B");
+	add_air_move(medium_airattack,"B");
+	
 	add_ground_move(heavy_attack,"C");
 	add_ground_move(heavy_lowattack,"2C");
-	
-	add_air_move(light_airattack,"A");
-	add_air_move(medium_airattack,"B");
 	add_air_move(heavy_airattack,"C");
+	
+	add_move(teleport_state,"F");
 }
 
 function timestop(_duration = 30) {

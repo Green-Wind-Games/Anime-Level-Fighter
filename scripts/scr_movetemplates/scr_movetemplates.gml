@@ -72,7 +72,7 @@ function basic_wallsplat(_hitframe,_damage,_hiteffect) {
 
 function basic_launcher(_hitframe,_damage,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
-		xspeed = 4 * facing;
+		xspeed = 5 * facing;
 		yspeed = -5;
 	}
 	if check_frame(_hitframe) {
@@ -151,7 +151,7 @@ function basic_medium_lowattack(_hitframe,_hiteffect) {
 function basic_heavy_lowattack(_hitframe,_hiteffect) {
 	basic_launcher(_hitframe,360,_hiteffect);
 	if anim_finished {
-		if combo_timer > 10 {
+		if combo_timer > 20 {
 			xspeed = 3 * facing;
 			yspeed = -10;
 			char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
@@ -363,7 +363,7 @@ function check_substitution(_defender,_cost = 1) {
 	with(_defender) {
 		if !is_char(id) return false;
 		if !check_tp(_cost) return false;
-		if combo_timer > 10 return false;
+		//if combo_timer > 10 return false;
 		
 		if !ai_enabled {
 			if input.dodge return true;
