@@ -248,7 +248,8 @@ function init_charstates() {
 	dash_stop_state.run = function() {
 		can_cancel = false;
 		face_target();
-		if (state_timer > 15) or (xspeed == 0) {
+		decelerate(1);
+		if (state_timer > 10) or (xspeed == 0) {
 			change_state(idle_state);
 		}
 	}

@@ -43,11 +43,11 @@ function gravitate(_multiplier = 1) {
 }
 
 function accelerate(_desired_speed, _speed = 1) {
-	xspeed = approach(xspeed,_desired_speed,_speed * 2);
+	xspeed = approach(xspeed,_desired_speed,_speed);
 }
 
 function decelerate(_speed = 1) {
-	xspeed = approach(xspeed,0,_speed);
+	xspeed = approach(xspeed,0,_speed/2);
 }
 
 function bounce_off_wall() {
