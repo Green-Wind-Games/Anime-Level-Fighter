@@ -71,7 +71,8 @@ input = noone;
 input_buffer = "";
 input_buffer_timer = 0;
 	
-movelist[0][0] = noone;
+ground_movelist[0][0] = noone;
+air_movelist[0][0] = noone;
 cancelable_moves = ds_list_create();
 can_cancel = true;
 

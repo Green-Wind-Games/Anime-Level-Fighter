@@ -135,7 +135,7 @@ function init_goku_baseform() {
 
 	medium_lowattack = new state();
 	medium_lowattack.start = function() {
-		change_sprite(spr_goku_attack_spin_kick,5,false);
+		change_sprite(spr_goku_attack_spin_kick,3,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -159,7 +159,7 @@ function init_goku_baseform() {
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
-	light_attack.run = function() {
+	light_airattack.run = function() {
 		basic_light_airattack(3,hiteffects.hit);
 		basic_light_airattack(5,hiteffects.hit);
 		basic_light_airattack(7,hiteffects.hit);

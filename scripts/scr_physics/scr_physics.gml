@@ -11,7 +11,7 @@ function init_physics() {
 	
 	jump_speed = base_jumpspeed;
 	
-	on_ground = y >= ground_height and yspeed >= 0;
+	on_ground = (y >= ground_height) and (yspeed >= 0);
 	is_airborne = !on_ground;
 	on_left_wall = x <= left_wall;
 	on_right_wall = x >= right_wall;
@@ -24,7 +24,7 @@ function run_physics() {
 	on_left_wall = x <= left_wall;
 	on_right_wall = x >= right_wall;
 	on_wall = on_left_wall or on_right_wall;
-	on_ground = y >= ground_height and yspeed >= 0;
+	on_ground = (y >= ground_height) and (yspeed >= 0);
 	is_airborne = !on_ground;
 }
 

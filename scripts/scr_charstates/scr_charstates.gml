@@ -235,7 +235,7 @@ function init_charstates() {
 	}
 	backdash_state.run = function() {
 		can_cancel = false;
-		if on_ground {
+		if on_ground and state_timer > 5 {
 			change_state(dash_stop_state);
 		}
 	}

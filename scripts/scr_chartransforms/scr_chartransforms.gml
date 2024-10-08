@@ -35,7 +35,8 @@ function transform(_form) {
 	var _target = target;
 	var _input = input;
 	
-	array_delete(movelist,0,array_length(movelist));
+	array_delete(ground_movelist,0,array_length(ground_movelist));
+	array_delete(air_movelist,0,array_length(air_movelist));
 	
 	instance_change(_form,true);
 	

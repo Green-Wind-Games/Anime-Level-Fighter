@@ -389,9 +389,9 @@ function draw_playerhud() {
 	var mp_stock_scale = mp_border_height / sprite_get_height(spr_bar_mp_stocks);
 	var mp_stock_width = sprite_get_width(spr_bar_mp_stocks) * mp_stock_scale;
 	var mp_stock_height = sprite_get_height(spr_bar_mp_stocks) * mp_stock_scale;
-	var mp_stock_xoffset = 0;
+	var mp_stock_xoffset = -mp_stock_width / 2;
 	
-	//mp_border_xoffset += mp_stock_width / 2;
+	mp_border_xoffset += mp_stock_width / 2;
 	
 	draw_set_font(fnt_hud);
 	var playertext = "Player N: Anime Character";

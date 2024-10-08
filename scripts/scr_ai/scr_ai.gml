@@ -90,9 +90,18 @@ function ai_default_movement() {
 
 function ai_perform_random_moves() {
 	var _inputs = ds_list_create();
-	for(var i = 0; i < array_length(movelist); i++) {
-		if (ds_list_find_index(_inputs,movelist[i][1]) == -1) {
-			ds_list_add(_inputs,movelist[i][1]);
+	if on_ground {
+		for(var i = 0; i < array_length(ground_movelist); i++) {
+			if (ds_list_find_index(_inputs,ground_movelist[i][1]) == -1) {
+				ds_list_add(_inputs,ground_movelist[i][1]);
+			}
+		}
+	}
+	else {
+		for(var i = 0; i < array_length(air_movelist); i++) {
+			if (ds_list_find_index(_inputs,air_movelist[i][1]) == -1) {
+				ds_list_add(_inputs,air_movelist[i][1]);
+			}
 		}
 	}
 	
@@ -130,9 +139,18 @@ function ai_input_command(_command,_chance = 100) {
 function ai_input_move(_move,_chance = 100) {
 	if (random(100) < _chance) {
 		var _move_input = "";
-		for(var i = 0; i < array_length(movelist); i++) {
-			if (movelist[i][0] == _move) {
-				_move_input = movelist[i][1];
+		if on_ground {
+			for(var i = 0; i < array_length(ground_movelist); i++) {
+				if (ground_movelist[i][0] == _move) {
+					_move_input = ground_movelist[i][1];
+				}
+			}
+		}
+		else {
+			for(var i = 0; i < array_length(air_movelist); i++) {
+				if (air_movelist[i][0] == _move) {
+					_move_input = air_movelist[i][1];
+				}
 			}
 		}
 		ai_input_command(_move_input,100);

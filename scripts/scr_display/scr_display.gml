@@ -1,6 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 globalvar	screen_width, screen_height, screen_aspectratio,
 			game_width, game_height, game_aspectratio,
 			gui_width, gui_height, hud_height,
@@ -10,13 +7,16 @@ globalvar	screen_width, screen_height, screen_aspectratio,
 screen_width = display_get_width();
 screen_height = display_get_height();
 screen_aspectratio = screen_width / screen_height;
-	
+
+var _test = true;
+
 game_width = 640;
 game_height = 360;
 
-if os_type == os_android {
-	game_width = floor(game_width / 2);
-	game_height = floor(game_height / 2);
+if os_type == os_android or _test {
+	var _factor = 1.5;
+	game_width = floor(game_width / _factor);
+	game_height = floor(game_height / _factor);
 }
 
 //game_width = round(game_height * (4 / 3));
@@ -31,9 +31,10 @@ game_aspectratio = game_width / game_height;
 gui_width = 640;
 gui_height = 360;
 
-if os_type == os_android {
-	gui_width = floor(gui_width / 2);
-	gui_height = floor(gui_height / 2);
+if os_type == os_android or _test {
+	var _factor = 1.25;
+	gui_width = floor(gui_width / _factor);
+	gui_height = floor(gui_height / _factor);
 }
 
 //gui_width = round(game_width / 2);

@@ -2,7 +2,7 @@ function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
 		if is_airborne {
 			if (target_distance <= 50) {
-				xspeed = max(4,(target_distance_x / 5)) * facing;
+				xspeed = max(5,(target_distance_x / 5)) * facing;
 				yspeed = min(-1.75,(target_y-y) / 4);
 			}
 		}
@@ -20,7 +20,7 @@ function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 		var _h = sprite_get_height(sprite) * 0.69;
 		var _x = 2;
 		var _y = -_h;
-		create_hitbox(_x,_y,_w,_h,_damage,4,0,attacktype.normal,_strength,_hiteffect);
+		create_hitbox(_x,_y,_w,_h,_damage,3,0,attacktype.normal,_strength,_hiteffect);
 	}
 	if frame < _hitframe {
 		can_cancel = false;
@@ -36,7 +36,7 @@ function basic_sweep(_hitframe,_damage,_strength,_hiteffect) {
 		var _h = sprite_get_height(sprite) * 0.25;
 		var _x = 2;
 		var _y = -_h;
-		create_hitbox(_x,_y,_w,_h,_damage,1,-5,attacktype.unblockable,_strength,_hiteffect);
+		create_hitbox(_x,_y,_w,_h,_damage,1,-3,attacktype.unblockable,_strength,_hiteffect);
 	}
 	if frame < _hitframe {
 		can_cancel = false;
@@ -45,8 +45,20 @@ function basic_sweep(_hitframe,_damage,_strength,_hiteffect) {
 
 function basic_wallsplat(_hitframe,_damage,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
-		xspeed = 3 * facing;
-		yspeed = -5;
+		if is_airborne {
+			if (target_distance <= 50) {
+				xspeed = max(5,(target_distance_x / 5)) * facing;
+				yspeed = min(-1.75,(target_y-y) / 4);
+			}
+		}
+		else {
+			if (target_distance <= 50) {
+				xspeed = max(4,(target_distance_x / 5)) * facing;
+			}
+			else {
+				xspeed = 3 * facing;
+			}
+		}
 	}
 	if check_frame(_hitframe) {
 		var _w = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
@@ -60,7 +72,7 @@ function basic_wallsplat(_hitframe,_damage,_hiteffect) {
 
 function basic_launcher(_hitframe,_damage,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
-		xspeed = 3 * facing;
+		xspeed = 4 * facing;
 		yspeed = -5;
 	}
 	if check_frame(_hitframe) {
@@ -76,7 +88,7 @@ function basic_launcher(_hitframe,_damage,_hiteffect) {
 function basic_smash(_hitframe,_damage,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
 		if target_distance <= 50 {
-			xspeed = max(5,(target_distance_x / 5)) * facing;
+			xspeed = max(5,(target_distance_x / 4)) * facing;
 			yspeed = min(-2,(target_y-y) / 4);
 		}
 	}
@@ -90,7 +102,7 @@ function basic_smash(_hitframe,_damage,_hiteffect) {
 		xspeed = -3 * facing;
 		yspeed = -3;
 	}
-	land();
+	return_to_idle();
 }
 
 function basic_light_attack(_hitframe,_hiteffect) {
@@ -104,25 +116,25 @@ function basic_medium_attack(_hitframe,_hiteffect) {
 }
 
 function basic_heavy_attack(_hitframe,_hiteffect) {
-	basic_wallsplat(_hitframe,320,_hiteffect);
-	if anim_finished {
-		if combo_timer > 10 {
-			xspeed = 24 * facing;
-			yspeed = -5;
-			if on_ground {
-				char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
-				play_sound(snd_jump);
-			}
-			else {
-				play_sound(snd_airjump);
-			}
-			play_sound(snd_dash);
-			change_state(air_state);
-		}
-		else {
-			return_to_idle();
-		}
-	}
+	basic_attack(_hitframe,320,attackstrength.heavy,_hiteffect);
+	//if anim_finished {
+	//	if combo_timer > 10 {
+	//		xspeed = 24 * facing;
+	//		yspeed = -5;
+	//		if on_ground {
+	//			char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
+	//			play_sound(snd_jump);
+	//		}
+	//		else {
+	//			play_sound(snd_airjump);
+	//		}
+	//		play_sound(snd_dash);
+	//		change_state(air_state);
+	//	}
+	//	else {
+	//		return_to_idle();
+	//	}
+	//}
 	return_to_idle();
 }
 
@@ -140,14 +152,12 @@ function basic_heavy_lowattack(_hitframe,_hiteffect) {
 	basic_launcher(_hitframe,360,_hiteffect);
 	if anim_finished {
 		if combo_timer > 10 {
-			if on_ground {
-				xspeed = 3 * facing;
-				yspeed = -10;
-				char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
-				play_sound(snd_jump);
-				play_sound(snd_dash);
-				change_state(air_state);
-			}
+			xspeed = 3 * facing;
+			yspeed = -10;
+			char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
+			play_sound(snd_jump);
+			play_sound(snd_dash);
+			change_state(air_state);
 		}
 		else {
 			return_to_idle();

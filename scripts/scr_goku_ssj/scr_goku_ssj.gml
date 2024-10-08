@@ -153,7 +153,7 @@ function init_goku_ssj() {
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
-	light_attack.run = function() {
+	light_airattack.run = function() {
 		basic_light_airattack(3,hiteffects.hit);
 		basic_light_airattack(5,hiteffects.hit);
 		basic_light_airattack(7,hiteffects.hit);

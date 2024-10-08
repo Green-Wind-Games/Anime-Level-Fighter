@@ -51,9 +51,9 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	xspeed = _xknockback * _attacker.facing;
 	yspeed = _yknockback;
 	
-	hitstun = map_value(_strength,attackstrength.light,attackstrength.heavy,20,40);
+	hitstun = map_value(_strength,attackstrength.light,attackstrength.ultimate,20,40);
 	blockstun = hitstun - 5;
-	hitstop = map_value(_strength,attackstrength.light,attackstrength.heavy,15,25);
+	hitstop = map_value(_strength,attackstrength.light,attackstrength.ultimate,12,24);
 	
 	if !is_char(_attacker) {
 		hitstop *= 0.5;
@@ -169,10 +169,10 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			var _hp = hp;
 			var dmg = take_damage(_attacker,_damage,!grabbed);
 	
-			combo_timer = hitstun + 20;
+			combo_timer = hitstun + 10;
 			if active_state == hard_knockdown_state
 			or active_state == wall_bounce_state {
-				combo_timer += 60;
+				combo_timer += 40;
 			}
 			
 			combo_hits_taken++;
@@ -287,7 +287,7 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	
 	if is_char(defender){
-		_kill = (defender.level >= 3);
+		//_kill = (defender.level >= 3);
 		
 		var _scale = true;
 		var _guts = true;
@@ -295,11 +295,11 @@ function take_damage(_attacker,_amount,_kill) {
 			if active_state == finisher_move {
 				_scale = false;
 				_guts = false;
-				_kill = true;
+				//_kill = true;
 			}
 			if active_state == signature_move {
 				_scale = false;
-				_kill = true;
+				//_kill = true;
 			}
 		}
 		if _scale {
@@ -324,13 +324,13 @@ function take_damage(_attacker,_amount,_kill) {
 	combo_damage_taken += min(dmg,hp-(!_kill));
 	
 	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * max_level;
-	var xp_gain = map_value(dmg,0,max_hp,0,max_xp);
+	var xp_gain = map_value(dmg,0,max_hp,0,max_xp) * max_level;
 	
 	var defend_mp_gain = mp_gain * 1.25;
-	var defend_xp_gain = xp_gain * 1.00;
+	var defend_xp_gain = xp_gain * 0.10;
 	
 	var attack_mp_gain = mp_gain * 1.50;
-	var attack_xp_gain = xp_gain * 1.00 * max_level;
+	var attack_xp_gain = xp_gain * 1.00;
 	
 	if !is_char(_attacker) {
 		attack_mp_gain /= 2;
@@ -373,7 +373,7 @@ function get_damage_scaling_guts(_defender) {
 			5
 		);
 		guts = max(guts,1);
-		return 1 / guts;
+		return clamp(1 / guts,0.1,1);
 	}
 }
 

@@ -8,7 +8,7 @@ function add_move(_move,_input,_ground = true,_air = true) {
 			ground_movelist[0][1] = _input;
 		}
 		else {
-			var n = array_length(movelist);
+			var n = array_length(ground_movelist);
 			ground_movelist[n][0] = _move;
 			ground_movelist[n][1] = _input;
 		}
@@ -19,7 +19,7 @@ function add_move(_move,_input,_ground = true,_air = true) {
 			air_movelist[0][1] = _input;
 		}
 		else {
-			var n = array_length(movelist);
+			var n = array_length(air_movelist);
 			air_movelist[n][0] = _move;
 			air_movelist[n][1] = _input;
 		}
@@ -175,10 +175,10 @@ function setup_autocombo() {
 
 function setup_basicmoves() {
 	add_ground_move(light_attack,"A");
-	add_ground_move(medium_attack,"B");
-	add_ground_move(heavy_attack,"C");
 	add_ground_move(light_lowattack,"2A");
+	add_ground_move(medium_attack,"B");
 	add_ground_move(medium_lowattack,"2B");
+	add_ground_move(heavy_attack,"C");
 	add_ground_move(heavy_lowattack,"2C");
 	
 	add_air_move(light_airattack,"A");

@@ -96,7 +96,7 @@ function init_genos_baseform() {
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
-	light_attack.run = function() {
+	light_airattack.run = function() {
 		basic_light_airattack(2,hiteffects.hit);
 	}
 
@@ -238,7 +238,7 @@ function init_genos_baseform() {
 	machinegun_blows.run = function() {
 		xspeed = 0;
 		yspeed = 0;
-		if state_timer mod 6 == 1 {
+		if state_timer mod 3 == 1 {
 			play_sound(snd_punch_whiff_medium);
 			repeat(2) {
 				with(create_shot(
@@ -247,9 +247,9 @@ function init_genos_baseform() {
 					10,
 					0,
 					spr_genos_blur_fist,
+					1,
 					10,
-					1,
-					1,
+					0,
 					0,
 					attacktype.normal,
 					attackstrength.light,
@@ -319,8 +319,8 @@ function init_genos_baseform() {
 		incinerate_light.run();
 	}
 
-	super_incinerate_light = new state();
-	super_incinerate_light.start = function() {
+	super_incinerate = new state();
+	super_incinerate.start = function() {
 		if (!incinerate_cooldown) and check_mp(2) {
 			change_sprite(spr_genos_special_incinerate2,12,false);
 			activate_super(60);
@@ -333,7 +333,7 @@ function init_genos_baseform() {
 			change_state(previous_state);
 		}
 	}
-	super_incinerate_light.run = function() {
+	super_incinerate.run = function() {
 		xspeed = 0;
 		yspeed = 0;
 		if superfreeze_active {
