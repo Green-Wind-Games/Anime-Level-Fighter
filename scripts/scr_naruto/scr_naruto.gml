@@ -59,17 +59,6 @@ function init_naruto_baseform() {
 		basic_light_attack(2,hiteffects.hit);
 	}
 
-	light_attack_forward = new state();
-	light_attack_forward.start = function() {
-		change_sprite(spr_naruto_attack_dash_punch,4,false);
-		xspeed = 10 * facing;
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	light_attack_down.run = function() {
-		basic_light_attack(2,hiteffects.hit);
-	}
-
 	light_attack_down = new state();
 	light_attack_down.start = function() {
 		change_sprite(spr_naruto_attack_slash_up,4,false);
@@ -78,6 +67,17 @@ function init_naruto_baseform() {
 	}
 	light_attack_down.run = function() {
 		basic_medium_lowattack(3,hiteffects.slash);
+	}
+
+	light_attack_forward = new state();
+	light_attack_forward.start = function() {
+		change_sprite(spr_naruto_attack_dash_punch,4,false);
+		xspeed = 10 * facing;
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
+	}
+	light_attack_forward.run = function() {
+		basic_light_attack(2,hiteffects.hit);
 	}
 
 	heavy_attack = new state();
@@ -120,6 +120,25 @@ function init_naruto_baseform() {
 	light_airattack.run = function() {
 		basic_light_airattack(1,hiteffects.hit);
 	}
+	
+	light_airattack_down = new state();
+	light_airattack_down.start = function() {
+		change_sprite(
+			choose(spr_naruto_attack_divekick,spr_naruto_attack_divekick2),
+			2,
+			true
+		);
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
+	}
+	light_airattack_down.run = function() {
+		xspeed = 15 * facing;
+		yspeed = 15;
+		basic_attack(1,150,attackstrength.light,hiteffects.hit);
+		if on_ground {
+			change_state(crouch_state);
+		}
+	}
 
 	heavy_airattack = new state();
 	heavy_airattack.start = function() {
@@ -129,27 +148,6 @@ function init_naruto_baseform() {
 	}
 	heavy_airattack.run = function() {
 		basic_heavy_airattack(3,hiteffects.hit);
-	}
-	
-	heavy_airattack_down = new state();
-	heavy_airattack_down.start = function() {
-		change_sprite(
-			choose(spr_naruto_attack_divekick,spr_naruto_attack_divekick2),
-			2,
-			true
-		);
-		xspeed = 10 * facing;
-		yspeed = 10;
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	heavy_airattack_down.run = function() {
-		xspeed = 10 * facing;
-		yspeed = 10;
-		basic_attack(1,150,attackstrength.light,hiteffects.hit);
-		if on_ground {
-			change_state(crouch_state);
-		}
 	}
 
 	heavy_airattack_forward = new state();
@@ -364,66 +362,13 @@ function init_naruto_baseform() {
 		}
 	}
 	mini_rasengan.run = function() {
+		rasengan_script(5,6,11,12,0,0.25,90,100,1000);
+		
 		if check_frame(4) {
 			play_sound(snd_rasengan_charge);
 		}
-		if (frame > 6) and (superfreeze_active) {
-			frame = 5;
-		}
 		if check_frame(7) {
-			xspeed = 20 * facing;
 			play_voiceline(snd_naruto_rasengan);
-		}
-		if frame > 10 {
-			deflecting_projectiles = false;
-		}
-		if (frame > 12) and (state_timer < 90) and (combo_hits > 0) {
-			frame = 11;
-		}
-		if check_frame(9)
-		or check_frame(10)
-		or check_frame(11) {
-			var _ball = create_shot(
-				width*1.5,
-				-height_half,
-				0,
-				0,
-				spr_rasengan,
-				0.2,
-				50,
-				0,
-				0,
-				attacktype.normal,
-				attackstrength.light,
-				hiteffects.hit
-			);
-			with(_ball) {
-				duration = 3;
-				alpha = 0;
-			}
-		}
-		if check_frame(13) {
-			if (combo_hits > 0) {
-				var _ball = create_shot(
-					width*1.5,
-					-height_half,
-					0,
-					0,
-					spr_rasengan,
-					0.2,
-					500,
-					15,
-					-3,
-					attacktype.hard_knockdown,
-					attackstrength.super,
-					hiteffects.hit
-				);
-				with(_ball) {
-					duration = 3;
-					alpha = 0;
-				}
-			}
-			play_sound(snd_explosion_medium,1,1.25);
 		}
 		if check_frame(4) or check_frame(7) {
 			create_particles(
@@ -435,9 +380,6 @@ function init_naruto_baseform() {
 			);
 		}
 		return_to_idle();
-	}
-	mini_rasengan.stop = function() {
-		deflecting_projectiles = false;
 	}
 	
 	rasengan_dive = new state();
@@ -455,12 +397,11 @@ function init_naruto_baseform() {
 		}
 	}
 	rasengan_dive.run = function() {
+		rasengan_script(5,6,10,11,-90,1,90,100,1000);
+		
 		var _target_y = target_y - target.height - 10;
 		if check_frame(5) {
 			play_sound(snd_rasengan_charge,1,1.5);
-		}
-		if (frame > 7) and (superfreeze_active) {
-			frame = 6;
 		}
 		if (frame == 10) and (y < _target_y) {
 			frame = 8;
@@ -480,50 +421,7 @@ function init_naruto_baseform() {
 				yspeed = 0;
 			}
 		}
-		if check_frame(10)
-		or check_frame(11) {
-			var _ball = create_shot(
-				-width_half,
-				64,
-				0,
-				0,
-				spr_rasengan,
-				0.3,
-				50,
-				0,
-				0,
-				attacktype.normal,
-				attackstrength.light,
-				hiteffects.hit
-			);
-			with(_ball) {
-				duration = 3;
-				alpha = 0;
-			}
-		}
 		if check_frame(12) {
-			if (combo_hits > 0) {
-				var _ball = create_shot(
-					0,
-					64,
-					0,
-					0,
-					spr_rasengan,
-					0.3,
-					500,
-					1,
-					15,
-					attacktype.hard_knockdown,
-					attackstrength.super,
-					hiteffects.hit
-				);
-				with(_ball) {
-					duration = 3;
-					alpha = 0;
-				}
-			}
-			play_sound(snd_explosion_medium);
-			
 			xspeed = -5 * facing;
 			yspeed = -10;
 		}
@@ -553,65 +451,17 @@ function init_naruto_baseform() {
 		}
 	}
 	double_rasengan.run = function() {
-		if check_frame(4) {
-			play_sound(snd_rasengan_charge,1,1.2);
-			play_sound(snd_rasengan_charge,1,0.8);
+		repeat(2) {
+			rasengan_script(5,6,11,12,0,1,120,100,1000);
 		}
-		if (frame > 6) and (superfreeze_active) {
-			frame = 5;
+		
+		if check_frame(4) {
+			play_sound(snd_rasengan_charge,1,1.25);
+			play_sound(snd_rasengan_charge,1,0.75);
 		}
 		if check_frame(7) {
-			xspeed = 20 * facing;
 			play_voiceline(snd_naruto_rasengan);
-			play_sound(snd_naruto_rasengan,0.75,1.2);
-		}
-		if (frame > 12) and (state_timer < 120) and (combo_hits > 0) {
-			frame = 11;
-		}
-		if check_frame(9)
-		or check_frame(10)
-		or check_frame(11) {
-			var _ball = create_shot(
-				width*1.5,
-				-height_half,
-				0,
-				0,
-				spr_rasengan,
-				0.2,
-				50,
-				0,
-				0,
-				attacktype.normal,
-				attackstrength.light,
-				hiteffects.hit
-			);
-			with(_ball) {
-				duration = 3;
-				alpha = 0;
-			}
-		}
-		if check_frame(13) {
-			if (combo_hits > 0) {
-				var _ball = create_shot(
-					width*1.5,
-					-height_half,
-					0,
-					0,
-					spr_rasengan,
-					0.2,
-					800,
-					30,
-					-2,
-					attacktype.wall_bounce,
-					attackstrength.super,
-					hiteffects.hit
-				);
-				with(_ball) {
-					duration = 3;
-					alpha = 0;
-				}
-			}
-			play_sound(snd_explosion_medium,1.25);
+			play_sound(snd_naruto_rasengan,1,1.25);
 		}
 		if check_frame(4) or check_frame(7) {
 			create_particles(
@@ -644,61 +494,13 @@ function init_naruto_baseform() {
 		}
 	}
 	giant_rasengan.run = function() {
+		rasengan_script(5,6,11,12,0,1,120,150,1500);
+		
 		if check_frame(4) {
 			play_sound(snd_rasengan_charge,1,0.8);
 		}
-		if (frame > 6) and (superfreeze_active) {
-			frame = 5;
-		}
 		if check_frame(7) {
-			xspeed = 20 * facing;
 			play_voiceline(snd_naruto_giantrasengan);
-		}
-		if (frame > 12) and (state_timer < 120) {
-			frame = 11;
-		}
-		if check_frame(10)
-		or check_frame(11)
-		or check_frame(12) {
-			var _ball = create_shot(
-				100,
-				-30,
-				0,
-				0,
-				spr_rasengan,
-				1,
-				80,
-				0,
-				0,
-				attacktype.normal,
-				attackstrength.light,
-				hiteffects.hit
-			);
-			with(_ball) {
-				duration = 3;
-				alpha = 0;
-			}
-		}
-		if check_frame(13) {
-			var _ball = create_shot(
-				100,
-				-30,
-				0,
-				0,
-				spr_rasengan,
-				1,
-				690,
-				15,
-				-3,
-				attacktype.hard_knockdown,
-				attackstrength.super,
-				hiteffects.hit
-			);
-			with(_ball) {
-				duration = 3;
-				alpha = 0;
-			}
-			play_sound(snd_explosion_medium);
 		}
 		if check_frame(4) {
 			create_particles(
@@ -848,7 +650,7 @@ function init_naruto_baseform() {
 	}
 	rasen_shuriken.run = function() {
 		if sprite == spr_naruto_special_rasenshuriken {
-			if check_frame(4) {
+			if check_frame(5) {
 				play_sound(snd_rasen_shuriken_spin);
 			}
 			if (frame > 6) and (superfreeze_timer > 100) {
@@ -904,24 +706,29 @@ function init_naruto_baseform() {
 						y = ground_height - height_half;
 						if duration > 30 {
 							alpha = approach(alpha,1,1/30);
-							for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
-								var _hit = ds_list_find_value(hitbox.hit_list,i);
-								if instance_exists(_hit) {
-									with(_hit) {
-										x = other.x;
-										y = other.y + height_half;
+							if ds_list_size(hitbox.hit_list) > 0 {
+								for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
+									var _hit = ds_list_find_value(hitbox.hit_list,i);
+									if instance_exists(_hit) {
+										with(_hit) {
+											x = other.x;
+											y = other.y + height_half;
+										}
 									}
 								}
+								with(hitbox) {
+									ds_list_clear(hit_list);
+								}
 							}
-							with(hitbox) {
-								ds_list_clear(hit_list);
+							else {
+								duration -= 10;
 							}
 						}
 						else {
 							if alpha == 1 {
 								play_sound(snd_rasen_shuriken_end);
 							}
-							alpha = approach(alpha,0,1/30);
+							alpha = map_value(duration,0,30,1,0);
 						}
 					}
 					hit_script = function(_hit) {
@@ -958,24 +765,26 @@ function init_naruto_baseform() {
 	}
 
 	setup_basicmoves();
+	add_air_move(light_airattack_down,"2A");
 	add_air_move(heavy_airattack_forward,"6B");
-	add_air_move(heavy_airattack_down,"2B");
 	
-	add_ground_move(uzumaki_barrage_start,"4C");
+	add_ground_move(uzumaki_barrage_start,"4B");
 
-	add_move(shuriken_throw,"D");
-	add_move(triple_shuriken_throw,"2D");
+	add_move(shuriken_throw,"C");
+	add_move(triple_shuriken_throw,"2C");
+	add_move(shadow_clone_barrage,"6C");
+	add_ground_move(shadow_clone_jutsu,"4D");
 	
-	add_move(shadow_clone_barrage,"6D");
-	add_ground_move(shadow_clone_jutsu,"4B");
+	add_ground_move(mini_rasengan,"D");
+	add_air_move(rasengan_dive,"D");
 	
-	add_ground_move(mini_rasengan,"236A");
-	add_air_move(rasengan_dive,"236A");
+	add_ground_move(double_rasengan,"4D");
+	add_ground_move(giant_rasengan,"6D");
 	
-	add_ground_move(double_rasengan,"236B");
-	add_ground_move(giant_rasengan,"236C");
+	add_ground_move(rasen_shuriken,"2D");
 	
-	add_ground_move(rasen_shuriken,"236D");
+	signature_move = mini_rasengan;
+	finisher_move = rasen_shuriken;
 	
 	//var i = 0;
 	//voice_attack[i++] = snd_naruto_attack1;

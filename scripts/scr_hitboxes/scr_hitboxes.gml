@@ -113,7 +113,15 @@ function check_hit() {
 		}
 		
 		with(b2) {
-			get_hit(a2,a.damage,a.xknockback,a.yknockback,a.attack_type,a.attack_strength,a.hit_effect);
+			get_hit(
+				a2,
+				a.damage,
+				a.xknockback,
+				a.yknockback,
+				a.attack_type,
+				a.attack_strength,
+				a.hit_effect
+			);
 		}
 		with(a2) {
 			if is_shot(id) {

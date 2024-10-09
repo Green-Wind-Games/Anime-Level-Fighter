@@ -151,13 +151,13 @@ function init_goku_ssj() {
 		basic_heavy_attack(2,hiteffects.hit);
 	}
 	
-	air_lightattack = new state();
-	air_lightattack.start = function() {
+	light_airattack = new state();
+	light_airattack.start = function() {
 		change_sprite(spr_goku_ssj_attack_triple_kick,2,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
-	air_lightattack.run = function() {
+	light_airattack.run = function() {
 		if frame <= 8 {
 			xspeed = 5 * facing;
 			yspeed = -1;

@@ -71,10 +71,6 @@ function basic_wallsplat(_hitframe,_damage,_hiteffect) {
 }
 
 function basic_launcher(_hitframe,_damage,_hiteffect) {
-	if check_frame(max(_hitframe-1,1)) {
-		xspeed = 5 * facing;
-		yspeed = -5;
-	}
 	if check_frame(_hitframe) {
 		var _w = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
 		var _h = sprite_get_height(sprite);
@@ -149,6 +145,10 @@ function basic_medium_lowattack(_hitframe,_hiteffect) {
 }
 
 function basic_heavy_lowattack(_hitframe,_hiteffect) {
+	if check_frame(max(_hitframe-1,1)) {
+		xspeed = 5 * facing;
+		yspeed = -5;
+	}
 	basic_launcher(_hitframe,360,_hiteffect);
 	if anim_finished {
 		if combo_timer > 20 {
@@ -176,7 +176,7 @@ function basic_medium_airattack(_hitframe,_hiteffect) {
 }
 
 function basic_heavy_airattack(_hitframe,_hiteffect) {
-	basic_smash(_hitframe,420,attackstrength.super,_hiteffect);
+	basic_smash(_hitframe,420,_hiteffect);
 	return_to_idle();
 }
 

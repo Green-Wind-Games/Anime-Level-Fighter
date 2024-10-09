@@ -15,8 +15,6 @@ run_animation();
 
 run_state();
 
-run_physics();
-
 if is_char(id) {
 	if round_state == roundstates.fight {
 		if can_cancel and (!is_hit) and (!is_guarding) {
@@ -24,6 +22,8 @@ if is_char(id) {
 		}
 	}
 }
+
+run_physics();
 
 var stay_in = true;
 if (is_helper(id) and (duration != -1)) stay_in = false;

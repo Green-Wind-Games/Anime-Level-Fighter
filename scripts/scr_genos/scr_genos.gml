@@ -34,7 +34,7 @@ function init_genos_baseform() {
 
 	light_attack = new state();
 	light_attack.start = function() {
-		change_sprite(spr_genos_attack_punch_straight,4,false);
+		change_sprite(spr_genos_attack_punch_straight,3,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -42,9 +42,19 @@ function init_genos_baseform() {
 		basic_light_attack(2,hiteffects.hit);
 	}
 
+	light_attack_down = new state();
+	light_attack_down.start = function() {
+		change_sprite(spr_genos_attack_kick_up,3,false);
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
+	}
+	light_attack_down.run = function() {
+		basic_medium_lowattack(2,hiteffects.hit);
+	}
+
 	light_attack_forward = new state();
 	light_attack_forward.start = function() {
-		change_sprite(spr_genos_attack_uppercut,4,false);
+		change_sprite(spr_genos_attack_kick_straight,3,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -70,16 +80,6 @@ function init_genos_baseform() {
 		light_attack.run();
 	}
 
-	medium_attack_down = new state();
-	medium_attack_down.start = function() {
-		change_sprite(spr_genos_attack_kick_up,4,false);
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	medium_attack_down.run = function() {
-		basic_medium_lowattack(2,hiteffects.hit);
-	}
-
 	heavy_attack_down = new state();
 	heavy_attack_down.start = function() {
 		change_sprite(spr_genos_attack_uppercut,4,false);
@@ -90,23 +90,13 @@ function init_genos_baseform() {
 		basic_heavy_lowattack(2,hiteffects.hit);
 	}
 	
-	air_lightattack = new state();
-	air_lightattack.start = function() {
-		change_sprite(spr_genos_attack_punch_straight,3,false);
-		play_sound(snd_punch_whiff_light);
-		play_voiceline(voice_attack,50,false);
-	}
-	air_lightattack.run = function() {
-		basic_light_airattack(2,hiteffects.hit);
-	}
-
-	medium_airattack = new state();
-	medium_airattack.start = function() {
+	light_airattack = new state();
+	light_airattack.start = function() {
 		change_sprite(spr_genos_attack_kick_up,5,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
-	medium_airattack.run = function() {
+	light_airattack.run = function() {
 		basic_medium_airattack(2,hiteffects.hit);
 	}
 
@@ -263,7 +253,7 @@ function init_genos_baseform() {
 		}
 		if state_timer > 50 {
 			if combo_timer > 0 {
-				change_state(heavy_attack);
+				change_state(heavy_attack_down);
 			}
 			else {
 				change_state(idle_state);
@@ -271,8 +261,8 @@ function init_genos_baseform() {
 		}
 	}
 
-	incinerate_light = new state();
-	incinerate_light.start = function() {
+	incinerate = new state();
+	incinerate.start = function() {
 		if !incinerate_cooldown {
 			change_sprite(spr_genos_special_incinerate,6,false);
 			xspeed = 0;
@@ -285,7 +275,7 @@ function init_genos_baseform() {
 			change_state(previous_state);
 		}
 	}
-	incinerate_light.run = function() {
+	incinerate.run = function() {
 		xspeed = 0;
 		yspeed = 0;
 		if check_frame(3) {
@@ -363,19 +353,13 @@ function init_genos_baseform() {
 
 	setup_basicmoves();
 
-	add_move(fireblast,"D");
-	add_move(dropkick,"2D");
+	add_move(fireblast,"C");
+	add_move(dropkick,"2C");
+	add_move(machinegun_blows,"6C");
 	
-	add_move(machinegun_blows,"AAA");
-
-	add_move(incinerate_light,"236A");
-	add_move(incinerate_medium,"236B");
-	add_move(incinerate_heavy,"236C");
+	add_move(incinerate,"D");
+	add_move(super_incinerate,"2D");
 	
-	add_move(super_incinerate,"214A");
-	add_move(super_incinerate,"214B");
-	add_move(super_incinerate,"214C");
-	
-	signature_move = incinerate_medium;
+	signature_move = dropkick;
 	finisher_move = super_incinerate;
 }

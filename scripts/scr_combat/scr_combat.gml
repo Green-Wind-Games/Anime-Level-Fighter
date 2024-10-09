@@ -54,7 +54,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	
 	hitstun = 15 + (_strength * 5);
 	blockstun = hitstun - 5;
-	hitstop = 8 + power(_strength+1,2);
+	hitstop = 8 + power(_strength,2);
 	
 	if !is_char(_attacker) {
 		hitstop *= 0.5;
@@ -263,7 +263,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	}
 	
 	create_hitspark(id,_strength,_hiteffect,guard_valid and guarding);
-	apply_hiteffect(_hiteffect,_strength,guard_valid and guarding);
+	apply_hiteffect(_strength,_hiteffect,guard_valid and guarding);
 }
 
 function take_damage(_attacker,_amount,_kill) {
@@ -277,7 +277,7 @@ function take_damage(_attacker,_amount,_kill) {
 			true_attacker = true_attacker.owner;
 		}
 	}
-	else {
+	if !instance_exists(true_attacker) {
 		true_attacker = noone;
 		dmg *= 1/4;
 		_kill = false;
@@ -296,7 +296,7 @@ function take_damage(_attacker,_amount,_kill) {
 			if active_state == finisher_move {
 				_scale = false;
 				_guts = false;
-				//_kill = true;
+				_kill = true;
 			}
 			if active_state == signature_move {
 				_scale = false;
@@ -312,6 +312,8 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	
 	dmg /= max(defender.defense,0.35);
+	
+	dmg /= 2;
 	
 	dmg = max(round(dmg),1);
 	

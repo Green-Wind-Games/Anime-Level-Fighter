@@ -162,13 +162,13 @@ function init_goku_baseform() {
 		basic_heavy_attack(2,hiteffects.hit);
 	}
 	
-	air_lightattack = new state();
-	air_lightattack.start = function() {
+	light_airattack = new state();
+	light_airattack.start = function() {
 		change_sprite(spr_goku_attack_triple_kick_air,2,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
-	air_lightattack.run = function() {
+	light_airattack.run = function() {
 		if frame <= 8 {
 			xspeed = 5 * facing;
 			yspeed = -1;
@@ -572,7 +572,7 @@ function init_goku_baseform() {
 	add_ground_move(kiai_push,"2C");
 	
 	add_move(super_kamehameha,"D");
-	add_move(spirit_bomb,"8D");
+	add_move(spirit_bomb,"4D");
 	add_ground_move(activate_kaioken,"2D");
 	
 	signature_move = super_kamehameha;

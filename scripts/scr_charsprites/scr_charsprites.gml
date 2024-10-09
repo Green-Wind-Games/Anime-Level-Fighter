@@ -95,12 +95,12 @@ function init_charsprites(_name) {
 	);
 }
 
-function apply_hiteffect(_hiteffect,_strength,_guarding) {
-	switch(_hiteffect) {
-		case hiteffects.fire:
-		if !_guarding {
+function apply_hiteffect(_strength,_hiteffect,_guarding) {
+	if !_guarding {
+		switch(_hiteffect) {
+			case hiteffects.fire:
 			flash_sprite(10,make_color_rgb(255,64,0));
+			break;
 		}
-		break;
 	}
 }

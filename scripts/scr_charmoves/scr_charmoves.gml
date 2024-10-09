@@ -134,28 +134,40 @@ function check_input(_input) {
 			case "2":
 			if (!string_ends_with(_input_dir,"1")) 
 			and (!string_ends_with(_input_dir,"2")) 
-			and (!string_ends_with(_input_dir,"3")) { 
+			and (!string_ends_with(_input_dir,"3")) 
+			and (!string_ends_with(_input_dir,"15")) 
+			and (!string_ends_with(_input_dir,"25")) 
+			and (!string_ends_with(_input_dir,"35")) {
 				valid = false;
 			}
 			break;
 			case "4":
 			if (!string_ends_with(_input_dir,"1")) 
 			and (!string_ends_with(_input_dir,"4")) 
-			and (!string_ends_with(_input_dir,"7")) { 
+			and (!string_ends_with(_input_dir,"7")) 
+			and (!string_ends_with(_input_dir,"15")) 
+			and (!string_ends_with(_input_dir,"45")) 
+			and (!string_ends_with(_input_dir,"75")) { 
 				valid = false;
 			}
 			break;
 			case "6":
 			if (!string_ends_with(_input_dir,"3")) 
 			and (!string_ends_with(_input_dir,"6")) 
-			and (!string_ends_with(_input_dir,"9")) { 
+			and (!string_ends_with(_input_dir,"9")) 
+			and (!string_ends_with(_input_dir,"35")) 
+			and (!string_ends_with(_input_dir,"65")) 
+			and (!string_ends_with(_input_dir,"95")) { 
 				valid = false;
 			}
 			break;
 			case "8":
 			if (!string_ends_with(_input_dir,"7")) 
 			and (!string_ends_with(_input_dir,"8")) 
-			and (!string_ends_with(_input_dir,"9")) { 
+			and (!string_ends_with(_input_dir,"9")) 
+			and (!string_ends_with(_input_dir,"75")) 
+			and (!string_ends_with(_input_dir,"85")) 
+			and (!string_ends_with(_input_dir,"95")) { 
 				valid = false;
 			}
 			break;
@@ -181,14 +193,13 @@ function setup_basicmoves() {
 	add_air_move(air_backdash_state,"454");
 	
 	add_ground_move(light_attack,"A");
-	add_ground_move(light_attack_down,"2A");
 	add_ground_move(light_attack_forward,"6A");
+	add_ground_move(light_attack_down,"2A");
+	add_air_move(light_airattack,"A");
 	
 	add_ground_move(heavy_attack,"B");
-	add_ground_move(heavy_attack_down,"2B");
 	add_ground_move(heavy_attack_forward,"6B");
-	
-	add_air_move(light_airattack,"A");
+	add_ground_move(heavy_attack_down,"2B");
 	add_air_move(heavy_airattack,"B");
 	
 	add_move(teleport_state,"F");
