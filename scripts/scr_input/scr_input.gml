@@ -58,7 +58,7 @@ function update_input_buffer_buttons() {
 	if input.special { _command += "C"; }
 	if input.alt_special { _command += "D"; }
 	if input.supercharge { _command += "E"; }
-	if input.teleport { _command += "F"; }
+	if input.use_teleport { _command += "F"; }
 	
 	if _command != "" {
 		input_buffer += _command;

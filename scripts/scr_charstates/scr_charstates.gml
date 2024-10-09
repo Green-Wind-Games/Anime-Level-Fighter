@@ -31,14 +31,14 @@ function init_charstates() {
 		}
 	}
 	idle_state.run = function() {
+		face_target();
+		
 		if round_state == roundstates.fight {
 			can_cancel = true;
 			
 			if auto_levelup() {
 				exit;
 			}
-			
-			face_target();
 			
 			if check_charge() {
 				change_state(charge_state);
@@ -67,7 +67,6 @@ function init_charstates() {
 		}
 		else {
 			change_sprite(idle_sprite,6,true);
-			face_target();
 		}
 	}
 
@@ -247,7 +246,6 @@ function init_charstates() {
 	}
 	dash_stop_state.run = function() {
 		can_cancel = false;
-		face_target();
 		decelerate(1);
 		if (state_timer > 10) or (xspeed == 0) {
 			change_state(idle_state);
@@ -536,7 +534,7 @@ function init_charstates() {
 		rotation = point_direction(0,0,abs(xspeed),yspeed);
 		if _distance <= stop_distance {
 			xspeed /= 2;
-			yspeed /= 2;
+			yspeed = -_speed / 2;
 			change_state(idle_state);
 		}
 	}
@@ -615,7 +613,6 @@ function init_charstates() {
 					_x += dist * facing;
 				}
 				
-				face_target();
 				teleport(_x,_y);
 			}
 		}

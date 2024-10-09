@@ -16,6 +16,7 @@ enum attacktype {
 }
 
 enum attackstrength {
+	weak,
 	light,
 	medium,
 	heavy,

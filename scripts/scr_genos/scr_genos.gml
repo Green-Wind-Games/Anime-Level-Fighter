@@ -42,13 +42,13 @@ function init_genos_baseform() {
 		basic_light_attack(2,hiteffects.hit);
 	}
 
-	medium_attack = new state();
-	medium_attack.start = function() {
+	light_attack_forward = new state();
+	light_attack_forward.start = function() {
 		change_sprite(spr_genos_attack_uppercut,4,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
-	medium_attack.run = function() {
+	light_attack_forward.run = function() {
 		basic_medium_attack(2,hiteffects.hit);
 	}
 
@@ -62,41 +62,41 @@ function init_genos_baseform() {
 		basic_heavy_attack(2,hiteffects.hit);
 	}
 	
-	light_lowattack = new state();
-	light_lowattack.start = function() {
+	light_attack_down = new state();
+	light_attack_down.start = function() {
 		light_attack.start();
 	}
-	light_lowattack.run = function() {
+	light_attack_down.run = function() {
 		light_attack.run();
 	}
 
-	medium_lowattack = new state();
-	medium_lowattack.start = function() {
+	medium_attack_down = new state();
+	medium_attack_down.start = function() {
 		change_sprite(spr_genos_attack_kick_up,4,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
-	medium_lowattack.run = function() {
+	medium_attack_down.run = function() {
 		basic_medium_lowattack(2,hiteffects.hit);
 	}
 
-	heavy_lowattack = new state();
-	heavy_lowattack.start = function() {
+	heavy_attack_down = new state();
+	heavy_attack_down.start = function() {
 		change_sprite(spr_genos_attack_uppercut,4,false);
 		play_sound(snd_punch_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
-	heavy_lowattack.run = function() {
+	heavy_attack_down.run = function() {
 		basic_heavy_lowattack(2,hiteffects.hit);
 	}
 	
-	light_airattack = new state();
-	light_airattack.start = function() {
+	air_lightattack = new state();
+	air_lightattack.start = function() {
 		change_sprite(spr_genos_attack_punch_straight,3,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
-	light_airattack.run = function() {
+	air_lightattack.run = function() {
 		basic_light_airattack(2,hiteffects.hit);
 	}
 
