@@ -93,11 +93,11 @@ function init_naruto_baseform() {
 	heavy_attack_down = new state();
 	heavy_attack_down.start = function() {
 		change_sprite(spr_naruto_attack_slash_up,3,false);
-		play_sound(snd_punch_whiff_heavy);
+		play_sound(snd_slash_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	heavy_attack_down.run = function() {
-		basic_heavy_lowattack(3,hiteffects.hit);
+		basic_heavy_lowattack(3,hiteffects.slash);
 	}
 	
 	heavy_attack_forward = new state();
