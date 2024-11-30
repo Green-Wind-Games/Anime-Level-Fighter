@@ -50,7 +50,7 @@ function change_sprite(_sprite,_frameduration, _loop) {
 		frame_timer = 0;
 	}
 	anim_loop = _loop;
-	frame_duration = max(_frameduration,1,is_char(id)*2,is_helper(id)*2);
+	frame_duration = max(_frameduration,2);
 	anim_duration = anim_frames * frame_duration;
 }
 

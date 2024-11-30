@@ -190,17 +190,31 @@ function setup_basicmoves() {
 	add_ground_move(backdash_state,"454");
 	
 	add_air_move(airdash_state,"656");
+	add_air_move(airdash_state,"956");
 	add_air_move(air_backdash_state,"454");
+	add_air_move(air_backdash_state,"754");
 	
 	add_ground_move(light_attack,"A");
-	add_ground_move(light_attack_forward,"6A");
-	add_ground_move(light_attack_down,"2A");
+	add_ground_move(light_lowattack,"2A");
 	add_air_move(light_airattack,"A");
 	
-	add_ground_move(heavy_attack,"B");
-	add_ground_move(heavy_attack_forward,"6B");
-	add_ground_move(heavy_attack_down,"2B");
-	add_air_move(heavy_airattack,"B");
+	add_ground_move(light_attack2,"A");
+	add_ground_move(light_attack3,"A");
+	
+	add_air_move(light_airattack2,"A");
+	add_air_move(light_airattack3,"A");
+	
+	add_ground_move(medium_attack,"B");
+	add_ground_move(medium_lowattack,"2B");
+	add_air_move(medium_airattack,"B");
+	
+	add_ground_move(medium_attack2,"B");
+	add_ground_move(medium_attack3,"B");
+	add_ground_move(medium_attack4,"B");
+	
+	add_ground_move(heavy_attack,"C");
+	add_ground_move(launcher_attack,"2C");
+	add_air_move(heavy_airattack,"C");
 	
 	add_move(teleport_state,"F");
 }
