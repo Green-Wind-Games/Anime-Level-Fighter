@@ -55,6 +55,8 @@ function init_charsprites(_name) {
 	grabbed_sprite[grab_point.body] = asset_get_index(prefix + "grabbed_body");
 	grabbed_sprite[grab_point.leg] = asset_get_index(prefix + "grabbed_leg");
 	
+	rush_sprite = asset_get_index(prefix + "rush");
+	
 	intro_sprite = asset_get_index(prefix + "intro");
 	victory_sprite = asset_get_index(prefix + "victory");
 	defeat_sprite = asset_get_index(prefix + "defeat");

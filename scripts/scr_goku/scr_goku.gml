@@ -127,7 +127,6 @@ function init_goku_baseform() {
 	light_lowattack = new state();
 	light_lowattack.start = function() {
 		change_sprite(spr_goku_attack_triple_kick,2,false);
-		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
 	light_lowattack.run = function() {
@@ -142,7 +141,6 @@ function init_goku_baseform() {
 	light_airattack = new state();
 	light_airattack.start = function() {
 		change_sprite(spr_goku_attack_triple_kick_air,2,false);
-		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
 	light_airattack.run = function() {
@@ -575,12 +573,16 @@ function init_goku_baseform() {
 	setup_basicmoves();
 	
 	add_move(kiblast,"D");
-	add_move(kamehameha,"236D");
-	add_ground_move(kiai_push,"214D");
+	
+	add_move(kamehameha,"236A");
+	add_move(kamehameha_medium,"236B");
+	add_move(super_kamehameha,"236C");
+	
+	add_ground_move(kiai_push,"214A");
+	add_ground_move(kiai_push,"214B");
+	add_ground_move(kiai_push,"214C");
 	
 	add_ground_move(activate_kaioken,"2D");
-	
-	add_move(super_kamehameha,"41236D");
 	add_move(super_spirit_bomb,"258D");
 	
 	signature_move = super_kamehameha;

@@ -59,56 +59,25 @@ function init_naruto_baseform() {
 		basic_light_attack(2,hiteffects.hit);
 	}
 
-	light_attack_down = new state();
-	light_attack_down.start = function() {
-		change_sprite(spr_naruto_attack_slash_up,4,false);
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	light_attack_down.run = function() {
-		basic_medium_lowattack(3,hiteffects.slash);
-	}
-
-	light_attack_forward = new state();
-	light_attack_forward.start = function() {
+	light_attack2 = new state();
+	light_attack2.start = function() {
 		change_sprite(spr_naruto_attack_dash_punch,4,false);
 		xspeed = 10 * facing;
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
-	light_attack_forward.run = function() {
+	light_attack2.run = function() {
 		basic_light_attack(2,hiteffects.hit);
 	}
 
-	heavy_attack = new state();
-	heavy_attack.start = function() {
-		change_sprite(spr_naruto_attack_spinkick,3,false);
-		play_sound(snd_punch_whiff_heavy);
-		play_voiceline(voice_heavyattack,50,false);
-	}
-	heavy_attack.run = function() {
-		basic_heavy_attack(3,hiteffects.hit);
-	}
-
-	heavy_attack_down = new state();
-	heavy_attack_down.start = function() {
-		change_sprite(spr_naruto_attack_slash_up,3,false);
-		play_sound(snd_slash_whiff_heavy);
-		play_voiceline(voice_heavyattack,50,false);
-	}
-	heavy_attack_down.run = function() {
-		basic_heavy_lowattack(3,hiteffects.slash);
-	}
-	
-	heavy_attack_forward = new state();
-	heavy_attack_forward.start = function() {
-		change_sprite(spr_naruto_attack_dash_slash,4,false);
-		xspeed = 10 * facing;
-		play_sound(snd_slash_whiff_medium);
+	light_attack3 = new state();
+	light_attack3.start = function() {
+		change_sprite(spr_naruto_attack_uppercut,4,false);
+		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
-	heavy_attack_forward.run = function() {
-		basic_medium_attack(2,hiteffects.slash);
+	light_attack3.run = function() {
+		basic_heavy_lowattack(3,hiteffects.hit);
 	}
 	
 	light_airattack = new state();
@@ -121,23 +90,97 @@ function init_naruto_baseform() {
 		basic_light_airattack(1,hiteffects.hit);
 	}
 	
-	light_airattack_down = new state();
-	light_airattack_down.start = function() {
-		change_sprite(
-			choose(spr_naruto_attack_divekick,spr_naruto_attack_divekick2),
-			2,
-			true
-		);
+	light_airattack2 = new state();
+	light_airattack2.start = function() {
+		medium_airattack.start();
+	}
+	light_airattack2.run = function() {
+		medium_airattack.run();
+	}
+	
+	light_airattack3 = new state();
+	light_airattack3.start = function() {
+		heavy_airattack.start();
+	}
+	light_airattack3.run = function() {
+		heavy_airattack.run();
+	}
+
+	medium_attack = new state();
+	medium_attack.start = function() {
+		change_sprite(spr_naruto_attack_punch_hook,3,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
-	light_airattack_down.run = function() {
-		xspeed = 15 * facing;
-		yspeed = 15;
-		basic_attack(1,150,attackstrength.light,hiteffects.hit);
-		if on_ground {
-			change_state(crouch_state);
+	medium_attack.run = function() {
+		basic_medium_attack(2,hiteffects.hit);
+	}
+	
+	medium_attack2 = new state();
+	medium_attack2.start = function() {
+		medium_lowattack.start();
+	}
+	medium_attack2.run = function() {
+		medium_lowattack.run();
+	}
+	
+	medium_attack3 = new state();
+	medium_attack3.start = function() {
+		heavy_attack.start();
+	}
+	medium_attack3.run = function() {
+		heavy_attack.run();
+	}
+	
+	medium_attack4 = new state();
+	medium_attack4.start = function() {
+		change_state(signature_move);
+		if active_state != signature_move {
+			change_state(backdash_state);
 		}
+	}
+
+	medium_lowattack = new state();
+	medium_lowattack.start = function() {
+		change_sprite(spr_naruto_attack_spinkick,3,false);
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
+	}
+	medium_lowattack.run = function() {
+		basic_medium_lowattack(3,hiteffects.hit);
+	}
+	
+	medium_airattack = new state();
+	medium_airattack.start = function() {
+		change_sprite(spr_naruto_attack_dash_punch,4,false);
+		xspeed = 10 * facing;
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
+	}
+	medium_airattack.run = function() {
+		basic_medium_attack(2,hiteffects.hit);
+	}
+	
+	heavy_attack = new state();
+	heavy_attack.start = function() {
+		change_sprite(spr_naruto_attack_dash_slash,5,false);
+		xspeed = 20 * facing;
+		play_sound(snd_dash);
+		play_sound(snd_slash_whiff_medium);
+		play_voiceline(voice_heavyattack,50,false);
+	}
+	heavy_attack.run = function() {
+		basic_heavy_attack(2,hiteffects.slash);
+	}
+	
+	launcher_attack = new state();
+	launcher_attack.start = function() {
+		change_sprite(spr_naruto_attack_slash_up,5,false);
+		play_sound(snd_slash_whiff_medium);
+		play_voiceline(voice_heavyattack,50,false);
+	}
+	launcher_attack.run = function() {
+		basic_heavy_lowattack(3,hiteffects.slash);
 	}
 
 	heavy_airattack = new state();
@@ -149,18 +192,24 @@ function init_naruto_baseform() {
 	heavy_airattack.run = function() {
 		basic_heavy_airattack(3,hiteffects.hit);
 	}
-
-	heavy_airattack_forward = new state();
-	heavy_airattack_forward.start = function() {
-		change_sprite(spr_naruto_attack_dash_slash,5,false);
-		xspeed = 10 * facing;
-		play_sound(snd_dash);
-		play_sound(snd_slash_whiff_medium);
+	
+	divekick = new state();
+	divekick.start = function() {
+		change_sprite(
+			choose(spr_naruto_attack_divekick,spr_naruto_attack_divekick2),
+			2,
+			true
+		);
+		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
-	heavy_airattack_forward.run = function() {
-		basic_medium_airattack(2,hiteffects.slash);
-		xspeed *= 0.9;
+	divekick.run = function() {
+		xspeed = 15 * facing;
+		yspeed = 15;
+		basic_attack(1,150,attackstrength.light,hiteffects.hit);
+		if on_ground {
+			change_state(crouch_state);
+		}
 	}
 
 	forward_throw = new state();
