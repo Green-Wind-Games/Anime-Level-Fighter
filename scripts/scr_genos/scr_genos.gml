@@ -1,7 +1,8 @@
 function init_genos_baseform() {
 	init_charsprites("genos");
 
-	name = "Genos";
+	name = "genos";
+	display_name = "Genos";
 	theme = mus_opm_genos;
 
 	move_speed_mod = 1.35;

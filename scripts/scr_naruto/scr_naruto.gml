@@ -1,12 +1,12 @@
 function init_naruto_baseform() {
 	init_charsprites("naruto");
 
-	name = "Naruto";
+	name = "naruto";
+	display_name = "Naruto";
+	theme = mus_naruto_clashofninja_qualifiers;
 	
 	move_speed_mod = 1.25;
 	max_air_moves = 1;
-
-	theme = mus_naruto_clashofninja_qualifiers;
 
 	rasengan_cooldown = 0;
 	rasengan_cooldown_duration = 100;

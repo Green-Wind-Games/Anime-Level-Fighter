@@ -1,7 +1,8 @@
 function init_goku_ssj() {
 	init_charsprites("goku_ssj");
 
-	name = "Goku Super Saiyajin";
+	name = "goku";
+	display_name = "Goku Super Saiyajin";
 	theme = mus_dbfz_space;
 
 	max_air_moves = 3;

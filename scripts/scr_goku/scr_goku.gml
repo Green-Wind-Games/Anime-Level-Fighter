@@ -1,7 +1,8 @@
 function init_goku_baseform() {
 	init_charsprites("goku");
 
-	name = "Goku";
+	name = "goku";
+	display_name = "Goku";
 	theme = mus_dbfz_goku;
 
 	max_air_moves = 3;

@@ -597,8 +597,8 @@ function draw_playerhud() {
 			draw_set_font(fnt_hud);
 			draw_set_halign(fa_left);
 			draw_set_valign(fa_top);
-			var playertext = "Player " + string(i+1) + ": " + name;
-			playertext += " (Level " + string(level) + ")"; 
+			var playertext = "P" + string(i+1) + ": " + display_name;
+			playertext += "\n" + "(Level " + string(level) + ")"; 
 			var playertext_scale = (hp_bar_height - 2) / string_height(playertext);
 			var playertext_width = string_width(playertext) * playertext_scale;
 			var playertext_height = string_height(playertext) * playertext_scale;
