@@ -145,22 +145,6 @@ function init_goku_ssj() {
 		basic_light_airattack(7,hiteffects.hit);
 	}
 	
-	light_airattack2 = new state();
-	light_airattack2.start = function() {
-		medium_airattack.start();
-	}
-	light_airattack2.run = function() {
-		medium_airattack.run();
-	}
-	
-	light_airattack3 = new state();
-	light_airattack3.start = function() {
-		heavy_airattack.start();
-	}
-	light_airattack3.run = function() {
-		heavy_airattack.run();
-	}
-	
 	medium_attack = new state();
 	medium_attack.start = function() {
 		change_sprite(spr_goku_ssj_attack_elbow_bash,3,false);
@@ -169,22 +153,6 @@ function init_goku_ssj() {
 	}
 	medium_attack.run = function() {
 		basic_medium_attack(2,hiteffects.hit);
-	}
-	
-	medium_attack2 = new state();
-	medium_attack2.start = function() {
-		medium_lowattack.start();
-	}
-	medium_attack2.run = function() {
-		medium_lowattack.run();
-	}
-	
-	medium_attack3 = new state();
-	medium_attack3.start = function() {
-		heavy_attack.start();
-	}
-	medium_attack3.run = function() {
-		heavy_attack.run();
 	}
 	
 	medium_attack4 = new state();
@@ -395,9 +363,7 @@ function init_goku_ssj() {
 		xspeed = 0;
 		yspeed = 0;
 		if superfreeze_active {
-			if frame > 5 {
-				frame = 4;
-			}
+			loop_anim_middle(4,5);
 			if superfreeze_timer == 15 {
 				if (input.forward) and check_tp(2) {
 					spend_tp(2);
@@ -411,16 +377,6 @@ function init_goku_ssj() {
 				}
 			}
 		}
-		if state_timer <= 120 {
-			if frame >= 9 {
-				frame = 6;
-				frame_timer = 1;
-			}
-		}
-		if value_in_range(frame,6,9) {
-			fire_beam(20,-25,spr_kamehameha,2,0,50);
-			shake_screen(5,3);
-		}
 		if check_frame(3) {
 			play_voiceline(snd_goku_kamehameha_charge);
 			play_sound(snd_dbz_beam_charge_long);
@@ -428,6 +384,11 @@ function init_goku_ssj() {
 		if check_frame(6) {
 			play_voiceline(snd_goku_kamehameha_fire);
 			play_sound(snd_dbz_beam_fire);
+		}
+		loop_anim_middle_timer(6,9,120);
+		if value_in_range(frame,6,9) {
+			fire_beam(20,-25,spr_kamehameha,2,0,50);
+			shake_screen(5,3);
 		}
 		return_to_idle();
 	}
@@ -453,16 +414,11 @@ function init_goku_ssj() {
 		if superfreeze_active {
 			frame = 0;
 		}
-		if state_timer <= 120 {
-			if frame > 3 {
-				frame = 3;
-				frame_timer = 1;
-			}
-		}
 		if check_frame(3) {
 			play_voiceline(snd_goku_kamehameha_fire);
 			play_sound(snd_dbz_beam_fire);
 		}
+		loop_anim_middle_timer(3,3,120);
 		if frame == 3 {
 			fire_beam(20,-25,spr_kamehameha,2,0,80);
 			shake_screen(5,10);

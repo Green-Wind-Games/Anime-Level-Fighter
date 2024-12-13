@@ -10,17 +10,24 @@ function init_sprite(_sprite = sprite_index) {
 	anim_loop = true;
 	anim_timer = 0;
 	anim_finished = false;
+	
 	xoffset = 0;
 	yoffset = 0;
+	
 	facing = 1;
+	
 	xscale = 1;
 	yscale = 1;
 	xstretch = 1;
 	ystretch = 1;
+	
 	rotation = 0;
 	rotation_speed = 0;
+	
 	color = c_white;
+	
 	alpha = 1;
+	
 	flash = 0;
 	flash_color = c_white;
 	
@@ -38,7 +45,7 @@ function init_sprite(_sprite = sprite_index) {
 function change_sprite(_sprite,_frameduration, _loop) {
 	if sprite != _sprite {
 		sprite = _sprite;
-		frame = 0;
+		frame = -1;
 		frame_timer = 0;
 		anim_timer = 0;
 		anim_frames = sprite_get_number(sprite);
@@ -105,7 +112,24 @@ function run_animation() {
 }
 
 function check_frame(_frame) {
-	if (frame == _frame) and (frame_timer == 0) return true; else return false;
+	if (frame != _frame) return false;
+	
+	if (frame_timer == 0) return true;
+	
+	return false;
+}
+
+function loop_anim_middle(_start, _end) {
+	if frame > _end {
+		frame = _start;
+		frame_timer = 1;
+	}
+}
+
+function loop_anim_middle_timer(_start, _end, _timer) {
+	if state_timer < _timer {
+		loop_anim_middle(_start, _end);
+	}
 }
 
 function sprite_sequence(_sprites, _frameduration) {

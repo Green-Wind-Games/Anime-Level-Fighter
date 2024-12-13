@@ -194,6 +194,46 @@ function setup_basicmoves() {
 	add_air_move(air_backdash_state,"454");
 	add_air_move(air_backdash_state,"754");
 	
+	medium_attack2 = new state();
+	medium_attack2.start = function() {
+		medium_lowattack.start();
+	}
+	medium_attack2.run = function() {
+		medium_lowattack.run();
+	}
+	
+	medium_attack3 = new state();
+	medium_attack3.start = function() {
+		heavy_attack.start();
+	}
+	medium_attack3.run = function() {
+		heavy_attack.run();
+	}
+	
+	light_airattack2 = new state();
+	light_airattack2.start = function() {
+		medium_airattack.start();
+	}
+	light_airattack2.run = function() {
+		medium_airattack.run();
+	}
+	
+	light_airattack3 = new state();
+	light_airattack3.start = function() {
+		heavy_airattack.start();
+	}
+	light_airattack3.run = function() {
+		heavy_airattack.run();
+	}
+	
+	medium_attack4 = new state();
+	medium_attack4.start = function() {
+		change_state(signature_move);
+		if active_state != signature_move {
+			change_state(backdash_state);
+		}
+	}
+	
 	add_ground_move(light_attack,"A");
 	add_ground_move(light_lowattack,"2A");
 	add_air_move(light_airattack,"A");

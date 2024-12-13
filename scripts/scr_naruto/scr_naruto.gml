@@ -89,22 +89,6 @@ function init_naruto_baseform() {
 	light_airattack.run = function() {
 		basic_light_airattack(1,hiteffects.hit);
 	}
-	
-	light_airattack2 = new state();
-	light_airattack2.start = function() {
-		medium_airattack.start();
-	}
-	light_airattack2.run = function() {
-		medium_airattack.run();
-	}
-	
-	light_airattack3 = new state();
-	light_airattack3.start = function() {
-		heavy_airattack.start();
-	}
-	light_airattack3.run = function() {
-		heavy_airattack.run();
-	}
 
 	medium_attack = new state();
 	medium_attack.start = function() {
@@ -114,30 +98,6 @@ function init_naruto_baseform() {
 	}
 	medium_attack.run = function() {
 		basic_medium_attack(2,hiteffects.hit);
-	}
-	
-	medium_attack2 = new state();
-	medium_attack2.start = function() {
-		medium_lowattack.start();
-	}
-	medium_attack2.run = function() {
-		medium_lowattack.run();
-	}
-	
-	medium_attack3 = new state();
-	medium_attack3.start = function() {
-		heavy_attack.start();
-	}
-	medium_attack3.run = function() {
-		heavy_attack.run();
-	}
-	
-	medium_attack4 = new state();
-	medium_attack4.start = function() {
-		change_state(signature_move);
-		if active_state != signature_move {
-			change_state(backdash_state);
-		}
 	}
 
 	medium_lowattack = new state();
@@ -210,47 +170,6 @@ function init_naruto_baseform() {
 		if on_ground {
 			change_state(crouch_state);
 		}
-	}
-
-	forward_throw = new state();
-	forward_throw.start = function() {
-		change_sprite(spr_naruto_spinkick_up,5,false);
-		with(grabbed) {
-			change_sprite(grabbed_head_sprite,1000,false);
-			yoffset = -40;
-			depth = other.depth + 1;
-		}
-		xspeed = 0;
-		yspeed = 0;
-	}
-	forward_throw.run = function() {
-		xspeed = 0;
-		yspeed = 0;
-		if state_timer < 20 {
-			frame = 0;
-		}
-		grab_frame(0,10,0,0,false);
-		if check_frame(2) {
-			play_sound(snd_punch_whiff_heavy);
-			play_voiceline(voice_heavyattack,100,true);
-		}
-		if check_frame(4) {
-			var _hit = grabbed;
-			release_grab(0,20,0,0,0);
-			with(_hit) {
-				get_hit(other,50,1,-10,attacktype.normal,attackstrength.heavy,hiteffects.hit);
-			}
-		}
-		return_to_idle();
-	}
-
-	back_throw = new state();
-	back_throw.start = function() {
-		forward_throw.start();
-	}
-	back_throw.run = function() {
-		if check_frame(1) facing = -facing;
-		forward_throw.run();
 	}
 	
 	uzumaki_barrage_start = new state();
@@ -599,9 +518,7 @@ function init_naruto_baseform() {
 			);
 		}
 		if superfreeze_active {
-			if frame > 5 { 
-				frame = 4;
-			}
+			loop_anim_middle(4,5);
 		}
 		return_to_idle();
 	}
@@ -814,8 +731,7 @@ function init_naruto_baseform() {
 	}
 
 	setup_basicmoves();
-	add_air_move(light_airattack_down,"2A");
-	add_air_move(heavy_airattack_forward,"6B");
+	add_air_move(divekick,"2A");
 	
 	add_ground_move(uzumaki_barrage_start,"4B");
 
@@ -860,9 +776,7 @@ function init_naruto_baseform() {
 
 	victory_state.run = function() {
 		if anim_finished {
-			if frame >= anim_frames - 1 {
-				frame = anim_frames - 4;
-			}
+			loop_anim_middle(3,5);
 		}
 	}
 
