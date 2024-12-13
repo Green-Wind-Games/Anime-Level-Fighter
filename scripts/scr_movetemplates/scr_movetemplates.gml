@@ -112,25 +112,25 @@ function basic_medium_attack(_hitframe,_hiteffect) {
 }
 
 function basic_heavy_attack(_hitframe,_hiteffect) {
-	basic_attack(_hitframe,320,attackstrength.heavy,_hiteffect);
-	//if anim_finished {
-	//	if combo_timer > 10 {
-	//		xspeed = 24 * facing;
-	//		yspeed = -5;
-	//		if on_ground {
-	//			char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
-	//			play_sound(snd_jump);
-	//		}
-	//		else {
-	//			play_sound(snd_airjump);
-	//		}
-	//		play_sound(snd_dash);
-	//		change_state(air_state);
-	//	}
-	//	else {
-	//		return_to_idle();
-	//	}
-	//}
+	basic_wallsplat(_hitframe,320,_hiteffect);
+	if frame > _hitframe {
+		if combo_timer > 10 {
+			xspeed = 30 * facing;
+			yspeed = -5;
+			if on_ground {
+				char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
+				play_sound(snd_jump);
+			}
+			else {
+				play_sound(snd_airjump);
+			}
+			play_sound(snd_dash);
+			change_state(air_state);
+		}
+		else {
+			return_to_idle();
+		}
+	}
 	return_to_idle();
 }
 
@@ -150,7 +150,7 @@ function basic_heavy_lowattack(_hitframe,_hiteffect) {
 		yspeed = -5;
 	}
 	basic_launcher(_hitframe,360,_hiteffect);
-	if anim_finished {
+	if frame > _hitframe {
 		if combo_timer > 20 {
 			xspeed = 3 * facing;
 			yspeed = -10;
