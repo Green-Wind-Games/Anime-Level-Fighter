@@ -176,7 +176,7 @@ function init_goku_baseform() {
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
-	medium_airattack.run = function() {
+	medium_lowattack.run = function() {
 		basic_medium_lowattack(4,hiteffects.hit);
 	}
 	
