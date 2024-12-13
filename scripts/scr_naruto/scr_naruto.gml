@@ -80,6 +80,16 @@ function init_naruto_baseform() {
 		basic_heavy_lowattack(3,hiteffects.hit);
 	}
 	
+	light_lowattack = new state();
+	light_lowattack.start = function() {
+		change_sprite(spr_naruto_attack_uppercut,2,false);
+		play_sound(snd_punch_whiff_light);
+		play_voiceline(voice_attack,50,false);
+	}
+	light_lowattack.run = function() {
+		basic_light_lowattack(3,hiteffects.hit);
+	}
+	
 	light_airattack = new state();
 	light_airattack.start = function() {
 		change_sprite(spr_naruto_attack_back_kick_air,3,false);
@@ -731,22 +741,26 @@ function init_naruto_baseform() {
 	}
 
 	setup_basicmoves();
-	add_air_move(divekick,"2A");
+	add_air_move(divekick,"2B");
+
+	add_move(shuriken_throw,"D");
+	add_move(triple_shuriken_throw,"2D");
 	
 	add_ground_move(uzumaki_barrage_start,"4B");
-
-	add_move(shuriken_throw,"C");
-	add_move(triple_shuriken_throw,"2C");
-	add_move(shadow_clone_barrage,"6C");
-	add_ground_move(shadow_clone_jutsu,"4D");
 	
-	add_ground_move(mini_rasengan,"D");
-	add_air_move(rasengan_dive,"D");
+	add_ground_move(mini_rasengan,"236A");
+	add_ground_move(double_rasengan,"236B");
+	add_ground_move(giant_rasengan,"236C");
 	
-	add_ground_move(double_rasengan,"4D");
-	add_ground_move(giant_rasengan,"6D");
+	add_air_move(rasengan_dive,"236A");
+	add_air_move(rasengan_dive,"236B");
+	add_air_move(rasengan_dive,"236C");
 	
-	add_ground_move(rasen_shuriken,"2D");
+	add_move(shadow_clone_barrage,"214A");
+	add_move(shadow_clone_barrage,"214B");
+	add_ground_move(shadow_clone_jutsu,"214C");
+	
+	add_ground_move(rasen_shuriken,"236D");
 	
 	signature_move = mini_rasengan;
 	finisher_move = rasen_shuriken;
