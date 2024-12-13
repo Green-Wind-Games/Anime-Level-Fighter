@@ -170,14 +170,6 @@ function init_goku_baseform() {
 		basic_medium_attack(2,hiteffects.hit);
 	}
 	
-	medium_attack4 = new state();
-	medium_attack4.start = function() {
-		change_state(signature_move);
-		if active_state != signature_move {
-			change_state(backdash_state);
-		}
-	}
-	
 	medium_lowattack = new state();
 	medium_lowattack.start = function() {
 		change_sprite(spr_goku_attack_spin_kick,2,false);
@@ -540,8 +532,8 @@ function init_goku_baseform() {
 	add_ground_move(kiai_push,"214B");
 	add_ground_move(kiai_push,"214C");
 	
-	add_ground_move(activate_kaioken,"2D");
-	add_move(super_spirit_bomb,"258D");
+	add_ground_move(activate_kaioken,"252C");
+	add_move(super_spirit_bomb,"258C");
 	
 	signature_move = super_kamehameha;
 	finisher_move = super_spirit_bomb;
