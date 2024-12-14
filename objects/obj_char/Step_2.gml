@@ -1,5 +1,12 @@
 if round_state == roundstates.pause exit;
 
+if sprite_exists(aura_sprite) {
+	aura_frame += 0.35;
+	if aura_frame >= sprite_get_number(aura_sprite) {
+		aura_frame = 0;
+	}
+}
+
 if facing == 0 {
 	facing = 1;
 }
