@@ -145,10 +145,6 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	light_airattack.run = function() {
-		if frame <= 8 {
-			xspeed = 5 * facing;
-			yspeed = -1;
-		}
 		if check_frame(2) or check_frame(4) or check_frame(6) {
 			play_sound(snd_punch_whiff_light);
 		}
