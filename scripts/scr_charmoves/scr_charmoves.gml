@@ -93,9 +93,6 @@ function check_moves() {
 				yspeed = _yspeed;
 			}
 			else {
-				if (abs(xspeed) > 15) {
-					show_debug_message(name + "'s " + input_buffer + " has abnormally high xspeed!");
-				}
 				can_guard = false;
 				can_cancel = false;
 				input_buffer = update_input_buffer_direction();
@@ -204,10 +201,15 @@ function setup_basicmoves() {
 	
 	medium_attack3 = new state();
 	medium_attack3.start = function() {
-		heavy_attack.start();
+		medium_attack.start();
 	}
 	medium_attack3.run = function() {
-		heavy_attack.run();
+		medium_attack.run();
+	}
+	
+	medium_attack4 = new state();
+	medium_attack4.start = function() {
+		change_state(signature_move);
 	}
 	
 	light_airattack2 = new state();
@@ -224,14 +226,6 @@ function setup_basicmoves() {
 	}
 	light_airattack3.run = function() {
 		heavy_airattack.run();
-	}
-	
-	medium_attack4 = new state();
-	medium_attack4.start = function() {
-		change_state(signature_move);
-		if active_state != signature_move {
-			change_state(backdash_state);
-		}
 	}
 	
 	add_ground_move(light_attack,"A");
