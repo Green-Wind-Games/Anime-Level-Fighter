@@ -141,6 +141,9 @@ function init_naruto_baseform() {
 	}
 	heavy_attack.run = function() {
 		basic_heavy_attack(2,hiteffects.slash);
+		if check_frame(2) {
+			char_specialeffect(spr_slash,width_half,-height_half,0.5,-0.5,-45);
+		}
 	}
 	
 	launcher_attack = new state();
@@ -151,6 +154,9 @@ function init_naruto_baseform() {
 	}
 	launcher_attack.run = function() {
 		basic_heavy_lowattack(3,hiteffects.slash);
+		if check_frame(3) {
+			char_specialeffect(spr_slash2,width*0.9,-height*0.75,0.5,-0.5,-45);
+		}
 	}
 
 	heavy_airattack = new state();

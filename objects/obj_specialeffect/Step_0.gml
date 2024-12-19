@@ -1,11 +1,19 @@
 if round_state == roundstates.pause exit;
 
-x += xspeed;
-y += yspeed;
+if !instance_exists(owner) {
+	owner = noone;
+	x += xspeed;
+	y += yspeed;
+	yspeed += ygravity * affected_by_gravity;
+}
+else {
+	x = owner.x;
+	y = owner.y;
+	xoffset = owner.xoffset;
+	yoffset = owner.yoffset;
+}
 
-yspeed += ygravity * affected_by_gravity;
-
-run_animation();
+update_sprite();
 
 if anim_finished {
 	instance_destroy();

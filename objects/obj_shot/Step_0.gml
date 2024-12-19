@@ -66,6 +66,6 @@ if xspeed != 0 {
 	facing = sign(xspeed);
 }
 
-run_animation();
+update_sprite();
 
-run_physics();
+update_physics();

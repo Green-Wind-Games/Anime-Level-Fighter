@@ -18,7 +18,7 @@ function init_physics() {
 	on_wall = on_left_wall or on_right_wall;
 }
 
-function run_physics() {
+function update_physics() {
 	x += xspeed;
 	y += yspeed;
 	on_left_wall = x <= left_wall;

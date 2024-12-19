@@ -14,7 +14,7 @@ function state() constructor {
 	stop = function() {};
 }
 
-function run_state() {
+function update_state() {
 	active_state.run();
 }
 

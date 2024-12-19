@@ -4,17 +4,24 @@ if ((timestop_active) and (timestop_activator != id)) exit;
 
 if (hitstop--) exit;
 
-run_animation();
+update_sprite();
 
-run_state();
+update_state();
 
-run_physics();
+update_physics();
 
-if is_char(id) {
-	if round_state == roundstates.fight {
-		if can_cancel and (!is_hit) and (!is_guarding) {
+if (round_state == roundstates.fight) and (is_char(id)) {
+	switch(active_state) {
+		case idle_state:
+		case air_state:
+		check_moves();
+		break;
+		
+		default:
+		if (can_cancel) and (!is_hit) and (!is_guarding) {
 			check_moves();
 		}
+		break;
 	}
 }
 

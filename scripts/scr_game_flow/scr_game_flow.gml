@@ -6,7 +6,7 @@ function change_gamestate(_gamestate, _wait = 0) {
 	game_state_duration = _wait + (screen_fade_duration*2);
 }
 
-function run_gamestate() {
+function update_gamestate() {
 	var _gamestate = game_state;
 	var _gamesubstate = game_substate;
 	
@@ -180,7 +180,7 @@ function run_gamestate() {
 	}
 }
 
-function run_game_substate() {
+function update_game_substate() {
 	switch(game_state) {
 		case gamestates.versus_vs:
 		switch(game_substate) {

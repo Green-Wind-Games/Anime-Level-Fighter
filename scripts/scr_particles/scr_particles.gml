@@ -316,10 +316,10 @@ function create_specialeffect(_sprite,_x,_y,_xscale = 1,_yscale = 1,_rotation = 
 }
 
 function char_specialeffect(_sprite,_x = 0,_y = -height_half,_xscale = 1,_yscale = 1,_rotation = 0,_rotationspeed = 0,_color = c_white,_alpha = 1,_blend = true) {
-	return create_specialeffect(
+	var _effect = create_specialeffect(
 		_sprite,
-		x + (_x * facing),
-		y + _y,
+		x,
+		y,
 		_xscale * facing,
 		_yscale,
 		_rotation,
@@ -328,4 +328,10 @@ function char_specialeffect(_sprite,_x = 0,_y = -height_half,_xscale = 1,_yscale
 		_alpha,
 		_blend
 	);
+	with(_effect) {
+		owner = other;
+		xoffset = _x * other.facing;
+		yoffset = _y;
+	}
+	return _effect;
 }

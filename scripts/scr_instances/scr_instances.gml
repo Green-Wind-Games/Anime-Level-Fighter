@@ -24,6 +24,6 @@ function is_shot(_obj) {
 
 function is_beam(_obj) {
 	with(_obj) {
-		return (is_shot(id)) and (id == owner.beam);
+		return (id == owner.beam);
 	}
 }

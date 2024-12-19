@@ -59,7 +59,7 @@ function play_sound(_snd,_volume = 1,_pitch = 1) {
 			false,
 			_volume*master_volume*sound_volume,
 			0,
-			_pitch * (random(0.05) * choose(1,-1))
+			_pitch * (1 + random_range(0.04,-0.04))
 		);
 		return sound;
 	}
@@ -99,7 +99,7 @@ function play_voiceline(_snd,_chance = 100,_interrupt = true) {
 					false,
 					master_volume*voice_volume*voice_volume_mine,
 					0,
-					1 * (random(0.02) * choose(1,-1))
+					1 + random_range(0.02,-0.02)
 				);
 				return voice;
 			}

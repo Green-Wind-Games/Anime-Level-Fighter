@@ -39,56 +39,39 @@ function check_moves() {
 			
 	var available_moves = ds_priority_create();
 	var min_cancel = 0; //floor(combo_hits * 0.5);
-	if on_ground {
-		if (ds_list_empty(cancelable_moves)) {
-			for(var i = min_cancel; i < array_length(ground_movelist); i++) {
-				if (active_state == ground_movelist[i][0]) {
-					min_cancel = i+1;
-					break;
-				}
-			}
-		}
-		for(var i = min_cancel; i < array_length(ground_movelist); i++) {
-			var move = ground_movelist[i][0];
-			var input = ground_movelist[i][1];
-			if (ds_list_find_index(cancelable_moves,move) != -1)
-			or ds_list_empty(cancelable_moves) {
-				if (check_input(input)) {
-					ds_priority_add(available_moves,move,string_length(input));
-				}
+	var _movelist = ground_movelist;
+	if is_airborne {
+		_movelist = air_movelist;
+	}
+	
+	if (ds_list_empty(cancelable_moves)) {
+		for(var i = min_cancel; i < array_length(_movelist); i++) {
+			if (active_state == _movelist[i][0]) {
+				min_cancel = i+1;
+				break;
 			}
 		}
 	}
-	else {
-		if (ds_list_empty(cancelable_moves)) {
-			for(var i = min_cancel; i < array_length(air_movelist); i++) {
-				if (active_state == air_movelist[i][0]) {
-					min_cancel = i+1;
-					break;
-				}
-			}
-		}
-		for(var i = min_cancel; i < array_length(air_movelist); i++) {
-			var move = air_movelist[i][0];
-			var input = air_movelist[i][1];
-			if (ds_list_find_index(cancelable_moves,move) != -1)
-			or ds_list_empty(cancelable_moves) {
-				if (check_input(input)) {
-					ds_priority_add(available_moves,move,string_length(input));
-				}
+	for(var i = min_cancel; i < array_length(_movelist); i++) {
+		var move = _movelist[i][0];
+		var input = _movelist[i][1];
+		if (ds_list_find_index(cancelable_moves,move) != -1)
+		or ds_list_empty(cancelable_moves) {
+			if (check_input(input)) {
+				ds_priority_add(available_moves,move,string_length(input));
 			}
 		}
 	}
+	
 	if (!ds_priority_empty(available_moves)) {
 		var _xspeed = xspeed;
 		var _yspeed = yspeed;
-		for(var i = 0; i < ds_priority_size(available_moves); i++) {
+		while(!ds_priority_empty(available_moves)) {
 			var _state = ds_priority_find_max(available_moves);
+			ds_priority_delete_max(available_moves);
 			reset_cancels();
 			change_state(_state);
-			if (active_state == idle_state) or (active_state == air_state) {
-				ds_priority_delete_max(available_moves);
-				i--;
+			if (active_state != _state) {
 				xspeed = _xspeed;
 				yspeed = _yspeed;
 			}
@@ -131,40 +114,28 @@ function check_input(_input) {
 			case "2":
 			if (!string_ends_with(_input_dir,"1")) 
 			and (!string_ends_with(_input_dir,"2")) 
-			and (!string_ends_with(_input_dir,"3")) 
-			and (!string_ends_with(_input_dir,"15")) 
-			and (!string_ends_with(_input_dir,"25")) 
-			and (!string_ends_with(_input_dir,"35")) {
+			and (!string_ends_with(_input_dir,"3")) {
 				valid = false;
 			}
 			break;
 			case "4":
 			if (!string_ends_with(_input_dir,"1")) 
 			and (!string_ends_with(_input_dir,"4")) 
-			and (!string_ends_with(_input_dir,"7")) 
-			and (!string_ends_with(_input_dir,"15")) 
-			and (!string_ends_with(_input_dir,"45")) 
-			and (!string_ends_with(_input_dir,"75")) { 
+			and (!string_ends_with(_input_dir,"7")) { 
 				valid = false;
 			}
 			break;
 			case "6":
 			if (!string_ends_with(_input_dir,"3")) 
 			and (!string_ends_with(_input_dir,"6")) 
-			and (!string_ends_with(_input_dir,"9")) 
-			and (!string_ends_with(_input_dir,"35")) 
-			and (!string_ends_with(_input_dir,"65")) 
-			and (!string_ends_with(_input_dir,"95")) { 
+			and (!string_ends_with(_input_dir,"9")) { 
 				valid = false;
 			}
 			break;
 			case "8":
 			if (!string_ends_with(_input_dir,"7")) 
 			and (!string_ends_with(_input_dir,"8")) 
-			and (!string_ends_with(_input_dir,"9")) 
-			and (!string_ends_with(_input_dir,"75")) 
-			and (!string_ends_with(_input_dir,"85")) 
-			and (!string_ends_with(_input_dir,"95")) { 
+			and (!string_ends_with(_input_dir,"9")) { 
 				valid = false;
 			}
 			break;
@@ -209,7 +180,10 @@ function setup_basicmoves() {
 	
 	medium_attack4 = new state();
 	medium_attack4.start = function() {
-		change_state(signature_move);
+		signature_move.start();
+	}
+	medium_attack4.run = function() {
+		signature_move.run();
 	}
 	
 	light_airattack2 = new state();
@@ -228,23 +202,24 @@ function setup_basicmoves() {
 		heavy_airattack.run();
 	}
 	
-	add_ground_move(light_attack,"A");
-	add_ground_move(light_lowattack,"2A");
-	add_air_move(light_airattack,"A");
 	
+	add_ground_move(light_attack,"A");
 	add_ground_move(light_attack2,"A");
 	add_ground_move(light_attack3,"A");
 	
+	add_ground_move(light_lowattack,"2A");
+	
+	add_air_move(light_airattack,"A");
 	add_air_move(light_airattack2,"A");
 	add_air_move(light_airattack3,"A");
 	
 	add_ground_move(medium_attack,"B");
-	add_ground_move(medium_lowattack,"2B");
-	add_air_move(medium_airattack,"B");
-	
 	add_ground_move(medium_attack2,"B");
 	add_ground_move(medium_attack3,"B");
 	add_ground_move(medium_attack4,"B");
+	
+	add_ground_move(medium_lowattack,"2B");
+	add_air_move(medium_airattack,"B");
 	
 	add_ground_move(heavy_attack,"C");
 	add_ground_move(launcher_attack,"2C");

@@ -23,13 +23,13 @@ function set_substitution_jutsu() {
 }
 
 function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _direction, _scale, _holdtime, _loopdamage, _enddamage) {
-	if (frame > _chargeframe2) and (superfreeze_active) {
-		frame = _chargeframe1;
+	if superfreeze_active {
+		loop_anim_middle(_chargeframe1,_chargeframe2);
 	}
 	
 	if check_frame(_chargeframe2+1) {
-		xspeed = lengthdir_x(20,_direction) * facing;
-		xspeed = lengthdir_y(20,_direction);
+		xspeed = lengthdir_x(25,_direction) * facing;
+		xspeed = lengthdir_y(25,_direction);
 	}
 	
 	var _x1 = lengthdir_x(width_half,_direction);
@@ -57,8 +57,8 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 			alpha = 0;
 		}
 	}
-	if (frame > _hitframe2) and (state_timer < _holdtime) and (combo_hits > 0) {
-		frame = _hitframe1;
+	if (combo_hits > 0) {
+		loop_anim_middle_timer(_hitframe1,_hitframe2,100);
 	}
 	
 	if check_frame(_hitframe2+1) {
@@ -68,12 +68,12 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 			0,
 			0,
 			spr_rasengan,
-			_scale,
+			_scale * 1.5,
 			_enddamage,
-			0,
-			0,
-			attacktype.normal,
-			attackstrength.light,
+			lengthdir_x(10,_direction),
+			lengthdir_y(10,_direction)-3,
+			attacktype.hard_knockdown,
+			attackstrength.heavy,
 			hiteffects.hit
 		);
 		with(_ball) {
