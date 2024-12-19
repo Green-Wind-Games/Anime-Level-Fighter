@@ -49,7 +49,7 @@ with(obj_char) {
 		other.x-other.width_half,
 		other.y-other.height,
 		other.x+other.width_half,
-		other.y,
+		other.y
 	) continue;
 			
 	var _dist = abs(x-other.x);

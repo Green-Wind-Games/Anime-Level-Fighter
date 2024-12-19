@@ -1,7 +1,7 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
-function add_move(_move,_input,_ground = true,_air = true) {
+function add_move(_move = light_attack, _input = "A", _ground = true, _air = true) {
 	if _ground {
 		if (ground_movelist[0][0] == noone) {
 			ground_movelist[0][0] = _move;
@@ -36,9 +36,9 @@ function add_air_move(_move,_input) {
 
 function check_moves() {
 	var moved = false;
-			
 	var available_moves = ds_priority_create();
-	var min_cancel = 0; //floor(combo_hits * 0.5);
+	var min_cancel = 0;
+	
 	var _movelist = ground_movelist;
 	if is_airborne {
 		_movelist = air_movelist;
@@ -71,7 +71,7 @@ function check_moves() {
 			ds_priority_delete_max(available_moves);
 			reset_cancels();
 			change_state(_state);
-			if (active_state != _state) {
+			if (active_state == idle_state) or (active_state == air_state) {
 				xspeed = _xspeed;
 				yspeed = _yspeed;
 			}
@@ -154,14 +154,6 @@ function setup_autocombo() {
 }
 
 function setup_basicmoves() {
-	add_ground_move(dash_state,"656");
-	add_ground_move(backdash_state,"454");
-	
-	add_air_move(airdash_state,"656");
-	add_air_move(airdash_state,"956");
-	add_air_move(air_backdash_state,"454");
-	add_air_move(air_backdash_state,"754");
-	
 	medium_attack2 = new state();
 	medium_attack2.start = function() {
 		medium_lowattack.start();
@@ -181,6 +173,10 @@ function setup_basicmoves() {
 	medium_attack4 = new state();
 	medium_attack4.start = function() {
 		signature_move.start();
+		
+		if active_state != medium_attack4 {
+			change_state(backdash_state);
+		}
 	}
 	medium_attack4.run = function() {
 		signature_move.run();
@@ -202,6 +198,15 @@ function setup_basicmoves() {
 		heavy_airattack.run();
 	}
 	
+	add_ground_move(dash_state,"656");
+	add_ground_move(backdash_state,"454");
+	
+	add_air_move(airdash_state,"656");
+	add_air_move(airdash_state,"956");
+	add_air_move(air_backdash_state,"454");
+	add_air_move(air_backdash_state,"754");
+	
+	add_move(teleport_state,"F");
 	
 	add_ground_move(light_attack,"A");
 	add_ground_move(light_attack2,"A");
@@ -224,8 +229,6 @@ function setup_basicmoves() {
 	add_ground_move(heavy_attack,"C");
 	add_ground_move(launcher_attack,"2C");
 	add_air_move(heavy_airattack,"C");
-	
-	add_move(teleport_state,"F");
 }
 
 function timestop(_duration = 30) {

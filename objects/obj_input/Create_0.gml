@@ -48,7 +48,7 @@ alt_attack = false;
 special = false;
 alt_special = false;
 supercharge = false;
-teleport = false;
+use_teleport = false;
 
 special_hold = false;
 alt_special_held = false;

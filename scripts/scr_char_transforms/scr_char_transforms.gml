@@ -62,7 +62,7 @@ function auto_levelup() {
 	
 	if xp < max_xp return false;
 	
-	if next_form == noone {
+	if next_form == -1 {
 		change_state(levelup_state);
 		play_voiceline(voice_powerup);
 		play_chartheme(theme);

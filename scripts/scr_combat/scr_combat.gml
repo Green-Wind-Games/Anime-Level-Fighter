@@ -168,7 +168,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 			}
 			
 			var _hp = hp;
-			var dmg = take_damage(_attacker,_damage,!grabbed);
+			var dmg = take_damage(_attacker,_damage,(!grabbed));
 	
 			combo_timer = hitstun + 10;
 			if active_state == hard_knockdown_state

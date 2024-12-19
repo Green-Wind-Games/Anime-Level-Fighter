@@ -15,13 +15,6 @@ switch(game_state) {
 	draw_superfreeze();
 	
 	//draw_hitboxes();
-
-	//with(obj_char) {
-	//	draw_set_halign(fa_center);
-	//	draw_set_valign(fa_top);
-	//	draw_set_color(c_white);
-	//	draw_text(x,y,string(dead));
-	//}
 	break;
 	
 	case gamestates.story_results:
@@ -33,11 +26,14 @@ switch(game_state) {
 	break;
 }
 
+with(obj_char) {
+	draw_set_halign(fa_center);
+	draw_set_valign(fa_top);
+	draw_set_color(c_white);
+	//draw_text(x,y,string(can_cancel));
+	//draw_text(x,y+16,input_buffer);
+}
+
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_color(c_white);
-
-with(obj_char) {
-	draw_text(x,y,string(can_cancel));
-	draw_text(x,y+16,input_buffer);
-}

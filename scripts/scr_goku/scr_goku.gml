@@ -160,11 +160,11 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	medium_attack.run = function() {
+		basic_medium_attack(2,hiteffects.hit);
 		if check_frame(2) {
-			xspeed = 20 * facing;
+			xspeed = 10 * facing;
 			yspeed = 0;
 		}
-		basic_medium_attack(2,hiteffects.hit);
 	}
 	
 	medium_lowattack = new state();
@@ -183,10 +183,6 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	medium_airattack.run = function() {
-		if frame <= 10 {
-			xspeed = 5 * facing;
-			yspeed = -1;
-		}
 		if check_frame(2) or check_frame(6) {
 			play_sound(snd_punch_whiff_medium);
 		}

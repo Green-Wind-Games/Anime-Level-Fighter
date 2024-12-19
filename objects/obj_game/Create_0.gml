@@ -203,9 +203,9 @@ screen_zoom = 1;
 screen_zoom_target = noone;
 
 vs_fadein_duration = screen_fade_duration;
-vs_slidein_duration = 90;
-vs_slidein2_duration = 90;
-vs_slideout_duration = 90;
+vs_slidein_duration = 60;
+vs_slidein2_duration = 60;
+vs_slideout_duration = 60;
 vs_fadeout_duration = screen_fade_duration;
 
 vs_fadein_time = vs_fadein_duration;

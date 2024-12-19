@@ -89,10 +89,10 @@ ygravity_mod = 1;
 attack_power = 1;
 defense = 1;
 
-next_form = noone;
+next_form = -1;
 transform_aura = spr_aura_dbz_white;
 	
-aura_sprite = noone;
+aura_sprite = -1;
 aura_frame = 0;
 
 charge_aura = spr_aura_dbz_white;

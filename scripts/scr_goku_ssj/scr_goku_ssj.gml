@@ -154,13 +154,9 @@ function init_goku_ssj() {
 	}
 	medium_attack.run = function() {
 		basic_medium_attack(2,hiteffects.hit);
-	}
-	
-	medium_attack4 = new state();
-	medium_attack4.start = function() {
-		change_state(signature_move);
-		if active_state != signature_move {
-			change_state(backdash_state);
+		if check_frame(2) {
+			xspeed = 10 * facing;
+			yspeed = 0;
 		}
 	}
 	
@@ -180,10 +176,6 @@ function init_goku_ssj() {
 		play_voiceline(voice_attack,50,false);
 	}
 	medium_airattack.run = function() {
-		if frame <= 10 {
-			xspeed = 5 * facing;
-			yspeed = -1;
-		}
 		if check_frame(2) or check_frame(6) {
 			play_sound(snd_punch_whiff_medium);
 		}

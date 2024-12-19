@@ -14,6 +14,9 @@ homing_max_turn = 10;
 duration = -1;
 
 target = noone;
+target_x = room_width/2;
+target_y = room_height/2;
+
 active_state = 0;
 
 active_script = function() {};

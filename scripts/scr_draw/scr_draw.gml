@@ -450,11 +450,6 @@ function draw_playerhud() {
 		
 		xp_border_y1 = hud_y + xp_border_yoffset;
 		xp_border_y2 = xp_border_y1 + xp_border_height;
-		
-		var hp_bar_x1, hp_bar_x2, hp_bar_y1, hp_bar_y2;
-		var mp_bar_x1, mp_bar_x2, mp_bar_y1, mp_bar_y2;
-		var tp_bar_x1, tp_bar_x2, tp_bar_y1, tp_bar_y2;
-		var xp_bar_x1, xp_bar_x2, xp_bar_y1, xp_bar_y2;
 			
 		hp_bar_x1 = hp_border_x1 + hp_bar_xoffset;
 		hp_bar_x2 = hp_bar_x1 + hp_bar_width;

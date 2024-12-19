@@ -23,7 +23,7 @@ function change_state(_state) {
 	active_state.stop();
 	previous_state = active_state;
 	active_state = next_state;
-	active_state.start();
 	next_state = noone;
+	active_state.start();
 	state_timer = 0;
 }
