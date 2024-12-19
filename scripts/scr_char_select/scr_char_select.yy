@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_charmoves",
+  "%Name":"scr_char_select",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_charmoves",
+  "name":"scr_char_select",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

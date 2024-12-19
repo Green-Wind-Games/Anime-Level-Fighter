@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_charstates",
+  "%Name":"scr_char_transforms",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_charstates",
+  "name":"scr_char_transforms",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_charselect",
+  "%Name":"scr_audio_chars",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_charselect",
+  "name":"scr_audio_chars",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

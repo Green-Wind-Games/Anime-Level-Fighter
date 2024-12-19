@@ -2,14 +2,36 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function init_sprite(_sprite = sprite_index) {
 	sprite = _sprite;
+	
+	previous_sprite = -1;
+	previous_sprite_frame_duration = -1;
+	previous_sprite_loop_count = 0;
+	
+	next_sprite = -1;
+	next_sprite_frame_duration = -1;
+	next_sprite_anim_loop = false;
+	
 	frame = 0;
-	frame_duration = 5;
 	frame_timer = 0;
+	frame_duration = 5;
+	
 	anim_frames = sprite_get_number(sprite);
-	anim_duration = anim_frames * frame_duration;
-	anim_loop = true;
+	
 	anim_timer = 0;
+	
+	anim_loop = true;
+	anim_loop_count = 0;
+	
 	anim_finished = false;
+	
+	anim_duration = anim_frames * frame_duration;
+	anim_progress = map_value(
+		anim_timer,
+		0,
+		anim_duration - 1,
+		0,
+		1
+	);
 	
 	xoffset = 0;
 	yoffset = 0;
@@ -44,21 +66,37 @@ function init_sprite(_sprite = sprite_index) {
 
 function change_sprite(_sprite,_frameduration, _loop) {
 	if sprite != _sprite {
+		previous_sprite_frame_duration = frame_duration;
+		previous_sprite_loop_count = anim_loop_count;
+		previous_sprite = sprite;
+		
+		if _sprite == next_sprite {
+			_loop = next_sprite_anim_loop;
+			_frameduration = next_sprite_frame_duration;
+		}
+		
 		sprite = _sprite;
+		
+		next_sprite = -1;
+		
 		frame = -1;
 		frame_timer = 0;
-		anim_timer = 0;
-		anim_frames = sprite_get_number(sprite);
 		anim_finished = false;
+		
 		reset_sprite(true,true);
 	}
 	if !_loop {
 		frame = 0;
 		frame_timer = 0;
 	}
-	anim_loop = _loop;
 	frame_duration = max(_frameduration,2);
+	anim_loop = _loop;
+	
+	anim_frames = sprite_get_number(sprite);
+	
+	anim_timer = frame_timer + (frame * frame_duration);
 	anim_duration = anim_frames * frame_duration;
+	anim_progress = map_value(anim_timer,0,anim_duration-1,0,1);
 }
 
 function reset_sprite(_keep_color = false, _keep_alpha = false) {
@@ -76,6 +114,37 @@ function reset_sprite(_keep_color = false, _keep_alpha = false) {
 	}
 }
 
+function update_sprite() {
+	update_sprite_animation();
+	update_sprite_flash();
+	update_sprite_rotation();
+	update_sprite_squash_stretch();
+}
+
+function update_sprite_animation() {
+	frame_timer++;
+	if frame_timer >= frame_duration {
+		frame += 1;
+		frame_timer = 0;
+		if frame >= anim_frames {
+			if anim_loop {
+				frame = 0;
+			}
+			else {
+				if next_sprite == -1 {
+					frame = anim_frames - 1;
+					frame_timer = frame_duration - 1;
+				}
+				else {
+				}
+			}
+			anim_finished = true;
+		}
+	}
+	anim_timer = frame_timer + (frame * frame_duration);
+	anim_progress = map_value(anim_timer,0,anim_duration-1,0,1);
+}
+
 function flash_sprite(_duration = 6,_color = c_white) {
 	flash = _duration;
 	flash_color = _color;
@@ -86,60 +155,21 @@ function squash_stretch(_x,_y) {
 	ystretch = _y;
 }
 
-function run_animation() {
-	frame_timer++;
-	if frame_timer >= frame_duration {
-		frame += 1;
-		frame_timer = 0;
-		if frame >= anim_frames {
-			if anim_loop {
-				frame = 0;
-			}
-			else {
-				frame = anim_frames - 1;
-				frame_timer = frame_duration - 1;
-			}
-			anim_finished = true;
-		}
-	}
-	anim_timer = frame_timer + (frame * frame_duration);
-	
-	xstretch = approach(xstretch,1,1/30);
-	ystretch = approach(ystretch,1,1/30);
-	rotation += rotation_speed;
-	
+function update_sprite_flash() {
 	flash--;
 }
 
-function check_frame(_frame) {
-	if (frame != _frame) return false;
-	
-	if (frame_timer == 0) return true;
-	
-	return false;
+function update_sprite_squash_stretch() {
+	xstretch = approach(xstretch,1,1/30);
+	ystretch = approach(ystretch,1,1/30);
 }
 
-function loop_anim_middle(_start, _end) {
-	if frame > _end {
-		frame = _start;
-		frame_timer = 1;
+function update_sprite_rotation() {
+	rotation += rotation_speed;
+	if rotation >= 360 {
+		rotation -= 360;
 	}
-}
-
-function loop_anim_middle_timer(_start, _end, _timer) {
-	if state_timer < _timer {
-		loop_anim_middle(_start, _end);
-	}
-}
-
-function sprite_sequence(_sprites, _frameduration) {
-	if anim_timer >= (anim_duration - 3) {
-		show_debug_message("sprite sequence check");
-		for(var i = 0; i < array_length(_sprites) - 1; i++) {
-			if sprite == _sprites[i] {
-				change_sprite(_sprites[i+1],_frameduration,false);
-				break;
-			}
-		}
+	if rotation < 0 {
+		rotation += 360;
 	}
 }

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_shot",
+  "%Name":"scr_char_states",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_shot",
+  "name":"scr_char_states",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

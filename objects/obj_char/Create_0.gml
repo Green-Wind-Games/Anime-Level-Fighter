@@ -107,6 +107,11 @@ death_timer = 0;
 
 draw_script = function() {};
 
+char_id = -1;
+name = "ERROR";
+display_name = "ERROR";
+anime = "ERROR";
+
 init_physics();
 init_charsprites("goku");
 init_charstates();

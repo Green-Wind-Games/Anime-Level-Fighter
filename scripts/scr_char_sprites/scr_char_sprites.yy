@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_movetemplates",
+  "%Name":"scr_char_sprites",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_movetemplates",
+  "name":"scr_char_sprites",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",
