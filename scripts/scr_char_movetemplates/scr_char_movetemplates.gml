@@ -118,7 +118,7 @@ function basic_heavy_attack(_hitframe,_hiteffect) {
 			xspeed = 30 * facing;
 			yspeed = -5;
 			if on_ground {
-				char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
+				create_specialeffect(spr_dust_dash,x,y,0.5,0.5);
 				play_sound(snd_jump);
 			}
 			else {
@@ -154,7 +154,7 @@ function basic_heavy_lowattack(_hitframe,_hiteffect) {
 		if combo_timer > 20 {
 			xspeed = 3 * facing;
 			yspeed = -10;
-			char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
+			create_specialeffect(spr_dust_dash,x,y,0.5,0.5);
 			play_sound(snd_jump);
 			play_sound(snd_dash);
 			change_state(air_state);
@@ -325,6 +325,7 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 		
 		xspeed = _xlength * other.facing;
 		yspeed = _ylength;
+		affected_by_gravity = false;
 		x = owner.x + (_x * other.facing);
 		y = owner.y + _y;
 		with(hitbox) {

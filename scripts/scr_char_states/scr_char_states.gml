@@ -195,7 +195,7 @@ function init_charstates() {
 			dash_duration = 60;
 		}
 		if state_timer mod 5 == 1 {
-			char_specialeffect(spr_dust_dash,0,0,0.5,0.5);
+			create_specialeffect(spr_dust_dash,x,y,0.5,0.5);
 		}
 		
 		if state_timer <= dash_duration {
@@ -227,7 +227,7 @@ function init_charstates() {
 		xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * -facing;
 		yspeed = -1.5;
 		play_sound(snd_dash);
-		char_specialeffect(spr_dust_dash,0,0,-0.5,0.5);
+		create_specialeffect(spr_dust_dash,x,y,-0.5,0.5);
 	}
 	backdash_state.run = function() {
 		can_cancel = false;
@@ -411,10 +411,10 @@ function init_charstates() {
 		var _x = sign(xspeed);
 		xspeed = max(30,abs(xspeed)) * _x;
 		if state_timer mod ceil(width / max(1,abs(xspeed))) == 0 {
-			char_specialeffect(
+			create_specialeffect(
 				spr_launch_wind_spin,
-				0,
-				-height_half,
+				x,
+				y-height_half,
 				1/3,
 				1/3,
 				point_direction(0,0,abs(xspeed),yspeed)

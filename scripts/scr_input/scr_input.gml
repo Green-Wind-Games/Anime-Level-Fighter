@@ -53,10 +53,10 @@ function update_input_forward_back() {
 
 function update_input_buffer_buttons() {
 	var _command = "";
-	if input.attack { _command += "A"; }
-	if input.alt_attack { _command += "B"; }
-	if input.special { _command += "C"; }
-	if input.alt_special { _command += "D"; }
+	if input.light_attack { _command += "A"; }
+	if input.medium_attack { _command += "B"; }
+	if input.heavy_attack { _command += "C"; }
+	if input.unique_attack { _command += "D"; }
 	if input.supercharge { _command += "E"; }
 	if input.use_teleport { _command += "F"; }
 	

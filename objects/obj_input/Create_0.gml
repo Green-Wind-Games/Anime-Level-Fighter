@@ -43,14 +43,12 @@ cancel = false;
 char_teamswitch = false;
 char_random = false;
 
-attack = false;
-alt_attack = false;
-special = false;
-alt_special = false;
+light_attack = false;
+medium_attack = false;
+heavy_attack = false;
+unique_attack = false;
 supercharge = false;
 use_teleport = false;
 
-special_hold = false;
-alt_special_held = false;
 charge = false;
 dodge = false;

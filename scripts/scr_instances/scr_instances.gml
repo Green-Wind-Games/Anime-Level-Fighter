@@ -12,7 +12,7 @@ function is_char(_obj) {
 
 function is_helper(_obj) {
 	with(_obj) {
-		return object_index == obj_helper;
+		return object_index == obj_helper or object_is_ancestor(object_index,obj_helper);
 	}
 }
 
@@ -24,6 +24,6 @@ function is_shot(_obj) {
 
 function is_beam(_obj) {
 	with(_obj) {
-		return (id == owner.beam);
+		return is_shot(_obj) and (_obj == owner.beam);
 	}
 }

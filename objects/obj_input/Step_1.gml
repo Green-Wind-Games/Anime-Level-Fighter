@@ -108,29 +108,25 @@ char_teamswitch = button6;
 	
 switch(type) {
 	default:
-	attack = button1;
-	alt_attack = button2;
-	special = button4;
-	alt_special = button5;
-	supercharge = button3;
+	light_attack = button1;
+	medium_attack = button2;
+	heavy_attack = button3;
+	unique_attack = button4;
+	supercharge = button5;
 	use_teleport = button6;
-
-	special_hold = button4_held;
-	alt_special_held = button5_held;
-	charge = button3_held - 10;
+	
+	charge = button5_held - 10;
 	dodge = button6_held;
 	break;
 	
 	case input_types.joystick:
-	attack = button3;
-	alt_attack = button4;
-	special = button1;
-	alt_special = button2;
+	light_attack = button3;
+	medium_attack = button4;
+	heavy_attack = button2;
+	unique_attack = button1;
 	supercharge = button5;
 	use_teleport = button6;
-
-	special_hold = button1_held;
-	alt_special_held = button2_held;
+	
 	charge = button5_held - 10;
 	dodge = button6_held;
 	break;
