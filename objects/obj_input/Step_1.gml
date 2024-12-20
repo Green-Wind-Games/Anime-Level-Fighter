@@ -112,11 +112,6 @@ switch(type) {
 	medium_attack = button2;
 	heavy_attack = button3;
 	unique_attack = button4;
-	supercharge = button5;
-	use_teleport = button6;
-	
-	charge = button5_held - 10;
-	dodge = button6_held;
 	break;
 	
 	case input_types.joystick:
@@ -124,10 +119,11 @@ switch(type) {
 	medium_attack = button4;
 	heavy_attack = button2;
 	unique_attack = button1;
-	supercharge = button5;
-	use_teleport = button6;
-	
-	charge = button5_held - 10;
-	dodge = button6_held;
 	break;
 }
+
+supercharge = button5;
+use_teleport = button6;
+	
+charge = button5_held - 10;
+dodge = button6_held;

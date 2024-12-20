@@ -340,7 +340,6 @@ function init_naruto_baseform() {
 			change_sprite(spr_naruto_special_rasengan,3,false);
 			activate_super(60);
 			spend_mp(1);
-			deflecting_projectiles = true;
 		}
 		else {
 			change_state(idle_state);

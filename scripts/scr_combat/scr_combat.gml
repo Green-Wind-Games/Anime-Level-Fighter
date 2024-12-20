@@ -130,6 +130,10 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 				change_state(hard_knockdown_state);
 				break;
 				
+				case attacktype.wall_splat:
+				change_state(wall_splat_state);
+				break;
+				
 				case attacktype.wall_bounce:
 				if previous_state != wall_bounce_state {
 					change_state(wall_bounce_state);

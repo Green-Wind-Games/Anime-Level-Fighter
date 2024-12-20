@@ -64,6 +64,16 @@ function init_genos_baseform() {
 		basic_heavy_lowattack(2,hiteffects.hit);
 	}
 	
+	light_lowattack = new state();
+	light_lowattack.start = function() {
+		change_sprite(spr_genos_attack_punch_straight,2,false);
+		play_sound(snd_punch_whiff_light);
+		play_voiceline(voice_attack,50,false);
+	}
+	light_lowattack.run = function() {
+		basic_light_lowattack(2,hiteffects.hit);
+	}
+	
 	medium_attack = new state();
 	medium_attack.start = function() {
 		change_sprite(spr_genos_attack_uppercut,3,false);
@@ -340,6 +350,6 @@ function init_genos_baseform() {
 	add_move(incinerate,"D");
 	add_move(super_incinerate,"2D");
 	
-	signature_move = dropkick;
+	signature_move = super_incinerate;
 	finisher_move = super_incinerate;
 }

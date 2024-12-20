@@ -49,13 +49,11 @@ function init_charstates() {
 			else {
 				if input.left or input.right {
 					accelerate(move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left));
-				}
-				if xspeed != 0 {
 					var walk_anim_speed = width / abs(xspeed);
 					walk_anim_speed /= max(1,sprite_get_number(walk_sprite) / 6);
 					walk_anim_speed = max(3,round(walk_anim_speed));
 					change_sprite(walk_sprite,walk_anim_speed,true);
-					xscale = abs(xscale) * sign(xspeed) * facing;
+					xscale = abs(xscale) * sign(input.right-input.left) * facing;
 				}
 				else {
 					change_sprite(idle_sprite,6,true);
@@ -398,6 +396,34 @@ function init_charstates() {
 				}
 			}
 		}
+	}
+	
+	wall_splat_state = new state();
+	wall_splat_state.start = function() {
+		hit_state.start();
+	}
+	wall_splat_state.run = function() {
+		if ((xspeed > 0) and (on_right_wall)) {
+			xspeed = 0;
+			create_particles(
+				x+width_half,
+				y-height_half,
+				x+width_half,
+				y-height_half,
+				right_wall_bang_particle
+			);
+		}
+		if ((xspeed < 0) and (on_left_wall)) {
+			xspeed = 0;
+			create_particles(
+				x-width_half,
+				y-height_half,
+				x-width_half,
+				y-height_half,
+				right_wall_bang_particle
+			);
+		}
+		hit_state.run();
 	}
 	
 	wall_bounce_state = new state();
