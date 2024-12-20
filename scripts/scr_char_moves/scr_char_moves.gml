@@ -74,6 +74,7 @@ function check_moves() {
 			if (active_state == idle_state) or (active_state == air_state) {
 				xspeed = _xspeed;
 				yspeed = _yspeed;
+				moved = false;
 			}
 			else {
 				can_guard = false;
@@ -81,8 +82,8 @@ function check_moves() {
 				input_buffer = update_input_buffer_direction();
 				input_buffer_timer = 0;
 				moved = true;
-				break;
 			}
+			if moved { break; }
 		}
 	}
 	ds_priority_destroy(available_moves);

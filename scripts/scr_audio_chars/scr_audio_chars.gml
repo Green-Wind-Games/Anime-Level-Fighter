@@ -3,6 +3,7 @@ function init_charaudio(_name = "") {
 	voice = noone;
 	
 	voice_volume_mine = 1;
+	voice_pitch_mine = 1;
 	
 	var _prefix = "snd_" + _name + "_";
 	

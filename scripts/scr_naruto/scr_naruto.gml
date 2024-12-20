@@ -4,6 +4,7 @@ function init_naruto_baseform() {
 	name = "naruto";
 	display_name = "Naruto";
 	theme = mus_naruto_clashofninja_qualifiers;
+	universe = universes.narutoshippuden;
 	
 	move_speed_mod = 1.25;
 	max_air_moves = 1;
@@ -342,7 +343,7 @@ function init_naruto_baseform() {
 			deflecting_projectiles = true;
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	mini_rasengan.run = function() {
@@ -377,7 +378,7 @@ function init_naruto_baseform() {
 			play_voiceline(snd_naruto_rasengan);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	rasengan_dive.run = function() {
@@ -431,7 +432,7 @@ function init_naruto_baseform() {
 			spend_mp(2);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	double_rasengan.run = function() {
@@ -474,7 +475,7 @@ function init_naruto_baseform() {
 			spend_mp(3);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	giant_rasengan.run = function() {
@@ -517,7 +518,7 @@ function init_naruto_baseform() {
 			play_voiceline(snd_naruto_shadowclonejutsu);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	shadow_clone_jutsu.run = function() {
@@ -549,7 +550,7 @@ function init_naruto_baseform() {
 			play_voiceline(snd_naruto_shadowclonejutsu);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	shadow_clone_barrage.run = function() {
@@ -627,7 +628,7 @@ function init_naruto_baseform() {
 			spend_mp(4);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	rasen_shuriken.run = function() {

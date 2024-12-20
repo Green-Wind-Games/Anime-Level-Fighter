@@ -581,7 +581,7 @@ function init_charstates() {
 			can_cancel = false;
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	teleport_state.run = function() {
@@ -669,7 +669,7 @@ function init_charstates() {
 			can_guard = false;
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	charge_state.run = function() {

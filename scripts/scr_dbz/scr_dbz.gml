@@ -20,7 +20,7 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_kiblastsprite) {
 			}
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	kiblast.run = function() {

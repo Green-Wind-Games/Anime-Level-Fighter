@@ -12,18 +12,26 @@ enum playerchars {
 	naruto,
 	sasuke,
 	kakashi,
-	orochimaru,
 	pain,
 	madara,
+	itachi,
 	
 	saitama,
 	genos,
-	elric,
-	mustang,
-	ichigo,
-	zaraki,
 	
 	allchars
+}
+
+enum universes {
+	dragonball,
+	narutoshippuden,
+	onepiece,
+	jojos,
+	onepunchman,
+	
+	uniforce,
+	
+	alluniverses
 }
 
 globalvar	max_characters, 

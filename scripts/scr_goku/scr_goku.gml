@@ -4,6 +4,7 @@ function init_goku_baseform() {
 	name = "goku";
 	display_name = "Goku";
 	theme = mus_dbfz_goku;
+	universe = universes.dragonball;
 
 	max_air_moves = 3;
 	
@@ -228,7 +229,7 @@ function init_goku_baseform() {
 			change_sprite(spr_goku_special_ki_blast,3,false);
 		}
 		else {
-			change_state(previous_state)
+			change_state(idle_state)
 		}
 	}
 	kiai_push.run = function() {
@@ -264,7 +265,7 @@ function init_goku_baseform() {
 			play_sound(snd_dbz_beam_charge_short);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	kamehameha.run = function() {
@@ -315,7 +316,7 @@ function init_goku_baseform() {
 			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	super_kamehameha.run = function() {
@@ -360,7 +361,7 @@ function init_goku_baseform() {
 	//		spend_mp(1);
 	//	}
 	//	else {
-	//		change_state(previous_state);
+	//		change_state(idle_state);
 	//	}
 	//}
 	//meteor_combo.run = function() {
@@ -426,7 +427,7 @@ function init_goku_baseform() {
 			play_voiceline(snd_goku_kaioken);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	activate_kaioken.run = function() {
@@ -449,7 +450,7 @@ function init_goku_baseform() {
 			y = target_y - 200;
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	super_spirit_bomb.run = function() {

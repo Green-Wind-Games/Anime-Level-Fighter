@@ -110,7 +110,8 @@ draw_script = function() {};
 char_id = -1;
 name = "ERROR";
 display_name = "ERROR";
-anime = "ERROR";
+universe = -1;
+theme = -1;
 
 init_physics();
 init_charsprites("goku");

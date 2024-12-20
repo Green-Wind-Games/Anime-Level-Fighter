@@ -4,6 +4,7 @@ function init_genos_baseform() {
 	name = "genos";
 	display_name = "Genos";
 	theme = mus_opm_genos;
+	universe = universes.onepunchman;
 
 	move_speed_mod = 1.35;
 	max_air_moves = 3;
@@ -142,7 +143,7 @@ function init_genos_baseform() {
 			yspeed = -20;
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	dropkick.run = function() {
@@ -185,7 +186,7 @@ function init_genos_baseform() {
 			change_sprite(spr_genos_special_blast,2,false);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	fireblast.run = function() {
@@ -258,7 +259,7 @@ function init_genos_baseform() {
 			play_sound(snd_dbz_beam_charge_short);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	incinerate.run = function() {
@@ -306,7 +307,7 @@ function init_genos_baseform() {
 			incinerate_cooldown = incinerate_cooldown_duration * 1.5;
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	super_incinerate.run = function() {

@@ -99,7 +99,7 @@ function play_voiceline(_snd,_chance = 100,_interrupt = true) {
 					false,
 					master_volume*voice_volume*voice_volume_mine,
 					0,
-					1 + random_range(0.02,-0.02)
+					voice_pitch_mine + random_range(0.02,-0.02)
 				);
 				return voice;
 			}

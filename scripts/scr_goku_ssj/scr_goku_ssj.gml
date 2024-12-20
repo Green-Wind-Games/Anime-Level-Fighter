@@ -4,6 +4,7 @@ function init_goku_ssj() {
 	name = "goku";
 	display_name = "Goku Super Saiyajin";
 	theme = mus_dbfz_space;
+	universe = universes.dragonball;
 
 	max_air_moves = 3;
 	
@@ -221,7 +222,7 @@ function init_goku_ssj() {
 			spend_mp(1);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	dragon_fist.run = function() {
@@ -251,7 +252,7 @@ function init_goku_ssj() {
 			change_sprite(spr_goku_ssj_special_ki_blast,3,false);
 		}
 		else {
-			change_state(previous_state)
+			change_state(idle_state)
 		}
 	}
 	ki_blast_cannon.run = function() {
@@ -298,7 +299,7 @@ function init_goku_ssj() {
 			play_sound(snd_dbz_beam_charge_short);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	kamehameha.run = function() {
@@ -349,7 +350,7 @@ function init_goku_ssj() {
 			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	super_kamehameha.run = function() {
@@ -398,7 +399,7 @@ function init_goku_ssj() {
 			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	angry_kamehameha.run = function() {
@@ -427,7 +428,7 @@ function init_goku_ssj() {
 			spend_mp(1);
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	meteor_combo.run = function() {
@@ -495,7 +496,7 @@ function init_goku_ssj() {
 			}
 		}
 		else {
-			change_state(previous_state);
+			change_state(idle_state);
 		}
 	}
 	activate_ssj2.run = function() {
