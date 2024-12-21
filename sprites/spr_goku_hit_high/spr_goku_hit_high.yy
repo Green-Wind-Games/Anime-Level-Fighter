@@ -28,7 +28,7 @@
   "origin":7,
   "parent":{
     "name":"Goku Base Sprites",
-    "path":"folders/Chars/Dragon Ball/Goku/Goku Sprites/Goku Base Sprites.yy",
+    "path":"folders/Chars/Dragon Ball Chars/Goku/Goku Sprites/Goku Base Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -33,7 +33,7 @@
   "origin":9,
   "parent":{
     "name":"Naruto Base Sprites",
-    "path":"folders/Chars/Naruto Shippuden/Naruto/Naruto Sprites/Naruto Base Sprites.yy",
+    "path":"folders/Chars/Naruto Shippuden Chars/Naruto/Naruto Sprites/Naruto Base Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

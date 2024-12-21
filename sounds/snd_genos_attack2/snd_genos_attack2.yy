@@ -13,7 +13,7 @@
   "name":"snd_genos_attack2",
   "parent":{
     "name":"Genos Voice",
-    "path":"folders/Chars/One Punch Man/Genos/Genos Voice.yy",
+    "path":"folders/Chars/One Punch Man Chars/Genos/Genos Voice.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

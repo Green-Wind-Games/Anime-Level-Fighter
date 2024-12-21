@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Genos",
-    "path":"folders/Chars/One Punch Man/Genos.yy",
+    "path":"folders/Chars/One Punch Man Chars/Genos.yy",
   },
   "parentObjectId":{
     "name":"obj_char",

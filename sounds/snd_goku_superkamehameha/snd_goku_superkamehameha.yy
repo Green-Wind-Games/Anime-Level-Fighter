@@ -13,7 +13,7 @@
   "name":"snd_goku_superkamehameha",
   "parent":{
     "name":"Goku Voice",
-    "path":"folders/Chars/Dragon Ball/Goku/Goku Voice.yy",
+    "path":"folders/Chars/Dragon Ball Chars/Goku/Goku Voice.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

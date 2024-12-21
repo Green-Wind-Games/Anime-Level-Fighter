@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Goku",
-    "path":"folders/Chars/Dragon Ball/Goku.yy",
+    "path":"folders/Chars/Dragon Ball Chars/Goku.yy",
   },
   "parentObjectId":{
     "name":"obj_char",

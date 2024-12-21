@@ -13,7 +13,7 @@
   "name":"snd_naruto_shadowclonejutsu",
   "parent":{
     "name":"Naruto Voice",
-    "path":"folders/Chars/Naruto Shippuden/Naruto/Naruto Voice.yy",
+    "path":"folders/Chars/Naruto Shippuden Chars/Naruto/Naruto Voice.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

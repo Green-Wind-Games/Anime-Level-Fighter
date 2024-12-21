@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_dbz",
   "parent":{
-    "name":"Dragon Ball",
-    "path":"folders/Chars/Dragon Ball.yy",
+    "name":"Dragon Ball Chars",
+    "path":"folders/Chars/Dragon Ball Chars.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

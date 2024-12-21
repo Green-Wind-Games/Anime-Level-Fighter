@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Naruto",
-    "path":"folders/Chars/Naruto Shippuden/Naruto.yy",
+    "path":"folders/Chars/Naruto Shippuden Chars/Naruto.yy",
   },
   "parentObjectId":{
     "name":"obj_char",

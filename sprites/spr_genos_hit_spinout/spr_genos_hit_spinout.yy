@@ -27,7 +27,7 @@
   "origin":4,
   "parent":{
     "name":"Genos Sprites",
-    "path":"folders/Chars/One Punch Man/Genos/Genos Sprites.yy",
+    "path":"folders/Chars/One Punch Man Chars/Genos/Genos Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

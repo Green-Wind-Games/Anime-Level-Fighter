@@ -13,7 +13,7 @@
   "name":"snd_naruto_hurt2",
   "parent":{
     "name":"Naruto Voice",
-    "path":"folders/Chars/Naruto Shippuden/Naruto/Naruto Voice.yy",
+    "path":"folders/Chars/Naruto Shippuden Chars/Naruto/Naruto Voice.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

@@ -6,7 +6,7 @@
   "name":"scr_genos",
   "parent":{
     "name":"Genos",
-    "path":"folders/Chars/One Punch Man/Genos.yy",
+    "path":"folders/Chars/One Punch Man Chars/Genos.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -29,7 +29,7 @@
   "origin":4,
   "parent":{
     "name":"Goku SSJ Sprites",
-    "path":"folders/Chars/Dragon Ball/Goku/Goku Sprites/Goku SSJ Sprites.yy",
+    "path":"folders/Chars/Dragon Ball Chars/Goku/Goku Sprites/Goku SSJ Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

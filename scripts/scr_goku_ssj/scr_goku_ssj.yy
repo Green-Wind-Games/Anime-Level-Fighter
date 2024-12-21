@@ -6,7 +6,7 @@
   "name":"scr_goku_ssj",
   "parent":{
     "name":"Goku",
-    "path":"folders/Chars/Dragon Ball/Goku.yy",
+    "path":"folders/Chars/Dragon Ball Chars/Goku.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
