@@ -180,6 +180,7 @@
     {"id":{"name":"snd_goku_intro2","path":"sounds/snd_goku_intro2/snd_goku_intro2.yy",},},
     {"id":{"name":"snd_goku_intro3","path":"sounds/snd_goku_intro3/snd_goku_intro3.yy",},},
     {"id":{"name":"snd_goku_kaioken","path":"sounds/snd_goku_kaioken/snd_goku_kaioken.yy",},},
+    {"id":{"name":"snd_goku_kamehame","path":"sounds/snd_goku_kamehame/snd_goku_kamehame.yy",},},
     {"id":{"name":"snd_goku_kamehameha_charge","path":"sounds/snd_goku_kamehameha_charge/snd_goku_kamehameha_charge.yy",},},
     {"id":{"name":"snd_goku_kamehameha_fire","path":"sounds/snd_goku_kamehameha_fire/snd_goku_kamehameha_fire.yy",},},
     {"id":{"name":"snd_goku_kamehameha","path":"sounds/snd_goku_kamehameha/snd_goku_kamehameha.yy",},},

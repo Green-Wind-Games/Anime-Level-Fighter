@@ -12,16 +12,10 @@ function init_charstates() {
 		is_guarding = false;
 		
 		if on_ground {
+			change_sprite(idle_sprite,6,true);
+			xspeed = 0;
 			yspeed = 0;
 			air_moves = 0;
-			
-			if xspeed != 0 {
-				change_sprite(walk_sprite,6,true);
-				xscale = abs(xscale) * sign(xspeed) * facing;
-			}
-			else {
-				change_sprite(idle_sprite,6,true);
-			}
 		}
 		else {
 			change_state(air_state);

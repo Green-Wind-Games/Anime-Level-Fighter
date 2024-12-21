@@ -59,8 +59,11 @@ function auto_levelup() {
 	if !target_exists() return false;
 	
 	if level >= max_level return false;
-	
 	if xp < max_xp return false;
+	
+	if is_hit return false;
+	if is_guarding return false;
+	if !can_cancel return false;
 	
 	if next_form == -1 {
 		change_state(levelup_state);

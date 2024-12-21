@@ -304,16 +304,23 @@ function init_goku_baseform() {
 
 	super_kamehameha = new state();
 	super_kamehameha.start = function() {
-		if kamehameha_cooldown <= 0 and check_mp(2) {
+		if (kamehameha_cooldown <= 0) and check_mp(2) {
 			change_sprite(spr_goku_special_kamehameha,5,false);
 			if is_airborne {
 				change_sprite(spr_goku_special_kamehameha_air,frame_duration,false);
 			}
-			activate_super(320);
 			spend_mp(2);
 			xspeed = 0;
 			yspeed = 0;
 			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
+			if combo_timer <= 0 {
+				activate_super(300);
+				play_voiceline(snd_goku_kamehameha_charge);
+			}
+			else {
+				activate_super(60);
+				play_voiceline(snd_goku_kamehame);
+			}
 		}
 		else {
 			change_state(idle_state);
@@ -343,8 +350,12 @@ function init_goku_baseform() {
 			shake_screen(5,3);
 		}
 		if check_frame(3) {
-			play_voiceline(snd_goku_kamehameha_charge);
-			play_sound(snd_dbz_beam_charge_long);
+			if superfreeze_timer > 60 {
+				play_sound(snd_dbz_beam_charge_long);
+			}
+			else {
+				play_sound(snd_dbz_beam_charge_short);
+			}
 		}
 		if check_frame(6) {
 			play_voiceline(snd_goku_kamehameha_fire);

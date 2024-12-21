@@ -99,7 +99,7 @@ function basic_smash(_hitframe,_damage,_hiteffect) {
 		create_hitbox(
 			_x,
 			_y,
-			_w,
+			max(_w,45),
 			_h,
 			_damage,
 			3,
@@ -362,7 +362,7 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 	with(beam) {
 		ds_list_clear(hitbox.hit_list);
 		alpha = 1;
-		duration = 10;
+		duration = 12;
 		
 		xspeed = _xlength * other.facing;
 		yspeed = _ylength;

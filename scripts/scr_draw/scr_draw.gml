@@ -30,7 +30,7 @@ function draw_ground() {
 	if sprite_exists(ground_sprite) {
 		var ground_w = room_width * 1.5;
 		var ground_h = (room_height-ground_height)*1.5;
-		var ground_x = -ground_w / 2;
+		var ground_x = -ground_w / 3;
 		var ground_y = ground_height-sprite_get_yoffset(ground_sprite);
 		draw_sprite_stretched(ground_sprite,0,ground_x,ground_y,ground_w,ground_h);
 	}

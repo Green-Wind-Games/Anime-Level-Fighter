@@ -149,6 +149,7 @@
     {"name":"snd_goku_intro2","order":29,"path":"sounds/snd_goku_intro2/snd_goku_intro2.yy",},
     {"name":"snd_goku_intro3","order":30,"path":"sounds/snd_goku_intro3/snd_goku_intro3.yy",},
     {"name":"snd_goku_kaioken","order":22,"path":"sounds/snd_goku_kaioken/snd_goku_kaioken.yy",},
+    {"name":"snd_goku_kamehame","order":31,"path":"sounds/snd_goku_kamehame/snd_goku_kamehame.yy",},
     {"name":"snd_goku_kamehameha_charge","order":20,"path":"sounds/snd_goku_kamehameha_charge/snd_goku_kamehameha_charge.yy",},
     {"name":"snd_goku_kamehameha_fire","order":21,"path":"sounds/snd_goku_kamehameha_fire/snd_goku_kamehameha_fire.yy",},
     {"name":"snd_goku_kamehameha","order":14,"path":"sounds/snd_goku_kamehameha/snd_goku_kamehameha.yy",},
