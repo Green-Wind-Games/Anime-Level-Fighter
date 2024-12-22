@@ -55,7 +55,16 @@ function init_charsprites(_name) {
 	grabbed_sprite[grab_point.body] = asset_get_index(prefix + "grabbed_body");
 	grabbed_sprite[grab_point.leg] = asset_get_index(prefix + "grabbed_leg");
 	
-	rush_sprite = asset_get_index(prefix + "rush");
+	fist_rush_sprite = asset_get_index(prefix + "rush_fist");
+	weapon_rush_sprite = asset_get_index(prefix + "rush_weapon");
+	
+	fist_combat_sprite = asset_get_index(prefix + "combat_fist");
+	weapon_combat_sprite = asset_get_index(prefix + "combat_weapon");
+	combat_dodge_sprite = crouch_sprite;
+	combat_block_sprite = guard_sprite;
+	
+	fist_bind_sprite = asset_get_index(prefix + "bind_fist");
+	weapon_bind_sprite = asset_get_index(prefix + "bind_weapon");
 	
 	intro_sprite = asset_get_index(prefix + "intro");
 	victory_sprite = asset_get_index(prefix + "victory");

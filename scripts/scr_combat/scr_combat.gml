@@ -333,10 +333,10 @@ function take_damage(_attacker,_amount,_kill) {
 	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * max_level;
 	var xp_gain = map_value(dmg,0,max_hp,0,max_xp) * max_level;
 	
-	var defend_mp_gain = mp_gain * 1.25;
+	var defend_mp_gain = mp_gain * 0.30;
 	var defend_xp_gain = xp_gain * 0.10;
 	
-	var attack_mp_gain = mp_gain * 1.50;
+	var attack_mp_gain = mp_gain * 0.50;
 	var attack_xp_gain = xp_gain * 1.00;
 	
 	if !is_char(_attacker) {

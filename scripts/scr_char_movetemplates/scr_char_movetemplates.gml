@@ -132,7 +132,7 @@ function basic_heavy_attack(_hitframe,_hiteffect) {
 			xspeed = 30 * facing;
 			yspeed = -5;
 			if on_ground {
-				create_specialeffect(spr_dust_dash,x,y,0.5,0.5);
+				create_specialeffect(spr_dust_dash,x,y,facing * 0.5,0.5);
 				play_sound(snd_jump);
 			}
 			else {
@@ -172,7 +172,7 @@ function basic_heavy_lowattack(_hitframe,_hiteffect) {
 		if combo_timer > 20 {
 			xspeed = 5 * facing;
 			yspeed = -10;
-			create_specialeffect(spr_dust_dash,x,y,0.5,0.5);
+			create_specialeffect(spr_dust_dash,x,y,facing * 0.5,0.5);
 			play_sound(snd_jump);
 			play_sound(snd_dash);
 			change_state(air_state);

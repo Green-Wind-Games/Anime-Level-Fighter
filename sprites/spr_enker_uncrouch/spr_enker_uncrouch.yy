@@ -26,8 +26,8 @@
   "nineSlice":null,
   "origin":7,
   "parent":{
-    "name":"Enker Sprites",
-    "path":"folders/Chars/Uni-Force Chars/Enker/Enker Sprites.yy",
+    "name":"Enker Base Sprites",
+    "path":"folders/Chars/Uni-Force Chars/Enker/Enker Sprites/Enker Base Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -1,5 +1,6 @@
 function init_enker() {
 	init_charsprites("enker");
+	init_charaudio("enker");
 
 	name = "enker";
 	display_name = "Enker";
@@ -30,8 +31,6 @@ function init_enker() {
 		spr_enker_special_ki_blast2,
 		spr_kiblast_green
 	);
-	
-	init_charaudio("enker");
 
 	char_script = function() {
 		kamehameha_cooldown -= 1;
