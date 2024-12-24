@@ -1,73 +1,42 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-globalvar	particle_system,
-			hitspark_light, hitspark_medium, hitspark_heavy,
-			hitspark_super, hitspark_ultimate,
-			slashspark,
-			guardspark,
-			deflect_spark,
-			explosion_small, explosion_medium, explosion_large,
-			left_wall_bang_particle, floor_bang_particle, right_wall_bang_particle,
-			shockwave_particle,
-			jutsu_smoke_particle,
-			super_particle, ultimate_particle;
+globalvar	particle_system;
 				
 particle_system = part_system_create();
-part_system_depth(particle_system,-9999);
+part_system_depth(particle_system,-99999);
 part_system_automatic_update(particle_system,false);
 part_system_automatic_draw(particle_system,false);
 	
-hitspark_light = part_type_create();
-part_type_sprite(hitspark_light,spr_hitspark,true,true,false);
-part_type_life(hitspark_light,12,12);
-part_type_size(hitspark_light,1/4,1/4,1/60,0);
-part_type_orientation(hitspark_light,0,360,0,0,true);
-part_type_blend(hitspark_light,true);
-part_type_color1(hitspark_light,c_white);
-	
-hitspark_medium = part_type_create();
-part_type_sprite(hitspark_medium,spr_hitspark,true,true,false);
-part_type_life(hitspark_medium,16,16);
-part_type_size(hitspark_medium,1/3,1/3,1/50,0);
-part_type_orientation(hitspark_medium,0,360,0,0,true);
-part_type_blend(hitspark_medium,true);
-part_type_color1(hitspark_medium,make_color_rgb(255,255,0));
-	
-hitspark_heavy = part_type_create();
-part_type_sprite(hitspark_heavy,spr_hitspark,true,true,false);
-part_type_life(hitspark_heavy,20,20);
-part_type_size(hitspark_heavy,1/2,1/2,1/40,0);
-part_type_orientation(hitspark_heavy,0,360,0,0,true);
-part_type_blend(hitspark_heavy,true);
-part_type_color1(hitspark_heavy,make_color_rgb(255,192,0));
-	
-hitspark_super = part_type_create();
-part_type_sprite(hitspark_super,spr_hitspark,true,true,false);
-part_type_life(hitspark_super,24,24);
-part_type_size(hitspark_super,1,1,1/30,0);
-part_type_orientation(hitspark_super,0,360,0,0,true);
-part_type_blend(hitspark_super,true);
-part_type_color1(hitspark_super,make_color_rgb(255,128,0));
-	
-hitspark_ultimate = part_type_create();
-part_type_sprite(hitspark_ultimate,spr_hitspark,true,true,false);
-part_type_life(hitspark_ultimate,24,24);
-part_type_size(hitspark_ultimate,1,1,1/30,0);
-part_type_orientation(hitspark_ultimate,0,360,0,0,true);
-part_type_blend(hitspark_ultimate,true);
-part_type_color1(hitspark_ultimate,make_color_rgb(255,128,0));
+globalvar	hitspark, slashspark, piercespark,
+			guardspark, parry_spark,
+			special_activate_particle, super_activate_particle, ultimate_activate_particle,
+			explosion_small_particle, explosion_medium_particle, explosion_large_particle,
+			wall_bang_left_particle, wall_bang_right_particle, floor_bang_particle,
+			air_shockwave_particle;
+			
+hitspark = part_type_create();
+part_type_shape(hitspark,pt_shape_line);
+part_type_life(hitspark,8,16);
+part_type_size(hitspark,1/4,1/2,-1/20,0);
+part_type_orientation(hitspark,0,0,0,0,true);
+part_type_direction(hitspark,0,360,0,0);
+part_type_speed(hitspark,4,8,0,0);
+part_type_blend(hitspark,true);
 	
 slashspark = part_type_create();
-part_type_sprite(slashspark,spr_slashspark,true,true,false);
-part_type_life(slashspark,15,15);
-part_type_size(slashspark,0.5,0.5,0,0);
-part_type_orientation(slashspark,0,360,0,0,true);
+part_type_shape(slashspark,pt_shape_line);
+part_type_life(slashspark,16,16);
+part_type_size(slashspark,1,1,-1/20,0);
+part_type_orientation(slashspark,0,0,0,0,true);
+part_type_direction(slashspark,0,360,0,0);
+part_type_speed(slashspark,5,5,-1/3,0);
 part_type_blend(slashspark,true);
 	
 guardspark = part_type_create();
-part_type_sprite(guardspark,spr_guardspark,true,true,false);
-part_type_life(guardspark,25,25);
-part_type_size(guardspark,0.5,0.5,0,0);
+part_type_shape(guardspark,pt_shape_flare);
+part_type_life(guardspark,16,16);
+part_type_size(guardspark,1,1,-1/20,0);
+part_type_orientation(guardspark,0,0,0,0,true);
+part_type_direction(guardspark,0,360,0,0);
+part_type_speed(guardspark,5,5,-1/3,0);
 part_type_blend(guardspark,true);
 	
 deflect_spark = part_type_create();
