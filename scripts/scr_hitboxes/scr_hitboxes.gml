@@ -77,15 +77,15 @@ function check_hit() {
 				continue;
 			}
 			if b2.deflecting_projectiles {
-				if !is_beam(b2) {
+				if !is_beam(a2) {
 					var _speed = abs(a2.xspeed) + abs(a2.yspeed) * 2;
-					var _dir = choose(45,135,225,315);
+					var _dir = 90 - (45 * b2.facing);
 					a2.xspeed = lengthdir_x(_speed * b2.facing,_dir);
 					a2.yspeed = lengthdir_y(_speed,_dir);
 					a2.homing = false;
-					a2.affected_by_gravity = 10;
+					a2.affected_by_gravity = 2;
 				}
-				create_particles(a2.x,a2.y,a2.x,a2.y,deflect_spark);
+				create_particles(a2.x,a2.y,a2.x,a2.y,parry_spark,50);
 				continue;
 			}
 		}
@@ -96,7 +96,7 @@ function check_hit() {
 			if b2.deflecting_attacks {
 				a2.xspeed = 12 * b2.facing;
 				//a2.yspeed = b2.yspeed;
-				create_particles(a2.x,a2.y,a2.x,a2.y,deflect_spark);
+				create_particles(a2.x,a2.y,a2.x,a2.y,parry_spark,50);
 				continue;
 			}
 		}

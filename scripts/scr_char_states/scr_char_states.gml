@@ -397,24 +397,24 @@ function init_charstates() {
 		hit_state.start();
 	}
 	wall_splat_state.run = function() {
-		if ((xspeed > 0) and (on_right_wall)) {
-			xspeed = 0;
-			create_particles(
-				x+width_half,
-				y-height_half,
-				x+width_half,
-				y-height_half,
-				right_wall_bang_particle
-			);
-		}
 		if ((xspeed < 0) and (on_left_wall)) {
 			xspeed = 0;
 			create_particles(
-				x-width_half,
+				left_wall,
 				y-height_half,
-				x-width_half,
+				left_wall,
 				y-height_half,
-				right_wall_bang_particle
+				wall_bang_left_particle
+			);
+		}
+		if ((xspeed > 0) and (on_right_wall)) {
+			xspeed = 0;
+			create_particles(
+				right_wall,
+				y-height_half,
+				right_wall,
+				y-height_half,
+				wall_bang_right_particle
 			);
 		}
 		hit_state.run();
@@ -445,11 +445,23 @@ function init_charstates() {
 		}
 		if on_wall {
 			take_damage(noone,abs(xspeed / 2),true);
-			if xspeed < 0 {
-				create_particles(left_wall,y-height_half,left_wall,y-height_half,left_wall_bang_particle,1);
+			if on_left_wall {
+				create_particles(
+					left_wall,
+					y-height_half,
+					left_wall,
+					y-height_half,
+					wall_bang_left_particle
+				);
 			}
 			else {
-				create_particles(right_wall,y-height_half,right_wall,y-height_half,right_wall_bang_particle,1);
+				create_particles(
+					right_wall,
+					y-height_half,
+					right_wall,
+					y-height_half,
+					wall_bang_right_particle,
+				);
 			}
 			xspeed *= -0.25;
 			yspeed = -5;

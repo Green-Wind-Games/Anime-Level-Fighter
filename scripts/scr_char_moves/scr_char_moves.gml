@@ -255,7 +255,7 @@ function activate_super(_duration = 30) {
 		y-(height*0.75),
 		x,
 		y-(height*0.75),
-		super_particle
+		super_activate_particle
 	);
 }
 
@@ -270,7 +270,7 @@ function activate_ultimate(_duration = 60) {
 		y-(height*0.75),
 		x,
 		y-(height*0.75),
-		ultimate_particle
+		ultimate_activate_particle
 	);
 }
 

@@ -80,6 +80,6 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 			duration = 3;
 			alpha = 0;
 		}
-		play_sound(snd_explosion_small,1,1);
+		play_sound(snd_explosion_small_particle,1,1);
 	}
 }

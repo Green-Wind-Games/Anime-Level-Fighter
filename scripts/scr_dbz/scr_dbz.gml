@@ -67,7 +67,7 @@ function create_kiblast(_x,_y,_sprite) {
 	)) {
 		blend = true;
 		hit_script = function() {
-			create_particles(x,y,x,y,explosion_small);
+			create_particles(x,y,x,y,explosion_small_particle);
 		}
 		active_script = function() {
 			if y >= ground_height {
