@@ -1,3 +1,12 @@
+globalvar jutsu_smoke_particle;
+
+jutsu_smoke_particle = part_type_create();
+part_type_sprite(jutsu_smoke_particle,spr_jutsu_smoke,true,true,false);
+part_type_life(jutsu_smoke_particle,30,30);
+part_type_size(jutsu_smoke_particle,0.6,0.6,0,0);
+part_type_blend(jutsu_smoke_particle,true);
+part_type_alpha3(jutsu_smoke_particle,1,1,0);
+
 function set_substitution_jutsu() {
 	substitution_state.start = function() {
 		change_sprite(air_peak_sprite,3,false);
@@ -80,6 +89,6 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 			duration = 3;
 			alpha = 0;
 		}
-		play_sound(snd_explosion_small_particle,1,1);
+		play_sound(snd_explosion_small,1,1);
 	}
 }
