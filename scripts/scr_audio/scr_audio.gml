@@ -82,7 +82,7 @@ function loop_sound(_snd,_volume = 1,_pitch = 1) {
 
 function play_voiceline(_snd,_chance = 100,_interrupt = true) {
 	if (_interrupt) or ((!_interrupt) and (!sound_is_playing(voice))) {
-		if (random(100) < _chance) {
+		if chance(_chance) {
 			stop_sound(voice);
 			if (audio_exists(_snd)) {
 				var _audioname = audio_get_name(_snd);

@@ -78,22 +78,22 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	blockstun = round(blockstun);
 	hitstop = round(hitstop);
 			
-	var guarding = is_guarding;
+	var _guarding = is_guarding;
 	if is_char(id) {
-		if input.back guarding = true;
-		if (ai_enabled) and (random(100) < map_value(ai_level,1,ai_level_max,10,90)) guarding = true;
+		if input.back _guarding = true;
+		if (ai_enabled) and chance(map_value(ai_level,1,ai_level_max,10,90)) _guarding = true;
 	}
 	
-	var guard_valid = (can_guard) and (!is_hit);
+	var _guard_valid = (can_guard) and (!is_hit);
 	if _attacktype == attacktype.unblockable
 	or _attacktype == attacktype.grab {
-		guard_valid = false;
+		_guard_valid = false;
 	}
 	if _attacktype == attacktype.antiair
 	and is_airborne {
-		guard_valid = false;
+		_guard_valid = false;
 	}
-	if guard_valid and guarding {
+	if _guard_valid and _guarding {
 		change_state(guard_state);
 		change_sprite(guard_sprite,3,false);
 		xspeed *= 2;
@@ -211,7 +211,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 						play_voiceline(voice_hurt_heavy,50,true);
 			
 						if meme_enabled {
-							if random(100) < meme_chance {
+							if chance(meme_chance) {
 								stop_sound(voice);
 								voice = play_sound(
 									choose(
@@ -266,8 +266,8 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		_attacker.can_cancel = true;
 	}
 	
-	create_hitspark(id,_strength,_hiteffect,guard_valid and guarding);
-	apply_hiteffect(_strength,_hiteffect,guard_valid and guarding);
+	create_hitspark(id,_strength,_hiteffect,_guard_valid and _guarding);
+	apply_hiteffect(_strength,_hiteffect,_guard_valid and _guarding);
 }
 
 function take_damage(_attacker,_amount,_kill) {

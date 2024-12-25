@@ -223,7 +223,7 @@ function init_genos_baseform() {
 		yspeed = 0;
 	}
 	machinegun_blows.run = function() {
-		xspeed = 0;
+		xspeed = 1;
 		yspeed = 0;
 		if state_timer mod 3 == 1 {
 			play_sound(snd_punch_whiff_medium);
@@ -250,10 +250,15 @@ function init_genos_baseform() {
 		}
 		if state_timer > 50 {
 			if combo_timer > 0 {
-				change_state(heavy_attack_down);
+				change_state(launcher_attack);
 			}
 			else {
-				change_state(idle_state);
+				if on_ground {
+					change_state(backdash_state);
+				}
+				else {
+					change_state(air_state);
+				}
 			}
 		}
 	}

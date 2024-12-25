@@ -396,7 +396,7 @@ function check_charge() {
 		}
 		if target_distance_x < 256 return false;
 		if active_state == charge_state return true;
-		if random(100) < 5 return true;
+		if chance(5) return true;
 	}
 	return false;
 }

@@ -115,6 +115,8 @@
     {"id":{"name":"scr_menus","path":"scripts/scr_menus/scr_menus.yy",},},
     {"id":{"name":"scr_naruto_clones","path":"scripts/scr_naruto_clones/scr_naruto_clones.yy",},},
     {"id":{"name":"scr_naruto","path":"scripts/scr_naruto/scr_naruto.yy",},},
+    {"id":{"name":"scr_particles_generic","path":"scripts/scr_particles_generic/scr_particles_generic.yy",},},
+    {"id":{"name":"scr_particles_hitsparks","path":"scripts/scr_particles_hitsparks/scr_particles_hitsparks.yy",},},
     {"id":{"name":"scr_particles","path":"scripts/scr_particles/scr_particles.yy",},},
     {"id":{"name":"scr_physics","path":"scripts/scr_physics/scr_physics.yy",},},
     {"id":{"name":"scr_shippuden","path":"scripts/scr_shippuden/scr_shippuden.yy",},},

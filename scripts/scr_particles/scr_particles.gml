@@ -5,82 +5,8 @@ part_system_depth(particle_system,-99999);
 part_system_automatic_update(particle_system,false);
 part_system_automatic_draw(particle_system,false);
 	
-globalvar	hitspark, slashspark, piercespark,
-			guardspark, parry_spark,
-			special_activate_particle, super_activate_particle, ultimate_activate_particle,
-			explosion_small_particle, explosion_medium_particle, explosion_large_particle,
-			wall_bang_left_particle, wall_bang_right_particle, floor_bang_particle,
-			air_shockwave_particle;
-			
-hitspark = part_type_create();
-part_type_shape(hitspark,pt_shape_line);
-part_type_life(hitspark,8,16);
-part_type_size(hitspark,1/4,1/2,-1/20,0);
-part_type_orientation(hitspark,0,0,0,0,true);
-part_type_direction(hitspark,0,360,0,0);
-part_type_speed(hitspark,4,8,0,0);
-part_type_blend(hitspark,true);
-	
-slashspark = part_type_create();
-part_type_shape(slashspark,pt_shape_line);
-part_type_life(slashspark,16,16);
-part_type_size(slashspark,1,1,-1/20,0);
-part_type_orientation(slashspark,0,0,0,0,true);
-part_type_direction(slashspark,0,360,0,0);
-part_type_speed(slashspark,5,5,-1/3,0);
-part_type_blend(slashspark,true);
-
-piercespark = hitspark;
-	
-guardspark = part_type_create();
-part_type_shape(guardspark,pt_shape_flare);
-part_type_life(guardspark,16,16);
-part_type_size(guardspark,1,1,-1/20,0);
-part_type_orientation(guardspark,0,0,0,0,true);
-part_type_direction(guardspark,0,360,0,0);
-part_type_speed(guardspark,5,5,-1/3,0);
-part_type_blend(guardspark,true);
-	
-parry_spark = part_type_create();
-part_type_shape(parry_spark,pt_shape_ring);
-part_type_life(parry_spark,30,30);
-part_type_size(parry_spark,1/10,1/10,1/10,0);
-part_type_orientation(parry_spark,0,360,0,0,true);
-part_type_blend(parry_spark,true);
-part_type_color1(parry_spark,make_color_rgb(0,255,128));
-	
-explosion_small_particle = part_type_create();
-part_type_shape(explosion_small_particle,pt_shape_explosion);
-part_type_life(explosion_small_particle,30,60);
-part_type_size(explosion_small_particle,1/10,1/5,0,0);
-part_type_orientation(explosion_small_particle,0,360,0,0,false);
-part_type_direction(explosion_small_particle,0,360,0,0);
-part_type_speed(explosion_small_particle,1,8,0,0);
-part_type_gravity(explosion_small_particle,-0.1,90);
-part_type_blend(explosion_small_particle,true);
-part_type_color3(explosion_small_particle,c_yellow,c_red,c_dkgray);
-	
-explosion_medium_particle = part_type_create();
-part_type_shape(explosion_medium_particle,pt_shape_explosion);
-part_type_life(explosion_medium_particle,30,60);
-part_type_size(explosion_medium_particle,1/10,1/5,0,0);
-part_type_orientation(explosion_medium_particle,0,360,0,0,false);
-part_type_direction(explosion_medium_particle,0,360,0,0);
-part_type_speed(explosion_medium_particle,1,8,0,0);
-part_type_gravity(explosion_medium_particle,-0.1,90);
-part_type_blend(explosion_medium_particle,true);
-part_type_color3(explosion_medium_particle,c_yellow,c_red,c_dkgray);
-	
-explosion_large_particle = part_type_create();
-part_type_shape(explosion_large_particle,pt_shape_explosion);
-part_type_life(explosion_large_particle,30,60);
-part_type_size(explosion_large_particle,1/10,1/5,0,0);
-part_type_orientation(explosion_large_particle,0,360,0,0,false);
-part_type_direction(explosion_large_particle,0,360,0,0);
-part_type_speed(explosion_large_particle,1,8,0,0);
-part_type_gravity(explosion_large_particle,-0.1,90);
-part_type_blend(explosion_large_particle,true);
-part_type_color3(explosion_large_particle,c_yellow,c_red,c_dkgray);
+globalvar	special_activate_particle, super_activate_particle, ultimate_activate_particle,
+			wall_bang_left_particle, wall_bang_right_particle, floor_bang_particle;
 
 wall_bang_left_particle = part_type_create();
 part_type_sprite(wall_bang_left_particle,spr_impact_dust,true,true,false);
@@ -132,17 +58,14 @@ function update_particles() {
 	part_system_update(particle_system);
 }
 
-function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1,_color = c_white) {
-	repeat(_number) {
-		part_particles_create_color(
-			particle_system,
-			irandom_range(_x1,_x2),
-			irandom_range(_y1,_y2),
-			_particle,
-			_color,
-			1
-		);
-	}
+function create_particles(_x,_y,_particle,_number = 1) {
+	part_particles_create(
+		particle_system,
+		_x,
+		_y,
+		_particle,
+		_number
+	);
 	switch(_particle) {
 		case parry_spark:
 		play_sound(snd_parry);
@@ -178,94 +101,6 @@ function create_particles(_x1,_y1,_x2,_y2,_particle,_number = 1,_color = c_white
 		play_sound(snd_jutsu_smoke);
 		break;
 	}
-}
-
-function create_hitspark(_target,_strength,_hiteffect,_guard) {
-	var _sound = noone;
-	var _volume = 1;
-	var _p = 1/3;
-	var _x1 = _target.x -						(_target.width_half * _p);
-	var _y1 = _target.y - _target.height_half -	(_target.height_half * _p);
-	var _x2 = _target.x +						(_target.width_half * _p);
-	var _y2 = _target.y - _target.height_half +	(_target.height_half * _p);
-	switch(_hiteffect) {
-		default:
-		if !_guard {
-			switch(_hiteffect) {	
-				case hiteffects.none:
-				//none lol
-				break;
-				
-				default:
-				if _strength < attackstrength.medium {
-					_sound = snd_punch_hit_light;
-					create_particles(_x1,_y1,_x2,_y2,hitspark,20);
-				}
-				else if _strength < attackstrength.heavy {
-					_sound = snd_punch_hit_medium;
-					create_particles(_x1,_y1,_x2,_y2,hitspark,40);
-				}
-				else if _strength < attackstrength.super {
-					_sound = snd_punch_hit_heavy;
-					create_particles(_x1,_y1,_x2,_y2,hitspark,60);
-				}
-				else if _strength < attackstrength.ultimate {
-					_sound = snd_punch_hit_super;
-					create_particles(_x1,_y1,_x2,_y2,hitspark,80);
-				}
-				else {
-					_sound = snd_punch_hit_ultimate;
-					create_particles(_x1,_y1,_x2,_y2,hitspark,100);
-				}
-				break;
-				
-				case hiteffects.slash:
-				create_particles(_x1,_y1,_x2,_y2,slashspark);
-				if _strength < attackstrength.medium {
-					_sound = snd_slash_hit_light;
-				}
-				else if _strength < attackstrength.heavy {
-					_sound = snd_slash_hit_medium;
-				}
-				else if _strength < attackstrength.super {
-					_sound = snd_slash_hit_heavy;
-				}
-				else if _strength < attackstrength.ultimate {
-					_sound = snd_slash_hit_super;
-				}
-				else {
-					_sound = snd_slash_hit_ultimate;
-				}
-				break;
-			}
-			
-			if _strength >= attackstrength.super {
-				if meme_enabled {
-					if random(100) < meme_chance {
-						_sound = choose(
-							snd_meme_hit_dunk,
-							snd_meme_hit_hammer,
-							snd_meme_hit_metal_dayum,
-							snd_meme_hit_tacobell,
-							snd_meme_hit_tf2_critical,
-							snd_meme_hit_tf2_fryingpan
-						);
-						_volume = 3;
-					}
-				}
-			}
-		}
-		else {
-			switch(_hiteffect) {
-				default: 
-				_sound = snd_punch_guard;
-				create_particles(_x1,_y1,_x2,_y2,guardspark);
-				break;
-			}
-		}
-		break;
-	}
-	play_sound(_sound,_volume);
 }
 
 function create_specialeffect(_sprite,_x,_y,_xscale = 1,_yscale = 1,_rotation = 0,_rotationspeed = 0,_color = c_white,_alpha = 1,_blend = true) {

@@ -13,7 +13,7 @@ function init_naruto_baseform_clone() {
 			change_state(choose(punch,punch2,slash,slash2));
 		}
 		else if (target_distance > 150) {
-			if irandom(1) {
+			if chance(30) {
 				change_state(shuriken_throw);
 			}
 		}

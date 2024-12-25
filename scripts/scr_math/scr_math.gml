@@ -17,6 +17,10 @@ function value_in_range(_value, _min, _max) {
 	return (_value >= _min) and (_value <= _max);
 }
 
+function chance(_percent) {
+	return random(100) < _percent;
+}
+
 function get_team_score(_team = team) {
 	var team_score = 0;
 	var team_score_divider = 0;
