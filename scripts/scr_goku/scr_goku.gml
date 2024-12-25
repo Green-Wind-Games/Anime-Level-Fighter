@@ -242,7 +242,7 @@ function init_goku_baseform() {
 				y-height_half,
 				x+(width_half*facing),
 				y-height_half,
-				shockwave_particle
+				air_shockwave_particle
 			);
 			create_hitbox(-50,-150,200,200,690,20,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
 		}
