@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_punch_hit_ultimate",
+  "%Name":"snd_slash_hit_super2",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.238519,
-  "name":"snd_punch_hit_ultimate",
+  "duration":0.61173,
+  "name":"snd_slash_hit_super2",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_punch_hit_ultimate.wav",
+  "soundFile":"snd_slash_hit_super2.wav",
   "type":0,
   "volume":1.0,
 }
