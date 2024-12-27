@@ -388,6 +388,7 @@
     {"id":{"name":"spr_genos_victory","path":"sprites/spr_genos_victory/spr_genos_victory.yy",},},
     {"id":{"name":"spr_genos_wakeup","path":"sprites/spr_genos_wakeup/spr_genos_wakeup.yy",},},
     {"id":{"name":"spr_genos_walk","path":"sprites/spr_genos_walk/spr_genos_walk.yy",},},
+    {"id":{"name":"spr_glow_blue","path":"sprites/spr_glow_blue/spr_glow_blue.yy",},},
     {"id":{"name":"spr_goku_air_down","path":"sprites/spr_goku_air_down/spr_goku_air_down.yy",},},
     {"id":{"name":"spr_goku_air_peak","path":"sprites/spr_goku_air_peak/spr_goku_air_peak.yy",},},
     {"id":{"name":"spr_goku_air_recover","path":"sprites/spr_goku_air_recover/spr_goku_air_recover.yy",},},

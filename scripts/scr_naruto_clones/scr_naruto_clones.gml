@@ -3,7 +3,7 @@ function init_naruto_baseform_clone() {
 	init_charaudio("naruto");
 	voice_volume_mine = owner.voice_volume_mine;
 	
-	create_particles(x,y,x,y,jutsu_smoke_particle);
+	create_particles(x,y,jutsu_smoke_particle);
 	
 	max_hp = 1;
 	hp = max_hp;
@@ -20,7 +20,7 @@ function init_naruto_baseform_clone() {
 	}
 	
 	death_script = function() {
-		create_particles(x,y,x,y,jutsu_smoke_particle);
+		create_particles(x,y,jutsu_smoke_particle);
 		instance_destroy();
 	}
 	

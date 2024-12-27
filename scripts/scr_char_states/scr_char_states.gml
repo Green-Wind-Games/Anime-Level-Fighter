@@ -375,7 +375,7 @@ function init_charstates() {
 				
 					if yspeed >= 15 {
 						take_damage(noone,abs(yspeed),false);
-						create_particles(x,y,x,y,floor_bang_particle,1);
+						create_particles(x,y,floor_bang_particle,1);
 					}
 					yspeed *= -0.25;
 				
@@ -402,16 +402,12 @@ function init_charstates() {
 			create_particles(
 				left_wall,
 				y-height_half,
-				left_wall,
-				y-height_half,
 				wall_bang_left_particle
 			);
 		}
 		if ((xspeed > 0) and (on_right_wall)) {
 			xspeed = 0;
 			create_particles(
-				right_wall,
-				y-height_half,
 				right_wall,
 				y-height_half,
 				wall_bang_right_particle
@@ -449,15 +445,11 @@ function init_charstates() {
 				create_particles(
 					left_wall,
 					y-height_half,
-					left_wall,
-					y-height_half,
 					wall_bang_left_particle
 				);
 			}
 			else {
 				create_particles(
-					right_wall,
-					y-height_half,
 					right_wall,
 					y-height_half,
 					wall_bang_right_particle,

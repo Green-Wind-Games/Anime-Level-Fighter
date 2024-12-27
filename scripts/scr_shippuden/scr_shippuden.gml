@@ -14,7 +14,7 @@ function set_substitution_jutsu() {
 		timestop();
 		can_cancel = false;
 		alpha = 0;
-		create_particles(x,y,x,y,jutsu_smoke_particle);
+		create_particles(x,y,jutsu_smoke_particle);
 	}
 	substitution_state.run = function() {
 		xspeed = 0;
@@ -22,7 +22,7 @@ function set_substitution_jutsu() {
 		face_target();
 		if timestop_timer == 10 {
 			substitution_teleport();
-			create_particles(x,y,x,y,jutsu_smoke_particle);
+			create_particles(x,y,jutsu_smoke_particle);
 			reset_sprite(true,false);
 		}
 		if !timestop_active {

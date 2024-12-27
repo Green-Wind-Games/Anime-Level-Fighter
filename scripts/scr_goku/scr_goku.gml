@@ -240,8 +240,6 @@ function init_goku_baseform() {
 			create_particles(
 				x+(width_half*facing),
 				y-height_half,
-				x+(width_half*facing),
-				y-height_half,
 				air_shockwave_particle
 			);
 			create_hitbox(-50,-150,200,200,690,20,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
@@ -275,7 +273,24 @@ function init_goku_baseform() {
 			play_sound(snd_dbz_beam_fire);
 		}
 		if value_in_range(frame,6,9) {
-			fire_beam(20,-25,spr_kamehameha,1,0,50);
+			var _beam = create_shot(
+				20,
+				-25,
+				10,
+				0,
+				spr_glow_blue,
+				1,
+				50,
+				3,
+				-3,
+				attacktype.beam,
+				attackstrength.heavy,
+				hiteffects.none
+			);
+			with(_beam) {
+				hit_limit = -1;
+			}
+			//fire_beam(20,-25,spr_kamehameha,1,0,50);
 		}
 		return_to_idle();
 	}
@@ -346,7 +361,24 @@ function init_goku_baseform() {
 		}
 		loop_anim_middle_timer(6,9,120);
 		if value_in_range(frame,6,9) {
-			fire_beam(20,-25,spr_kamehameha,2,0,50);
+			var _beam = create_shot(
+				20,
+				-25,
+				10,
+				0,
+				spr_glow_blue,
+				1,
+				50,
+				3,
+				-3,
+				attacktype.beam,
+				attackstrength.heavy,
+				hiteffects.none
+			);
+			with(_beam) {
+				hit_limit = -1;
+			}
+			//fire_beam(20,-25,spr_kamehameha,2,0,50);
 			shake_screen(5,3);
 		}
 		if check_frame(3) {
@@ -471,7 +503,20 @@ function init_goku_baseform() {
 			loop_anim_middle(2,5);
 		}
 		if check_frame(2) {
-			spirit_bomb_shot = create_shot(0,-200,0,0,spr_genkidama,2,0,0,0,attacktype.unblockable,attackstrength.ultimate,hiteffects.none)
+			spirit_bomb_shot = create_shot(
+				0,
+				-200,
+				0,
+				0,
+				spr_glow_blue,
+				3,
+				0,
+				0,
+				0,
+				attacktype.unblockable,
+				attackstrength.ultimate,
+				hiteffects.none
+			);
 			with(spirit_bomb_shot) {
 				play_sound(snd_activate_super,1,2);
 				duration = -1;
@@ -509,7 +554,7 @@ function init_goku_baseform() {
 								shake_screen(20,5);
 							}
 						}
-						create_particles(x,y,x,y,explosion_large);
+						create_particles(x,y,explosion_large_particle);
 					}
 				}
 			}

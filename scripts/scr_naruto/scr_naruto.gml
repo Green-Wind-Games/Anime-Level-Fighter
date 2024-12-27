@@ -337,7 +337,7 @@ function init_naruto_baseform() {
 	mini_rasengan = new state();
 	mini_rasengan.start = function() {
 		if check_mp(1) and (!rasengan_cooldown) {
-			change_sprite(spr_naruto_special_rasengan,2,false);
+			change_sprite(spr_naruto_special_rasengan,3,false);
 			activate_super(60);
 			spend_mp(1);
 		}
@@ -358,8 +358,6 @@ function init_naruto_baseform() {
 			create_particles(
 				x-(width*facing),
 				y,
-				x-(width*facing),
-				y,
 				jutsu_smoke_particle
 			);
 		}
@@ -369,7 +367,7 @@ function init_naruto_baseform() {
 	rasengan_dive = new state();
 	rasengan_dive.start = function() {
 		if check_mp(1) and (!rasengan_cooldown) {
-			change_sprite(spr_naruto_special_rasengan_dive,2,false);
+			change_sprite(spr_naruto_special_rasengan_dive,3,false);
 			activate_super(30);
 			spend_mp(1);
 			xspeed = 0;
@@ -413,8 +411,6 @@ function init_naruto_baseform() {
 			create_particles(
 				x-(width_half*facing),
 				y,
-				x-(width_half*facing),
-				y,
 				jutsu_smoke_particle
 			);
 		}
@@ -426,7 +422,7 @@ function init_naruto_baseform() {
 	double_rasengan = new state();
 	double_rasengan.start = function() {
 		if check_mp(2) and (!rasengan_cooldown) {
-			change_sprite(spr_naruto_special_doublerasengan,3,false);
+			change_sprite(spr_naruto_special_doublerasengan,4,false);
 			activate_super(80);
 			spend_mp(2);
 		}
@@ -451,13 +447,9 @@ function init_naruto_baseform() {
 			create_particles(
 				x-(width*facing),
 				y,
-				x-(width*facing),
-				y,
 				jutsu_smoke_particle
 			);
 			create_particles(
-				x+(width*facing),
-				y,
 				x+(width*facing),
 				y,
 				jutsu_smoke_particle
@@ -469,7 +461,7 @@ function init_naruto_baseform() {
 	giant_rasengan = new state();
 	giant_rasengan.start = function() {
 		if (on_ground) and check_mp(3) and (!rasengan_cooldown) {
-			change_sprite(spr_naruto_special_giantrasengan,4,false);
+			change_sprite(spr_naruto_special_giantrasengan,5,false);
 			activate_super(80);
 			spend_mp(3);
 		}
@@ -490,15 +482,11 @@ function init_naruto_baseform() {
 			create_particles(
 				x-(width*facing),
 				y,
-				x-(width*facing),
-				y,
 				jutsu_smoke_particle
 			);
 		}
 		if check_frame(13) {
 			create_particles(
-				x,
-				y,
 				x,
 				y,
 				jutsu_smoke_particle
@@ -589,8 +577,6 @@ function init_naruto_baseform() {
 					create_particles(
 						x,
 						y,
-						x,
-						y,
 						jutsu_smoke_particle
 					);
 					
@@ -604,8 +590,6 @@ function init_naruto_baseform() {
 					
 					expire_script = function() {
 						create_particles(
-							x,
-							y,
 							x,
 							y,
 							jutsu_smoke_particle

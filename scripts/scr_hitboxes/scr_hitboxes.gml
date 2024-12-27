@@ -85,7 +85,7 @@ function check_hit() {
 					a2.homing = false;
 					a2.affected_by_gravity = 2;
 				}
-				create_particles(a2.x,a2.y,a2.x,a2.y,parry_spark,50);
+				create_particles(a2.x,a2.y,parry_spark,50);
 				continue;
 			}
 		}
@@ -96,7 +96,7 @@ function check_hit() {
 			if b2.deflecting_attacks {
 				a2.xspeed = 12 * b2.facing;
 				//a2.yspeed = b2.yspeed;
-				create_particles(a2.x,a2.y,a2.x,a2.y,parry_spark,50);
+				create_particles(a2.x,a2.y,parry_spark,50);
 				continue;
 			}
 		}
