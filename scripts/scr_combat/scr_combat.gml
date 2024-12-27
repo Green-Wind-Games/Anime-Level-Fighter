@@ -38,9 +38,9 @@ enum hiteffects {
 	thunder_yellow,
 	thunder_purple,
 	
-	wind,
 	ice,
 	water,
+	wind,
 	
 	dark,
 	light,
@@ -63,7 +63,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	else {
 		var _recovery = _attacker.anim_duration - _attacker.anim_timer;
 		hitstun = max(hitstun,_recovery);
-		blockstun = _recovery - 10;
+		blockstun = _recovery - 5;
 		target = _attacker;
 	}
 	
@@ -71,7 +71,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 		
 	if abs(_xknockback) >= 10
 	or abs(_yknockback) >= 10 {
-		hitstun = max(hitstun,50);
+		hitstun = max(hitstun,60);
 	}
 	
 	hitstun = round(hitstun);
@@ -213,14 +213,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 						if meme_enabled {
 							if chance(meme_chance) {
 								stop_sound(voice);
-								voice = play_sound(
-									choose(
-										snd_meme_scream_disappear,
-										snd_meme_scream_disappear_srpelo,
-										snd_meme_scream_disappear_vsauce
-									),
-									3
-								);
+								voice = play_sound(snd_meme_scream_disappear,3);
 							}
 						}
 					}
