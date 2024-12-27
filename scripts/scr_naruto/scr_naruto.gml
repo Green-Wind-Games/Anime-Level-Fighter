@@ -671,7 +671,7 @@ function init_naruto_baseform() {
 					0,
 					spr_rasen_shuriken_explosion,
 					2,
-					300,
+					25,
 					1,
 					-15,
 					attacktype.hard_knockdown,
@@ -725,7 +725,7 @@ function init_naruto_baseform() {
 				rasen_shuriken_explosion = _explosion;
 			}
 			if check_frame(16) {
-				take_damage(noone,300,false);
+				take_damage(noone,100,false);
 				change_sprite(launch_sprite,3,true);
 				yoffset = -height_half;
 				xspeed = -10 * facing;
