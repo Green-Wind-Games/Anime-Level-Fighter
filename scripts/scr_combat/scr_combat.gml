@@ -315,33 +315,43 @@ function take_damage(_attacker,_amount,_kill) {
 		}
 	}
 	
-	dmg /= max(defender.defense,0.35);
+	dmg /= max(defender.defense,0.3);
 	
 	dmg /= 2;
 	
 	dmg = max(round(dmg),1);
 	
-	hp -= dmg;
+	hp = approach(hp,0,dmg);
 	if !dead {
 		if !_kill {
 			hp = max(hp,1);
 		}
 	}
 	
-	combo_damage_taken += min(dmg,hp-(!_kill));
+	combo_damage_taken += dmg;
 	
-	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * max_level;
-	var xp_gain = map_value(dmg,0,max_hp,0,max_xp) * max_level;
+	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * 2;
+	var xp_gain = map_value(dmg,0,max_hp,0,max_xp) * 2;
 	
-	var defend_mp_gain = mp_gain * 0.30;
-	var defend_xp_gain = xp_gain * 0.10;
-	
-	var attack_mp_gain = mp_gain * 0.50;
+	var attack_mp_gain = mp_gain * 1.00;
 	var attack_xp_gain = xp_gain * 1.00;
 	
+	var defend_mp_gain = mp_gain * 1.50;
+	var defend_xp_gain = xp_gain * 0.50;
+	
 	if !is_char(_attacker) {
-		attack_mp_gain /= 2;
-		attack_xp_gain /= 2;
+		attack_mp_gain *= 0.5;
+		attack_xp_gain *= 0.5;
+	}
+	
+	with(true_attacker) {
+		if level > (other.level + 1) {
+			attack_xp_gain *= 0.5;
+			defend_xp_gain *= 1.5;
+		}
+		else if level < (other.level) {
+			attack_xp_gain *= 1.5;
+		}
 	}
 	
 	mp += defend_mp_gain;
