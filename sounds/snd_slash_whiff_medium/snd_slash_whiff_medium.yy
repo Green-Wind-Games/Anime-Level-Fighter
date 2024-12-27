@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.823628,
+  "duration":0.2,
   "name":"snd_slash_whiff_medium",
   "parent":{
     "name":"Sounds",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_slash_whiff_medium.wav",
+  "soundFile":"snd_slash_whiff_medium.ogg",
   "type":0,
   "volume":1.0,
 }

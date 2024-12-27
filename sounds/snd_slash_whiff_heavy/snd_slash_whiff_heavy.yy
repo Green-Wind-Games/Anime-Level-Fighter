@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.727755,
+  "duration":0.25,
   "name":"snd_slash_whiff_heavy",
   "parent":{
     "name":"Sounds",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_slash_whiff_heavy.wav",
+  "soundFile":"snd_slash_whiff_heavy.ogg",
   "type":0,
   "volume":1.0,
 }

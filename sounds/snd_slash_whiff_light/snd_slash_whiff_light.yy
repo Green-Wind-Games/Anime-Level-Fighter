@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.219062,
+  "duration":0.15,
   "name":"snd_slash_whiff_light",
   "parent":{
     "name":"Sounds",
