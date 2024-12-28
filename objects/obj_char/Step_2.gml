@@ -11,7 +11,7 @@ or sprite == launch_sprite {
 }
 
 if sprite_exists(aura_sprite) {
-	aura_frame += 0.35;
+	aura_frame += sprite_get_speed(aura_sprite) / 60;
 	if aura_frame >= sprite_get_number(aura_sprite) {
 		aura_frame = 0;
 	}

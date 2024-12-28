@@ -3,11 +3,11 @@
 function init_sprite(_sprite = sprite_index) {
 	sprite = _sprite;
 	
-	previous_sprite = -1;
+	previous_sprite = noone;
 	previous_sprite_frame_duration = -1;
 	previous_sprite_loop_count = 0;
 	
-	next_sprite = -1;
+	next_sprite = noone;
 	next_sprite_frame_duration = -1;
 	next_sprite_anim_loop = false;
 	
@@ -77,10 +77,10 @@ function change_sprite(_sprite,_frameduration, _loop) {
 		
 		sprite = _sprite;
 		
-		next_sprite = -1;
+		next_sprite = noone;
 		
-		frame = -1;
-		frame_timer = 0;
+		frame = 0;
+		frame_timer = noone;
 		anim_finished = false;
 		
 		reset_sprite(true,true);
@@ -131,7 +131,7 @@ function update_sprite_animation() {
 				frame = 0;
 			}
 			else {
-				if next_sprite == -1 {
+				if next_sprite == noone {
 					frame = anim_frames - 1;
 					frame_timer = frame_duration - 1;
 				}

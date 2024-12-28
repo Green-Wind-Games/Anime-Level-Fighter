@@ -89,10 +89,10 @@ ygravity_mod = 1;
 attack_power = 1;
 defense = 1;
 
-next_form = -1;
+next_form = noone;
 transform_aura = spr_aura_dbz_white;
 	
-aura_sprite = -1;
+aura_sprite = noone;
 aura_frame = 0;
 
 charge_aura = spr_aura_dbz_white;
@@ -107,11 +107,11 @@ death_timer = 0;
 
 draw_script = function() {};
 
-char_id = -1;
+char_id = noone;
 name = "ERROR";
 display_name = "ERROR";
-universe = -1;
-theme = -1;
+universe = noone;
+theme = noone;
 
 init_physics();
 init_charsprites("goku");

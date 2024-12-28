@@ -338,10 +338,10 @@ function draw_playerhud() {
 	var tp_xscale = tp_border_width / sprite_get_width(spr_bar_tp_border);
 	var xp_xscale = xp_border_width / sprite_get_width(spr_bar_xp_border);
 	
-	var hud_yscale = 2 / ceil(active_players / 2);
+	var hud_yscale = max(1,1.5 / ceil(active_players / 2));
 	
-	var hp_border_height = 16 * hud_yscale;
-	var mp_border_height = 12 * hud_yscale;
+	var hp_border_height = 15 * hud_yscale;
+	var mp_border_height = 10 * hud_yscale;
 	var tp_border_height = 8;
 	var xp_border_height = tp_border_height;
 	var hp_yscale = hp_border_height / sprite_get_height(spr_bar_hp_border);
@@ -593,7 +593,8 @@ function draw_playerhud() {
 			draw_set_halign(fa_left);
 			draw_set_valign(fa_top);
 			var playertext = "P" + string(i+1) + ": " + display_name;
-			playertext += "\n" + "(Level " + string(level) + ")"; 
+			//playertext += "\n";
+			playertext += " (Level " + string(level) + ")"; 
 			var playertext_scale = (hp_bar_height - 2) / string_height(playertext);
 			var playertext_width = string_width(playertext) * playertext_scale;
 			var playertext_height = string_height(playertext) * playertext_scale;
