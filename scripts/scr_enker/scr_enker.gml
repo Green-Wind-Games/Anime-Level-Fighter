@@ -198,7 +198,7 @@ function init_enker() {
 
 	launcher_attack = new charstate();
 	launcher_attack.start = function() {
-		change_sprite(spr_enker_attack_backflip_kick,5,false);
+		change_sprite(spr_enker_attack_backflip_kick,3,false);
 		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}

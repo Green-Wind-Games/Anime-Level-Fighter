@@ -65,17 +65,17 @@ function auto_levelup() {
 	if is_guarding return false;
 	//if !can_cancel return false;
 	
-	if next_form == -1 {
-		change_state(levelup_state);
-		play_voiceline(voice_powerup);
-		play_chartheme(theme);
-		xp = 0;
-	}
-	else {
-		change_state(transform_state);
+	if object_exists(next_form) {
 		var _nextform = instance_create(0,0,next_form);
 		play_chartheme(_nextform.theme);
 		instance_destroy(_nextform);
+		change_state(transform_state);
+	}
+	else {
+		change_state(levelup_state);
+		xp = 0;
+		play_voiceline(voice_powerup);
+		play_chartheme(theme);
 	}
 	can_cancel = false;
 	return true;

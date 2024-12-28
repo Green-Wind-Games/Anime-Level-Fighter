@@ -72,7 +72,7 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_kiblastsprite) {
 		if check_frame(3) {
 			var _x = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
 			var _y = sprite_get_bbox_top(sprite) - sprite_get_yoffset(sprite);
-			create_kiblast(_x,_y,kiblast_particle);
+			create_kiblast(_x,_y,kiblast_shot_sprite);
 			if is_airborne {
 				xspeed = -2 * facing;
 				yspeed = -2;

@@ -106,7 +106,7 @@ function init_genos_baseform() {
 
 	launcher_attack = new charstate();
 	launcher_attack.start = function() {
-		change_sprite(spr_genos_attack_uppercut,4,false);
+		change_sprite(spr_genos_attack_uppercut,3,false);
 		play_sound(snd_punch_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}

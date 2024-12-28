@@ -281,7 +281,7 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	
 	with(true_attacker) {
-		dmg *= attack_power + (level * level_scaling);
+		dmg *= attack_power + ((level - 1) * level_scaling);
 	}
 	
 	if is_char(defender){
@@ -308,9 +308,9 @@ function take_damage(_attacker,_amount,_kill) {
 		}
 	}
 	
-	dmg /= max(defender.defense,0.3);
+	dmg /= max(defender.defense,0.1);
 	
-	dmg /= 2;
+	//dmg /= 2;
 	
 	dmg = max(round(dmg),1);
 	
@@ -364,7 +364,7 @@ function get_damage_scaling(_defender) {
 		var scaling = map_value(
 			combo_hits_taken,
 			0,
-			50,
+			30,
 			1,
 			0.1
 		);

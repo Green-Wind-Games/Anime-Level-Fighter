@@ -149,14 +149,14 @@ function init_naruto_baseform() {
 	
 	launcher_attack = new charstate();
 	launcher_attack.start = function() {
-		change_sprite(spr_naruto_attack_slash_up,5,false);
+		change_sprite(spr_naruto_attack_slash_up,3,false);
 		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	launcher_attack.run = function() {
 		basic_heavy_lowattack(3,hiteffects.slash);
 		if check_frame(3) {
-			char_specialeffect(spr_slash2,width*0.9,-height*0.75,0.5,-0.5,-45);
+			char_specialeffect(spr_slash2,width_half,-height*0.75,0.5,-0.5,-45);
 		}
 	}
 

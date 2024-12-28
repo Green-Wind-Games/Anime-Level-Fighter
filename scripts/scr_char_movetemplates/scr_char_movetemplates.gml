@@ -1,9 +1,9 @@
 function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 	if check_frame(_hitframe) {
 		var _w = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
-		var _h = sprite_get_height(sprite) * 0.69;
+		var _h = sprite_get_height(sprite) * 0.75;
 		var _x = 2;
-		var _y = -_h;
+		var _y = -height_half - (_h / 2);
 		create_hitbox(
 			_x,
 			_y,
@@ -25,7 +25,7 @@ function basic_attack(_hitframe,_damage,_strength,_hiteffect) {
 function basic_sweep(_hitframe,_damage,_strength,_hiteffect) {
 	if check_frame(_hitframe) {
 		var _w = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
-		var _h = sprite_get_height(sprite) * 0.25;
+		var _h = sprite_get_height(sprite) * 0.5;
 		var _x = 2;
 		var _y = -_h;
 		create_hitbox(
@@ -49,9 +49,9 @@ function basic_sweep(_hitframe,_damage,_strength,_hiteffect) {
 function basic_wallsplat(_hitframe,_damage,_hiteffect) {
 	if check_frame(_hitframe) {
 		var _w = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
-		var _h = sprite_get_height(sprite);
+		var _h = sprite_get_height(sprite) * 0.75;
 		var _x = 2;
-		var _y = -_h;
+		var _y = -height_half - (_h / 2);
 		create_hitbox(
 			_x,
 			_y,
@@ -95,7 +95,7 @@ function basic_smash(_hitframe,_damage,_hiteffect) {
 		var _w = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
 		var _h = sprite_get_height(sprite);
 		var _x = 2;
-		var _y = -_h * 0.69;
+		var _y = -_h * 0.75;
 		create_hitbox(
 			_x,
 			_y,
@@ -128,7 +128,8 @@ function basic_heavy_attack(_hitframe,_hiteffect) {
 	basic_attack_stepforward(_hitframe);
 	basic_wallsplat(_hitframe,1000,_hiteffect);
 	if frame >= min(anim_frames-1,_hitframe+2) {
-		if combo_timer > 10 {
+		if (combo_timer > 10) 
+		and (!input.down) and (!input.back) {
 			xspeed = 30 * facing;
 			yspeed = -5;
 			if on_ground {
@@ -150,7 +151,7 @@ function basic_heavy_attack(_hitframe,_hiteffect) {
 
 function basic_light_lowattack(_hitframe,_hiteffect) {
 	basic_attack_stepforward(_hitframe);
-	basic_attack(_hitframe,100,attackstrength.light,_hiteffect);
+	basic_attack(_hitframe,400,attackstrength.light,_hiteffect);
 	return_to_idle();
 }
 
@@ -158,7 +159,7 @@ function basic_medium_lowattack(_hitframe,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
 		xspeed = 8 * facing;
 	}
-	basic_sweep(_hitframe,200,attackstrength.medium,_hiteffect);
+	basic_sweep(_hitframe,600,attackstrength.medium,_hiteffect);
 	return_to_idle();
 }
 
@@ -167,7 +168,7 @@ function basic_heavy_lowattack(_hitframe,_hiteffect) {
 		xspeed = 5 * facing;
 		yspeed = -5;
 	}
-	basic_launcher(_hitframe,360,_hiteffect);
+	basic_launcher(_hitframe,1000,_hiteffect);
 	if frame >= min(anim_frames-1,_hitframe+2) {
 		if combo_timer > 20 {
 			xspeed = 5 * facing;
@@ -185,19 +186,19 @@ function basic_heavy_lowattack(_hitframe,_hiteffect) {
 
 function basic_light_airattack(_hitframe,_hiteffect) {
 	basic_attack_stepforward(_hitframe);
-	basic_attack(_hitframe,160,attackstrength.light,_hiteffect);
+	basic_attack(_hitframe,400,attackstrength.light,_hiteffect);
 	return_to_idle();
 }
 
 function basic_medium_airattack(_hitframe,_hiteffect) {
 	basic_attack_stepforward(_hitframe);
-	basic_attack(_hitframe,240,attackstrength.medium,_hiteffect);
+	basic_attack(_hitframe,700,attackstrength.medium,_hiteffect);
 	return_to_idle();
 }
 
 function basic_heavy_airattack(_hitframe,_hiteffect) {
 	basic_attack_stepforward(_hitframe);
-	basic_smash(_hitframe,420,_hiteffect);
+	basic_smash(_hitframe,1000,_hiteffect);
 	if check_frame(_hitframe+1) {
 		xspeed = -3 * facing;
 		yspeed = -3;

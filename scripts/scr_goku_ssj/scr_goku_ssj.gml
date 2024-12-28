@@ -196,7 +196,7 @@ function init_goku_ssj() {
 
 	launcher_attack = new charstate();
 	launcher_attack.start = function() {
-		change_sprite(spr_goku_ssj_attack_backflip_kick,5,false);
+		change_sprite(spr_goku_ssj_attack_backflip_kick,3,false);
 		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
@@ -504,7 +504,7 @@ function init_goku_ssj() {
 	add_move(super_kamehameha,"236B");
 	add_move(angry_kamehameha,"236C");
 	
-	add_ground_move(kiai_push,"214A");
+	add_ground_move(ki_blast_cannon,"214A");
 	add_ground_move(ki_blast_cannon,"214B");
 	add_ground_move(ki_blast_cannon,"214C");
 	
