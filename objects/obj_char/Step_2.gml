@@ -101,8 +101,10 @@ if active_state == super_state {
 	super_active = true;
 }
 else {
-	super_state = noone;
-	super_active = false;
+	if (active_state == idle_state)
+	or (is_hit) or (is_guarding) {
+		deactivate_super();
+	}
 }
 
 if hitstop < 0 then hitstop = 0;

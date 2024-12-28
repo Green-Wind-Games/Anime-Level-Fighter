@@ -330,9 +330,9 @@ function draw_playerhud() {
 	var hud_y = 0;
 
 	var hp_border_width = ((hud_w) - (_spacing * 2));
-	var mp_border_width = (hp_border_width * 0.75);
-	var tp_border_width = (hp_border_width * 0.25);
-	var xp_border_width = (tp_border_width * 0.75);
+	var mp_border_width = (hp_border_width * 0.8);
+	var tp_border_width = (hp_border_width * 0.2);
+	var xp_border_width = (tp_border_width);
 	var hp_xscale = hp_border_width / sprite_get_width(spr_bar_hp_border);
 	var mp_xscale = mp_border_width / sprite_get_width(spr_bar_mp_border);
 	var tp_xscale = tp_border_width / sprite_get_width(spr_bar_tp_border);
@@ -341,8 +341,8 @@ function draw_playerhud() {
 	var hud_yscale = 2 / ceil(active_players / 2);
 	
 	var hp_border_height = 16 * hud_yscale;
-	var mp_border_height = hp_border_height / 1.5;
-	var tp_border_height = mp_border_height / 1.5;
+	var mp_border_height = 12 * hud_yscale;
+	var tp_border_height = 8;
 	var xp_border_height = tp_border_height;
 	var hp_yscale = hp_border_height / sprite_get_height(spr_bar_hp_border);
 	var mp_yscale = mp_border_height / sprite_get_height(spr_bar_mp_border);
@@ -791,10 +791,29 @@ function draw_versus() {
 			active_players++;
 		}
 	}
+	
+	var team1_members = 0;
+	var team2_members = 0;
+	for(var i = 0; i < max_players; i++) {
+		if player_slot[i] != noone {
+			if i < ceil(active_players / 2) {
+				team1_members++;
+			}
+			else {
+				team2_members++;
+			}
+		}
+	}
+	
 	var _w = gui_width;
 	var _h = gui_height;
-	var _w2 = _w / max(3,active_players+1);
+	var _w2 = _w / 2;
 	var _h2 = _h / 2;
+	
+	var _w3 = _w2 / 2;
+	
+	var _w4_t1 = _w3 / max(2,team1_members+1);
+	var _w4_t2 = _w3 / max(2,team2_members+1);
 	
 	var _timer = game_state_timer;
 	
@@ -811,18 +830,24 @@ function draw_versus() {
 	_t5 = clamp(_t5,0,1);
 	
 	var drawn_players = 0;
+	var drawn_team1_players = 0;
+	var drawn_team2_players = 0;
 	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			var _portrait = get_char_portrait(player_char[i]);
 			var _yscale = _h / sprite_get_height(_portrait);
 			var _xscale = _yscale;
 			
-			if drawn_players >= ceil(active_players / 2) {
+			var _portrait_x = 0;
+			var _portrait_y = 0;
+				
+			if drawn_players < team1_members {
+				_portrait_x = _w4_t1 * (drawn_team1_players + 1);
+			}
+			else {
+				_portrait_x = _w2 + (_w4_t2 * (drawn_team2_players + 1));
 				_xscale *= -1;
 			}
-			
-			var _portrait_x = _w2 * (drawn_players + 1);
-			var _portrait_y = 0;
 			
 			var _timer_offset = map_value(drawn_players,0,active_players,0,20);
 	
@@ -860,6 +885,12 @@ function draw_versus() {
 				1
 			);
 			
+			if drawn_players >= team1_members {
+				drawn_team1_players++;
+			}
+			else {
+				drawn_team2_players++;
+			}
 			drawn_players++;
 		}
 	}

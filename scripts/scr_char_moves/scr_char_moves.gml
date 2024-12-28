@@ -252,9 +252,7 @@ function activate_super(_duration = 30) {
 	play_sound(snd_activate_super);
 	create_particles(
 		x,
-		y-(height*0.75),
-		x,
-		y-(height*0.75),
+		y-height_half,
 		super_activate_particle
 	);
 }
@@ -267,14 +265,13 @@ function activate_ultimate(_duration = 60) {
 	play_sound(snd_activate_ultimate);
 	create_particles(
 		x,
-		y-(height*0.75),
-		x,
-		y-(height*0.75),
+		y-height_half,
 		ultimate_activate_particle
 	);
 }
 
 function deactivate_super() {
+	super_state = noone;
 	super_active = false;
 }
 

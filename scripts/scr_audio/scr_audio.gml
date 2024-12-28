@@ -4,7 +4,7 @@ sound_volume = 1;
 music_volume = 1;
 voice_volume = 1;
 
-audio_set_master_gain(0,0.1);
+audio_set_master_gain(0,0.2);
 
 globalvar music, music_timer, music_min_duration;
 music = noone;
