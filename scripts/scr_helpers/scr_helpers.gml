@@ -54,7 +54,7 @@ function init_helperstates() {
 		}
 	}
 	
-	jump_forward_state = new state();
+	jump_forward_state = new charstate();
 	jump_forward_state.start = function() {
 		change_sprite(jumpsquat_sprite,2,false);
 		squash_stretch(1.2,0.8);
@@ -70,7 +70,7 @@ function init_helperstates() {
 		}
 	}
 	
-	jump_back_state = new state();
+	jump_back_state = new charstate();
 	jump_back_state.start = function() {
 		change_sprite(jumpsquat_sprite,2,false);
 		squash_stretch(1.2,0.8);

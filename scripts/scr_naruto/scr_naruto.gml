@@ -50,7 +50,7 @@ function init_naruto_baseform() {
 		}
 	}
 	
-	light_attack = new state();
+	light_attack = new charstate();
 	light_attack.start = function() {
 		change_sprite(spr_naruto_attack_punch_straight,4,false);
 		play_sound(snd_punch_whiff_light);
@@ -60,7 +60,7 @@ function init_naruto_baseform() {
 		basic_light_attack(2,hiteffects.hit);
 	}
 
-	light_attack2 = new state();
+	light_attack2 = new charstate();
 	light_attack2.start = function() {
 		change_sprite(spr_naruto_attack_dash_punch,4,false);
 		xspeed = 10 * facing;
@@ -71,7 +71,7 @@ function init_naruto_baseform() {
 		basic_light_attack(2,hiteffects.hit);
 	}
 
-	light_attack3 = new state();
+	light_attack3 = new charstate();
 	light_attack3.start = function() {
 		change_sprite(spr_naruto_attack_uppercut,4,false);
 		play_sound(snd_punch_whiff_medium);
@@ -81,7 +81,7 @@ function init_naruto_baseform() {
 		basic_heavy_lowattack(3,hiteffects.hit);
 	}
 	
-	light_lowattack = new state();
+	light_lowattack = new charstate();
 	light_lowattack.start = function() {
 		change_sprite(spr_naruto_attack_uppercut,2,false);
 		play_sound(snd_punch_whiff_light);
@@ -91,7 +91,7 @@ function init_naruto_baseform() {
 		basic_light_lowattack(3,hiteffects.hit);
 	}
 	
-	light_airattack = new state();
+	light_airattack = new charstate();
 	light_airattack.start = function() {
 		change_sprite(spr_naruto_attack_back_kick_air,3,false);
 		play_sound(snd_punch_whiff_light);
@@ -101,7 +101,7 @@ function init_naruto_baseform() {
 		basic_light_airattack(1,hiteffects.hit);
 	}
 
-	medium_attack = new state();
+	medium_attack = new charstate();
 	medium_attack.start = function() {
 		change_sprite(spr_naruto_attack_punch_hook,3,false);
 		play_sound(snd_punch_whiff_medium);
@@ -111,7 +111,7 @@ function init_naruto_baseform() {
 		basic_medium_attack(2,hiteffects.hit);
 	}
 
-	medium_lowattack = new state();
+	medium_lowattack = new charstate();
 	medium_lowattack.start = function() {
 		change_sprite(spr_naruto_attack_spinkick,3,false);
 		play_sound(snd_punch_whiff_medium);
@@ -121,7 +121,7 @@ function init_naruto_baseform() {
 		basic_medium_lowattack(3,hiteffects.hit);
 	}
 	
-	medium_airattack = new state();
+	medium_airattack = new charstate();
 	medium_airattack.start = function() {
 		change_sprite(spr_naruto_attack_dash_punch,4,false);
 		xspeed = 10 * facing;
@@ -132,7 +132,7 @@ function init_naruto_baseform() {
 		basic_medium_attack(2,hiteffects.hit);
 	}
 	
-	heavy_attack = new state();
+	heavy_attack = new charstate();
 	heavy_attack.start = function() {
 		change_sprite(spr_naruto_attack_dash_slash,5,false);
 		xspeed = 20 * facing;
@@ -147,7 +147,7 @@ function init_naruto_baseform() {
 		}
 	}
 	
-	launcher_attack = new state();
+	launcher_attack = new charstate();
 	launcher_attack.start = function() {
 		change_sprite(spr_naruto_attack_slash_up,5,false);
 		play_sound(snd_slash_whiff_medium);
@@ -160,7 +160,7 @@ function init_naruto_baseform() {
 		}
 	}
 
-	heavy_airattack = new state();
+	heavy_airattack = new charstate();
 	heavy_airattack.start = function() {
 		change_sprite(spr_naruto_attack_smash_kick,4,false);
 		play_sound(snd_punch_whiff_super);
@@ -170,7 +170,7 @@ function init_naruto_baseform() {
 		basic_heavy_airattack(3,hiteffects.hit);
 	}
 	
-	divekick = new state();
+	divekick = new charstate();
 	divekick.start = function() {
 		change_sprite(
 			choose(spr_naruto_attack_divekick,spr_naruto_attack_divekick2),
@@ -181,15 +181,15 @@ function init_naruto_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	divekick.run = function() {
+		basic_attack(frame,100,attackstrength.light,hiteffects.hit);
 		xspeed = 15 * facing;
 		yspeed = 15;
-		basic_attack(1,150,attackstrength.light,hiteffects.hit);
 		if on_ground {
 			change_state(crouch_state);
 		}
 	}
 	
-	uzumaki_barrage_start = new state();
+	uzumaki_barrage_start = new charstate();
 	uzumaki_barrage_start.start = function() {
 		change_sprite(spr_naruto_jutsu,3,false);
 		play_sound(snd_jutsu_activate);
@@ -221,7 +221,7 @@ function init_naruto_baseform() {
 		}
 	}
 
-	uzumaki_barrage_flip = new state();
+	uzumaki_barrage_flip = new charstate();
 	uzumaki_barrage_flip.start = function() {
 		change_sprite(spr_naruto_flip,3,true);
 		yoffset = -height_half;
@@ -239,13 +239,13 @@ function init_naruto_baseform() {
 		}
 	}
 	
-	shuriken_throw = new state();
+	shuriken_throw = new charstate();
 	shuriken_throw.start = function() {
 		change_sprite(spr_naruto_special_throw_shuriken,3,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	shuriken_throw.run = function() {
-		loop_anim_middle_timer(1,1,20);
+		loop_anim_middle_timer(1,1,10);
 		if check_frame(3) {
 			shuriken = create_shot(
 				10,
@@ -267,6 +267,7 @@ function init_naruto_baseform() {
 				homing_max_turn = 1;
 				hit_limit = -1;
 				duration = 100;
+				rotation_speed = -20;
 				active_script = function() {
 					if y >= ground_height {
 						homing = false;
@@ -291,13 +292,13 @@ function init_naruto_baseform() {
 		return_to_idle();
 	}
 	
-	triple_shuriken_throw = new state();
+	triple_shuriken_throw = new charstate();
 	triple_shuriken_throw.start = function() {
 		change_sprite(spr_naruto_special_throw_shuriken,3,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	triple_shuriken_throw.run = function() {
-		loop_anim_middle_timer(1,1,30);
+		loop_anim_middle_timer(1,1,20);
 		if check_frame(3) {
 			repeat(3) {
 				shuriken = create_shot(
@@ -317,6 +318,7 @@ function init_naruto_baseform() {
 				with(shuriken) {
 					blend = false;
 					hit_limit = -1;
+					rotation_speed = -20;
 					active_script = function() {
 						if y >= ground_height {
 							homing = false;
@@ -342,10 +344,10 @@ function init_naruto_baseform() {
 		return_to_idle();
 	}
 	
-	mini_rasengan = new state();
+	mini_rasengan = new charstate();
 	mini_rasengan.start = function() {
 		if check_mp(1) and (!rasengan_cooldown) {
-			change_sprite(spr_naruto_special_rasengan,3,false);
+			change_sprite(spr_naruto_special_rasengan,3 - (combo_timer > 0),false);
 			activate_super(60);
 			spend_mp(1);
 		}
@@ -372,7 +374,7 @@ function init_naruto_baseform() {
 		return_to_idle();
 	}
 	
-	rasengan_dive = new state();
+	rasengan_dive = new charstate();
 	rasengan_dive.start = function() {
 		if check_mp(1) and (!rasengan_cooldown) {
 			change_sprite(spr_naruto_special_rasengan_dive,3,false);
@@ -427,7 +429,7 @@ function init_naruto_baseform() {
 		}
 	}
 	
-	double_rasengan = new state();
+	double_rasengan = new charstate();
 	double_rasengan.start = function() {
 		if check_mp(2) and (!rasengan_cooldown) {
 			change_sprite(spr_naruto_special_doublerasengan,4,false);
@@ -466,7 +468,7 @@ function init_naruto_baseform() {
 		return_to_idle();
 	}
 	
-	giant_rasengan = new state();
+	giant_rasengan = new charstate();
 	giant_rasengan.start = function() {
 		if (on_ground) and check_mp(3) and (!rasengan_cooldown) {
 			change_sprite(spr_naruto_special_giantrasengan,5,false);
@@ -478,7 +480,7 @@ function init_naruto_baseform() {
 		}
 	}
 	giant_rasengan.run = function() {
-		rasengan_script(5,6,11,12,0,1,120,150,1500);
+		rasengan_script(5,6,11,12,0,2,120,150,1500);
 		
 		if check_frame(4) {
 			play_sound(snd_rasengan_charge,1,0.8);
@@ -503,7 +505,7 @@ function init_naruto_baseform() {
 		return_to_idle();
 	}
 
-	shadow_clone_jutsu = new state();
+	shadow_clone_jutsu = new charstate();
 	shadow_clone_jutsu.start = function() {
 		if check_mp(2) and (!shadow_clone_jutsu_cooldown) {
 			change_sprite(spr_naruto_jutsu,5,false);
@@ -535,7 +537,7 @@ function init_naruto_baseform() {
 		return_to_idle();
 	}
 	
-	shadow_clone_barrage = new state();
+	shadow_clone_barrage = new charstate();
 	shadow_clone_barrage.start = function() {
 		if check_mp(1) {
 			change_sprite(spr_naruto_jutsu,3,false);
@@ -611,7 +613,7 @@ function init_naruto_baseform() {
 		return_to_idle();
 	}
 	
-	rasen_shuriken = new state();
+	rasen_shuriken = new charstate();
 	rasen_shuriken.start = function() {
 		if (on_ground) and check_mp(4) and (!rasengan_cooldown) {
 			change_sprite(spr_naruto_special_rasenshuriken,3,false);
@@ -640,13 +642,9 @@ function init_naruto_baseform() {
 				create_particles(
 					x-(width*facing),
 					y,
-					x-(width*facing),
-					y,
 					jutsu_smoke_particle
 				);
 				create_particles(
-					x+(width*facing),
-					y,
 					x+(width*facing),
 					y,
 					jutsu_smoke_particle

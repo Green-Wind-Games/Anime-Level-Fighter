@@ -95,6 +95,7 @@
     {"id":{"name":"scr_char_select","path":"scripts/scr_char_select/scr_char_select.yy",},},
     {"id":{"name":"scr_char_shots","path":"scripts/scr_char_shots/scr_char_shots.yy",},},
     {"id":{"name":"scr_char_sprites","path":"scripts/scr_char_sprites/scr_char_sprites.yy",},},
+    {"id":{"name":"scr_char_statemachine","path":"scripts/scr_char_statemachine/scr_char_statemachine.yy",},},
     {"id":{"name":"scr_char_states","path":"scripts/scr_char_states/scr_char_states.yy",},},
     {"id":{"name":"scr_char_transforms","path":"scripts/scr_char_transforms/scr_char_transforms.yy",},},
     {"id":{"name":"scr_combat_grappling","path":"scripts/scr_combat_grappling/scr_combat_grappling.yy",},},

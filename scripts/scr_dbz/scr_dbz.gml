@@ -54,7 +54,7 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_kiblastsprite) {
 	kiblast_sprite2 = _sprite2;
 	kiblast_shot_sprite = _kiblastsprite;
 	
-	kiblast = new state();
+	kiblast = new charstate();
 	kiblast.start = function() {
 		if check_mp(1/max_kiblasts) {
 			if sprite == kiblast_sprite {
@@ -112,7 +112,7 @@ function create_kiblast(_x,_y,_sprite) {
 	)) {
 		blend = true;
 		hit_script = function() {
-			create_particles(x,y,x,y,explosion_small_particle);
+			create_particles(x,y,explosion_small_particle);
 		}
 		active_script = function() {
 			if y >= ground_height {

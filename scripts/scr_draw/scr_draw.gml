@@ -673,47 +673,68 @@ function draw_timer() {
 
 function draw_combo_counters() {
 	var active_players = 0;
+	var _p1 = noone;
+	var _p2 = noone;
+	var _p1_color = noone;
+	var _p2_color = noone;
 	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			active_players++;
+			if active_players == 1 {
+				_p1 = player[i];
+				_p1_color = player_color[i];
+			}
+			else if active_players == 2 {
+				_p2 = player[i];
+				_p2_color = player_color[i];
+			}
 		}
 	}
+	
+	if !value_in_range(active_players,1,2) {
+		exit;
+	}
+	
 	var _w = gui_width;
 	var _h = gui_height;
-	var _w2 = _w / max(3,active_players+1);
+	var _w2 = _w / 4;
 	var _h2 = _h / 2;
 	
-	var _x = _w2;
-	var _y = hud_height + 10;
-	for(var i = 0; i < max_players; i++) {
-		with(player[i]) {
-			if (combo_timer > 0) and (combo_hits >= 2) {
-				draw_set_halign(fa_center);
-				draw_set_valign(fa_top);
-				draw_set_font(fnt_combo);
+	var _x1 = _w2;
+	var _y1 = hud_height + 5;
+	var _x2 = _w - _w2;
+	var _y2  = _y1;
+	
+	with(_p1) {
+		draw_my_combo_counter(_x1,_y1,_p1_color);
+	}
+	with(_p2) {
+		draw_my_combo_counter(_x2,_y2,_p2_color);
+	}
+}
+
+function draw_my_combo_counter(_x,_y,_color) {
+	if (combo_timer > 0) and (combo_hits > 0) {
+		draw_set_halign(fa_center);
+		draw_set_valign(fa_top);
+		draw_set_font(fnt_combo);
 				
-				var _text = string(combo_hits) + " acertos!";
-				_text += "\n" + string(combo_damage) + " de dano!";
+		var _text = string(combo_hits) + " acertos!";
+		_text += "\n" + string(combo_damage) + " de dano!";
 				
-				var _x2 = _x;
-				var _y2 = _y;
-				
-				if (hitstop > 0) and (round_state != roundstates.pause) {
-					_x2 += random(hitstop) * choose(1,-1);
-					_y2 += random(hitstop) * choose(1,-1);
-				}
-				
-				draw_text_outlined(
-					_x2,
-					_y2,
-					_text,
-					c_black,
-					merge_color(player_color[i],c_white,0.5),
-					1
-				);
-			}
-			_x += _w2;
+		if (hitstop > 0) and (round_state != roundstates.pause) {
+			_x += random(hitstop) * choose(1,-1);
+			_y += random(hitstop) * choose(1,-1);
 		}
+				
+		draw_text_outlined(
+			_x,
+			_y,
+			_text,
+			c_black,
+			merge_color(_color,c_white,0.5),
+			1
+		);
 	}
 }
 

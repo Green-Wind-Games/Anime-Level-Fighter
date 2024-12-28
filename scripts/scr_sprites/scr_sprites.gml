@@ -80,14 +80,14 @@ function change_sprite(_sprite,_frameduration, _loop) {
 		next_sprite = noone;
 		
 		frame = 0;
-		frame_timer = noone;
+		frame_timer = -1;
 		anim_finished = false;
 		
 		reset_sprite(true,true);
 	}
 	if !_loop {
 		frame = 0;
-		frame_timer = 0;
+		frame_timer = -1;
 	}
 	frame_duration = max(_frameduration,2);
 	anim_loop = _loop;

@@ -2,7 +2,7 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
 function init_charstates() {
-	idle_state = new state();
+	idle_state = new charstate();
 	idle_state.start = function() {
 		face_target();
 		reset_cancels();
@@ -59,7 +59,7 @@ function init_charstates() {
 		}
 	}
 
-	crouch_state = new state();
+	crouch_state = new charstate();
 	crouch_state.start = function() {
 		change_sprite(crouch_sprite,2,false);
 		face_target();
@@ -82,7 +82,7 @@ function init_charstates() {
 		}
 	}
 
-	jump_state = new state();
+	jump_state = new charstate();
 	jump_state.start = function() {
 		change_sprite(jumpsquat_sprite,2,false);
 		squash_stretch(1.2,0.8);
@@ -98,7 +98,7 @@ function init_charstates() {
 		}
 	}
 
-	superjump_state = new state();
+	superjump_state = new charstate();
 	superjump_state.start = function() {
 		change_sprite(jumpsquat_sprite,2,false);
 		squash_stretch(1.25,0.75);
@@ -114,7 +114,7 @@ function init_charstates() {
 		}
 	}
 
-	air_state = new state();
+	air_state = new charstate();
 	air_state.start = function() {
 		change_sprite(air_peak_sprite,5,true);
 		can_guard = true;
@@ -167,7 +167,7 @@ function init_charstates() {
 		}
 	}
 	
-	dash_state = new state();
+	dash_state = new charstate();
 	dash_state.start = function() {
 		change_sprite(dash_sprite,2,true);
 		yoffset = -height_half;
@@ -212,7 +212,7 @@ function init_charstates() {
 		}
 	}
 	
-	backdash_state = new state();
+	backdash_state = new charstate();
 	backdash_state.start = function() {
 		change_sprite(air_up_sprite,2,true);
 		can_cancel = false;
@@ -228,7 +228,7 @@ function init_charstates() {
 		}
 	}
 	
-	dash_stop_state = new state();
+	dash_stop_state = new charstate();
 	dash_stop_state.start = function() {
 		can_cancel = false;
 		change_sprite(uncrouch_sprite,3,false);
@@ -241,7 +241,7 @@ function init_charstates() {
 		}
 	}
 	
-	airdash_state = new state();
+	airdash_state = new charstate();
 	airdash_state.start = function() {
 		if air_moves < max_air_moves {
 			change_sprite(dash_sprite,2,true);
@@ -263,7 +263,7 @@ function init_charstates() {
 		}
 	}
 	
-	air_backdash_state = new state();
+	air_backdash_state = new charstate();
 	air_backdash_state.start = function() {
 		if air_moves < max_air_moves {
 			change_sprite(dash_sprite,2,true);
@@ -286,7 +286,7 @@ function init_charstates() {
 		}
 	}
 	
-	guard_state = new state();
+	guard_state = new charstate();
 	guard_state.start = function() {
 		change_sprite(guard_sprite,6,false);
 		is_guarding = true;
@@ -307,7 +307,7 @@ function init_charstates() {
 		is_guarding = false;
 	}
 	
-	hit_state = new state();
+	hit_state = new charstate();
 	hit_state.start = function() {
 		is_hit = true;
 		can_guard = false;
@@ -344,7 +344,7 @@ function init_charstates() {
 		is_hit = false;
 	}
 	
-	grabbed_state = new state();
+	grabbed_state = new charstate();
 	grabbed_state.start = function() {
 		change_sprite(grabbed_sprite,1000,false);
 		xspeed = 0;
@@ -356,7 +356,7 @@ function init_charstates() {
 		yspeed = 0;
 	}
 	
-	hard_knockdown_state = new state();
+	hard_knockdown_state = new charstate();
 	hard_knockdown_state.start = function() {
 		is_hit = true;
 		can_guard = false;
@@ -392,7 +392,7 @@ function init_charstates() {
 		}
 	}
 	
-	wall_splat_state = new state();
+	wall_splat_state = new charstate();
 	wall_splat_state.start = function() {
 		hit_state.start();
 	}
@@ -400,7 +400,7 @@ function init_charstates() {
 		if ((xspeed < 0) and (on_left_wall)) {
 			xspeed = 0;
 			create_particles(
-				left_wall,
+				x-width_half,
 				y-height_half,
 				wall_bang_left_particle
 			);
@@ -408,7 +408,7 @@ function init_charstates() {
 		if ((xspeed > 0) and (on_right_wall)) {
 			xspeed = 0;
 			create_particles(
-				right_wall,
+				x + width_half,
 				y-height_half,
 				wall_bang_right_particle
 			);
@@ -416,7 +416,7 @@ function init_charstates() {
 		hit_state.run();
 	}
 	
-	wall_bounce_state = new state();
+	wall_bounce_state = new charstate();
 	wall_bounce_state.start = function() {
 		change_sprite(launch_sprite,3,true);
 		is_hit = true;
@@ -461,7 +461,7 @@ function init_charstates() {
 		}
 	}
 	
-	liedown_state = new state();
+	liedown_state = new charstate();
 	liedown_state.start = function() {
 		change_sprite(liedown_sprite,2,false);
 		dodging_attacks = true;
@@ -499,7 +499,7 @@ function init_charstates() {
 		dodging_projectiles = false;
 	}
 	
-	tech_state = new state();
+	tech_state = new charstate();
 	tech_state.start = function() {
 		change_sprite(tech_sprite,6,false);
 		flash_sprite();
@@ -522,7 +522,7 @@ function init_charstates() {
 		dodging_projectiles = false;
 	}
 	
-	homing_dash_state = new state();
+	homing_dash_state = new charstate();
 	homing_dash_state.start = function() {
 		change_sprite(dash_sprite,2,true);
 		yoffset = -height_half;
@@ -560,7 +560,7 @@ function init_charstates() {
 		}
 	}
 	
-	substitution_state = new state();
+	substitution_state = new charstate();
 	substitution_state.start = function() {
 		change_sprite(crouch_sprite,3,false);
 		reset_sprite();
@@ -594,7 +594,7 @@ function init_charstates() {
 		}
 	}
 	
-	teleport_state = new state();
+	teleport_state = new charstate();
 	teleport_state.start = function() {
 		if check_tp(1) {
 			spend_tp(1);
@@ -647,7 +647,7 @@ function init_charstates() {
 		}
 	}
 	
-	levelup_state = new state();
+	levelup_state = new charstate();
 	levelup_state.start = function() {
 		change_sprite(charge_loop_sprite,3,true);
 		flash_sprite();
@@ -667,7 +667,7 @@ function init_charstates() {
 		}
 	}
 	
-	transform_state = new state();
+	transform_state = new charstate();
 	transform_state.start = function() {
 		change_sprite(charge_loop_sprite,3,true);
 		superfreeze(2 * 60);
@@ -685,7 +685,7 @@ function init_charstates() {
 		}
 	}
 	
-	charge_state = new state();
+	charge_state = new charstate();
 	charge_state.start = function() {
 		if check_charge() {
 			change_sprite(charge_start_sprite,3,false);
@@ -746,7 +746,7 @@ function init_charstates() {
 		stop_sound(voice);
 	}
 	
-	intro_state = new state();
+	intro_state = new charstate();
 	intro_state.start = function() {
 		change_sprite(idle_sprite,6,true);
 		play_voiceline(voice_intro);
@@ -757,7 +757,7 @@ function init_charstates() {
 		}
 	}
 	
-	enter_state = new state();
+	enter_state = new charstate();
 	enter_state.start = function() {
 		change_sprite(air_down_sprite,3,true);
 	}
@@ -780,12 +780,12 @@ function init_charstates() {
 		}
 	}
 	
-	victory_state = new state();
+	victory_state = new charstate();
 	victory_state.start = function() {
 		change_sprite(victory_sprite,6,false);
 		play_voiceline(voice_victory);
 	}
-	defeat_state = new state();
+	defeat_state = new charstate();
 	defeat_state.start = function() {
 		change_sprite(defeat_sprite,6,false);
 		play_voiceline(voice_defeat);

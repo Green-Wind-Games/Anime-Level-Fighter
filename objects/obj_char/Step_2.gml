@@ -18,14 +18,14 @@ if sprite_exists(aura_sprite) {
 }
 
 if sprite == spinout_sprite {
-	if state_timer mod ceil(width / max(1,abs(xspeed))) == 1 {
+	if anim_timer mod 5 == 1 {
 		create_specialeffect(
 			spr_launch_wind_spin,
 			x,
 			y-height_half,
 			1/3,
 			1/3,
-			point_direction(0,0,abs(xspeed),yspeed)
+			point_direction(0,0,xspeed,yspeed)
 		)
 	}
 }

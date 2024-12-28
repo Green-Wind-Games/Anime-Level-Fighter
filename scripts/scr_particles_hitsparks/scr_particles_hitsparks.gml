@@ -38,29 +38,29 @@ part_type_sprite(slashspark_light,spr_slashspark,true,true,false);
 part_type_life(slashspark_light,10,20);
 part_type_size(slashspark_light,0.2,0.3,0,0);
 part_type_orientation(slashspark_light,0,0,0,0,true);
-part_type_direction(slashspark_light,0,360,0,0);
-part_type_speed(slashspark_light,5,5,0,0);
+part_type_direction(slashspark_light,45,45,0,0);
+//part_type_speed(slashspark_light,5,5,0,0);
 part_type_color2(slashspark_light,c_white,make_color_rgb(0,192,255));
 part_type_blend(slashspark_light,true);
 
 slashspark_medium = part_type_create();
 part_type_sprite(slashspark_medium,spr_slashspark,true,true,false);
-part_type_life(slashspark_medium,20,30);
-part_type_size(slashspark_medium,0.3,0.4,0,0);
+part_type_life(slashspark_medium,10,20);
+part_type_size(slashspark_medium,0.2,0.3,0,0);
 part_type_orientation(slashspark_medium,0,0,0,0,true);
-part_type_direction(slashspark_medium,0,360,0,0);
-part_type_speed(slashspark_medium,5,5,0,0);
-part_type_color2(slashspark_medium,c_white,make_color_rgb(255,192,0));
+part_type_direction(slashspark_medium,45,45,0,0);
+//part_type_speed(slashspark_medium,5,5,0,0);
+part_type_color2(slashspark_medium,c_white,make_color_rgb(0,192,255));
 part_type_blend(slashspark_medium,true);
 
 slashspark_heavy = part_type_create();
 part_type_sprite(slashspark_heavy,spr_slashspark,true,true,false);
-part_type_life(slashspark_heavy,30,40);
-part_type_size(slashspark_heavy,0.4,0.5,0,0);
+part_type_life(slashspark_heavy,10,20);
+part_type_size(slashspark_heavy,0.2,0.3,0,0);
 part_type_orientation(slashspark_heavy,0,0,0,0,true);
-part_type_direction(slashspark_heavy,0,360,0,0);
-part_type_speed(slashspark_heavy,5,5,0,0);
-part_type_color2(slashspark_heavy,c_white,make_color_rgb(255,128,0));
+part_type_direction(slashspark_heavy,45,45,0,0);
+//part_type_speed(slashspark_heavy,5,5,0,0);
+part_type_color2(slashspark_heavy,c_white,make_color_rgb(0,192,255));
 part_type_blend(slashspark_heavy,true);
 
 piercespark_light = part_type_create();
@@ -113,9 +113,9 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 	var _sound = noone;
 	var _volume = 1;
 	var _p = _target.facing / 4;
-	var _x1 = _target.x -						(_target.width_half * _p);
+	var _x1 = _target.x +						(_target.width_half * _p);
 	var _y1 = _target.y - _target.height_half -	(_target.height_half * _p);
-	var _x2 = _target.x +						(_target.width_half * _p);
+	var _x2 = _target.x -						(_target.width_half * _p);
 	var _y2 = _target.y - _target.height_half +	(_target.height_half * _p);
 	switch(_hiteffect) {
 		default:

@@ -114,19 +114,19 @@ function basic_smash(_hitframe,_damage,_hiteffect) {
 
 function basic_light_attack(_hitframe,_hiteffect) {
 	basic_attack_stepforward(_hitframe);
-	basic_attack(_hitframe,120,attackstrength.light,_hiteffect);
+	basic_attack(_hitframe,400,attackstrength.light,_hiteffect);
 	return_to_idle();
 }
 
 function basic_medium_attack(_hitframe,_hiteffect) {
 	basic_attack_stepforward(_hitframe);
-	basic_attack(_hitframe,240,attackstrength.medium,_hiteffect);
+	basic_attack(_hitframe,700,attackstrength.medium,_hiteffect);
 	return_to_idle();
 }
 
 function basic_heavy_attack(_hitframe,_hiteffect) {
 	basic_attack_stepforward(_hitframe);
-	basic_wallsplat(_hitframe,320,_hiteffect);
+	basic_wallsplat(_hitframe,1000,_hiteffect);
 	if frame >= min(anim_frames-1,_hitframe+2) {
 		if combo_timer > 10 {
 			xspeed = 30 * facing;
@@ -231,7 +231,7 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 		}
 		init_sprite(_sprite);
 		change_sprite(sprite,max(1,round(60/sprite_get_speed(_sprite))),true);
-		var _true_scale = _scale / 2;
+		var _true_scale = _scale / 3;
 		xscale = _scale;
 		yscale = _scale;
 		width = sprite_get_width(sprite) * _true_scale;

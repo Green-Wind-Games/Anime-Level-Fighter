@@ -11,8 +11,8 @@ switch(game_state) {
 	//draw_player_outlines();
 	draw_chars();
 	draw_shots();
-	draw_particles();
 	draw_superfreeze();
+	draw_particles();
 	
 	//draw_hitboxes();
 	break;

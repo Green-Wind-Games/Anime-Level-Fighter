@@ -97,7 +97,7 @@ function init_goku_baseform() {
 	//	}
 	//}
 
-	light_attack = new state();
+	light_attack = new charstate();
 	light_attack.start = function() {
 		change_sprite(spr_goku_attack_punch_straight,3,false);
 		play_sound(snd_punch_whiff_light);
@@ -107,7 +107,7 @@ function init_goku_baseform() {
 		basic_light_attack(2,hiteffects.hit);
 	}
 
-	light_attack2 = new state();
+	light_attack2 = new charstate();
 	light_attack2.start = function() {
 		change_sprite(spr_goku_attack_punch_gut,3,false);
 		play_sound(snd_punch_whiff_medium);
@@ -117,7 +117,7 @@ function init_goku_baseform() {
 		basic_medium_attack(3,hiteffects.hit);
 	}
 
-	light_attack3 = new state();
+	light_attack3 = new charstate();
 	light_attack3.start = function() {
 		change_sprite(spr_goku_attack_kick_arc,3,false);
 		play_voiceline(voice_heavyattack,50,false);
@@ -126,7 +126,7 @@ function init_goku_baseform() {
 		basic_heavy_lowattack(1,hiteffects.hit);
 	}
 	
-	light_lowattack = new state();
+	light_lowattack = new charstate();
 	light_lowattack.start = function() {
 		change_sprite(spr_goku_attack_triple_kick,2,false);
 		play_voiceline(voice_attack,50,false);
@@ -140,7 +140,7 @@ function init_goku_baseform() {
 		basic_light_airattack(7,hiteffects.hit);
 	}
 	
-	light_airattack = new state();
+	light_airattack = new charstate();
 	light_airattack.start = function() {
 		change_sprite(spr_goku_attack_triple_kick_air,2,false);
 		play_voiceline(voice_attack,50,false);
@@ -154,7 +154,7 @@ function init_goku_baseform() {
 		basic_light_airattack(7,hiteffects.hit);
 	}
 	
-	medium_attack = new state();
+	medium_attack = new charstate();
 	medium_attack.start = function() {
 		change_sprite(spr_goku_attack_elbow_bash,3,false);
 		play_sound(snd_punch_whiff_medium);
@@ -168,7 +168,7 @@ function init_goku_baseform() {
 		}
 	}
 	
-	medium_lowattack = new state();
+	medium_lowattack = new charstate();
 	medium_lowattack.start = function() {
 		change_sprite(spr_goku_attack_spin_kick,2,false);
 		play_sound(snd_punch_whiff_medium);
@@ -178,7 +178,7 @@ function init_goku_baseform() {
 		basic_medium_lowattack(4,hiteffects.hit);
 	}
 	
-	medium_airattack = new state();
+	medium_airattack = new charstate();
 	medium_airattack.start = function() {
 		change_sprite(spr_goku_attack_spin_kick_double,2,false);
 		play_voiceline(voice_attack,50,false);
@@ -191,7 +191,7 @@ function init_goku_baseform() {
 		basic_medium_airattack(8,hiteffects.hit);
 	}
 
-	heavy_attack = new state();
+	heavy_attack = new charstate();
 	heavy_attack.start = function() {
 		change_sprite(spr_goku_attack_kick_arc,5,false);
 		play_sound(snd_punch_whiff_super);
@@ -201,7 +201,7 @@ function init_goku_baseform() {
 		basic_heavy_attack(1,hiteffects.hit);
 	}
 
-	launcher_attack = new state();
+	launcher_attack = new charstate();
 	launcher_attack.start = function() {
 		change_sprite(spr_goku_attack_backflip_kick,5,false);
 		play_sound(snd_punch_whiff_super);
@@ -211,7 +211,7 @@ function init_goku_baseform() {
 		basic_heavy_lowattack(3,hiteffects.hit);
 	}
 
-	heavy_airattack = new state();
+	heavy_airattack = new charstate();
 	heavy_airattack.start = function() {
 		change_sprite(spr_goku_attack_smash,5,false);
 		play_sound(snd_punch_whiff_super);
@@ -221,7 +221,7 @@ function init_goku_baseform() {
 		basic_heavy_airattack(2,hiteffects.hit);
 	}
 
-	kiai_push = new state();
+	kiai_push = new charstate();
 	kiai_push.start = function() {
 		if check_mp(1) {
 			activate_super();
@@ -249,7 +249,7 @@ function init_goku_baseform() {
 		}
 	}
 
-	kamehameha = new state();
+	kamehameha = new charstate();
 	kamehameha.start = function() {
 		if kamehameha_cooldown <= 0 {
 			change_sprite(spr_goku_special_kamehameha,5,false);
@@ -274,12 +274,12 @@ function init_goku_baseform() {
 		}
 		if value_in_range(frame,6,9) {
 			var _beam = create_shot(
-				20,
+				30,
 				-25,
 				20,
 				0,
 				spr_glow_blue,
-				map_value(level,1,max_level,1/2,1),
+				1/4,
 				50,
 				3,
 				-3,
@@ -295,7 +295,7 @@ function init_goku_baseform() {
 		return_to_idle();
 	}
 	
-	kamehameha_medium = new state();
+	kamehameha_medium = new charstate();
 	kamehameha_medium.start = function() {
 		kamehameha_light.start();
 		if active_state == kamehameha_medium {
@@ -306,7 +306,7 @@ function init_goku_baseform() {
 		kamehameha_light.run();
 	}
 	
-	kamehameha_heavy = new state();
+	kamehameha_heavy = new charstate();
 	kamehameha_heavy.start = function() {
 		kamehameha_light.start();
 		if active_state == kamehameha_heavy {
@@ -317,7 +317,7 @@ function init_goku_baseform() {
 		kamehameha_light.run();
 	}
 
-	super_kamehameha = new state();
+	super_kamehameha = new charstate();
 	super_kamehameha.start = function() {
 		if (kamehameha_cooldown <= 0) and check_mp(2) {
 			change_sprite(spr_goku_special_kamehameha,5,false);
@@ -362,12 +362,12 @@ function init_goku_baseform() {
 		loop_anim_middle_timer(6,9,120);
 		if value_in_range(frame,6,9) {
 			var _beam = create_shot(
-				20,
+				30,
 				-25,
-				10,
+				20,
 				0,
 				spr_glow_blue,
-				map_value(level,1,max_level,1,3),
+				3/4,
 				50,
 				3,
 				-3,
@@ -396,7 +396,7 @@ function init_goku_baseform() {
 		return_to_idle();
 	}
 
-	//meteor_combo = new state();
+	//meteor_combo = new charstate();
 	//meteor_combo.start = function() {
 	//	if on_ground and check_mp(1) {
 	//		change_sprite(spr_goku_attack_punch_straight,3,false);
@@ -454,7 +454,7 @@ function init_goku_baseform() {
 	//	return_to_idle();
 	//}
 
-	activate_kaioken = new state();
+	activate_kaioken = new charstate();
 	activate_kaioken.start = function() {
 		if check_mp(1) and (!kaioken_timer) and (hp > kaioken_min_hp) {
 			change_sprite(charge_loop_sprite,3,true);
@@ -481,7 +481,7 @@ function init_goku_baseform() {
 		}
 	}
 
-	super_spirit_bomb = new state();
+	super_spirit_bomb = new charstate();
 	super_spirit_bomb.start = function() {
 		if check_mp(4) and !kaioken_active {
 			change_sprite(spr_goku_special_spiritbomb,5,false);

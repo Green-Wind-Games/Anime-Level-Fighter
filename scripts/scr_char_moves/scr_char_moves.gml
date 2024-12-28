@@ -155,7 +155,7 @@ function setup_autocombo() {
 }
 
 function setup_basicmoves() {
-	medium_attack2 = new state();
+	medium_attack2 = new charstate();
 	medium_attack2.start = function() {
 		medium_lowattack.start();
 	}
@@ -163,7 +163,7 @@ function setup_basicmoves() {
 		medium_lowattack.run();
 	}
 	
-	medium_attack3 = new state();
+	medium_attack3 = new charstate();
 	medium_attack3.start = function() {
 		medium_attack.start();
 	}
@@ -171,7 +171,7 @@ function setup_basicmoves() {
 		medium_attack.run();
 	}
 	
-	medium_attack4 = new state();
+	medium_attack4 = new charstate();
 	medium_attack4.start = function() {
 		signature_move.start();
 		
@@ -183,7 +183,7 @@ function setup_basicmoves() {
 		signature_move.run();
 	}
 	
-	light_airattack2 = new state();
+	light_airattack2 = new charstate();
 	light_airattack2.start = function() {
 		medium_airattack.start();
 	}
@@ -191,7 +191,7 @@ function setup_basicmoves() {
 		medium_airattack.run();
 	}
 	
-	light_airattack3 = new state();
+	light_airattack3 = new charstate();
 	light_airattack3.start = function() {
 		heavy_airattack.start();
 	}
