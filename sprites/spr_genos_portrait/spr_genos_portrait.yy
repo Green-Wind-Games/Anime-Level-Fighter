@@ -23,7 +23,7 @@
   ],
   "name":"spr_genos_portrait",
   "nineSlice":null,
-  "origin":9,
+  "origin":1,
   "parent":{
     "name":"Genos Sprites",
     "path":"folders/Chars/One Punch Man Chars/Genos/Genos Sprites.yy",
@@ -75,7 +75,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":150,
+    "xorigin":204,
     "yorigin":0,
   },
   "swatchColours":null,

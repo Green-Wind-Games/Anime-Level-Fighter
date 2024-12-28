@@ -127,6 +127,9 @@ function init_naruto_baseform_clone() {
 							duration = 10;
 						}
 					}
+					else {
+						loop_sound(snd_slash_whiff_light,0.5,2);
+					}
 				}
 				hit_script = function() {
 					xspeed /= 2;

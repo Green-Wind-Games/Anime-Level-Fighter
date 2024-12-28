@@ -41,7 +41,7 @@ function init_charstates() {
 				change_state(crouch_state);
 			}
 			else {
-				if input.left or input.right {
+				if sign(input.right-input.left) != 0 {
 					xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
 					var walk_anim_speed = width / abs(xspeed);
 					walk_anim_speed /= max(1,sprite_get_number(walk_sprite) / 5);

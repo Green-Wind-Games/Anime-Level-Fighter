@@ -9,8 +9,8 @@ if !instance_exists(owner) {
 else {
 	x = owner.x;
 	y = owner.y;
-	xoffset = owner.xoffset;
-	yoffset = owner.yoffset;
+	//xoffset = owner.xoffset;
+	//yoffset = owner.yoffset;
 }
 
 update_sprite();

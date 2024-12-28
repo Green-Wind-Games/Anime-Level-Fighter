@@ -19,6 +19,7 @@
   "height":740,
   "HTile":false,
   "layers":[
+    {"$GMImageLayer":"","%Name":"15ae8978-a5d1-4fb4-8535-37f90da1f6c8","blendMode":0,"displayName":"Layer 1","isLocked":false,"name":"15ae8978-a5d1-4fb4-8535-37f90da1f6c8","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
     {"$GMImageLayer":"","%Name":"4c02c340-a910-438f-8896-14cfc7d52a85","blendMode":0,"displayName":"default","isLocked":false,"name":"4c02c340-a910-438f-8896-14cfc7d52a85","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_grassfield",

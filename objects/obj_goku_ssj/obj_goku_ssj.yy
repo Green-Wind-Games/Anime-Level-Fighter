@@ -12,8 +12,8 @@
     "path":"folders/Chars/Dragon Ball Chars/Goku.yy",
   },
   "parentObjectId":{
-    "name":"obj_goku",
-    "path":"objects/obj_goku/obj_goku.yy",
+    "name":"obj_char",
+    "path":"objects/obj_char/obj_char.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

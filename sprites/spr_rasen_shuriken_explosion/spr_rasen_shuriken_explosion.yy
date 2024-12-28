@@ -112,7 +112,7 @@
     },
     "name":"spr_rasen_shuriken_explosion",
     "playback":1,
-    "playbackSpeed":60.0,
+    "playbackSpeed":30.0,
     "playbackSpeedType":0,
     "resourceType":"GMSequence",
     "resourceVersion":"2.0",

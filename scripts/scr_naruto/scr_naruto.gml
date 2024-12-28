@@ -241,10 +241,11 @@ function init_naruto_baseform() {
 	
 	shuriken_throw = new state();
 	shuriken_throw.start = function() {
-		change_sprite(spr_naruto_special_throw_shuriken,5,false);
+		change_sprite(spr_naruto_special_throw_shuriken,3,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	shuriken_throw.run = function() {
+		loop_anim_middle_timer(1,1,20);
 		if check_frame(3) {
 			shuriken = create_shot(
 				10,
@@ -275,6 +276,9 @@ function init_naruto_baseform() {
 							duration = 10;
 						}
 					}
+					else {
+						loop_sound(snd_slash_whiff_light,1,2);
+					}
 				}
 				hit_script = function() {
 					xspeed /= 2;
@@ -289,10 +293,11 @@ function init_naruto_baseform() {
 	
 	triple_shuriken_throw = new state();
 	triple_shuriken_throw.start = function() {
-		change_sprite(spr_naruto_special_throw_shuriken,6,false);
+		change_sprite(spr_naruto_special_throw_shuriken,3,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	triple_shuriken_throw.run = function() {
+		loop_anim_middle_timer(1,1,30);
 		if check_frame(3) {
 			repeat(3) {
 				shuriken = create_shot(
@@ -320,6 +325,9 @@ function init_naruto_baseform() {
 							if duration == -1 {
 								duration = 20;
 							}
+						}
+						else {
+							loop_sound(snd_slash_whiff_light,0.5,2);
 						}
 					}
 					hit_script = function() {

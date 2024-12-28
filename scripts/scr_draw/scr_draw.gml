@@ -369,12 +369,12 @@ function draw_playerhud() {
 	
 	var hp_bar_xoffset = 4;
 	var hp_bar_yoffset = 4;
-	var mp_bar_xoffset = 4;
-	var mp_bar_yoffset = 4;
-	var tp_bar_xoffset = 3;
+	var mp_bar_xoffset = 2;
+	var mp_bar_yoffset = 2;
+	var tp_bar_xoffset = 2;
 	var tp_bar_yoffset = 2;
-	var xp_bar_xoffset = 4;
-	var xp_bar_yoffset = 4;
+	var xp_bar_xoffset = 2;
+	var xp_bar_yoffset = 2;
 	
 	var hp_bar_width = (hp_border_width - (hp_bar_xoffset * 2));
 	var mp_bar_width = (mp_border_width - (mp_bar_xoffset * 2));
@@ -569,25 +569,25 @@ function draw_playerhud() {
 				var hp_segment_x = map_value(ii,0,hp_segments,hp_bar_x1,hp_bar_x2);
 				draw_set_color(c_black);
 				draw_set_alpha(_alpha);
-				draw_rectangle(hp_segment_x-1,hp_bar_y1,hp_segment_x,hp_bar_y2,false);
+				draw_rectangle(hp_segment_x-1,hp_bar_y1,hp_segment_x,hp_bar_y2-1,false);
 			}
 			for(var ii = 1; ii < mp_segments; ii++) {
 				var mp_segment_x = map_value(ii,0,mp_segments,mp_bar_x1,mp_bar_x2);
 				draw_set_color(c_black);
 				draw_set_alpha(_alpha);
-				draw_rectangle(mp_segment_x-1,mp_bar_y1,mp_segment_x,mp_bar_y2,false);
+				draw_rectangle(mp_segment_x-1,mp_bar_y1,mp_segment_x,mp_bar_y2-2,false);
 			}
 			for(var ii = 1; ii < tp_segments; ii++) {
 				var tp_segment_x = map_value(ii,0,tp_segments,tp_bar_x1,tp_bar_x2);
 				draw_set_color(c_white);
 				draw_set_alpha(_alpha);
-				draw_rectangle(tp_segment_x-1,tp_bar_y1,tp_segment_x,tp_bar_y2,false);
+				draw_rectangle(tp_segment_x-1,tp_bar_y1,tp_segment_x,tp_bar_y2-1,false);
 			}
 			for(var ii = 1; ii < xp_segments; ii++) {
 				var xp_segment_x = map_value(ii,0,xp_segments,xp_bar_x1,xp_bar_x2);
 				draw_set_color(c_black);
 				draw_set_alpha(_alpha);
-				draw_rectangle(xp_segment_x-1,xp_bar_y1,xp_segment_x,xp_bar_y2,false);
+				draw_rectangle(xp_segment_x-1,xp_bar_y1,xp_segment_x,xp_bar_y2-1,false);
 			}
 			draw_set_font(fnt_hud);
 			draw_set_halign(fa_left);
@@ -812,8 +812,8 @@ function draw_versus() {
 	
 	var _w3 = _w2 / 2;
 	
-	var _w4_t1 = _w3 / max(2,team1_members+1);
-	var _w4_t2 = _w3 / max(2,team2_members+1);
+	var _w4_t1 = _w3 / max(1,team1_members);
+	var _w4_t2 = _w3 / max(1,team2_members);
 	
 	var _timer = game_state_timer;
 	
@@ -885,7 +885,7 @@ function draw_versus() {
 				1
 			);
 			
-			if drawn_players >= team1_members {
+			if drawn_players <= team1_members {
 				drawn_team1_players++;
 			}
 			else {
