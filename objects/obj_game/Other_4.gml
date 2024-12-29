@@ -33,7 +33,9 @@ switch(room) {
 		player_ready[i] = false;
 	}
 	ready_timer = 100;
-	stage = choose(rm_grassfield,rm_namek);
+	stage = choose(
+		rm_namek
+	);
 	play_music(mus_umvc3_charselect);
 	break;
 	

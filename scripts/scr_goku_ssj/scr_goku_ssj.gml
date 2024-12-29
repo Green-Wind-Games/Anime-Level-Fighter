@@ -309,24 +309,24 @@ function init_goku_ssj() {
 			play_sound(snd_dbz_beam_fire);
 		}
 		if value_in_range(frame,6,9) {
-			var _beam = create_shot(
-				30,
-				-25,
-				20,
-				0,
-				spr_glow_blue,
-				1/4,
-				200,
-				3,
-				-3,
-				attacktype.beam,
-				attackstrength.heavy,
-				hiteffects.none
-			);
-			with(_beam) {
-				hit_limit = -1;
-			}
-			//fire_beam(20,-25,spr_kamehameha,1,0,50);
+			//var _beam = create_shot(
+			//	30,
+			//	-25,
+			//	20,
+			//	0,
+			//	spr_glow_blue,
+			//	1/4,
+			//	200,
+			//	3,
+			//	-3,
+			//	attacktype.beam,
+			//	attackstrength.heavy,
+			//	hiteffects.none
+			//);
+			//with(_beam) {
+			//	hit_limit = -1;
+			//}
+			fire_beam(20,-25,spr_kamehameha,1,0,50);
 		}
 		return_to_idle();
 	}
@@ -375,24 +375,24 @@ function init_goku_ssj() {
 		}
 		loop_anim_middle_timer(6,9,120);
 		if value_in_range(frame,6,9) {
-			var _beam = create_shot(
-				30,
-				-25,
-				20,
-				0,
-				spr_glow_blue,
-				3/4,
-				25,
-				3,
-				-3,
-				attacktype.beam,
-				attackstrength.heavy,
-				hiteffects.none
-			);
-			with(_beam) {
-				hit_limit = -1;
-			}
-			//fire_beam(20,-25,spr_kamehameha,2,0,50);
+			//var _beam = create_shot(
+			//	30,
+			//	-25,
+			//	20,
+			//	0,
+			//	spr_glow_blue,
+			//	3/4,
+			//	25,
+			//	3,
+			//	-3,
+			//	attacktype.beam,
+			//	attackstrength.heavy,
+			//	hiteffects.none
+			//);
+			//with(_beam) {
+			//	hit_limit = -1;
+			//}
+			fire_beam(20,-25,spr_kamehameha,2,0,50);
 			shake_screen(5,3);
 		}
 		if check_frame(3) {

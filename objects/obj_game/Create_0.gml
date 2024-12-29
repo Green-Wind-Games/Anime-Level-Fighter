@@ -225,9 +225,13 @@ ground_sprite = noone;
 depth = -9999;
 
 for(var i = 0; i <= room_last; i++) {
-	if i <= rm_training {
-		room_set_width(i,game_width*2);
-		room_set_height(i,game_height*2);
+	if i >= rm_training {
+		room_set_width(i,1000);
+		room_set_height(i,400);
+	}
+	else if i != rm_start {
+		room_set_width(i,game_width);
+		room_set_height(i,game_height);
 	}
 }
 

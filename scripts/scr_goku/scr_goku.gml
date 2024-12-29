@@ -16,7 +16,7 @@ function init_goku_baseform() {
 	kaioken_duration = 10 * 60;
 	kaioken_buff = 1.25;
 	kaioken_color = make_color_rgb(255,128,128);
-	kaioken_min_hp = 100;
+	kaioken_min_hp = max_hp / 100;
 
 	spirit_bomb_shot = noone;
 
@@ -42,13 +42,15 @@ function init_goku_baseform() {
 		if dead or hp <= kaioken_min_hp {
 			kaioken_timer = 0;
 		}
-		if kaioken_timer-- > 0 {
+		if kaioken_timer > 0 {
+			kaioken_timer -= !super_active;
 			kaioken_active = true;
 			if kaioken_timer mod ceil(kaioken_duration / (max_hp / 15)) == 0 {
 				hp = approach(hp,kaioken_min_hp,1);
 			}
 			color = kaioken_color;
 			aura_sprite = spr_aura_dbz_red;
+			
 			loop_sound(snd_energy_loop);
 		}
 		else {
@@ -58,16 +60,21 @@ function init_goku_baseform() {
 			if kaioken_active {
 				attack_power = kaioken_buff;
 				move_speed_buff = kaioken_buff;
+			
+				kiblast_shot_sprite = spr_glow_red;
 			}
 			else {
-				flash_sprite();
-				play_sound(snd_energy_stop);
 				attack_power = 1;
 				move_speed_buff = 1;
+				
 				if color == kaioken_color {
 					color = c_white;
 				}
 				aura_sprite = noone;
+				kiblast_shot_sprite = spr_glow_blue;
+				
+				flash_sprite();
+				play_sound(snd_energy_stop);
 			}
 		}
 	}
@@ -99,7 +106,7 @@ function init_goku_baseform() {
 
 	light_attack = new charstate();
 	light_attack.start = function() {
-		change_sprite(spr_goku_attack_punch_straight,3,false);
+		change_sprite(spr_goku_attack_punch_straight,4,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -216,6 +223,13 @@ function init_goku_baseform() {
 	heavy_airattack.run = function() {
 		basic_heavy_airattack(2,hiteffects.hit);
 	}
+	
+	heavy_elbow = new charstate();
+	heavy_elbow.start = function() {
+		change_sprite(spr_goku_attack_elbow_bash,3,false);
+		play_sound(snd_punch_whiff_medium);
+		play_voiceline(voice_attack,50,false);
+	}
 
 	kiai_push = new charstate();
 	kiai_push.start = function() {
@@ -269,24 +283,31 @@ function init_goku_baseform() {
 			play_sound(snd_dbz_beam_fire);
 		}
 		if value_in_range(frame,6,9) {
-			var _beam = create_shot(
-				30,
-				-25,
+			//var _beam = create_shot(
+			//	30,
+			//	-25,
+			//	20,
+			//	0,
+			//	spr_glow_blue,
+			//	1/4,
+			//	200,
+			//	3,
+			//	-3,
+			//	attacktype.beam,
+			//	attackstrength.heavy,
+			//	hiteffects.none
+			//);
+			//with(_beam) {
+			//	hit_limit = -1;
+			//}
+			fire_beam(
 				20,
+				-25,
+				kaioken_active ? spr_kamehameha_red : spr_kamehameha,
+				1,
 				0,
-				spr_glow_blue,
-				1/4,
-				200,
-				3,
-				-3,
-				attacktype.beam,
-				attackstrength.heavy,
-				hiteffects.none
+				50
 			);
-			with(_beam) {
-				hit_limit = -1;
-			}
-			//fire_beam(20,-25,spr_kamehameha,1,0,50);
 		}
 		return_to_idle();
 	}
@@ -335,24 +356,31 @@ function init_goku_baseform() {
 		}
 		loop_anim_middle_timer(6,9,120);
 		if value_in_range(frame,6,9) {
-			var _beam = create_shot(
-				30,
-				-25,
+			//var _beam = create_shot(
+			//	30,
+			//	-25,
+			//	20,
+			//	0,
+			//	spr_glow_blue,
+			//	3/4,
+			//	25,
+			//	3,
+			//	-3,
+			//	attacktype.beam,
+			//	attackstrength.heavy,
+			//	hiteffects.none
+			//);
+			//with(_beam) {
+			//	hit_limit = -1;
+			//}
+			fire_beam(
 				20,
+				-25,
+				kaioken_active ? spr_kamehameha_red : spr_kamehameha,
+				2,
 				0,
-				spr_glow_blue,
-				3/4,
-				25,
-				3,
-				-3,
-				attacktype.beam,
-				attackstrength.heavy,
-				hiteffects.none
+				50
 			);
-			with(_beam) {
-				hit_limit = -1;
-			}
-			//fire_beam(20,-25,spr_kamehameha,2,0,50);
 			shake_screen(5,3);
 		}
 		if check_frame(3) {

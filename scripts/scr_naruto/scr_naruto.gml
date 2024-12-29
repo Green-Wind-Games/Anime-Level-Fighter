@@ -245,13 +245,13 @@ function init_naruto_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	shuriken_throw.run = function() {
-		loop_anim_middle_timer(1,1,10);
+		loop_anim_middle_timer(1,1,15);
 		if check_frame(3) {
 			shuriken = create_shot(
-				10,
-				-35,
+				15,
+				-30,
 				12,
-				0,
+				is_airborne * 5,
 				spr_shuriken,
 				1,
 				100,
@@ -300,12 +300,13 @@ function init_naruto_baseform() {
 	triple_shuriken_throw.run = function() {
 		loop_anim_middle_timer(1,1,20);
 		if check_frame(3) {
+			var i = 0;
 			repeat(3) {
 				shuriken = create_shot(
-					10,
-					-35,
+					15 - i,
+					-30,
 					12,
-					random_range(-2-on_ground,1+is_airborne),
+					2 - (i * 1.5) - (on_ground) + (is_airborne * 5),
 					spr_shuriken,
 					1,
 					50,
@@ -339,6 +340,7 @@ function init_naruto_baseform() {
 						affected_by_gravity = true;
 					}
 				}
+				i++;
 			}
 		}
 		return_to_idle();

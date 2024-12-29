@@ -367,9 +367,15 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 		
 		xspeed = _xlength * other.facing;
 		yspeed = _ylength;
+		
 		affected_by_gravity = false;
+		
 		x = owner.x + (_x * other.facing);
 		y = owner.y + _y;
+		
+		x += lengthdir_x(sprite_get_xoffset(sprite)*xscale,_angle) * facing;
+		y += lengthdir_y(sprite_get_xoffset(sprite)*xscale,_angle);
+		
 		with(hitbox) {
 			xknockback = _xlength * 10;
 			yknockback = _ylength * 10;
