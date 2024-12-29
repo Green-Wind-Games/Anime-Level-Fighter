@@ -267,7 +267,7 @@ function init_naruto_baseform() {
 				homing_max_turn = 1;
 				hit_limit = -1;
 				duration = 100;
-				rotation_speed = -20;
+				rotation_speed = -30;
 				active_script = function() {
 					if y >= ground_height {
 						homing = false;
@@ -318,7 +318,7 @@ function init_naruto_baseform() {
 				with(shuriken) {
 					blend = false;
 					hit_limit = -1;
-					rotation_speed = -20;
+					rotation_speed = -30;
 					active_script = function() {
 						if y >= ground_height {
 							homing = false;

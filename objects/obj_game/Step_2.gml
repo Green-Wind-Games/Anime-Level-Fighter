@@ -51,6 +51,11 @@ if keyboard_check_pressed(vk_pageup) {
 		xp = max_xp;
 	}
 }
+if keyboard_check_pressed(vk_pagedown) {
+	with(obj_char) {
+		xp = 0;
+	}
+}
 if keyboard_check_pressed(vk_delete) {
 	with(player[0]) {
 		dead = true;

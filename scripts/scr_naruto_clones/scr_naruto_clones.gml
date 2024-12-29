@@ -118,6 +118,7 @@ function init_naruto_baseform_clone() {
 				blend = false;
 				hit_limit = -1;
 				duration = 100;
+				rotation_speed = -30;
 				active_script = function() {
 					if y >= ground_height {
 						homing = false;

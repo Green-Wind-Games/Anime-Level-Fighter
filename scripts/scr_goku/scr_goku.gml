@@ -342,7 +342,7 @@ function init_goku_baseform() {
 				0,
 				spr_glow_blue,
 				3/4,
-				200,
+				25,
 				3,
 				-3,
 				attacktype.beam,

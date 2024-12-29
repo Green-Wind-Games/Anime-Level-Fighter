@@ -267,7 +267,7 @@ function init_goku_ssj() {
 				0,
 				spr_kiblast_cannon,
 				1,
-				100,
+				1125,
 				30,
 				-2,
 				attacktype.hard_knockdown,
@@ -295,7 +295,7 @@ function init_goku_ssj() {
 			xspeed = 0;
 			yspeed = 0;
 			kamehameha_cooldown = kamehameha_cooldown_duration;
-			play_voiceline(snd_goku_kamehameha);
+			play_voiceline(snd_goku_superkamehameha);
 			play_sound(snd_dbz_beam_charge_short);
 		}
 		else {
@@ -309,33 +309,28 @@ function init_goku_ssj() {
 			play_sound(snd_dbz_beam_fire);
 		}
 		if value_in_range(frame,6,9) {
-			fire_beam(20,-25,spr_kamehameha,1,0,50);
+			var _beam = create_shot(
+				30,
+				-25,
+				20,
+				0,
+				spr_glow_blue,
+				1/4,
+				200,
+				3,
+				-3,
+				attacktype.beam,
+				attackstrength.heavy,
+				hiteffects.none
+			);
+			with(_beam) {
+				hit_limit = -1;
+			}
+			//fire_beam(20,-25,spr_kamehameha,1,0,50);
 		}
 		return_to_idle();
 	}
-	
-	kamehameha_medium = new charstate();
-	kamehameha_medium.start = function() {
-		kamehameha_light.start();
-		if active_state == kamehameha_medium {
-			change_sprite(sprite,frame_duration + 2,false);
-		}
-	}
-	kamehameha_medium.start = function() {
-		kamehameha_light.run();
-	}
-	
-	kamehameha_heavy = new charstate();
-	kamehameha_heavy.start = function() {
-		kamehameha_light.start();
-		if active_state == kamehameha_heavy {
-			change_sprite(sprite,frame_duration + 3,false);
-		}
-	}
-	kamehameha_heavy.start = function() {
-		kamehameha_light.run();
-	}
-	
+
 	super_kamehameha = new charstate();
 	super_kamehameha.start = function() {
 		if (kamehameha_cooldown <= 0) and check_mp(2) {
@@ -381,13 +376,13 @@ function init_goku_ssj() {
 		loop_anim_middle_timer(6,9,120);
 		if value_in_range(frame,6,9) {
 			var _beam = create_shot(
-				20,
+				30,
 				-25,
-				10,
+				20,
 				0,
 				spr_glow_blue,
-				map_value(level,1,max_level,2,5),
-				50,
+				3/4,
+				25,
 				3,
 				-3,
 				attacktype.beam,
@@ -435,15 +430,19 @@ function init_goku_ssj() {
 		if superfreeze_active {
 			loop_anim_middle(0,0);
 		}
-		loop_anim_middle_timer(3,4,120);
-		if value_in_range(frame,6,9) {
+		if check_frame(2) {
+			play_voiceline(snd_goku_kamehameha_fire);
+			play_sound(snd_dbz_beam_fire);
+		}
+		loop_anim_middle_timer(3,3,120);
+		if value_in_range(frame,3,3) {
 			var _beam = create_shot(
-				20,
+				30,
 				-25,
-				10,
+				20,
 				0,
 				spr_glow_yellow,
-				map_value(level,1,max_level,4,8),
+				3/4,
 				50,
 				3,
 				-3,
@@ -456,10 +455,6 @@ function init_goku_ssj() {
 			}
 			//fire_beam(20,-25,spr_kamehameha,2,0,50);
 			shake_screen(5,3);
-		}
-		if check_frame(6) {
-			play_voiceline(snd_goku_kamehameha_fire);
-			play_sound(snd_dbz_beam_fire,1.2,0.8);
 		}
 		return_to_idle();
 	}
@@ -500,13 +495,13 @@ function init_goku_ssj() {
 	
 	add_move(kiblast,"D");
 	
-	add_move(kamehameha,"236A");
-	add_move(super_kamehameha,"236B");
-	add_move(angry_kamehameha,"236C");
+	add_move(kamehameha,"236D");
+	add_move(super_kamehameha,"214D");
+	add_move(angry_kamehameha,"41236D");
 	
-	add_ground_move(ki_blast_cannon,"214A");
-	add_ground_move(ki_blast_cannon,"214B");
-	add_ground_move(ki_blast_cannon,"214C");
+	add_ground_move(ki_blast_cannon,"236A");
+	add_ground_move(ki_blast_cannon,"236B");
+	add_ground_move(ki_blast_cannon,"236C");
 	
 	add_ground_move(activate_ssj2,"2D");
 	
