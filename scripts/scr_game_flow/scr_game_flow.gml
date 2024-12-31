@@ -90,7 +90,7 @@ function update_gamestate() {
 		break;
 	}
 
-	game_state_timer += 1;
+	game_state_timer += game_speed;
 	if next_game_state != -1 {
 		if game_state_timer >= game_state_duration {
 			game_state = next_game_state;
@@ -107,7 +107,7 @@ function update_gamestate() {
 		}
 	}
 
-	game_substate_timer += 1;
+	game_substate_timer += game_speed;
 	if next_game_substate != -1 {
 		if game_substate_timer >= game_substate_duration {
 			game_substate = next_game_state;
@@ -214,7 +214,7 @@ function update_game_substate() {
 }
 
 function update_fight() {
-	round_state_timer += 1;
+	round_state_timer += game_speed;
 	var _roundstate = round_state;
 	if round_state == roundstates.intro {
 		var ready = round_state_timer > 60;
@@ -233,7 +233,7 @@ function update_fight() {
 		}
 	}
 	else if round_state == roundstates.fight {
-		round_timer -= 1;
+		round_timer -= game_speed;
 		if round_timer <= 0 {
 			round_state = roundstates.time_over;
 		}
@@ -316,7 +316,7 @@ function update_fight() {
 	
 	if superfreeze_timer > 0 {
 		superfreeze_active = true;
-		superfreeze_timer -= 1;
+		superfreeze_timer -= game_speed;
 	}
 	else {
 		superfreeze_active = false;
@@ -326,7 +326,7 @@ function update_fight() {
 	
 	if timestop_timer > 0 {
 		timestop_active = true;
-		timestop_timer -= 1;
+		timestop_timer -= game_speed;
 	}
 	else {
 		timestop_active = false;

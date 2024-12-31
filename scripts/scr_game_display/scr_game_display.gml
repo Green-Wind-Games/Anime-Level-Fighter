@@ -68,7 +68,7 @@ function init_view() {
 
 function update_view() {
 	if screen_shake_timer > 0 {
-		screen_shake_timer--;
+		screen_shake_timer -= game_speed;
 		screen_shake_x = random(screen_shake_intensity / 2) * choose(1,-1);
 		screen_shake_y = random(screen_shake_intensity) * choose(1,-1);
 	}

@@ -64,6 +64,7 @@
     {"name":"scr_audio","order":1,"path":"scripts/scr_audio/scr_audio.yy",},
     {"name":"scr_char_moves","order":2,"path":"scripts/scr_char_moves/scr_char_moves.yy",},
     {"name":"scr_char_movetemplates","order":24,"path":"scripts/scr_char_movetemplates/scr_char_movetemplates.yy",},
+    {"name":"scr_char_physics","order":32,"path":"scripts/scr_char_physics/scr_char_physics.yy",},
     {"name":"scr_char_select","order":23,"path":"scripts/scr_char_select/scr_char_select.yy",},
     {"name":"scr_char_shots","order":17,"path":"scripts/scr_char_shots/scr_char_shots.yy",},
     {"name":"scr_char_sprites","order":22,"path":"scripts/scr_char_sprites/scr_char_sprites.yy",},

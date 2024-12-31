@@ -8,7 +8,7 @@ if !value_in_range(x,-room_width,room_width*2) {
 	active = false;
 }
 if duration != -1 {
-	duration -= 1;
+	duration -= game_speed;
 	if duration <= 0 {
 		active = false
 	}
@@ -45,7 +45,7 @@ if homing {
 		var _direction = point_direction(0,0,xspeed,yspeed);
 		if homing_max_turn > 0 {
 			var turn = angle_difference(target_direction,_direction);
-			turn = clamp(turn,-homing_max_turn,homing_max_turn);
+			turn = clamp(turn,-homing_max_turn,homing_max_turn) * game_speed;
 			_direction += turn;
 		}
 		else {

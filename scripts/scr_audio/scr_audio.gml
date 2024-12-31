@@ -9,7 +9,7 @@ audio_set_master_gain(0,0.2);
 globalvar music, music_timer, music_min_duration;
 music = noone;
 music_timer = 0;
-music_min_duration = 60*45;
+music_min_duration = 30;
 
 globalvar meme_enabled, meme_chance;
 meme_enabled = true;
@@ -22,7 +22,7 @@ function set_music_loop(_music,_start,_end) {
 
 function update_music() {
 	if (audio_is_playing(music)) {
-		music_timer += 1;
+		music_timer = audio_sound_get_track_position(music);
 		if (keyboard_check_pressed(vk_end)) {
 			audio_sound_set_track_position(music,80);
 		}

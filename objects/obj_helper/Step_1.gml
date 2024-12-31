@@ -14,7 +14,8 @@ if timestop_active exit;
 if hitstop exit;
 
 if duration != -1 {
-	if duration-- <= 0 {
+	duration -= game_speed;
+	if duration <= 0 {
 		death_script();
 		instance_destroy();
 	}

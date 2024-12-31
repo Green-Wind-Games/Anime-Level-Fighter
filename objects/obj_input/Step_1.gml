@@ -93,12 +93,12 @@ button4 = (!button4_held) and b4;
 button5 = (!button5_held) and b5;
 button6 = (!button6_held) and b6;
 		
-if b1 button1_held++; else button1_held = 0;
-if b2 button2_held++; else button2_held = 0;
-if b3 button3_held++; else button3_held = 0;
-if b4 button4_held++; else button4_held = 0;
-if b5 button5_held++; else button5_held = 0;
-if b6 button6_held++; else button6_held = 0;
+if b1 button1_held += game_speed; else button1_held = 0;
+if b2 button2_held += game_speed; else button2_held = 0;
+if b3 button3_held += game_speed; else button3_held = 0;
+if b4 button4_held += game_speed; else button4_held = 0;
+if b5 button5_held += game_speed; else button5_held = 0;
+if b6 button6_held += game_speed; else button6_held = 0;
 
 confirm = button1;
 cancel = button2;

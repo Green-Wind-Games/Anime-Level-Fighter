@@ -8,30 +8,26 @@ ai_level_max = 8;
 
 function change_ai_level(_level = ai_level) {
 	ai_level = clamp(round(_level),1,ai_level_max);
-	ai_think_interval = round(map_value(ai_level,1,ai_level_max,16,3));
+	ai_think_interval = round(map_value(ai_level,1,ai_level_max,20,10));
 	//ai_think_interval = 6;
 }
 
-change_ai_level(1);
+change_ai_level(ai_level_max/2);
 
 function update_ai() {
-	if (ai_timer-- <= 0) {
-		input.up = false;
-		input.down = false;
-		input.left = false;
-		input.right = false;
-		input.forward = false;
-		input.back = false;
+	ai_timer -= game_speed;
+	if (ai_timer <= 0) {
+		//input.up = false;
+		//input.down = false;
+		//input.left = false;
+		//input.right = false;
+		//input.forward = false;
+		//input.back = false;
 		
-		if (active_state == idle_state)
-		or (active_state == air_state) {
-			ai_default_movement();
-			ai_perform_random_moves();
-			ai_script();
-		}
-		else {
-			ai_combo();
-		}
+		ai_default_movement();
+		ai_perform_random_moves();
+		ai_combo();
+		ai_script();
 		
 		input.left = false;
 		input.right = false;
@@ -62,12 +58,12 @@ function ai_default_movement() {
 	var _y = 0;
 	
 	if chance(10) { _y = 1; }
-	if chance(20) { _y = -1; }
+	if chance(30) { _y = -1; }
 	if chance(30) { _x = -facing; }
-	if chance(40) { _x = facing; }
+	if chance(50) { _x = facing; }
 	
-	input.up = _y > 0;
-	input.down = _y < 0;
+	input.up = _y < 0;
+	input.down = _y > 0;
 	input.left = _x < 0;
 	input.right = _x > 0;
 	
@@ -112,20 +108,18 @@ function ai_perform_random_moves() {
 }
 
 function ai_combo() {
-	if (combo_hits > 0) {
-		//var _move;
-		//if ds_list_empty(cancelable_moves) {
-		//	_move = movelist[irandom(array_length(movelist)-1)][0];
-		//}
-		//else {
-		//	_move = ds_list_find_value(cancelable_moves,irandom(ds_list_size(cancelable_moves)-1));
-		//}
-		//ai_input_move(_move,map_value(ai_level,1,ai_level_max,10,50));
-		for(var i = 0; i < array_length(autocombo)-1; i++) {
-			if (active_state == autocombo[i]) {
-				ai_input_move(autocombo[0],100);
-			}
+	if (combo_timer > 0) {
+		var _movelist = on_ground ? ground_movelist : air_movelist;
+		var _move = _movelist[irandom(array_length(_movelist)-1)][0];
+		if !ds_list_empty(cancelable_moves) {
+			_move = ds_list_find_value(cancelable_moves,irandom(ds_list_size(cancelable_moves)-1));
 		}
+		ai_input_move(_move,map_value(ai_level,1,ai_level_max,50,100));
+		//for(var i = 0; i < array_length(autocombo)-1; i++) {
+		//	if (active_state == autocombo[i]) {
+		//		ai_input_move(autocombo[0],100);
+		//	}
+		//}
 	}
 }
 
@@ -138,19 +132,11 @@ function ai_input_command(_command,_chance = 100) {
 
 function ai_input_move(_move,_chance = 100) {
 	if chance(_chance) {
+		var _movelist = on_ground ? ground_movelist : air_movelist;
 		var _move_input = "";
-		if on_ground {
-			for(var i = 0; i < array_length(ground_movelist); i++) {
-				if (ground_movelist[i][0] == _move) {
-					_move_input = ground_movelist[i][1];
-				}
-			}
-		}
-		else {
-			for(var i = 0; i < array_length(air_movelist); i++) {
-				if (air_movelist[i][0] == _move) {
-					_move_input = air_movelist[i][1];
-				}
+		for(var i = 0; i < array_length(_movelist); i++) {
+			if (_movelist[i][0] == _move) {
+				_move_input = _movelist[i][1];
 			}
 		}
 		ai_input_command(_move_input,100);

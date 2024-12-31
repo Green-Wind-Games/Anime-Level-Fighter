@@ -130,7 +130,7 @@ function basic_heavy_attack(_hitframe,_hiteffect) {
 	if frame >= min(anim_frames-1,_hitframe+2) {
 		if (combo_timer > 10) 
 		and (!input.down) and (!input.back) {
-			xspeed = 30 * facing;
+			xspeed = 20 * facing;
 			yspeed = -5;
 			if on_ground {
 				create_specialeffect(spr_dust_dash,x,y,facing * 0.5,0.5);
@@ -207,11 +207,11 @@ function basic_heavy_airattack(_hitframe,_hiteffect) {
 }
 
 function basic_attack_stepforward(_hitframe) {
-	if check_frame(max(_hitframe-1,1)) {
+	if check_frame(max(_hitframe-2,1)) {
 		if target_distance <= 50 {
-			xspeed = max(5,(target_distance_x / 4)) * facing;
+			xspeed = max(5,abs(x-target_x) / 4) * facing;
 			if is_airborne {
-				yspeed = min(-1.8,(target_y-y) / 8);
+				yspeed = min(-1.8,(target_y-y) / 6);
 			}
 		}
 		else {
@@ -308,8 +308,8 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 			_sprite,
 			_scale,
 			_damage,
-			_xlength * 10,
-			_ylength * 10,
+			_xlength * 9,
+			_ylength * 9,
 			attacktype.hard_knockdown,
 			attackstrength.light,
 			hiteffects.none
@@ -330,7 +330,7 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 				yoffset = -(image_yscale * sprite_get_height(spr_hitbox)) / 2;
 			}
 			active_script = function() {
-				xscale += 100 / sprite_get_width(sprite);
+				xscale += 30 / sprite_get_width(sprite);
 				alpha = duration / 10;
 				with(hitbox) {
 					image_angle = point_direction(0,0,abs(other.xspeed),other.yspeed);
@@ -377,9 +377,9 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 		y += lengthdir_y(sprite_get_xoffset(sprite)*xscale,_angle);
 		
 		with(hitbox) {
-			xknockback = _xlength * 10;
-			yknockback = _ylength * 10;
-			if yknockback == 0 then yknockback -= 2;
+			xknockback = _xlength * 9;
+			yknockback = _ylength * 9;
+			if yknockback == 0 then yknockback -= 0.1;
 		}
 	}
 }

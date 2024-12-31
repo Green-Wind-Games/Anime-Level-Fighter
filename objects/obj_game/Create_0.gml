@@ -63,19 +63,21 @@ enum vs_screen_substates {
 
 globalvar	game_state, previous_game_state, next_game_state, game_state_timer, game_state_duration,
 			game_substate, previous_game_substate, next_game_substate, game_substate_timer, game_substate_duration,
-			round_state, round_timer, round_state_timer, round_timer_max, round_countdown_duration, round_is_infinite,
+			round_state, round_timer, round_state_timer, round_timer_max, round_timer_visible_max, round_countdown_duration, round_is_infinite,
 			stage,
 			
 			max_players, player, player_char, player_input,
 			player_slot, player_ready, ready_timer,
 			player_color,
 			
+			game_speed,
+			
 			ygravity, ground_height, battle_x, battle_y, left_wall, right_wall,
 			
-			base_hp, base_movespeed, base_jumpspeed,
+			base_max_hp, base_movespeed, base_jumpspeed,
 			max_mp, max_mp_stocks, mp_stock_size,
 			max_tp, max_tp_stocks, tp_stock_size,
-			max_xp, max_level, level_scaling,
+			base_max_xp, max_level, level_scaling,
 			
 			transform_heal_percent, transform_late_heal_percent_increase,
 			
@@ -109,10 +111,13 @@ game_substate_timer = -1;
 stage = rm_training;
 round_state = roundstates.intro;
 round_state_timer = 0;
-round_timer_max = 400 * 60;
+round_timer_max = 300 * 60;
 round_timer = round_timer_max;
+round_timer_visible_max = 999;
 round_countdown_duration = (3 * 30) + 30;
 round_is_infinite = false;
+
+game_speed = 1;
 
 max_players = 4;
 
@@ -154,16 +159,16 @@ player_color[i++] = make_color_rgb(255,0,255);
 player_color[i++] = make_color_rgb(255,128,0);
 player_color[i++] = make_color_rgb(128,64,32);
 
-max_xp = 10000;
+base_max_xp = 1000;
 max_level = 5;
 level_scaling = 0.35;
 
-base_hp = 10000 * max_level;
+base_max_hp = 20000;
 base_movespeed = 5;
 base_jumpspeed = 8;
 
-mp_stock_size = 10000;
-max_mp_stocks = 7;
+mp_stock_size = 1000;
+max_mp_stocks = 10;
 max_mp = max_mp_stocks * mp_stock_size;
 
 tp_stock_size = 8 * 60;

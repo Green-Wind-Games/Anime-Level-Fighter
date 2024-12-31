@@ -282,6 +282,7 @@ function init_goku_baseform() {
 		if check_frame(6) {
 			play_sound(snd_dbz_beam_fire);
 		}
+		loop_anim_middle_timer(6,9,30);
 		if value_in_range(frame,6,9) {
 			//var _beam = create_shot(
 			//	30,

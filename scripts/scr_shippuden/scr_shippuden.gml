@@ -31,7 +31,7 @@ function set_substitution_jutsu() {
 	}
 }
 
-function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _direction, _scale, _holdtime, _loopdamage, _enddamage, _endhittype) {
+function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _direction, _scale, _loopdamage, _enddamage, _endhittype) {
 	if superfreeze_active {
 		loop_anim_middle(_chargeframe1,_chargeframe2);
 	}
@@ -68,6 +68,9 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 	}
 	
 	if check_frame(_hitframe2+1) and (combo_hits > 0) {
+		with(target) {
+			y -= 1;
+		}
 		var _ball = create_shot(
 			width_half + (sprite_get_width(spr_rasengan) * _scale / 4),
 			-height_half,
@@ -76,7 +79,7 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 			spr_rasengan,
 			_scale * 1.5,
 			_enddamage,
-			lengthdir_x(10,_direction),
+			lengthdir_x(10,_direction)+3,
 			lengthdir_y(10,_direction)-3,
 			attacktype.hard_knockdown,
 			attackstrength.heavy,

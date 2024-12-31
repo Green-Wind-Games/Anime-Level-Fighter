@@ -4,96 +4,52 @@ if facing == 0 {
 	facing = 1;
 }
 
-if sprite == spinout_sprite 
-or sprite == launch_sprite {
+switch(sprite) {
+	case idle_sprite:
+	case walk_sprite:
+	case dash_sprite:
+	if sprite_get_yoffset(sprite) > sprite_get_height(sprite) {
+		yoffset = sine_between(state_timer,100,-2,2);
+	}
+	else {
+		xstretch = 1 + sine_between(state_timer,100,0.01,-0.01);
+		ystretch = 1 + sine_between(state_timer,100,-0.01,0.01);
+	}
+	break;
+	
+	case air_up_sprite:
+	case air_peak_sprite:
+	case air_down_sprite:
+	var _stretch = clamp(max(0.01,abs(yspeed)) / 100,0,0.3);
+	xstretch = 1 - _stretch;;
+	ystretch = 1 + _stretch;;
+	break;
+	
+	case launch_sprite:
 	yoffset = -height_half;
 	rotation = point_direction(0,0,abs(xspeed),-yspeed);
+	break;
+	
+	case spinout_sprite:
+	yoffset = -height_half;
+	rotation = point_direction(0,0,abs(xspeed),-yspeed);
+	if anim_timer mod 15 == 1 {
+		char_specialeffect(
+			spr_launch_wind_spin,
+			x,
+			y-height_half,
+			1/4,
+			1/4,
+			point_direction(0,0,xspeed,yspeed)
+		);
+	}
+	break;
 }
 
 if sprite_exists(aura_sprite) {
 	aura_frame += sprite_get_speed(aura_sprite) / 60;
 	if aura_frame >= sprite_get_number(aura_sprite) {
 		aura_frame = 0;
-	}
-}
-
-if sprite == spinout_sprite {
-	if anim_timer mod 5 == 1 {
-		create_specialeffect(
-			spr_launch_wind_spin,
-			x,
-			y-height_half,
-			1/3,
-			1/3,
-			point_direction(0,0,xspeed,yspeed)
-		)
-	}
-}
-
-with(obj_char) {
-	if grabbed or other.grabbed continue;
-	if dead or other.dead continue;
-	if team == other.team continue;
-	if is_helper(id) {
-		if duration != -1 continue;
-	}
-	if is_helper(other) {
-		if other.duration != -1 continue;
-	}
-			
-	if !rectangle_in_rectangle(
-		x-width_half,
-		y-height,
-		x+width_half,
-		y,
-		other.x-other.width_half,
-		other.y-other.height,
-		other.x+other.width_half,
-		other.y
-	) continue;
-			
-	var _dist = abs(x-other.x);
-	_dist -= width_half;
-	_dist -= other.width_half;
-	if _dist >= 0 continue;
-	
-	var pushme = true;
-	var pushthem = true;
-	
-	if is_char(id) {
-		if is_helper(other) {
-			pushme = false;
-			pushthem = true;
-		}
-	}
-	else if is_helper(id) {
-		if is_char(other) {
-			pushme = true;
-			pushthem = false;
-		}
-	}
-	
-	if !(pushme or pushthem) {
-		pushme = true;
-		pushthem = true;
-	}
-			
-	var _push = -sign(x-other.x);
-	//if _push == 0 then _push = sign(on_left_wall - on_right_wall) * sign(y - other.y);
-	if _push == 0 then _push = facing;
-	if _push == 0 then _push = 1;
-	_push *= 0.5;
-	
-	var i = 0;
-	while(_dist < 0) {
-		if pushme {
-			x = clamp(x-_push, left_wall, right_wall);
-		}
-		if pushthem {
-			other.x = clamp(other.x+_push, left_wall, right_wall);
-		}
-		_dist = point_distance(x,0,other.x,0) - (width_half + other.width_half);
-		if i++ >= 20 break;
 	}
 }
 
@@ -110,8 +66,9 @@ else {
 if hitstop < 0 then hitstop = 0;
 
 if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
-	tp += 1;
-	if combo_timer-- <= 0 {
+	tp += game_speed * 1;
+	combo_timer -= game_speed;
+	if combo_timer <= 0 {
 		reset_combo();
 	}
 }
@@ -153,6 +110,8 @@ dmg_percent_visible = max(
 	)
 );
 
+dmg_percent_visible = median(dmg_percent_visible,0,hp_percent_visible-100);
+
 if (!is_hit) {
 	previous_hp = approach(previous_hp,hp,100);
 }
@@ -164,7 +123,8 @@ if (!is_hit) {
 //if !value_in_range(dmg_percent_visible,0.1,99.9) { dmg_percent_visible = round(dmg_percent_visible); }
 
 if dead {
-	if death_timer++ >= hitstun {
+	death_timer += game_speed;
+	if death_timer >= hitstun {
 		death_script();
 	}
 }

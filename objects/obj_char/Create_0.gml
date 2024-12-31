@@ -1,7 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-max_hp = base_hp;
+max_hp = base_max_hp * max_level;
 hp = max_hp;
 previous_hp = hp;
 dead = false;
@@ -13,6 +13,7 @@ tp = max_tp;
 tp_stocks = max_tp_stocks;
 
 level = 1;
+max_xp = base_max_xp;
 xp = 0;
 
 hp_percent = (hp / max_hp) * 100;

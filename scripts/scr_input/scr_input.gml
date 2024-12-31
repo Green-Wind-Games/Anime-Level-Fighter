@@ -23,7 +23,8 @@ function update_input_buffer() {
 	}
 	else {
 		if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
-			if input_buffer_timer-- <= 0 {
+			input_buffer_timer -= game_speed;
+			if input_buffer_timer <= 0 {
 				input_buffer = update_input_buffer_direction();
 				input_buffer_timer = 0;
 			}

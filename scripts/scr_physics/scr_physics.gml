@@ -18,9 +18,9 @@ function init_physics() {
 	on_wall = on_left_wall or on_right_wall;
 }
 
-function update_physics() {
-	x += xspeed;
-	y += yspeed;
+function update_physics(_movespeed = true) {
+	x += xspeed * _movespeed * game_speed;
+	y += yspeed * _movespeed * game_speed;
 	on_left_wall = x <= left_wall;
 	on_right_wall = x >= right_wall;
 	on_wall = on_left_wall or on_right_wall;
@@ -39,15 +39,15 @@ function gravitate(_multiplier = 1) {
 			}
 		}
 	}
-	yspeed += ygravity * _multiplier;
+	yspeed += ygravity * _multiplier * game_speed;
 }
 
-function accelerate(_desired_speed, _speed = 1) {
-	xspeed = approach(xspeed,_desired_speed,_speed);
+function accelerate(_desired_speed, _speed = 2) {
+	xspeed = approach(xspeed,_desired_speed,_speed * game_speed);
 }
 
 function decelerate(_speed = 1) {
-	xspeed = approach(xspeed,0,_speed/2);
+	xspeed = approach(xspeed,0,_speed * game_speed);
 }
 
 function bounce_off_wall() {

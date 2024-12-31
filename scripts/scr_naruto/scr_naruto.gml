@@ -358,7 +358,7 @@ function init_naruto_baseform() {
 		}
 	}
 	mini_rasengan.run = function() {
-		rasengan_script(5,6,11,12,0,0.25,90,100,1000);
+		rasengan_script(5,6,11,12,0,0.25,100,1000,attacktype.hard_knockdown);
 		
 		if check_frame(4) {
 			play_sound(snd_rasengan_charge);
@@ -391,29 +391,71 @@ function init_naruto_baseform() {
 		}
 	}
 	rasengan_dive.run = function() {
-		rasengan_script(5,6,10,11,-90,1,90,100,1000);
-		
 		var _target_y = target_y - target.height - 10;
-		if check_frame(5) {
-			play_sound(snd_rasengan_charge,1,1.5);
-		}
-		if (frame == 10) and (y < _target_y) {
-			frame = 8;
-		}
-		if (frame > 11) and (state_timer < 90) and (combo_hits > 0) {
-			frame = 10;
-		}
 		if value_in_range(frame,8,9)  {
 			xspeed = 10 * facing;
 			yspeed = 15;
 		}
 		if (frame <= 11) and (target_distance_x <= 10) {
-			xspeed = 0;
-			x = target_x;
 			if value_in_range(y,_target_y,target_y) {
-				y = _target_y;
+				xspeed = 0;
 				yspeed = 0;
+				x = target_x;
+				y = _target_y;
 			}
+		}
+		if (frame < 11) and (y < _target_y) and (yspeed > 0) {
+			loop_anim_middle(8,9);
+		}
+		
+		if (combo_hits > 0) {
+			loop_anim_middle_timer(10,11,50);
+		}
+		if value_in_range(frame,10,11) {
+			if check_frame(frame) {
+				var _ball = create_shot(
+					0,
+					height,
+					0,
+					0,
+					spr_rasengan,
+					1,
+					100,
+					0,
+					0,
+					attacktype.normal,
+					attackstrength.light,
+					hiteffects.hit
+				);
+				with(_ball) {
+					duration = 3;
+					alpha = 0;
+				}
+			}
+		}
+		if check_frame(12) and (combo_hits > 0) {
+			with(target) {
+				y -= 1;
+			}
+			var _ball = create_shot(
+				0,
+				height,
+				0,
+				0,
+				spr_rasengan,
+				1.5,
+				2000,
+				0,
+				10,
+				attacktype.hard_knockdown,
+				attackstrength.heavy,
+				hiteffects.hit
+			);
+			with(_ball) {
+				duration = 3;
+				alpha = 0;
+			}
+			play_sound(snd_explosion_small,1,1);
 		}
 		if check_frame(12) {
 			xspeed = -5 * facing;
@@ -425,6 +467,9 @@ function init_naruto_baseform() {
 				y,
 				jutsu_smoke_particle
 			);
+		}
+		if check_frame(5) {
+			play_sound(snd_rasengan_charge,1,1.5);
 		}
 		if anim_finished {
 			land();
@@ -444,7 +489,7 @@ function init_naruto_baseform() {
 	}
 	double_rasengan.run = function() {
 		repeat(2) {
-			rasengan_script(5,6,11,12,0,1,120,100,1000);
+			rasengan_script(5,6,11,12,0,1,150,1500,attacktype.hard_knockdown);
 		}
 		
 		if check_frame(4) {
@@ -482,7 +527,7 @@ function init_naruto_baseform() {
 		}
 	}
 	giant_rasengan.run = function() {
-		rasengan_script(5,6,11,12,0,2,120,150,1500);
+		rasengan_script(5,6,11,12,0,2,200,2000,attacktype.hard_knockdown);
 		
 		if check_frame(4) {
 			play_sound(snd_rasengan_charge,1,0.8);

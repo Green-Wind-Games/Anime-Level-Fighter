@@ -2,13 +2,17 @@ if round_state == roundstates.pause exit;
 if ((superfreeze_active) and (superfreeze_activator != id)) exit;
 if ((timestop_active) and (timestop_activator != id)) exit;
 
-if (hitstop--) exit;
+hitstop -= game_speed;
+if hitstop exit;
 
 update_sprite();
 
-update_state();
+if (round_state_timer mod 1 >= 0)
+and (round_state_timer mod 1 < game_speed) {
+	update_state();
+}
 
-update_physics();
+update_charphysics();
 
 if (round_state == roundstates.fight) and (is_char(id)) {
 	switch(active_state) {
@@ -40,7 +44,11 @@ if (!superfreeze_active) and (!timestop_active) {
 	else {
 		gravitate(ygravity_mod);
 	}
-
-	char_script();
-	state_timer += 1;
+	
+	if (round_state_timer mod 1 >= 0)
+	and (round_state_timer mod 1 < game_speed) {
+		char_script();
+	}
+	
+	state_timer += game_speed;
 }

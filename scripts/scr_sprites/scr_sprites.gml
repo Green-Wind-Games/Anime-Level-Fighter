@@ -1,5 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function init_sprite(_sprite = sprite_index) {
 	sprite = _sprite;
 	
@@ -11,12 +9,14 @@ function init_sprite(_sprite = sprite_index) {
 	next_sprite_frame_duration = -1;
 	next_sprite_anim_loop = false;
 	
+	sprite_timer = 0;
+	
+	anim_speed = 1;
 	frame = 0;
 	frame_timer = 0;
 	frame_duration = 5;
 	
 	anim_frames = sprite_get_number(sprite);
-	
 	anim_timer = 0;
 	
 	anim_loop = true;
@@ -79,6 +79,8 @@ function change_sprite(_sprite,_frameduration, _loop) {
 		
 		next_sprite = noone;
 		
+		anim_loop_count = 0;
+		
 		frame = 0;
 		frame_timer = -1;
 		anim_finished = false;
@@ -89,7 +91,7 @@ function change_sprite(_sprite,_frameduration, _loop) {
 		frame = 0;
 		frame_timer = -1;
 	}
-	frame_duration = max(_frameduration,2);
+	frame_duration = max(_frameduration,1);
 	anim_loop = _loop;
 	
 	anim_frames = sprite_get_number(sprite);
@@ -122,23 +124,25 @@ function update_sprite() {
 }
 
 function update_sprite_animation() {
-	frame_timer++;
+	frame_timer += anim_speed * game_speed;
 	if frame_timer >= frame_duration {
 		frame += 1;
-		frame_timer = 0;
+		frame_timer -= frame_duration;
 		if frame >= anim_frames {
+			anim_finished = true;
 			if anim_loop {
 				frame = 0;
+				anim_loop_count++;
 			}
 			else {
-				if next_sprite == noone {
+				if !sprite_exists(next_sprite) {
 					frame = anim_frames - 1;
 					frame_timer = frame_duration - 1;
 				}
 				else {
+					change_sprite(next_sprite,next_sprite_frame_duration,next_sprite_frame_duration);
 				}
 			}
-			anim_finished = true;
 		}
 	}
 	anim_timer = frame_timer + (frame * frame_duration);
@@ -156,7 +160,7 @@ function squash_stretch(_x,_y) {
 }
 
 function update_sprite_flash() {
-	flash--;
+	flash -= game_speed;
 }
 
 function update_sprite_squash_stretch() {
@@ -165,7 +169,7 @@ function update_sprite_squash_stretch() {
 }
 
 function update_sprite_rotation() {
-	rotation += rotation_speed;
+	rotation += rotation_speed * game_speed;
 	if rotation >= 360 {
 		rotation -= 360;
 	}

@@ -14,11 +14,38 @@ function map_value(_value, _current_lower_bound, _current_upper_bound, _desired_
 }
 
 function value_in_range(_value, _min, _max) {
-	return (_value >= _min) and (_value <= _max);
+	if _value < min(_min,_max) return false;
+	if _value > max(_min,_max) return false;
+	return true;
+}
+
+function keep_value_out(_value,_min,_max) {
+	var _mid = mean(_min,_max);
+	var _min2 = min(_min,_max) - 1;
+	var _max2 = max(_min,_max) + 1;
+	if value_in_range(_value,_min2,_max2) {
+		if _value < _mid {
+			_value = _min2;
+		}
+		else {
+			_value = _max2;
+		}
+	}
+	return _value;
 }
 
 function chance(_percent) {
 	return random(100) < _percent;
+}
+
+function sine_wave(_time, _period, _amplitude, _midpoint) {
+    return sin(_time * 2 * pi / _period) * _amplitude + _midpoint;
+}
+
+function sine_between(_time, _period, _minimum, _maximum) {
+    var _midpoint = mean(_minimum, _maximum);
+    var _amplitude = _maximum - _midpoint;
+    return sine_wave(_time, _period, _amplitude, _midpoint);
 }
 
 function get_team_score(_team = team) {

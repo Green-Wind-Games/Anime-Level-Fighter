@@ -81,7 +81,7 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	var _guarding = is_guarding;
 	if is_char(id) {
 		if input.back _guarding = true;
-		if (ai_enabled) and chance(map_value(ai_level,1,ai_level_max,10,90)) _guarding = true;
+		if (ai_enabled) and chance(map_value(ai_level,1,ai_level_max,20,90)) _guarding = true;
 	}
 	
 	var _guard_valid = (can_guard) and (!is_hit);
@@ -323,14 +323,14 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	combo_damage_taken += dmg;
 	
-	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * 2;
-	var xp_gain = map_value(dmg,0,max_hp,0,max_xp) * 2;
+	var mp_gain = map_value(dmg,0,max_hp,0,max_mp);
+	var xp_gain = map_value(dmg,0,base_max_hp,0,base_max_xp);
 	
-	var attack_mp_gain = mp_gain * 1.00;
-	var attack_xp_gain = xp_gain * 1.00;
+	var attack_mp_gain = mp_gain * 2.4;
+	var attack_xp_gain = xp_gain * 1.6;
 	
-	var defend_mp_gain = mp_gain * 1.50;
-	var defend_xp_gain = xp_gain * 0.50;
+	var defend_mp_gain = mp_gain * 2.0;
+	var defend_xp_gain = xp_gain * 1.2;
 	
 	if !is_char(_attacker) {
 		attack_mp_gain *= 0.5;
@@ -338,13 +338,8 @@ function take_damage(_attacker,_amount,_kill) {
 	}
 	
 	with(true_attacker) {
-		if level > (other.level + 1) {
-			attack_xp_gain *= 0.5;
-			defend_xp_gain *= 1.5;
-		}
-		else if level < (other.level) {
-			attack_xp_gain *= 1.5;
-		}
+		attack_xp_gain /= level / other.level;
+		defend_xp_gain *= level / other.level;
 	}
 	
 	mp += defend_mp_gain;
@@ -383,7 +378,7 @@ function get_damage_scaling_guts(_defender) {
 			5
 		);
 		guts = max(guts,1);
-		return clamp(1 / guts,0.1,1);
+		return clamp(1 / guts,0.2,1);
 	}
 }
 

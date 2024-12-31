@@ -92,6 +92,7 @@
     {"id":{"name":"scr_audio","path":"scripts/scr_audio/scr_audio.yy",},},
     {"id":{"name":"scr_char_moves","path":"scripts/scr_char_moves/scr_char_moves.yy",},},
     {"id":{"name":"scr_char_movetemplates","path":"scripts/scr_char_movetemplates/scr_char_movetemplates.yy",},},
+    {"id":{"name":"scr_char_physics","path":"scripts/scr_char_physics/scr_char_physics.yy",},},
     {"id":{"name":"scr_char_select","path":"scripts/scr_char_select/scr_char_select.yy",},},
     {"id":{"name":"scr_char_shots","path":"scripts/scr_char_shots/scr_char_shots.yy",},},
     {"id":{"name":"scr_char_sprites","path":"scripts/scr_char_sprites/scr_char_sprites.yy",},},

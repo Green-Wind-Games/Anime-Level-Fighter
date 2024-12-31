@@ -436,24 +436,24 @@ function init_goku_ssj() {
 		}
 		loop_anim_middle_timer(3,3,120);
 		if value_in_range(frame,3,3) {
-			var _beam = create_shot(
-				30,
-				-25,
-				20,
-				0,
-				spr_glow_yellow,
-				3/4,
-				50,
-				3,
-				-3,
-				attacktype.beam,
-				attackstrength.heavy,
-				hiteffects.none
-			);
-			with(_beam) {
-				hit_limit = -1;
-			}
-			//fire_beam(20,-25,spr_kamehameha,2,0,50);
+			//var _beam = create_shot(
+			//	30,
+			//	-25,
+			//	20,
+			//	0,
+			//	spr_glow_yellow,
+			//	3/4,
+			//	50,
+			//	3,
+			//	-3,
+			//	attacktype.beam,
+			//	attackstrength.heavy,
+			//	hiteffects.none
+			//);
+			//with(_beam) {
+			//	hit_limit = -1;
+			//}
+			fire_beam(20,-25,spr_kamehameha_gold,2,0,50);
 			shake_screen(5,3);
 		}
 		return_to_idle();

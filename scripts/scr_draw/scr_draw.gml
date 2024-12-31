@@ -655,7 +655,7 @@ function draw_timer() {
 	var _timer_sprite = spr_timer;
 	var _timer_x = gui_width/2;
 	var _timer_y = gui_height - (sprite_get_height(_timer_sprite) - sprite_get_yoffset(_timer_sprite)) + 1;
-	var _timer_text = string(ceil(round_timer / 60));
+	var _timer_text = string(ceil(map_value(round_timer,0,round_timer_max,0,round_timer_visible_max)));
 	
 	draw_sprite(_timer_sprite,0,_timer_x,_timer_y);
 	
@@ -1021,7 +1021,7 @@ function draw_versus_results() {
 	if instance_number(obj_char) == 2 {
 		with(obj_char) {
 			if active_state == victory_state {
-				_text = name + " venceu!";
+				_text = display_name + " venceu!";
 				for(var i = 0; i < max_players; i++) {
 					if id == player[i] {
 						_text_color = player_color[i];

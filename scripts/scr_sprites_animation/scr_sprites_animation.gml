@@ -1,9 +1,10 @@
 function check_frame(_frame) {
 	if (frame != _frame) return false;
 	
-	if (frame_timer == 0) return true;
+	if frame_timer < 0 return false;
+	if frame_timer >= anim_speed return false;
 	
-	return false;
+	return true;
 }
 
 function loop_anim_middle(_start, _end) {
@@ -20,13 +21,12 @@ function loop_anim_middle_timer(_start, _end, _timer) {
 }
 
 function sprite_sequence(_sprites, _frameduration) {
-	if anim_timer >= (anim_duration - 3) {
-		show_debug_message("sprite sequence check");
-		for(var i = 0; i < array_length(_sprites) - 1; i++) {
-			if sprite == _sprites[i] {
-				change_sprite(_sprites[i+1],_frameduration,false);
-				break;
-			}
+	for(var i = 0; i < array_length(_sprites) - 1; i++) {
+		if sprite == _sprites[i] {
+			next_sprite = _sprites[i+1];
+			next_sprite_frame_duration = _frameduration;
+			next_sprite_anim_loop = false;
+			break;
 		}
 	}
 }

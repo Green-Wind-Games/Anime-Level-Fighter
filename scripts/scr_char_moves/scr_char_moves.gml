@@ -66,14 +66,17 @@ function check_moves() {
 	if (!ds_priority_empty(available_moves)) {
 		var _xspeed = xspeed;
 		var _yspeed = yspeed;
+		var _facing = facing;
 		while(!ds_priority_empty(available_moves)) {
 			var _state = ds_priority_find_max(available_moves);
 			ds_priority_delete_max(available_moves);
 			reset_cancels();
+			face_target();
 			change_state(_state);
 			if (active_state == idle_state) or (active_state == air_state) {
 				xspeed = _xspeed;
 				yspeed = _yspeed;
+				facing = _facing;
 				moved = false;
 			}
 			else {

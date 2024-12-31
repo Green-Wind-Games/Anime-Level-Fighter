@@ -44,8 +44,8 @@ function init_charstates() {
 				if sign(input.right-input.left) != 0 {
 					xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
 					var walk_anim_speed = width / abs(xspeed);
-					walk_anim_speed /= max(1,sprite_get_number(walk_sprite) / 5);
-					walk_anim_speed = max(1,round(walk_anim_speed));
+					walk_anim_speed /= max(1,sprite_get_number(walk_sprite) / 6);
+					walk_anim_speed = max(2,round(walk_anim_speed));
 					change_sprite(walk_sprite,walk_anim_speed,true);
 					xscale = abs(xscale) * sign(input.right-input.left) * facing;
 				}
