@@ -204,10 +204,37 @@ function init_genos_baseform() {
 	}
 	fireblast.run = function() {
 		if check_frame(3) {
-			repeat(2+level) {
-				create_kiblast(20,-35,spr_fireball);
-			}
 			spend_mp(1/2);
+			var i = 0;
+			var _shots = 1 + level;
+			repeat(_shots) {
+				with(create_shot(
+					20,
+					-35,
+					20,
+					map_value(i++,0,_shots,-2,2),
+					spr_glow_orange,
+					0.2,
+					100,
+					3,
+					-3,
+					attacktype.normal,
+					attackstrength.light,
+					hiteffects.fire
+				)) {
+					blend = true;
+					hit_script = function() {
+						create_particles(x,y,explosion_small_particle);
+					}
+					active_script = function() {
+						if y >= ground_height {
+							hit_script();
+							instance_destroy();
+						}
+					}
+					play_sound(snd_kiblast_fire);
+				}
+			}
 			if is_airborne {
 				xspeed = -2 * facing;
 				yspeed = -2;

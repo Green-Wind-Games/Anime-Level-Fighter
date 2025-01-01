@@ -159,11 +159,11 @@ player_color[i++] = make_color_rgb(255,0,255);
 player_color[i++] = make_color_rgb(255,128,0);
 player_color[i++] = make_color_rgb(128,64,32);
 
-base_max_xp = 1000;
+base_max_xp = 10000;
 max_level = 5;
 level_scaling = 0.35;
 
-base_max_hp = 20000;
+base_max_hp = 20000 * max_level;
 base_movespeed = 5;
 base_jumpspeed = 8;
 

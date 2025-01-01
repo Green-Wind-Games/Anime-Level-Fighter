@@ -282,7 +282,9 @@ function init_goku_baseform() {
 		if check_frame(6) {
 			play_sound(snd_dbz_beam_fire);
 		}
-		loop_anim_middle_timer(6,9,30);
+		if state_timer < 30 or value_in_range(combo_hits,1,20) {
+			loop_anim_middle(6,9);
+		}
 		if value_in_range(frame,6,9) {
 			//var _beam = create_shot(
 			//	30,
@@ -307,7 +309,7 @@ function init_goku_baseform() {
 				kaioken_active ? spr_kamehameha_red : spr_kamehameha,
 				1,
 				0,
-				50
+				80
 			);
 		}
 		return_to_idle();

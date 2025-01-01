@@ -323,23 +323,26 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	combo_damage_taken += dmg;
 	
-	var mp_gain = map_value(dmg,0,max_hp,0,max_mp);
-	var xp_gain = map_value(dmg,0,base_max_hp,0,base_max_xp);
+	var mp_gain = map_value(dmg,0,max_hp,0,max_mp) * 3;
+	var xp_gain = map_value(dmg,0,max_hp,0,base_max_xp) * 2;
 	
-	var attack_mp_gain = mp_gain * 2.4;
-	var attack_xp_gain = xp_gain * 1.6;
+	var attack_mp_gain = mp_gain * 1.0;
+	var attack_xp_gain = xp_gain * 1.0;
 	
-	var defend_mp_gain = mp_gain * 2.0;
-	var defend_xp_gain = xp_gain * 1.2;
+	var defend_mp_gain = mp_gain * 0.75;
+	var defend_xp_gain = xp_gain * 0.75;
 	
 	if !is_char(_attacker) {
-		attack_mp_gain *= 0.5;
-		attack_xp_gain *= 0.5;
+		attack_mp_gain *= 0.25;
+		attack_xp_gain *= 0.75;
 	}
 	
 	with(true_attacker) {
 		attack_xp_gain /= level / other.level;
 		defend_xp_gain *= level / other.level;
+		if super_active {
+			attack_xp_gain *= 2;
+		}
 	}
 	
 	mp += defend_mp_gain;

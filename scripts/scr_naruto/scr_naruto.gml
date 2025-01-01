@@ -392,24 +392,24 @@ function init_naruto_baseform() {
 	}
 	rasengan_dive.run = function() {
 		var _target_y = target_y - target.height - 10;
-		if value_in_range(frame,8,9)  {
-			xspeed = 10 * facing;
-			yspeed = 15;
-		}
-		if (frame <= 11) and (target_distance_x <= 10) {
-			if value_in_range(y,_target_y,target_y) {
+		if (frame <= 11) {
+			if (y < _target_y) {
+				loop_anim_middle(8,9);
+			}
+			if value_in_range(frame,8,9)  {
+				xspeed = 10 * facing;
+				yspeed = 15;
+			}
+			if value_in_range(y,_target_y,target_y) and (target_distance <= 10) {
 				xspeed = 0;
 				yspeed = 0;
 				x = target_x;
 				y = _target_y;
 			}
 		}
-		if (frame < 11) and (y < _target_y) and (yspeed > 0) {
-			loop_anim_middle(8,9);
-		}
 		
 		if (combo_hits > 0) {
-			loop_anim_middle_timer(10,11,50);
+			//loop_anim_middle_timer(10,11,50);
 		}
 		if value_in_range(frame,10,11) {
 			if check_frame(frame) {
@@ -433,7 +433,7 @@ function init_naruto_baseform() {
 				}
 			}
 		}
-		if check_frame(12) and (combo_hits > 0) {
+		if check_frame(12) {
 			with(target) {
 				y -= 1;
 			}
@@ -444,7 +444,7 @@ function init_naruto_baseform() {
 				0,
 				spr_rasengan,
 				1.5,
-				2000,
+				1600,
 				0,
 				10,
 				attacktype.hard_knockdown,

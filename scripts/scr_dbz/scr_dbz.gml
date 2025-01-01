@@ -100,7 +100,7 @@ function create_kiblast(_x,_y,_sprite) {
 		_x,
 		_y,
 		20,
-		random_range(-2,2),
+		sine_between(kiblast_count,max_kiblasts,-1.5,1.5),
 		_sprite,
 		32 / sprite_get_height(_sprite),
 		100,

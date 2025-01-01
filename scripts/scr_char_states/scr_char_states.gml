@@ -121,6 +121,7 @@ function init_charstates() {
 		can_cancel = true;
 		is_hit = false;
 		is_guarding = false;
+		face_target();
 		if land() {
 			exit;
 		}
@@ -129,14 +130,7 @@ function init_charstates() {
 		if land() {
 			exit;
 		}
-		
-		if previous_state == airdash_state
-		or previous_state == air_backdash_state {
-			if abs(xspeed) > (base_movespeed / 2) {
-				decelerate(1);
-			}
-			can_cancel = state_timer > 10;
-		}
+		face_target();
 		
 		if yspeed >= 0 {
 			if input.up {
@@ -235,7 +229,7 @@ function init_charstates() {
 	}
 	dash_stop_state.run = function() {
 		can_cancel = false;
-		decelerate(1);
+		decelerate();
 		if (state_timer > 10) or (xspeed == 0) {
 			change_state(idle_state);
 		}
@@ -258,7 +252,8 @@ function init_charstates() {
 	airdash_state.run = function() {
 		xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 		yspeed = 0;
-		if state_timer >= 6 {
+		if state_timer >= 10 {
+			xspeed = base_movespeed / 2 * facing;
 			change_state(air_state);
 		}
 	}
@@ -281,7 +276,8 @@ function init_charstates() {
 	air_backdash_state.run = function() {
 		xspeed = -move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 		yspeed = 0;
-		if state_timer >= 6 {
+		if state_timer >= 10 {
+			xspeed = base_movespeed / 2 * -facing;
 			change_state(air_state);
 		}
 	}

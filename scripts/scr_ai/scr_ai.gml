@@ -8,7 +8,7 @@ ai_level_max = 8;
 
 function change_ai_level(_level = ai_level) {
 	ai_level = clamp(round(_level),1,ai_level_max);
-	ai_think_interval = round(map_value(ai_level,1,ai_level_max,20,10));
+	ai_think_interval = round(map_value(ai_level,1,ai_level_max,16,8));
 	//ai_think_interval = 6;
 }
 
@@ -58,9 +58,9 @@ function ai_default_movement() {
 	var _y = 0;
 	
 	if chance(10) { _y = 1; }
-	if chance(30) { _y = -1; }
+	if chance(10 + (10 * max_air_moves)) { _y = -1; }
 	if chance(30) { _x = -facing; }
-	if chance(50) { _x = facing; }
+	if chance(40) { _x = facing; }
 	
 	input.up = _y < 0;
 	input.down = _y > 0;
@@ -77,10 +77,10 @@ function ai_default_movement() {
 		}
 	}
 	if (target_distance_x < 100) {
-		ai_input_move(backdash_state,1);
+		ai_input_move(backdash_state,10);
 	}
 	if (target_distance_x > 50) {
-		ai_input_move(dash_state,1);
+		ai_input_move(dash_state,10);
 	}
 }
 

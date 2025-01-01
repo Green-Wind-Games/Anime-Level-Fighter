@@ -1,7 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-max_hp = base_max_hp * max_level;
+max_hp = base_max_hp;
 hp = max_hp;
 previous_hp = hp;
 dead = false;
