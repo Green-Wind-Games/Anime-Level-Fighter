@@ -1,5 +1,72 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+function draw_chars() {
+	var draw_order = ds_priority_create();
+	with(obj_char) {
+		ds_priority_add(draw_order,id,depth);
+	}
+	while(!ds_priority_empty(draw_order)) {
+		with(ds_priority_find_max(draw_order)) {
+			var _x = x + (xoffset*facing);
+			var _y = y + yoffset;
+			var _shake = min(hitstop,5);
+			_x += sine_wave(hitstop,5,_shake,0);
+			_y += sine_wave(hitstop,3,_shake,0) * is_airborne;
+		
+			if flash {
+				gpu_set_fog(true,flash_color,0,0);
+			}
+
+			draw_sprite_ext(
+				sprite,
+				frame,
+				_x,
+				_y,
+				xscale*xstretch*facing,
+				yscale*ystretch,
+				rotation*facing*sign(xscale)*sign(xstretch),
+				color,
+				alpha
+			);
+
+			gpu_set_fog(false,c_white,0,0);
+			
+			draw_aura();
+		}
+		ds_priority_delete_max(draw_order);
+	}
+	ds_priority_destroy(draw_order);
+	with(obj_char) {
+		if id == superfreeze_activator continue;
+			
+		draw_script();
+	}
+	
+	draw_playerindicators();
+}
+
+function draw_char_shadows() {
+	var shadow_scale = -0.2;
+	var shadow_alpha = 0.5;
+	with(obj_char) {
+		var _x = x + (xoffset*facing);
+		var _y = ground_height;
+		var _shake = min(hitstop,5);
+		_y += map_value(y+yoffset,ground_height,0,-1,-(room_height/2)*shadow_scale);
+		_x += sine_wave(hitstop,5,_shake,0);
+		_y += sine_wave(hitstop,3,_shake,0);
+		
+		draw_sprite_ext(
+			sprite,
+			frame,
+			_x,
+			_y,
+			xscale*xstretch*facing,
+			yscale*ystretch*shadow_scale,
+			0,
+			c_black,
+			alpha * shadow_alpha
+		);
+	}
+}
 
 function draw_text_outlined(_x,_y,_text,_outlinecolor,_text_color,_scale = 1) {
 	draw_set_color(_outlinecolor);
@@ -75,76 +142,6 @@ function draw_my_playerindicator(_playerid = 0) {
 	
 	var text = "[P"+string(_playerid+1)+"]";
 	draw_text_outlined(indicator_x,indicator_y,text,c_black,player_color[_playerid],_scale);
-}
-
-function draw_chars() {
-	var draw_order = ds_priority_create();
-	with(obj_char) {
-		ds_priority_add(draw_order,id,depth);
-	}
-	while(!ds_priority_empty(draw_order)) {
-		with(ds_priority_find_max(draw_order)) {
-			var _x = x + (xoffset*facing);
-			var _y = y + yoffset;
-			var _shake = min(hitstop,5);
-			_x += sine_wave(hitstop,5,_shake,0);
-			_y += sine_wave(hitstop,3,_shake,0) * is_airborne;
-		
-			if flash {
-				gpu_set_fog(true,flash_color,0,0);
-			}
-
-			draw_sprite_ext(
-				sprite,
-				frame,
-				_x,
-				_y,
-				xscale*xstretch*facing,
-				yscale*ystretch,
-				rotation*facing*sign(xscale)*sign(xstretch),
-				color,
-				alpha
-			);
-
-			gpu_set_fog(false,c_white,0,0);
-			
-			draw_aura();
-		}
-		ds_priority_delete_max(draw_order);
-	}
-	ds_priority_destroy(draw_order);
-	with(obj_char) {
-		if id == superfreeze_activator continue;
-			
-		draw_script();
-	}
-	
-	draw_playerindicators();
-}
-
-function draw_char_shadows() {
-	var shadow_scale = -0.2;
-	var shadow_alpha = 0.5;
-	with(obj_char) {
-		var _x = x + (xoffset*facing);
-		var _y = ground_height;
-		var _shake = min(hitstop,5);
-		_y += map_value(y+yoffset,ground_height,0,-1,-(room_height/2)*shadow_scale);
-		_x += sine_wave(hitstop,5,_shake,0);
-		_y += sine_wave(hitstop,3,_shake,0);
-		
-		draw_sprite_ext(
-			sprite,
-			frame,
-			_x,
-			_y,
-			xscale*xstretch*facing,
-			yscale*ystretch*shadow_scale,
-			0,
-			c_black,
-			alpha * shadow_alpha
-		);
-	}
 }
 
 function draw_aura() {
