@@ -14,7 +14,7 @@ screen_fade_type = fade_types.normal;
 ground_height = room_height - floor(game_height * 0.2);
 		
 battle_x = room_width / 2;
-battle_y = -game_height;
+battle_y = -520;
 left_wall = 0;
 right_wall = room_width;
 
@@ -69,16 +69,18 @@ switch(room) {
 		round_state_timer = 0;
 		
 		var spawned_players = 0;
+		var spawned_team1_players = 0;
+		var spawned_team2_players = 0;
 		for(var i = 0; i < max_players; i++) {
 			if player_slot[i] != noone {
 				var _x = battle_x;
-				if spawned_players <= team1_members {
+				if spawned_players < team1_members {
 					_x -= _w2;
-					_x += _w4_t1 * (team1_members - spawned_players);
+					_x += _w4_t1 * (spawned_team1_players + 1);
 				}
 				else {
 					_x += _w2;
-					_x -= _w4_t2 * (team2_members - spawned_players);
+					_x -= _w4_t2 * (spawned_team2_players + 1);
 				}
 				var _y = battle_y;
 				with(instance_create(_x,_y,get_char_object(player_char[i]))) {
@@ -87,10 +89,12 @@ switch(room) {
 					if x <= battle_x {
 						team = 1;
 						facing = 1;
+						spawned_team1_players++
 					}
 					else {
 						team = 2;
 						facing = -1;
+						spawned_team2_players++;
 					}
 					change_state(enter_state);
 				}
