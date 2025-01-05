@@ -86,8 +86,9 @@ function draw_chars() {
 		with(ds_priority_find_max(draw_order)) {
 			var _x = x + (xoffset*facing);
 			var _y = y + yoffset;
-			_x += random(hitstop)*choose(1,-1);
-			_y += random(hitstop)*choose(1,-1)*is_airborne;
+			var _shake = min(hitstop,5);
+			_x += sine_wave(hitstop,5,_shake,0);
+			_y += sine_wave(hitstop,3,_shake,0) * is_airborne;
 		
 			if flash {
 				gpu_set_fog(true,flash_color,0,0);
@@ -127,9 +128,10 @@ function draw_char_shadows() {
 	with(obj_char) {
 		var _x = x + (xoffset*facing);
 		var _y = ground_height;
+		var _shake = min(hitstop,5);
 		_y += map_value(y+yoffset,ground_height,0,-1,-(room_height/2)*shadow_scale);
-		//_x += random(hitstop)*choose(1,-1);
-		//_y -= random(hitstop)*choose(1,-1)*is_airborne;
+		_x += sine_wave(hitstop,5,_shake,0);
+		_y += sine_wave(hitstop,3,_shake,0);
 		
 		draw_sprite_ext(
 			sprite,
@@ -593,6 +595,9 @@ function draw_playerhud() {
 			draw_set_halign(fa_left);
 			draw_set_valign(fa_top);
 			var playertext = "P" + string(i+1) + ": " + display_name;
+			if form_name != "base" {
+				playertext += " " + form_display_name;
+			}
 			//playertext += "\n";
 			playertext += " (Level " + string(level) + ")"; 
 			var playertext_scale = (hp_bar_height - 2) / string_height(playertext);
@@ -719,12 +724,16 @@ function draw_my_combo_counter(_x,_y,_color) {
 		draw_set_valign(fa_top);
 		draw_set_font(fnt_combo);
 				
-		var _text = string(combo_hits) + " acertos!";
-		_text += "\n" + string(combo_damage) + " de dano!";
+		var _text = string(combo_hits) + " hit";
+		if combo_hits > 1 {
+			_text += "s";
+		}
+		_text += "!" + "\n" + string(combo_damage) + " damage!";
 				
 		if (hitstop > 0) and (round_state != roundstates.pause) {
-			_x += random(hitstop) * choose(1,-1);
-			_y += random(hitstop) * choose(1,-1);
+			var _shake = min(hitstop,5);
+			_x += sine_wave(hitstop,5,_shake,0);
+			_y += sine_wave(hitstop,3,_shake,0);
 		}
 				
 		draw_text_outlined(
@@ -951,7 +960,7 @@ function draw_pause() {
 	draw_set_font(fnt_hud);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
-	draw_text(gui_width/2,gui_height/2,"Jogo Pausado");
+	draw_text(gui_width/2,gui_height/2,"Pause!");
 }
 
 function draw_countdown() {
@@ -1021,7 +1030,11 @@ function draw_versus_results() {
 	if instance_number(obj_char) == 2 {
 		with(obj_char) {
 			if active_state == victory_state {
-				_text = display_name + " venceu!";
+				_text = display_name;
+				if form_name != "base" {
+					_text += form_display_name;
+				}
+				_text += " wins!";
 				for(var i = 0; i < max_players; i++) {
 					if id == player[i] {
 						_text_color = player_color[i];

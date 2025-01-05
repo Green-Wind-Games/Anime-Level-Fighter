@@ -2,7 +2,9 @@ function init_goku_ssj() {
 	init_charsprites("goku_ssj");
 
 	name = "goku";
-	display_name = "Goku Super Saiyajin";
+	form_name = "ssj";
+	display_name = "Goku";
+	form_display_name = "Super Saiyan";
 	theme = mus_dbfz_space;
 	universe = universes.dragonball;
 

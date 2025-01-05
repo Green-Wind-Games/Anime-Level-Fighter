@@ -110,7 +110,9 @@ draw_script = function() {};
 
 char_id = noone;
 name = "ERROR";
+form_name = "base";
 display_name = "ERROR";
+form_display_name = "ERROR";
 universe = noone;
 theme = noone;
 

@@ -20,7 +20,7 @@ function open_menu(_x,_y,_options,_description = -1) {
 		height_line = string_height("ABC");
 		height = height_line * (options_count + (description != -1));
 		
-		width_full = width + margin;
+		width_full = width + (margin*2);
 		height_full = height + (margin*2);
 		x -= (width_full / 2);
 		y -= (height_full / 2);

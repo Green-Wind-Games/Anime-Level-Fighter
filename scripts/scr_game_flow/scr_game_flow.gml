@@ -29,14 +29,14 @@ function update_gamestate() {
 				gui_width/2,
 				gui_height/2,
 				[
-					//["Modo História",-1],
-					//["Modo Arcade",-1],
-					["Modo Versus",goto_versus_select],
-					//["Treinamento",-1],
-					//["Configurações",-1],
-					["Sair do Jogo",game_end]
+					//["Story Mode",-1],
+					//["Arcade Mode",-1],
+					["Versus Mode",goto_versus_select],
+					//["Training Mode",-1],
+					//["Settings",-1],
+					["Quit Game",game_end]
 				],
-				"Menu Principal"
+				"Main Menu"
 			);
 		}
 		break;
