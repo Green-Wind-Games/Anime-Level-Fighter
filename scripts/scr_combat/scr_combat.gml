@@ -47,24 +47,33 @@ enum hiteffects {
 }
 
 function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _strength, _hiteffect) {
+	var true_attacker = _attacker;
+	while(!is_char(true_attacker)) {
+		true_attacker = true_attacker.owner;
+		if !instance_exists(true_attacker) {
+			true_attacker = noone;
+			break;
+		}
+	}
+	
+	target = true_attacker;
+	
 	var _xspeed = xspeed;
 	var _yspeed = yspeed;
 	xspeed = _xknockback * _attacker.facing;
 	yspeed = _yknockback;
 	
-	hitstun = 15 + (_strength * 5);
+	hitstun = 20 + (_strength * 5);
 	blockstun = hitstun - 5;
-	hitstop = 8 + power(_strength,2);
+	hitstop = 8 + power(_strength,1.5);
 	
-	if !is_char(_attacker) {
-		hitstop *= 0.5;
-		target = _attacker.owner;
-	}
-	else {
+	if is_char(_attacker) {
 		var _recovery = _attacker.anim_duration - _attacker.anim_timer;
 		hitstun = max(hitstun,_recovery);
 		blockstun = _recovery - 5;
-		target = _attacker;
+	}
+	else {
+		hitstop *= 0.5;
 	}
 	
 	hitstun = max(hitstun - (combo_hits_taken / 4), 10);

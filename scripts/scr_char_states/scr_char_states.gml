@@ -424,7 +424,7 @@ function init_charstates() {
 		xspeed = max(30,abs(xspeed)) * _x;
 		if state_timer mod ceil(width / max(1,abs(xspeed))) == 0 {
 			create_specialeffect(
-				spr_launch_wind_spin,
+				spr_wind_spin,
 				x,
 				y-height_half,
 				1/3,

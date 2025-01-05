@@ -1,45 +1,22 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
-enum playerchars {
-	goku,
-	vegeta,
-	trunks,
-	freeza,
-	cell,
-	broly,
-	
-	naruto,
-	sasuke,
-	kakashi,
-	pain,
-	madara,
-	itachi,
-	
-	saitama,
-	genos,
-	
-	allchars
+function get_char_sprite(_id) {
+	return char_list[_id].sprite;
 }
 
-enum universes {
-	dragonball,
-	narutoshippuden,
-	onepiece,
-	jojos,
-	onepunchman,
-	
-	uniforce,
-	
-	alluniverses
+function get_char_portrait(_id) {
+	return char_list[_id].portrait;
 }
 
-globalvar	max_characters, 
-			chars_per_row, chars_per_column;
-			
-max_characters = playerchars.allchars;
-chars_per_row = min(max_characters,6);
-chars_per_column = ceil(max_characters / chars_per_row);
+function get_char_icon(_id) {
+	return char_list[_id].icon;
+}
+
+function get_char_name(_id) {
+	return char_list[_id].name;
+}
+
+function get_char_object(_id) {
+	return char_list[_id].object;
+}
 
 function update_charselect() {
 	if (next_game_state == -1) {
@@ -186,6 +163,8 @@ function charselect_startgame() {
 }
 
 function draw_charselect() {
+	draw_charselect_boxes();
+	
 	var active_players = 0;
 	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
@@ -218,7 +197,7 @@ function draw_charselect() {
 					case input_types.wasd: _text += "WASD"; break;
 					case input_types.numpad: _text += "Arrows"; break;
 					case input_types.touch: _text += "Touch"; break;
-					case input_types.ai: _text += "Bot"; break;
+					case input_types.ai: _text += "AI"; break;
 				}
 				_text += ")";
 			}
@@ -239,20 +218,21 @@ function draw_charselect() {
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);
 	draw_set_color(c_white);
-	
-	draw_charselect_boxes();
 }
 
 function draw_charselect_boxes() {
-	var box_size = ceil(200 / chars_per_row);
-	var icon_size = ceil(box_size * 0.75);
-	
 	var _w = gui_width;
 	var _h = gui_height;
 	var _w2 = _w / 2;
 	var _h2 = _h / 2;
-	var _x = _w2 - (box_size * (chars_per_row / 2));
-	var _y = box_size / 2;
+	
+	var _x = _w2;
+	var _y = 10;
+	
+	var box_size = (_h2 - (_y * 2)) / chars_per_column;
+	var icon_size = box_size * 0.8;
+	
+	_x -= (box_size * (chars_per_row / 2));
 	
 	var _char_i = 0;
 	
@@ -293,59 +273,4 @@ function draw_charselect_boxes() {
 			_char_i++;
 		}
 	}
-}
-
-function get_char_sprite(_id) {
-	switch(_id) {
-		case playerchars.goku: return spr_goku_idle; break;
-		
-		case playerchars.naruto: return spr_naruto_idle; break;
-		
-		case playerchars.genos: return spr_genos_idle; break;
-	}
-	return noone;
-}
-
-function get_char_portrait(_id) {
-	switch(_id) {
-		case playerchars.goku: return spr_goku_portrait; break;
-		
-		case playerchars.naruto: return spr_naruto_portrait; break;
-		
-		case playerchars.genos: return spr_genos_portrait; break;
-	}
-	return noone;
-}
-
-function get_char_icon(_id) {
-	switch(_id) {
-		case playerchars.goku: return spr_goku_icon; break;
-		
-		case playerchars.naruto: return spr_naruto_icon; break;
-		
-		case playerchars.genos: return spr_genos_icon; break;
-	}
-	return noone;
-}
-
-function get_char_name(_id) {
-	switch(_id) {
-		case playerchars.goku: return "Goku"; break;
-		
-		case playerchars.naruto: return "Naruto"; break;
-		
-		case playerchars.genos: return "Genos"; break;
-	}
-	return "";
-}
-
-function get_char_object(_id) {
-	switch(_id) {
-		case playerchars.goku: return obj_goku; break;
-		
-		case playerchars.naruto: return obj_naruto; break;
-		
-		case playerchars.genos: return obj_genos; break;
-	}
-	return noone;
 }

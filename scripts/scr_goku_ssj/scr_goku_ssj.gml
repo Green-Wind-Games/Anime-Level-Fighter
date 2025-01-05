@@ -25,8 +25,8 @@ function init_goku_ssj() {
 	
 	add_kiblast_state(
 		7,
-		spr_goku_ssj_special_ki_blast,
-		spr_goku_ssj_special_ki_blast2,
+		spr_goku_ssj_special_kiblast,
+		spr_goku_ssj_special_kiblast2,
 		spr_kiblast_yellow
 	);
 	

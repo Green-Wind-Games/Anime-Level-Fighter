@@ -8,8 +8,8 @@ function draw_chars() {
 			var _x = x + (xoffset*facing);
 			var _y = y + yoffset;
 			var _shake = min(hitstop,5);
-			_x += sine_wave(hitstop,5,_shake,0);
-			_y += sine_wave(hitstop,3,_shake,0) * is_airborne;
+			_x += sine_wave(hitstop,4,_shake,0);
+			_y += sine_wave(hitstop+1,4,_shake,0) * is_airborne;
 		
 			if flash {
 				gpu_set_fog(true,flash_color,0,0);
@@ -51,8 +51,8 @@ function draw_char_shadows() {
 		var _y = ground_height;
 		var _shake = min(hitstop,5);
 		_y += map_value(y+yoffset,ground_height,0,-1,-(room_height/2)*shadow_scale);
-		_x += sine_wave(hitstop,5,_shake,0);
-		_y += sine_wave(hitstop,3,_shake,0);
+		_x += sine_wave(hitstop,4,_shake,0);
+		_y += sine_wave(hitstop+1,4,_shake,0) * is_airborne;
 		
 		draw_sprite_ext(
 			sprite,
@@ -729,8 +729,8 @@ function draw_my_combo_counter(_x,_y,_color) {
 				
 		if (hitstop > 0) and (round_state != roundstates.pause) {
 			var _shake = min(hitstop,5);
-			_x += sine_wave(hitstop,5,_shake,0);
-			_y += sine_wave(hitstop,3,_shake,0);
+			_x += sine_wave(hitstop,4,_shake,0);
+			_y += sine_wave(hitstop+1,4,_shake,0);
 		}
 				
 		draw_text_outlined(
@@ -897,8 +897,8 @@ function draw_versus() {
 			);
 			
 			if screen_shake_timer > 0 {
-				_portrait_x += random(screen_shake_intensity) * choose(1,-1);
-				_portrait_y += random(screen_shake_intensity) * choose(1,-1);
+				_portrait_x += sine_wave(screen_shake_timer,4,screen_shake_intensity,0);
+				_portrait_y += sine_wave(screen_shake_timer+1,4,screen_shake_intensity,0);
 			}
 			
 			draw_sprite_ext(
@@ -929,7 +929,7 @@ function draw_versus() {
 	var vs_scale = (_w / 5) / sprite_get_width(spr_versus);
 	var vs_x = _w / 2;
 	var vs_y = _h * 0.5;
-	vs_y += gui_height * power(map_value(_t3,0,1,1,0),3);
+	vs_y += gui_height * power(1-_t3,3);
 	vs_y -= gui_height * power(_t4,3);
 	if screen_shake_timer > 0 {
 		vs_x += random(screen_shake_intensity) * choose(1,-1);

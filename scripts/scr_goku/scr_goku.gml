@@ -25,8 +25,8 @@ function init_goku_baseform() {
 	
 	add_kiblast_state(
 		7,
-		spr_goku_special_ki_blast,
-		spr_goku_special_ki_blast2,
+		spr_goku_special_kiblast,
+		spr_goku_special_kiblast2,
 		spr_glow_blue
 	);
 	

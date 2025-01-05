@@ -119,7 +119,7 @@ round_is_infinite = false;
 
 game_speed = 1;
 
-max_players = 4;
+max_players = 8;
 
 for(var i = 0; i < max_players; i++) {
 	player[i] = noone;

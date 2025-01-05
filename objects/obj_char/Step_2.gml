@@ -35,7 +35,7 @@ switch(sprite) {
 	rotation = point_direction(0,0,abs(xspeed),-yspeed);
 	if anim_timer mod 15 == 1 {
 		char_specialeffect(
-			spr_launch_wind_spin,
+			spr_wind_spin,
 			x,
 			y-height_half,
 			1/4,

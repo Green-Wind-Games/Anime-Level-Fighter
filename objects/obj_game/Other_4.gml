@@ -24,8 +24,25 @@ for(var i = 0; i < max_players; i++) {
 		active_players++;
 	}
 }
-var _w = game_width / 3;
+
+var team1_members = 0;
+var team2_members = 0;
+for(var i = 0; i < max_players; i++) {
+	if player_slot[i] != noone {
+		if i < ceil(active_players / 2) {
+			team1_members++;
+		}
+		else {
+			team2_members++;
+		}
+	}
+}
+var _w = game_width / 2;
 var _w2 = _w / 2;
+var _w3 = _w2 / 2;
+
+var _w4_t1 = _w3 / max(1,team1_members);
+var _w4_t2 = _w3 / max(1,team2_members);
 
 switch(room) {
 	case rm_versus_charselect:
@@ -51,12 +68,18 @@ switch(room) {
 		round_timer = round_timer_max;
 		round_state_timer = 0;
 		
-		var _x1 = battle_x - _w2;
-		var _x2 = battle_x + _w2;
 		var spawned_players = 0;
 		for(var i = 0; i < max_players; i++) {
 			if player_slot[i] != noone {
-				var _x = map_value(spawned_players,0,active_players-1,_x1,_x2);
+				var _x = battle_x;
+				if spawned_players <= team1_members {
+					_x -= _w2;
+					_x += _w4_t1 * (team1_members - spawned_players);
+				}
+				else {
+					_x += _w2;
+					_x -= _w4_t2 * (team2_members - spawned_players);
+				}
 				var _y = battle_y;
 				with(instance_create(_x,_y,get_char_object(player_char[i]))) {
 					player[i] = id;

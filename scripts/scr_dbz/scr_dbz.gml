@@ -126,8 +126,8 @@ function create_kiblast(_x,_y,_sprite) {
 }
 
 function ssj2_sparks() {
-	var _scale = random(0.75);
-	var _spark = char_specialeffect(
+	var _scale = random_range(0.3,0.8);
+	var _spark = create_specialeffect(
 		spr_electric_spark,
 		random(width*0.25) * choose(1,-1),
 		random_range(height*0.25,height*0.75) * -1,

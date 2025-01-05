@@ -27,9 +27,9 @@ function init_enker() {
 	
 	add_kiblast_state(
 		5,
-		spr_enker_special_ki_blast,
-		spr_enker_special_ki_blast2,
-		spr_kiblast_green
+		spr_enker_special_windblast,
+		spr_enker_special_windblast2,
+		spr_glow_green
 	);
 
 	char_script = function() {
@@ -42,7 +42,17 @@ function init_enker() {
 			greenwind_active = true;
 			mp -= greenwind_mp_drain;
 			if greenwind_timer mod 30 == 1 {
-				greenwind_sparks();
+				create_specialeffect(
+					spr_wind_spin,
+					x,
+					y-height_half,
+					1,
+					1,
+					90,
+					0,
+					make_color_rgb(128,255,128)
+				);
+				play_sound(snd_chakra_loop,1,1.5);
 			}
 		}
 		else {
