@@ -45,8 +45,8 @@ switch(sprite) {
 			spr_wind_spin,
 			x,
 			y-height_half,
-			1/4,
-			1/4,
+			1,
+			1,
 			point_direction(0,0,xspeed,yspeed)
 		);
 	}

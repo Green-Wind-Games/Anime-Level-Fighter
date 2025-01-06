@@ -427,8 +427,8 @@ function init_charstates() {
 				spr_wind_spin,
 				x,
 				y-height_half,
-				1/3,
-				1/3,
+				1,
+				1,
 				point_direction(0,0,abs(xspeed),yspeed)
 			)
 		}
@@ -649,7 +649,7 @@ function init_charstates() {
 		flash_sprite();
 		aura_sprite = transform_aura;
 		superfreeze(3 * 60);
-		shake_screen(superfreeze_timer,2);
+		shake_screen(superfreeze_timer,1);
 		play_sound(snd_energy_start);
 		level_up();
 		can_cancel = false;
@@ -667,7 +667,7 @@ function init_charstates() {
 	transform_state.start = function() {
 		change_sprite(charge_loop_sprite,3,true);
 		superfreeze(2 * 60);
-		shake_screen(superfreeze_timer,2);
+		shake_screen(superfreeze_timer,1);
 		play_voiceline(voice_transform);
 		can_cancel = false;
 		aura_sprite = transform_aura;
@@ -718,7 +718,7 @@ function init_charstates() {
 				loop_sound(charge_loop_sound);
 				
 				if screen_shake_timer <= 1 {
-					shake_screen(5,2);
+					shake_screen(5,1);
 				}
 			}
 			else {

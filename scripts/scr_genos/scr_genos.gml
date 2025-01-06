@@ -374,7 +374,7 @@ function init_genos_baseform() {
 		}
 		if check_frame(5) {
 			play_sound(snd_dbz_beam_fire);
-			shake_screen(20,2);
+			shake_screen(20,1);
 		}
 		return_to_idle();
 	}

@@ -389,7 +389,7 @@ function init_goku_baseform() {
 		if check_frame(6) {
 			play_voiceline(snd_goku_kamehameha_fire);
 			play_sound(snd_dbz_beam_fire);
-			shake_screen(120,2);
+			shake_screen(120,1);
 		}
 		return_to_idle();
 	}
@@ -545,7 +545,7 @@ function init_goku_baseform() {
 								get_hit(other,8000,1,-12,attacktype.hard_knockdown,attackstrength.ultimate,hiteffects.none);
 								x = other.x;
 								y = ground_height - 1;
-								shake_screen(20,5);
+								shake_screen(20,1);
 							}
 						}
 						create_particles(x,y,explosion_large_particle);
@@ -602,7 +602,7 @@ function init_goku_baseform() {
 		aura_sprite = spr_aura_dbz_yellow;
 		xspeed = 0;
 		yspeed = 0;
-		shake_screen(superfreeze_timer,2);
+		shake_screen(superfreeze_timer,1);
 		loop_sound(snd_energy_loop);
 		if superfreeze_timer <= 5 {
 			transform(next_form);

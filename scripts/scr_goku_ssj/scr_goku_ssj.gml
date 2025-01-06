@@ -400,7 +400,7 @@ function init_goku_ssj() {
 		if check_frame(6) {
 			play_voiceline(snd_goku_kamehameha_fire);
 			play_sound(snd_dbz_beam_fire);
-			shake_screen(120,2);
+			shake_screen(120,1);
 		}
 		return_to_idle();
 	}
@@ -426,7 +426,7 @@ function init_goku_ssj() {
 		if check_frame(2) {
 			play_voiceline(snd_goku_kamehameha_fire);
 			play_sound(snd_dbz_beam_fire);
-			shake_screen(120,2);
+			shake_screen(120,1);
 		}
 		loop_anim_middle_timer(3,3,120);
 		if value_in_range(frame,3,3) {

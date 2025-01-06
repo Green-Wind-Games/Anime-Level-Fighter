@@ -93,7 +93,7 @@ function auto_levelup() {
 	
 	if is_hit return false;
 	if is_guarding return false;
-	//if !can_cancel return false;
+	if !can_cancel return false;
 	
 	if object_exists(next_form) {
 		var _nextform = instance_create(0,0,next_form);
@@ -105,7 +105,7 @@ function auto_levelup() {
 		change_state(levelup_state);
 		xp = 0;
 		play_voiceline(voice_powerup);
-		play_chartheme(theme);
+		play_chartheme(id);
 	}
 	can_cancel = false;
 	return true;
