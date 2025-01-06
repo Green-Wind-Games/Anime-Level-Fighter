@@ -107,7 +107,7 @@ function init_enker() {
 	light_attack2.run = function() {
 		basic_medium_attack(2,hiteffects.slash);
 		if check_frame(2) {
-			char_specialeffect(spr_slash,width_half,-height_half,1/2,1/2);
+			char_specialeffect(spr_slash,16,-32,1/2,1/2);
 		}
 	}
 
@@ -120,7 +120,7 @@ function init_enker() {
 	light_attack3.run = function() {
 		basic_heavy_lowattack(3,hiteffects.slash);
 		if check_frame(3) {
-			char_specialeffect(spr_slash2,0,-height,0.75,-0.75);
+			char_specialeffect(spr_slash2,0,-64,0.75,-0.75);
 		}
 	}
 	
@@ -160,7 +160,7 @@ function init_enker() {
 	medium_attack.run = function() {
 		basic_medium_lowattack(2,hiteffects.slash);
 		if check_frame(2) {
-			char_specialeffect(spr_slash2,width*1.75,-height*0.75,1/2,-1/2);
+			char_specialeffect(spr_slash2,32,-32,1/2,-1/2);
 		}
 	}
 	
@@ -177,7 +177,7 @@ function init_enker() {
 		}
 		basic_medium_attack(3,hiteffects.slash);
 		if check_frame(3) {
-			char_specialeffect(spr_slash3,width,-height_half,1,1);
+			char_specialeffect(spr_slash3,24,-32,1,1);
 		}
 	}
 	
@@ -194,7 +194,7 @@ function init_enker() {
 		}
 		basic_medium_airattack(3,hiteffects.slash);
 		if check_frame(3) {
-			char_specialeffect(spr_slash3,width,-height_half,1,1);
+			char_specialeffect(spr_slash3,24,-32,1,1);
 		}
 	}
 
@@ -207,7 +207,7 @@ function init_enker() {
 	heavy_attack.run = function() {
 		basic_heavy_attack(2,hiteffects.slash);
 		if check_frame(2) {
-			char_specialeffect(spr_slash,width,-height,1/2,-1/2);
+			char_specialeffect(spr_slash,24,-32,0.75,0.75);
 		}
 	}
 
@@ -218,9 +218,9 @@ function init_enker() {
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	launcher_attack.run = function() {
-		basic_heavy_lowattack(3,hiteffects.slash);
-		if check_frame(3) {
-			char_specialeffect(spr_slash2,width,-height,1/2,-1/2);
+		basic_heavy_lowattack(2,hiteffects.slash);
+		if check_frame(2) {
+			char_specialeffect(spr_slash2,24,-48,0.75,-0.75);
 		}
 	}
 
@@ -233,7 +233,7 @@ function init_enker() {
 	heavy_airattack.run = function() {
 		basic_heavy_airattack(2,hiteffects.slash);
 		if check_frame(2) {
-			char_specialeffect(spr_slash,width,-height,1/2,1/2);
+			char_specialeffect(spr_slash,24,-32,0.75,0.75);
 		}
 	}
 	
@@ -257,8 +257,8 @@ function init_enker() {
 				-35,
 				20,
 				sine_wave(windblast_count,max_windblasts/2,2,0),
-				windblast_sprite,
-				32 / sprite_get_height(windblast_sprite),
+				windblast_shot_sprite,
+				32 / sprite_get_height(windblast_shot_sprite),
 				100,
 				3,
 				-3,
@@ -273,21 +273,25 @@ function init_enker() {
 						spr_wind_spin,
 						0,
 						0,
-						0.2,
-						0.2,
+						0.5,
+						0.5,
 						point_direction(0,0,abs(xspeed),yspeed),
 						0,
 						greenwind_color
 					);
 				}
 				hit_script = function() {
+					var _dir = point_direction(0,0,abs(xspeed),yspeed);
+					var _xspeed = lengthdir_x(1,_dir);
+					var _yspeed = lengthdir_y(1,_dir);
 					with(create_shot(
 						0,
 						0,
-						abs(xspeed/2),
-						yspeed/2,
+						_xspeed,
+						_yspeed,
 						spr_wind_spin,
 						0.5,
+						5,
 						1,
 						-1,
 						attacktype.normal,
@@ -307,13 +311,12 @@ function init_enker() {
 					}
 				}
 				play_sound(snd_dbz_beam_fire,0.5,1.5);
-				return id;
 			}
 			if is_airborne {
 				xspeed = -2 * facing;
 				yspeed = -2;
 			}
-			windblast_count += 1;
+			windblast_count++;
 			
 			add_cancel(wind_blast);
 			can_cancel = (windblast_count < max_windblasts) and (check_mp(1/max_windblasts));
