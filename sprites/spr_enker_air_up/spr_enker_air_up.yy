@@ -23,7 +23,7 @@
   ],
   "name":"spr_enker_air_up",
   "nineSlice":null,
-  "origin":4,
+  "origin":7,
   "parent":{
     "name":"Enker Base Sprites",
     "path":"folders/Chars/Uni-Force Chars/Enker/Enker Sprites/Enker Base Sprites.yy",
@@ -76,7 +76,7 @@
     "visibleRange":null,
     "volume":1.0,
     "xorigin":15,
-    "yorigin":27,
+    "yorigin":54,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

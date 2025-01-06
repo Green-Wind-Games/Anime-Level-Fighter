@@ -242,9 +242,23 @@ function timestop(_duration = 30) {
 }
 
 function superfreeze(_duration = 30) {
-	superfreeze_active = true;
-	superfreeze_activator = id;
-	superfreeze_timer = _duration;
+	if _duration > 0 {
+		superfreeze_active = true;
+		superfreeze_activator = id;
+		superfreeze_timer = _duration;
+	}
+}
+
+function activate_special() {
+	if special_state != active_state {
+		special_state = active_state;
+		play_sound(snd_activate_super,1,1.25);
+		create_particles(
+			x,
+			y-height_half,
+			super_activate_particle
+		);
+	}
 }
 
 function activate_super(_duration = 30) {
@@ -263,7 +277,7 @@ function activate_super(_duration = 30) {
 function activate_ultimate(_duration = 60) {
 	xspeed = 0;
 	yspeed = 0;
-	super_state = active_state;
+	ultimate_state = active_state;
 	superfreeze(_duration);
 	play_sound(snd_activate_ultimate);
 	create_particles(
@@ -274,8 +288,40 @@ function activate_ultimate(_duration = 60) {
 }
 
 function deactivate_super() {
+	special_state = noone;
 	super_state = noone;
+	ultimate_state = noone;
+	
+	special_active = false;
 	super_active = false;
+	ultimate_active = false;
+}
+
+function attempt_special(_cost, _condition = true) {
+	if !check_mp(_cost) return false;
+	if !_condition return false;
+	
+	activate_special();
+	spend_mp(_cost);
+	return true;
+}
+
+function attempt_super(_cost, _condition = true) {
+	if !check_mp(_cost) return false;
+	if !_condition return false;
+	
+	activate_super();
+	spend_mp(_cost);
+	return true;
+}
+
+function attempt_ultimate(_cost, _condition = true) {
+	if !check_mp(_cost) return false;
+	if !_condition return false;
+	
+	activate_ultimate();
+	spend_mp(_cost);
+	return true;
 }
 
 function check_mp(_stocks) {

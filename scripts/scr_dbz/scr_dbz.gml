@@ -56,13 +56,12 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_kiblastsprite) {
 	
 	kiblast = new charstate();
 	kiblast.start = function() {
-		if check_mp(1/max_kiblasts) {
-			if sprite == kiblast_sprite {
-				change_sprite(kiblast_sprite2,frame_duration,false);
-			}
-			else {
-				change_sprite(kiblast_sprite,2,false);
-			}
+		if attempt_special(1/max_kiblasts) {
+			change_sprite(
+				sprite == kiblast_sprite2 ? kiblast_sprite : kiblast_sprite2,
+				2,
+				false
+			);
 		}
 		else {
 			change_state(idle_state);
@@ -78,7 +77,6 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_kiblastsprite) {
 				yspeed = -2;
 			}
 			kiblast_count += 1;
-			spend_mp(1/max_kiblasts);
 		}
 		if frame > 3 {
 			add_cancel(kiblast);
@@ -100,7 +98,7 @@ function create_kiblast(_x,_y,_sprite) {
 		_x,
 		_y,
 		20,
-		sine_between(kiblast_count,max_kiblasts,-1.5,1.5),
+		sine_wave(kiblast_count,max_kiblasts/2,2,0),
 		_sprite,
 		32 / sprite_get_height(_sprite),
 		100,

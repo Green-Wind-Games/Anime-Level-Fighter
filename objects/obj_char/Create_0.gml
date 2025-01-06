@@ -77,8 +77,13 @@ air_movelist[0][0] = noone;
 cancelable_moves = ds_list_create();
 can_cancel = true;
 
+special_state = noone;
 super_state = noone;
+ultimate_state = noone;
+	
+special_active = false;
 super_active = false;
+ultimate_active = false;
 
 beam = noone;
 
@@ -114,7 +119,9 @@ form_name = "base";
 display_name = "ERROR";
 form_display_name = "ERROR";
 universe = noone;
+
 theme = noone;
+theme_pitch = 1;
 
 init_physics();
 init_charsprites("goku");

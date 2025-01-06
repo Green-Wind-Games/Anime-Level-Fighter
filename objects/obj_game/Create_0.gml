@@ -161,9 +161,9 @@ player_color[i++] = make_color_rgb(128,64,32);
 
 base_max_xp = 10000;
 max_level = 5;
-level_scaling = 0.35;
+level_scaling = 0.5;
 
-base_max_hp = 10000 * max_level;
+base_max_hp = base_max_xp * max_level;
 base_movespeed = 5;
 base_jumpspeed = 8;
 

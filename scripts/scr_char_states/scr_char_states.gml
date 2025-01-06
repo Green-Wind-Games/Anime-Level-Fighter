@@ -649,6 +649,7 @@ function init_charstates() {
 		flash_sprite();
 		aura_sprite = transform_aura;
 		superfreeze(3 * 60);
+		shake_screen(superfreeze_timer,2);
 		play_sound(snd_energy_start);
 		level_up();
 		can_cancel = false;
@@ -656,7 +657,6 @@ function init_charstates() {
 	levelup_state.run = function() {
 		xspeed = 0;
 		yspeed = 0;
-		shake_screen(5,2);
 		if !superfreeze_active {
 			aura_sprite = noone;
 			change_state(idle_state);
@@ -667,6 +667,7 @@ function init_charstates() {
 	transform_state.start = function() {
 		change_sprite(charge_loop_sprite,3,true);
 		superfreeze(2 * 60);
+		shake_screen(superfreeze_timer,2);
 		play_voiceline(voice_transform);
 		can_cancel = false;
 		aura_sprite = transform_aura;
@@ -674,7 +675,6 @@ function init_charstates() {
 	transform_state.run = function() {
 		xspeed = 0;
 		yspeed = 0;
-		shake_screen(5,2);
 		loop_sound(snd_energy_loop);
 		if superfreeze_timer <= 5 {
 			transform(next_form);
@@ -716,8 +716,10 @@ function init_charstates() {
 				}
 			
 				loop_sound(charge_loop_sound);
-			
-				shake_screen(5,2);
+				
+				if screen_shake_timer <= 1 {
+					shake_screen(5,2);
+				}
 			}
 			else {
 				change_sprite(charge_stop_sprite,3,false);

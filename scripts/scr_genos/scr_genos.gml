@@ -146,7 +146,7 @@ function init_genos_baseform() {
 
 	dropkick = new charstate();
 	dropkick.start = function() {
-		if !dropkick_cooldown {
+		if attempt_special(1/2,(!dropkick_cooldown)) {
 			change_sprite(spr_genos_special_dropkick,2,false);
 			dropkick_cooldown = dropkick_cooldown_duration;
 			xspeed = (10 + (level * 3)) * facing;
@@ -195,7 +195,7 @@ function init_genos_baseform() {
 
 	fireblast = new charstate();
 	fireblast.start = function() {
-		if check_mp(1/2) {
+		if attempt_special(1/2) {
 			change_sprite(spr_genos_special_blast,3,false);
 		}
 		else {
@@ -204,7 +204,6 @@ function init_genos_baseform() {
 	}
 	fireblast.run = function() {
 		if check_frame(3) {
-			spend_mp(1/2);
 			var i = 0;
 			var _shots = 1 + level;
 			repeat(_shots) {
@@ -247,8 +246,10 @@ function init_genos_baseform() {
 
 	machinegun_blows = new charstate();
 	machinegun_blows.start = function() {
-		change_sprite(spr_genos_attack_punch_straight,2,true);
-		play_voiceline(voice_attack,50,false);
+		if attempt_special(1/2) {
+			change_sprite(spr_genos_attack_punch_straight,2,true);
+			play_voiceline(voice_attack,50,false);
+		}
 	}
 	machinegun_blows.run = function() {
 		xspeed = 1 * facing;
@@ -276,9 +277,14 @@ function init_genos_baseform() {
 				}
 			}
 		}
-		if state_timer > 120*(level / 3) {
+		if state_timer > (120 * (level / 3)) {
 			if combo_timer > 0 {
-				change_state(launcher_attack);
+				if on_ground {
+					change_state(launcher_attack);
+				}
+				else {
+					change_state(heavy_airattack);
+				}
 			}
 			else {
 				if on_ground {
@@ -293,7 +299,7 @@ function init_genos_baseform() {
 
 	incinerate = new charstate();
 	incinerate.start = function() {
-		if !incinerate_cooldown {
+		if attempt_special(1,(!incinerate_cooldown)) {
 			change_sprite(spr_genos_special_incinerate,5-(level / 2),false);
 			xspeed = 0;
 			yspeed = 0;
@@ -342,10 +348,8 @@ function init_genos_baseform() {
 
 	super_incinerate = new charstate();
 	super_incinerate.start = function() {
-		if (!incinerate_cooldown) and check_mp(2) {
+		if attempt_special(2,(!incinerate_cooldown)) {
 			change_sprite(spr_genos_special_incinerate2,12,false);
-			activate_super(60);
-			spend_mp(2);
 			xspeed = 0;
 			yspeed = 0;
 			incinerate_cooldown = incinerate_cooldown_duration * 1.5;
@@ -363,7 +367,6 @@ function init_genos_baseform() {
 		loop_anim_middle_timer(5,6,120);
 		if value_in_range(frame,5,6) {
 			fire_beam(10,-25,spr_incinerate,1+(level / 3),0,50);
-			shake_screen(5,3);
 		}
 		if check_frame(3) {
 			play_voiceline(snd_genos_incinerate);
@@ -371,6 +374,7 @@ function init_genos_baseform() {
 		}
 		if check_frame(5) {
 			play_sound(snd_dbz_beam_fire);
+			shake_screen(20,2);
 		}
 		return_to_idle();
 	}

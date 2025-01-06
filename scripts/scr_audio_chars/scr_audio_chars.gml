@@ -23,18 +23,17 @@ function init_charaudio(_name = "") {
 	voice_dead = asset_get_index(_prefix + "dead");
 }
 
-function play_chartheme(_theme) {
-	if (audio_is_playing(_theme)) {
-		return false;
-	}
-	if (audio_is_playing(music)) {
-		if (music_timer < music_min_duration) {
+function play_chartheme(_char) {
+	with(_char) {
+		if (audio_is_playing(music)) {
+			if (music_timer < music_min_duration) {
+				return false;
+			}
+		}
+		if (audio_is_playing(theme)) {
 			return false;
 		}
+		play_music(theme,1,theme_pitch);
+		return true;
 	}
-	if (audio_is_playing(_theme)) {
-		return false;
-	}
-	play_music(_theme);
-	return true;
 }

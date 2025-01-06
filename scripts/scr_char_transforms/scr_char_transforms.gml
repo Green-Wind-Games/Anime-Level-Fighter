@@ -97,7 +97,7 @@ function auto_levelup() {
 	
 	if object_exists(next_form) {
 		var _nextform = instance_create(0,0,next_form);
-		play_chartheme(_nextform.theme);
+		play_chartheme(_nextform);
 		instance_destroy(_nextform);
 		change_state(transform_state);
 	}

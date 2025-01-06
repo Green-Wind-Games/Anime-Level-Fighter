@@ -85,6 +85,8 @@ function change_sprite(_sprite,_frameduration, _loop) {
 		frame_timer = -1;
 		anim_finished = false;
 		
+		sprite_timer = -1;
+		
 		reset_sprite(true,true);
 	}
 	if !_loop {
@@ -124,6 +126,7 @@ function update_sprite() {
 }
 
 function update_sprite_animation() {
+	sprite_timer += game_speed;
 	frame_timer += anim_speed * game_speed;
 	if frame_timer >= frame_duration {
 		frame += 1;
@@ -164,8 +167,8 @@ function update_sprite_flash() {
 }
 
 function update_sprite_squash_stretch() {
-	xstretch = approach(xstretch,1,1/30);
-	ystretch = approach(ystretch,1,1/30);
+	xstretch = approach(xstretch,1,0.05);
+	ystretch = approach(ystretch,1,0.05);
 }
 
 function update_sprite_rotation() {

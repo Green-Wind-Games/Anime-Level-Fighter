@@ -217,11 +217,11 @@ function update_fight() {
 	round_state_timer += game_speed;
 	var _roundstate = round_state;
 	if round_state == roundstates.intro {
-		var ready = round_state_timer > 60;
+		var ready = round_state_timer > 100;
 		with(obj_char) {
 			if active_state != idle_state { ready = false; }
 			if sound_is_playing(voice) { ready = false; }
-			if state_timer < 60 { ready = false; }
+			if state_timer < 100 { ready = false; }
 		}
 		if ready {
 			round_state = roundstates.countdown;
@@ -233,7 +233,9 @@ function update_fight() {
 		}
 	}
 	else if round_state == roundstates.fight {
-		round_timer -= game_speed;
+		if (!superfreeze_active) and (!timestop_active) {
+			round_timer -= game_speed;
+		}
 		if round_timer <= 0 {
 			round_state = roundstates.time_over;
 		}
@@ -245,12 +247,19 @@ function update_fight() {
 			}
 		}
 		if alldead {
-			round_state = roundstates.knockout;
-			play_sound(snd_round_end_knockout);
+			if (!superfreeze_active) and (!timestop_active) {
+				with(obj_char) {
+					if combo_timer > 0 {
+						hitstop = 100;
+					}
+				}
+				play_sound(snd_round_end_knockout);
+				round_state = roundstates.knockout;
+			}
 		}
 	}
 	else if round_state == roundstates.time_over or round_state == roundstates.knockout {
-		var ready = round_state_timer > 60;
+		var ready = round_state_timer > 100;
 		with(obj_char) {
 			if dead {
 				if active_state != liedown_state { ready = false; }
@@ -258,7 +267,7 @@ function update_fight() {
 			else {
 				if active_state != idle_state { ready = false; }
 			}
-			if state_timer < 60 { ready = false; }
+			if state_timer < 100 { ready = false; }
 		}
 		if ready {
 			round_state = roundstates.victory;
@@ -267,7 +276,7 @@ function update_fight() {
 	else if round_state == roundstates.victory {
 		var team1_score = get_team_score(1);
 		var team2_score = get_team_score(2);
-		var ready = round_state_timer > 60;
+		var ready = round_state_timer > 100;
 		with(obj_char) {
 			if active_state == idle_state {
 				if (team == 1 and (team1_score > team2_score))
@@ -280,7 +289,7 @@ function update_fight() {
 			}
 			if !anim_finished { ready = false; }
 			if sound_is_playing(voice) { ready = false; }
-			if state_timer < 60 { ready = false; }
+			if state_timer < 100 { ready = false; }
 		}
 		if ready {
 			if next_game_state == -1 {

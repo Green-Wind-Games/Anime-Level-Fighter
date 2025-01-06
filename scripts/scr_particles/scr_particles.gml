@@ -77,17 +77,17 @@ function create_particles(_x,_y,_particle,_number = 1) {
 		
 		case explosion_medium_particle:
 		play_sound(snd_explosion_medium);
-		shake_screen(10,5);
+		shake_screen(20,2);
 		break;
 		
 		case explosion_large_particle:
 		play_sound(snd_explosion_large);
-		shake_screen(20,10);
+		shake_screen(50,5);
 		break;
 		
 		case air_shockwave_particle:
 		play_sound(snd_shockwave);
-		shake_screen(10,10);
+		shake_screen(20,5);
 		break;
 		
 		case floor_bang_particle:

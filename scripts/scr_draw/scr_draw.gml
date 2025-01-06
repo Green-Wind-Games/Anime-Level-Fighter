@@ -745,6 +745,17 @@ function draw_my_combo_counter(_x,_y,_color) {
 }
 
 function draw_hitboxes() {
+	with(obj_char) {
+		var _x1 = x - width_half;
+		var _y1 = y - height;
+		var _x2 = x + width_half;
+		var _y2 = y;
+		
+		var _w = _x2 - _x1;
+		var _h = _y2 - _y1;
+		
+		draw_sprite_stretched_ext(mask_index,0,_x1,_y1,_w,_h,c_white,1/2);
+	}
 	with(obj_hitbox_parent) {
 		draw_self();
 	}

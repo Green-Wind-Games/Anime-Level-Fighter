@@ -104,7 +104,7 @@ switch(room) {
 	
 		stop_music();
 		var picked_player = instance_find(obj_char,irandom(instance_number(obj_char)-1));
-		play_music(picked_player.theme);
+		play_chartheme(picked_player);
 	}
 	
 	switch(room) {

@@ -191,18 +191,20 @@ function init_naruto_baseform() {
 	
 	uzumaki_barrage_start = new charstate();
 	uzumaki_barrage_start.start = function() {
-		change_sprite(spr_naruto_jutsu,3,false);
-		play_sound(snd_jutsu_activate);
-		play_voiceline(snd_naruto_uzumaki);
-		if (instance_number(obj_char) <= 2) and (combo_timer > 20) {
-			timestop(60);
+		if attempt_special(1) {
+			change_sprite(spr_naruto_jutsu,3,false);
+			play_sound(snd_jutsu_activate);
+			play_voiceline(snd_naruto_uzumaki);
+			if (instance_number(obj_char) <= 2) and (combo_timer > 0) {
+				timestop(60);
+			}
+			xspeed = -8 * facing;
 		}
-		xspeed = -8 * facing;
 	}
 	uzumaki_barrage_start.run = function() {
 		decelerate();
-		if (frame > 3) and timestop_active {
-			frame = 2;
+		if timestop_active {
+			loop_anim_middle(2,3);
 		}
 		if check_frame(4) {
 			create_helper(-75,0,init_naruto_baseform_clone_barrage);
@@ -348,10 +350,8 @@ function init_naruto_baseform() {
 	
 	mini_rasengan = new charstate();
 	mini_rasengan.start = function() {
-		if check_mp(1) and (!rasengan_cooldown) {
+		if attempt_special(1,(!rasengan_cooldown)) {
 			change_sprite(spr_naruto_special_rasengan,3 - (combo_timer > 0),false);
-			activate_super(60);
-			spend_mp(1);
 		}
 		else {
 			change_state(idle_state);
@@ -378,10 +378,8 @@ function init_naruto_baseform() {
 	
 	rasengan_dive = new charstate();
 	rasengan_dive.start = function() {
-		if check_mp(1) and (!rasengan_cooldown) {
+		if attempt_special(1,(!rasengan_cooldown)) {
 			change_sprite(spr_naruto_special_rasengan_dive,3,false);
-			activate_super(30);
-			spend_mp(1);
 			xspeed = 0;
 			yspeed = 0;
 			play_voiceline(snd_naruto_rasengan);
@@ -393,6 +391,10 @@ function init_naruto_baseform() {
 	rasengan_dive.run = function() {
 		var _target_y = target_y - target.height - 10;
 		if (frame <= 11) {
+			if frame < 8 {
+				xspeed = 0;
+				yspeed = 0;
+			}
 			if (y < _target_y) {
 				loop_anim_middle(8,9);
 			}
@@ -478,10 +480,8 @@ function init_naruto_baseform() {
 	
 	double_rasengan = new charstate();
 	double_rasengan.start = function() {
-		if check_mp(2) and (!rasengan_cooldown) {
+		if attempt_super(2,(!rasengan_cooldown)) {
 			change_sprite(spr_naruto_special_doublerasengan,4,false);
-			activate_super(80);
-			spend_mp(2);
 		}
 		else {
 			change_state(idle_state);
@@ -517,10 +517,8 @@ function init_naruto_baseform() {
 	
 	giant_rasengan = new charstate();
 	giant_rasengan.start = function() {
-		if (on_ground) and check_mp(3) and (!rasengan_cooldown) {
+		if attempt_super(3,(!rasengan_cooldown)) {
 			change_sprite(spr_naruto_special_giantrasengan,5,false);
-			activate_super(80);
-			spend_mp(3);
 		}
 		else {
 			change_state(idle_state);
@@ -554,10 +552,8 @@ function init_naruto_baseform() {
 
 	shadow_clone_jutsu = new charstate();
 	shadow_clone_jutsu.start = function() {
-		if check_mp(2) and (!shadow_clone_jutsu_cooldown) {
+		if attempt_special(2,(!shadow_clone_jutsu_cooldown)) {
 			change_sprite(spr_naruto_jutsu,5,false);
-			activate_super();
-			spend_mp(2);
 			play_sound(snd_jutsu_activate);
 			play_voiceline(snd_naruto_shadowclonejutsu);
 		}
@@ -566,6 +562,9 @@ function init_naruto_baseform() {
 		}
 	}
 	shadow_clone_jutsu.run = function() {
+		if superfreeze_active {
+			loop_anim_middle(4,5);
+		}
 		if check_frame(3) {
 			create_helper(
 				-width,
@@ -578,18 +577,13 @@ function init_naruto_baseform() {
 				init_naruto_baseform_clone
 			);
 		}
-		if superfreeze_active {
-			loop_anim_middle(4,5);
-		}
 		return_to_idle();
 	}
 	
 	shadow_clone_barrage = new charstate();
 	shadow_clone_barrage.start = function() {
-		if check_mp(1) {
+		if attempt_super(1.5,(!shadow_clone_jutsu_cooldown)) {
 			change_sprite(spr_naruto_jutsu,3,false);
-			activate_super();
-			spend_mp(1);
 			play_sound(snd_jutsu_activate);
 			play_voiceline(snd_naruto_shadowclonejutsu);
 		}
@@ -662,10 +656,8 @@ function init_naruto_baseform() {
 	
 	rasen_shuriken = new charstate();
 	rasen_shuriken.start = function() {
-		if (on_ground) and check_mp(4) and (!rasengan_cooldown) {
+		if attempt_ultimate(7,(!rasengan_cooldown)) {
 			change_sprite(spr_naruto_special_rasenshuriken,3,false);
-			activate_ultimate(150);
-			spend_mp(4);
 		}
 		else {
 			change_state(idle_state);

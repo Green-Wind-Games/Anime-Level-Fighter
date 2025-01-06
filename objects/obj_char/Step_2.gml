@@ -1,28 +1,35 @@
-if round_state == roundstates.pause exit;
-
 if facing == 0 {
 	facing = 1;
 }
 
+if round_state == roundstates.pause exit;
+
 switch(sprite) {
 	case idle_sprite:
+	case crouch_sprite:
+	case uncrouch_sprite:
+	if anim_frames == 1 {
+		xstretch += sine_wave(state_timer,100,0.02,0);
+		ystretch -= sine_wave(state_timer,100,0.02,0);
+	}
+	if sprite_get_yoffset(sprite) > sprite_get_height(sprite) {
+		yoffset = sine_wave(state_timer,100,2,0);
+	}
+	break;
+	
 	case walk_sprite:
 	case dash_sprite:
 	if sprite_get_yoffset(sprite) > sprite_get_height(sprite) {
-		yoffset = sine_between(state_timer,100,-2,2);
-	}
-	else {
-		xstretch = 1 + sine_between(state_timer,100,0.01,-0.01);
-		ystretch = 1 + sine_between(state_timer,100,-0.01,0.01);
+		yoffset = sine_wave(state_timer,60,2,0);
 	}
 	break;
 	
 	case air_up_sprite:
 	case air_peak_sprite:
 	case air_down_sprite:
-	var _stretch = clamp(max(0.01,abs(yspeed)) / 100,0,0.3);
-	xstretch = 1 - _stretch;;
-	ystretch = 1 + _stretch;;
+	var _stretch = clamp(max(ygravity,abs(yspeed)) / 200,0,0.2);
+	xstretch = 1 - _stretch;
+	ystretch = 1 + _stretch;
 	break;
 	
 	case launch_sprite:
@@ -53,14 +60,25 @@ if sprite_exists(aura_sprite) {
 	}
 }
 
-if active_state == super_state {
-	super_active = true;
-}
-else {
+switch(active_state) {
+	default:
 	if (active_state == idle_state)
-	or (is_hit) or (is_guarding) {
+	or ((is_hit) or (is_guarding)) {
 		deactivate_super();
 	}
+	break;
+	
+	case special_state:
+	special_active = true;
+	break;
+	
+	case super_state:
+	super_active = true;
+	break;
+	
+	case ultimate_state:
+	ultimate_active = true;
+	break;
 }
 
 if hitstop < 0 then hitstop = 0;

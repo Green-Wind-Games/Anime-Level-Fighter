@@ -218,10 +218,8 @@ function init_goku_ssj() {
 
 	dragon_fist = new charstate();
 	dragon_fist.start = function() {
-		if check_mp(1) {
+		if attempt_super(1) {
 			change_sprite(spr_goku_ssj_attack_punch_straight,8,false);
-			activate_super();
-			spend_mp(1);
 		}
 		else {
 			change_state(idle_state);
@@ -248,10 +246,8 @@ function init_goku_ssj() {
 
 	ki_blast_cannon = new charstate();
 	ki_blast_cannon.start = function() {
-		if check_mp(1) {
-			activate_super();
-			spend_mp(1);
-			change_sprite(spr_goku_ssj_special_ki_blast,3,false);
+		if attempt_super(1) {
+			change_sprite(spr_goku_ssj_special_kiblast,3,false);
 		}
 		else {
 			change_state(idle_state)
@@ -289,7 +285,7 @@ function init_goku_ssj() {
 
 	kamehameha = new charstate();
 	kamehameha.start = function() {
-		if kamehameha_cooldown <= 0 {
+		if attempt_special(1) {
 			change_sprite(spr_goku_ssj_special_kamehameha,5,false);
 			if is_airborne {
 				change_sprite(spr_goku_ssj_special_kamehameha_air,frame_duration,false);
@@ -335,23 +331,20 @@ function init_goku_ssj() {
 
 	super_kamehameha = new charstate();
 	super_kamehameha.start = function() {
-		if (kamehameha_cooldown <= 0) and check_mp(2) {
+		if attempt_super(2,(kamehameha_cooldown <= 0)) {
 			change_sprite(spr_goku_ssj_special_kamehameha,5,false);
 			if is_airborne {
 				change_sprite(spr_goku_ssj_special_kamehameha_air,frame_duration,false);
 			}
-			spend_mp(2);
 			xspeed = 0;
 			yspeed = 0;
 			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
-			if combo_timer <= 0 {
-				activate_super(300);
-				play_voiceline(snd_goku_kamehameha_charge);
-			}
-			else {
-				activate_super(60);
-				play_voiceline(snd_goku_kamehame);
-			}
+			activate_super(60);
+			play_voiceline(snd_goku_kamehame);
+			//if combo_timer <= 0 {
+			//	superfreeze(200);
+			//	play_voiceline(snd_goku_kamehameha_charge);
+			//}
 		}
 		else {
 			change_state(idle_state);
@@ -363,7 +356,7 @@ function init_goku_ssj() {
 		if superfreeze_active {
 			loop_anim_middle(4,5);
 			if superfreeze_timer == 15 {
-				if (input.forward) and check_tp(2) {
+				if (input.forward) and check_tp(1) {
 					spend_tp(2);
 					play_sound(snd_dbz_teleport_long);
 					teleport(target_x + ((width + target.width) * facing), target_y);
@@ -395,7 +388,6 @@ function init_goku_ssj() {
 			//	hit_limit = -1;
 			//}
 			fire_beam(20,-25,spr_kamehameha,2,0,50);
-			shake_screen(5,3);
 		}
 		if check_frame(3) {
 			if superfreeze_timer > 60 {
@@ -408,16 +400,15 @@ function init_goku_ssj() {
 		if check_frame(6) {
 			play_voiceline(snd_goku_kamehameha_fire);
 			play_sound(snd_dbz_beam_fire);
+			shake_screen(120,2);
 		}
 		return_to_idle();
 	}
 
 	angry_kamehameha = new charstate();
 	angry_kamehameha.start = function() {
-		if (kamehameha_cooldown <= 0) and check_mp(5) {
-			change_sprite(spr_goku_ssj_special_ki_blast,5,false);
-			activate_ultimate();
-			spend_mp(5);
+		if attempt_ultimate(5,(!ssj2_active)) {
+			change_sprite(spr_goku_ssj_special_kiblast,5,false);
 			xspeed = 0;
 			yspeed = 0;
 			kamehameha_cooldown = kamehameha_cooldown_duration * 2;
@@ -435,6 +426,7 @@ function init_goku_ssj() {
 		if check_frame(2) {
 			play_voiceline(snd_goku_kamehameha_fire);
 			play_sound(snd_dbz_beam_fire);
+			shake_screen(120,2);
 		}
 		loop_anim_middle_timer(3,3,120);
 		if value_in_range(frame,3,3) {
@@ -456,19 +448,18 @@ function init_goku_ssj() {
 			//	hit_limit = -1;
 			//}
 			fire_beam(20,-25,spr_kamehameha_gold,2,0,50);
-			shake_screen(5,3);
 		}
 		return_to_idle();
 	}
 
 	activate_ssj2 = new charstate();
 	activate_ssj2.start = function() {
-		if check_mp(1) and (!ssj2_timer) {
+		if attempt_super(1,(!ssj2_timer)) {
 			change_sprite(charge_loop_sprite,3,true);
 			flash_sprite();
-		
-			activate_super(100);
-			spend_mp(1);
+			
+			superfreeze(60);
+			
 			ssj2_timer = ssj2_duration;
 		
 			play_sound(snd_energy_start);
@@ -483,7 +474,7 @@ function init_goku_ssj() {
 		}
 	}
 	activate_ssj2.run = function() {
-		if superfreeze_timer mod 10 == 1 {
+		if superfreeze_timer mod 5 == 0 {
 			ssj2_sparks();
 		}
 		xspeed = 0;
