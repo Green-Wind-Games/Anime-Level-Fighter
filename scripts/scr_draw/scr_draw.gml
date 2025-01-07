@@ -7,7 +7,7 @@ function draw_chars() {
 		with(ds_priority_find_max(draw_order)) {
 			var _x = x + (xoffset*facing);
 			var _y = y + yoffset;
-			var _shake = min(hitstop,5);
+			var _shake = hitstop / 3;
 			_x += sine_wave(hitstop,4,_shake,0);
 			_y += sine_wave(hitstop+1,4,_shake,0) * is_airborne;
 		
@@ -49,7 +49,7 @@ function draw_char_shadows() {
 	with(obj_char) {
 		var _x = x + (xoffset*facing);
 		var _y = ground_height;
-		var _shake = min(hitstop,5);
+		var _shake = hitstop / 3;
 		_y += map_value(y+yoffset,ground_height,0,-1,-(room_height/2)*shadow_scale);
 		_x += sine_wave(hitstop,4,_shake,0);
 		_y += sine_wave(hitstop+1,4,_shake,0) * is_airborne;
@@ -728,7 +728,7 @@ function draw_my_combo_counter(_x,_y,_color) {
 		_text += "!" + "\n" + string(combo_damage) + " damage!";
 				
 		if (hitstop > 0) and (round_state != roundstates.pause) {
-			var _shake = min(hitstop,5);
+			var _shake = hitstop / 3;
 			_x += sine_wave(hitstop,4,_shake,0);
 			_y += sine_wave(hitstop+1,4,_shake,0);
 		}
