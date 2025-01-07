@@ -29,7 +29,7 @@
   ],
   "name":"spr_enker_attack_slash_side",
   "nineSlice":null,
-  "origin":7,
+  "origin":9,
   "parent":{
     "name":"Enker Base Sprites",
     "path":"folders/Chars/Uni-Force Chars/Enker/Enker Sprites/Enker Base Sprites.yy",
@@ -99,7 +99,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":53,
+    "xorigin":40,
     "yorigin":64,
   },
   "swatchColours":null,
