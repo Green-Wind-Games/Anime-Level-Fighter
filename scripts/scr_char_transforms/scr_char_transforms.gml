@@ -12,7 +12,7 @@ function level_up() {
 		max_hp
 	);
 	
-	max_hp = base_max_hp;
+	//max_hp = base_max_hp;
 	//max_hp = round(max_hp * (1 + ((level-1) * level_scaling)));
 	
 	hp = map_value(_hp,0,100,0,max_hp);
