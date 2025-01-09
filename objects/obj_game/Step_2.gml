@@ -32,6 +32,10 @@ if keyboard_check_pressed(vk_f6) {
 	}
 }
 
+if keyboard_check_pressed(vk_f12) {
+	test_ai_matchup(player_char[0],player_char[1]);
+}
+
 if keyboard_check(vk_insert) {
 	with(obj_char) {
 		hp = max_hp;

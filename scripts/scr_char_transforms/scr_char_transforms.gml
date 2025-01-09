@@ -12,7 +12,7 @@ function level_up() {
 		max_hp
 	);
 	
-	max_hp = base_max_hp;
+	//max_hp = base_max_hp;
 	//max_hp = round(max_hp * (1 + ((level-1) * level_scaling)));
 	
 	hp = map_value(_hp,0,100,0,max_hp);
@@ -23,7 +23,7 @@ function level_up() {
 	mp += mp_stock_size;
 	tp += tp_stock_size;
 	
-	max_xp = base_max_xp * (level * level);
+	max_xp = base_max_xp * power(level,2);
 	xp = 0;
 	
 	move_speed = map_value(level,1,max_level,base_movespeed,base_movespeed+5);
