@@ -17,23 +17,8 @@ if keyboard_check_pressed(vk_f4) {
 	toggle_fullscreen();
 }
 
-if keyboard_check_pressed(vk_f5) {
-	for(var i = 0; i < max_players; i++) {
-		with(player[i]) {
-			input = player_input[i+11];
-		}
-	}
-}
-if keyboard_check_pressed(vk_f6) {
-	for(var i = 0; i < max_players; i++) {
-		with(player[i]) {
-			input = player_input[player_slot[i]];
-		}
-	}
-}
-
 if keyboard_check_pressed(vk_f12) {
-	test_ai_matchup(player_char[0],player_char[1]);
+	test_ai_matchup_live(player_char[0],player_char[1]);
 }
 
 if keyboard_check(vk_insert) {
@@ -78,13 +63,32 @@ var _fps = game_get_speed(gamespeed_fps);
 var _change = 6;
 
 if keyboard_check_pressed(vk_add) {
-	game_set_speed(game_get_speed(gamespeed_fps) + _change, gamespeed_fps);
+	game_set_speed(_fps + _change, gamespeed_fps);
 }
 if keyboard_check_pressed(vk_subtract) and (_fps > _change) {
-	game_set_speed(game_get_speed(gamespeed_fps) - _change, gamespeed_fps);
+	game_set_speed(_fps - _change, gamespeed_fps);
 }
 if keyboard_check_pressed(vk_multiply) {
 	game_set_speed(60, gamespeed_fps);
+}
+if keyboard_check_pressed(vk_divide) {
+	game_set_speed(600, gamespeed_fps);
+}
+
+if keyboard_check_pressed(vk_f5)
+or (game_get_speed(gamespeed_fps) > 60) {
+	for(var i = 0; i < max_players; i++) {
+		with(player[i]) {
+			input = player_input[i+11];
+		}
+	}
+}
+if keyboard_check_pressed(vk_f6) {
+	for(var i = 0; i < max_players; i++) {
+		with(player[i]) {
+			input = player_input[player_slot[i]];
+		}
+	}
 }
 
 with(all) {

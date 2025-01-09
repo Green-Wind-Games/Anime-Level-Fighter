@@ -382,7 +382,7 @@ function init_enker() {
 			play_voiceline(voice_powerup);
 			
 			repeat(20) {
-				greenwind_sparks();
+				greenwind_swirls();
 			}
 		}
 		else {
@@ -391,7 +391,7 @@ function init_enker() {
 	}
 	activate_greenwind.run = function() {
 		if superfreeze_timer mod 10 == 1 {
-			greenwind_sparks();
+			greenwind_swirls();
 		}
 		xspeed = 0;
 		yspeed = 0;
@@ -421,18 +421,4 @@ function init_enker() {
 	draw_script = function() {
 		gpu_set_blendmode(bm_normal);
 	}
-}
-
-function greenwind_swirls() {
-	char_specialeffect(
-		spr_wind_spin,
-		random_range(-width_half,width_half),
-		-random(height),
-		random(1),
-		random(1),
-		random(360),
-		random(20),
-		greenwind_color
-	);
-	play_sound(snd_chakra_loop,1,1.5);
 }

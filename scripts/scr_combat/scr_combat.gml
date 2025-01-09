@@ -384,7 +384,7 @@ function get_damage_scaling_guts(_defender) {
 			5
 		);
 		guts = max(guts,1);
-		return clamp(1 / guts,0.2,1);
+		return clamp(1 / guts,0.5,1);
 	}
 }
 

@@ -2,7 +2,7 @@ globalvar timeskip_active;
 
 timeskip_active = false;
 
-function timeskip(_frames) {
+function timeskip(_frames = 1) {
 	if !timeskip_active {
 		timeskip_active = true;
 		repeat(_frames) {
