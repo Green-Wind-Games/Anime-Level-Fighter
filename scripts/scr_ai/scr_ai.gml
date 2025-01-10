@@ -108,11 +108,22 @@ function ai_perform_random_moves() {
 }
 
 function ai_combo() {
-	if (combo_timer > 0) {
+	if (attack_hits > 0) {
 		var _movelist = on_ground ? ground_movelist : air_movelist;
-		var _move = _movelist[irandom(array_length(_movelist)-1)][0];
+		var _move = noone;
 		if !ds_list_empty(cancelable_moves) {
 			_move = ds_list_find_value(cancelable_moves,irandom(ds_list_size(cancelable_moves)-1));
+		}
+		else {
+			var _ahead = irandom_range(1,5);
+			var _moveid = 0;
+			for(var i = 0; i < array_length(_movelist)-1; i++) {
+				if (active_state == _movelist[i][0]) {
+					_moveid = i+1;
+					break;
+				}
+			}
+			var _move = _movelist[_moveid][0];
 		}
 		ai_input_move(_move,map_value(ai_level,1,ai_level_max,50,100));
 		//for(var i = 0; i < array_length(autocombo)-1; i++) {

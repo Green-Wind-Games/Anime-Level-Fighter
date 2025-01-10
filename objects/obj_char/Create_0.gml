@@ -56,9 +56,12 @@ grab_connect_state = noone;
 
 combo_timer = 0;
 combo_hits = 0;
-combo_damage = 0;
 combo_hits_taken = 0;
+combo_hits_visible = 0;
+combo_damage = 0;
 combo_damage_taken = 0;
+combo_damage_visible = 0;
+combo_damage_scaling = 1;
 
 invincible = false;
 dodging_attacks = false;
@@ -76,6 +79,8 @@ ground_movelist[0][0] = noone;
 air_movelist[0][0] = noone;
 cancelable_moves = ds_list_create();
 can_cancel = true;
+
+attack_hits = 0;
 
 special_state = noone;
 super_state = noone;

@@ -109,14 +109,31 @@ part_type_orientation(parry_spark,0,360,0,0,true);
 part_type_color2(parry_spark,make_color_rgb(0,255,128),c_black);
 part_type_blend(parry_spark,true);
 
-function create_hitspark(_target,_strength,_hiteffect,_guard) {
+function create_hitspark(_hitbox,_hurtbox,_strength,_hiteffect,_guard) {
 	var _sound = noone;
 	var _volume = 1;
-	var _p = _target.facing / 4;
-	var _x1 = _target.x +						(_target.width_half * _p);
-	var _y1 = _target.y - _target.height_half -	(_target.height_half * _p);
-	var _x2 = _target.x -						(_target.width_half * _p);
-	var _y2 = _target.y - _target.height_half +	(_target.height_half * _p);
+	
+	var _x = 0;
+	var _y = 0;
+	
+	with(_hitbox) {
+		_x += bbox_left;
+		_x += bbox_right;
+		_y += bbox_top;
+		_y += bbox_bottom;
+	}
+	with(_hurtbox) {
+		_x += bbox_left;
+		_x += bbox_right;
+		_y += bbox_top;
+		_y += bbox_bottom;
+	}
+	_x /= 4;
+	_y /= 4;
+	
+	_x = clamp(_x,_hurtbox.bbox_left,_hurtbox.bbox_right);
+	_y = clamp(_y,_hurtbox.bbox_top,_hurtbox.bbox_bottom);
+	
 	switch(_hiteffect) {
 		default:
 		if !_guard {
@@ -128,46 +145,46 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 				default:
 				if _strength < attackstrength.medium {
 					_sound = snd_punch_hit_light;
-					create_particles(random_range(_x1,_x2),random_range(_y1,_y2),hitspark_light,20);
+					create_particles(_x,_y,hitspark_light,20);
 				}
 				else if _strength < attackstrength.heavy {
 					_sound = snd_punch_hit_medium;
-					create_particles(random_range(_x1,_x2),random_range(_y1,_y2),hitspark_medium,30);
+					create_particles(_x,_y,hitspark_medium,30);
 				}
 				else if _strength < attackstrength.super {
 					_sound = snd_punch_hit_heavy;
-					create_particles(random_range(_x1,_x2),random_range(_y1,_y2),hitspark_heavy,40);
+					create_particles(_x,_y,hitspark_heavy,40);
 				}
 				else if _strength < attackstrength.ultimate {
 					_sound = snd_punch_hit_super;
-					create_particles(random_range(_x1,_x2),random_range(_y1,_y2),hitspark_heavy,50);
+					create_particles(_x,_y,hitspark_heavy,50);
 				}
 				else {
 					_sound = snd_punch_hit_ultimate;
-					create_particles(random_range(_x1,_x2),random_range(_y1,_y2),hitspark_heavy,60);
+					create_particles(_x,_y,hitspark_heavy,60);
 				}
 				break;
 				
 				case hiteffects.slash:
 				if _strength < attackstrength.medium {
 					_sound = snd_slash_hit_light;
-					create_particles(random_range(_x1,_x2),random_range(_y1,_y2),slashspark_light);
+					create_particles(_x,_y,slashspark_light);
 				}
 				else if _strength < attackstrength.heavy {
 					_sound = snd_slash_hit_medium;
-					create_particles(random_range(_x1,_x2),random_range(_y1,_y2),slashspark_medium);
+					create_particles(_x,_y,slashspark_medium);
 				}
 				else if _strength < attackstrength.super {
 					_sound = snd_slash_hit_heavy;
-					create_particles(random_range(_x1,_x2),random_range(_y1,_y2),slashspark_heavy);
+					create_particles(_x,_y,slashspark_heavy);
 				}
 				else if _strength < attackstrength.ultimate {
 					_sound = snd_slash_hit_super;
-					create_particles(random_range(_x1,_x2),random_range(_y1,_y2),slashspark_heavy);
+					create_particles(_x,_y,slashspark_heavy);
 				}
 				else {
 					_sound = snd_slash_hit_ultimate;
-					create_particles(random_range(_x1,_x2),random_range(_y1,_y2),slashspark_heavy);
+					create_particles(_x,_y,slashspark_heavy);
 				}
 				break;
 			}
@@ -192,7 +209,7 @@ function create_hitspark(_target,_strength,_hiteffect,_guard) {
 			switch(_hiteffect) {
 				default: 
 				_sound = snd_punch_guard;
-				create_particles(_x1,random_range(_y1,_y2),guardspark);
+				create_particles(_x,_y,guardspark);
 				break;
 			}
 		}

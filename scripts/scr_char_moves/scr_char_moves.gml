@@ -80,6 +80,7 @@ function check_moves() {
 				moved = false;
 			}
 			else {
+				attack_hits = 0;
 				can_guard = false;
 				can_cancel = false;
 				input_buffer = update_input_buffer_direction();

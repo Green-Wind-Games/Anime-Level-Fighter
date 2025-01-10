@@ -721,11 +721,12 @@ function draw_my_combo_counter(_x,_y,_color) {
 		draw_set_valign(fa_top);
 		draw_set_font(fnt_combo);
 				
-		var _text = string(combo_hits) + " hit";
-		if combo_hits > 1 {
+		var _text = string(combo_hits_visible) + " hit";
+		if combo_hits_visible > 1 {
 			_text += "s";
 		}
-		_text += "!" + "\n" + string(combo_damage) + " damage!";
+		_text += "!";
+		_text += "\n" + string(combo_damage_visible) + " damage!";
 				
 		if (hitstop > 0) and (round_state != roundstates.pause) {
 			var _shake = hitstop / 3;

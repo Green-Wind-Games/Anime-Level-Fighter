@@ -65,6 +65,7 @@ switch(active_state) {
 	if (active_state == idle_state)
 	or ((is_hit) or (is_guarding)) {
 		deactivate_super();
+		attack_hits = 0;
 	}
 	break;
 	

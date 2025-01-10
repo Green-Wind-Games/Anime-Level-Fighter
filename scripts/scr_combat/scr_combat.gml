@@ -47,15 +47,15 @@ enum hiteffects {
 }
 
 function get_true_attacker(_obj) {
-	var _attacker = _obj;
-	while(!is_char(_attacker)) {
-		_attacker = _attacker.owner;
-		if !instance_exists(_attacker) {
-			_attacker = noone;
+	var _true_attacker = _obj;
+	while(!is_char(_true_attacker)) {
+		_true_attacker = _true_attacker.owner;
+		if !instance_exists(_true_attacker) {
+			_true_attacker = noone;
 			break;
 		}
 	}
-	return _attacker;
+	return _true_attacker;
 }
 
 function get_attack_hitstun(_attackstrength) {
@@ -119,155 +119,117 @@ function guard_attack(_hitbox) {
 	if on_ground {
 		yspeed = 0;
 	}
-	take_damage(_hitbox.owner,_hitbox.damage/20,false);
 }
 
 function get_hit_by_attack(_hitbox) {
-	var connect = true;
-	if invincible {
-		connect = false;
-	}
-	if is_shot(_attacker) {
-		if immune_to_projectiles {
-			connect = false;
+	var _attacker = _hitbox.owner;
+	var _true_attacker = get_true_attacker(_hitbox);
+	
+	xspeed = _hitbox.xknockback * _attacker.facing;
+	yspeed = _hitbox.yknockback;
+		
+	switch(_attacktype) {
+		default:
+		change_state(hit_state);
+		if on_ground and _hitbox.yknockback >= 0 {
+			yspeed = 0;
 		}
-	}
-	if connect {
-		switch(_attacktype) {
-			default:
+		else if is_airborne and _hitbox.yknockback == 0 {
+			yspeed = -abs(xspeed) / 2;
+		}
+		break;
+				
+		case attacktype.hard_knockdown:
+		change_state(hard_knockdown_state);
+		break;
+				
+		case attacktype.wall_splat:
+		change_state(wall_splat_state);
+		break;
+				
+		case attacktype.wall_bounce:
+		if previous_state != wall_bounce_state {
+			change_state(wall_bounce_state);
+			play_sound(snd_launch);
+			hitstun = max(hitstun,100);
+		}
+		else {
 			change_state(hit_state);
-			if on_ground and _hitbox.yknockback >= 0 {
-				yspeed = 0;
-			}
-			else if is_airborne and _hitbox.yknockback == 0 {
-				yspeed = -abs(xspeed) / 2;
-			}
-			break;
+		}
+		break;
 				
-			case attacktype.hard_knockdown:
-			change_state(hard_knockdown_state);
-			break;
+		case attacktype.slide_knockdown:
+		change_state(slide_knockdown_state);
+		break;
 				
-			case attacktype.wall_splat:
-			change_state(wall_splat_state);
-			break;
-				
-			case attacktype.wall_bounce:
-			if previous_state != wall_bounce_state {
-				change_state(wall_bounce_state);
-				play_sound(snd_launch);
-				hitstun = max(hitstun,100);
+		case attacktype.grab:
+		with(_hitbox.owner) {
+			init_grab(id,other);
+		}
+		break;
+	}
+			
+	change_sprite(
+		sprite == hit_high_sprite ? hit_low_sprite : hit_high_sprite,
+		3,
+		false
+	);
+	if is_airborne or (yspeed < 0) {
+		change_sprite(hit_air_sprite,frame_duration,false);
+	}
+	if (abs(xspeed) >= 10) or (abs(yspeed) >= 10) {
+		change_sprite(launch_sprite,frame_duration,true);
+		yoffset = -height_half;
+		rotation = point_direction(0,0,abs(xspeed),-yspeed);
+	}
+	if yspeed <= -10 {
+		change_sprite(spinout_sprite,frame_duration,true);
+		yoffset = -height_half;
+		rotation = point_direction(0,0,abs(xspeed),-yspeed);
+	}
+	
+	if (previous_hp > 0) {
+		if (hp > 0) {
+			var _is_strong_attack = true;
+			if _hitbox.attack_strength < attackstrength.super { _is_strong_attack = false; }
+			if (abs(xspeed) < 10) and (abs(yspeed) < 10) { _is_strong_attack = false; }
+			//if (yspeed > -10) and on_ground { _is_strong_attack = false; }
+			
+			if _is_strong_attack {
+				play_voiceline(voice_hurt_heavy,50,true);
+			
+				if meme_enabled {
+					if chance(meme_chance) {
+						stop_sound(voice);
+						voice = play_sound(snd_meme_scream_disappear,3);
+					}
+				}
 			}
 			else {
-				change_state(hit_state);
-			}
-			break;
-				
-			case attacktype.slide_knockdown:
-			change_state(slide_knockdown_state);
-			break;
-				
-			case attacktype.grab:
-			with(_hitbox.owner) {
-				init_grab(id,other);
-			}
-			break;
-		}
-			
-		change_sprite(
-			sprite == hit_high_sprite ? hit_low_sprite : hit_high_sprite,
-			3,
-			false
-		);
-		if is_airborne or (yspeed < 0) {
-			change_sprite(hit_air_sprite,frame_duration,false);
-		}
-		if (abs(xspeed) >= 10) or (abs(yspeed) >= 10) {
-			change_sprite(launch_sprite,frame_duration,true);
-			yoffset = -height_half;
-			rotation = point_direction(0,0,abs(xspeed),-yspeed);
-		}
-		if yspeed <= -10 {
-			change_sprite(spinout_sprite,frame_duration,true);
-			yoffset = -height_half;
-			rotation = point_direction(0,0,abs(xspeed),-yspeed);
-		}
-			
-		var _hp = hp;
-		var dmg = take_damage(_attacker,_damage,(!grabbed));
-	
-		combo_timer = hitstun;
-		if active_state == hard_knockdown_state
-		or active_state == wall_bounce_state {
-			combo_timer += 60;
-		}
-			
-		combo_hits_taken++;
-			
-		combo_hits = 0;
-		combo_damage = 0;
-			
-		if is_char(_attacker) {
-			with(_attacker) {
-				combo_timer = other.combo_timer;
-				combo_hits++;
-				combo_damage += dmg;
+				play_voiceline(voice_hurt,50,true);
 			}
 		}
 		else {
-			with(_attacker.owner) {
-				combo_timer = other.combo_timer;
-				combo_hits++;
-				combo_damage += dmg;
+			if is_char(id) {
+				play_voiceline(voice_dead,100,true);
 			}
-		}
-			
-		if (_hp > 0) {
-			if (hp > 0) {
-				var _heavyattack_speed = 10;
-				var is_heavyattack = ((abs(xspeed) >= _heavyattack_speed) or (abs(yspeed) >= _heavyattack_speed));
-				if on_ground and (yspeed > -_heavyattack_speed) {
-					is_heavyattack = false;
-				}
-				if is_heavyattack {
-					play_voiceline(voice_hurt_heavy,50,true);
-			
-					if meme_enabled {
-						if chance(meme_chance) {
-							stop_sound(voice);
-							voice = play_sound(snd_meme_scream_disappear,3);
-						}
-					}
-				}
-				else {
-					play_voiceline(voice_hurt,50,true);
-				}
-			}
-			else {
-				if is_char(id) {
-					play_voiceline(voice_dead,100,true);
-				}
-				if on_ground {
-					if yspeed >= 0 {
-						yspeed = -5;
-						xspeed = 5 * _attacker.facing;
-					}
+			if on_ground {
+				if yspeed >= 0 {
+					yspeed = -5;
+					xspeed = 5 * _attacker.facing;
 				}
 			}
 		}
+	}
 			
-		frame = 0;
-		frame_timer = 0;
-		facing = -_attacker.facing;
-	}
-	else {
-		xspeed = _xspeed;
-		yspeed = _yspeed;
-	}
+	frame = 0;
+	frame_timer = 0;
+	facing = -_attacker.facing;
 }
 
 function connect_attack(_hitbox, _hurtbox) {
-	var _attacker = get_true_attacker(_hitbox);
+	var _attacker = _hitbox.owner;
+	var _true_attacker = get_true_attacker(_hitbox);
 	
 	hitstun = get_attack_hitstun(_hitbox);
 	blockstun = get_attack_blockstun(_hitbox);
@@ -278,6 +240,7 @@ function connect_attack(_hitbox, _hurtbox) {
 	var _is_strong_attack = true;
 	if _hitbox.attack_strength < attackstrength.super { _is_strong_attack = false; }
 	if (abs(xspeed) < 10) and (abs(yspeed) < 10) { _is_strong_attack = false; }
+	//if (yspeed > -10) and on_ground { _is_strong_attack = false; }
 		
 	if _is_strong_attack {
 		hitstun = max(hitstun,60);
@@ -297,11 +260,29 @@ function connect_attack(_hitbox, _hurtbox) {
 	blockstun = round(blockstun);
 	hitstop = round(hitstop);
 	
+	var dmg = _hitbox.damage;
+	
 	if check_guard(_hitbox.attack_type) {
 		guard_attack(_hitbox);
+		dmg /= 20;
+		take_damage(_true_attacker,dmg,false);
 	}
 	else {
-		get_hit_by_attack(_hitbox);
+		var _stun = true;
+		if invincible {
+			_stun = false;
+		}
+		if is_shot(_attacker) {
+			if immune_to_projectiles {
+				_stun = false;
+			}
+		}
+		
+		if _stun {
+			get_hit_by_attack(_hitbox);
+			dmg /= 1.5;
+		}
+		take_damage(_true_attacker,dmg,_stun);
 	}
 	
 	if on_wall {
@@ -310,46 +291,92 @@ function connect_attack(_hitbox, _hurtbox) {
 		}
 	}
 	
-	super_active = false;
+	deactivate_super();
 	
 	depth = 0;
 	_attacker.depth = -1;
 	if is_char(_attacker) or is_helper(_attacker) {
-		_attacker.hitstop = hitstop;
-		_attacker.can_cancel = true;
+		with(_attacker) {
+			_attacker.hitstop = hitstop;
+			_attacker.can_cancel = true;
+		}
 	}
 	
-	create_hitspark(id,_strength,_hiteffect,_guard_valid and _guarding);
-	apply_hiteffect(_strength,_hiteffect,_guard_valid and _guarding);
+	if is_hit {
+		combo_damage_taken += dmg;
+		combo_hits_taken++;
+	
+		combo_timer = hitstun;
+		if active_state == hard_knockdown_state
+		or active_state == wall_bounce_state {
+			combo_timer += 60;
+		}
+			
+		combo_hits = 0;
+		combo_damage = 0;
+			
+		with(_true_attacker) {
+			combo_timer = other.combo_timer;
+			combo_hits++;
+			combo_damage += dmg;
+		}
+	}
+	
+	with(_true_attacker) {
+		attack_hits++;
+	}
+	
+	var mp_gain = dmg / 2;
+	var xp_gain = dmg;
+	
+	var attack_mp_gain = mp_gain * 1.0;
+	var attack_xp_gain = xp_gain * 1.0;
+	
+	var defend_mp_gain = mp_gain * 0.75;
+	var defend_xp_gain = xp_gain * 0.75;
+	
+	with(_true_attacker) {
+		attack_xp_gain /= level / other.level;
+		defend_xp_gain *= level / other.level;
+		if special_active or super_active or ultimate_active {
+			attack_mp_gain = 0;
+			attack_xp_gain *= 2;
+		}
+	}
+	
+	mp += defend_mp_gain;
+	xp += defend_xp_gain;
+	with(_true_attacker) {
+		mp += attack_mp_gain;
+		xp += attack_xp_gain;
+	}
+	
+	create_hitspark(_hitbox,_hurtbox);
+	apply_hiteffect(_hitbox.attack_strength,_hitbox.hit_effect,is_guarding);
 }
 
 function take_damage(_attacker,_amount,_kill) {
-	var dmg = round(_amount);
+	var dmg = round(_amount / 2);
 	
-	var defender = id;
+	var _defender = id;
 	
-	var true_attacker = _attacker;
-	if instance_exists(true_attacker) {
-		while(!is_char(true_attacker)) {
-			true_attacker = true_attacker.owner;
-		}
-	}
-	if !instance_exists(true_attacker) {
-		true_attacker = noone;
+	var _true_attacker = get_true_attacker(_attacker);
+	if !instance_exists(_true_attacker) {
+		_true_attacker = noone;
 		dmg *= 1/4;
 		_kill = false;
 	}
 	
-	with(true_attacker) {
+	with(_true_attacker) {
 		dmg *= attack_power + ((level - 1) * level_scaling);
 	}
 	
-	if is_char(defender){
-		//_kill = (defender.level >= 3);
+	if is_char(_defender){
+		//_kill = (_defender.level >= 3);
 		
 		var _scale = true;
 		var _guts = true;
-		with(true_attacker) {
+		with(_true_attacker) {
 			if active_state == finisher_move {
 				_scale = false;
 				_guts = false;
@@ -361,16 +388,14 @@ function take_damage(_attacker,_amount,_kill) {
 			}
 		}
 		if _scale {
-			dmg *= get_damage_scaling(defender);
+			dmg *= get_damage_scaling(_defender);
 		}
 		if _guts {
-			dmg *= get_damage_scaling_guts(defender);
+			dmg *= get_damage_scaling_guts(_defender);
 		}
 	}
 	
-	dmg /= max(defender.defense,0.1);
-	
-	//dmg /= 2;
+	dmg /= max(_defender.defense,0.1);
 	
 	dmg = max(round(dmg),1);
 	
@@ -381,33 +406,6 @@ function take_damage(_attacker,_amount,_kill) {
 		}
 	}
 	
-	combo_damage_taken += dmg;
-	
-	var mp_gain = dmg / 2;
-	var xp_gain = dmg;
-	
-	var attack_mp_gain = mp_gain * 1.0;
-	var attack_xp_gain = xp_gain * 1.0;
-	
-	var defend_mp_gain = mp_gain * 0.75;
-	var defend_xp_gain = xp_gain * 0.75;
-	
-	with(true_attacker) {
-		attack_xp_gain /= level / other.level;
-		defend_xp_gain *= level / other.level;
-		if special_active or super_active or ultimate_active {
-			attack_mp_gain = 0;
-			attack_xp_gain *= 2;
-		}
-	}
-	
-	mp += defend_mp_gain;
-	xp += defend_xp_gain;
-	with(true_attacker) {
-		mp += attack_mp_gain;
-		xp += attack_xp_gain;
-	}
-	
 	return dmg;
 }
 
@@ -416,7 +414,7 @@ function get_damage_scaling(_defender) {
 		var scaling = map_value(
 			combo_hits_taken,
 			0,
-			30,
+			50,
 			1,
 			0.1
 		);
@@ -432,10 +430,10 @@ function get_damage_scaling_guts(_defender) {
 			max_hp/5,
 			0,
 			1,
-			5
+			2
 		);
 		guts = max(guts,1);
-		return clamp(1 / guts,0.5,1);
+		return clamp(1 / guts,0.1,1);
 	}
 }
 
