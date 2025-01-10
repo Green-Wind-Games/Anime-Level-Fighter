@@ -284,8 +284,9 @@ function init_charstates() {
 	
 	guard_state = new charstate();
 	guard_state.start = function() {
-		change_sprite(guard_sprite,6,false);
+		change_sprite(guard_sprite,3,false);
 		is_guarding = true;
+		
 		can_guard = true;
 		can_cancel = false;
 	}

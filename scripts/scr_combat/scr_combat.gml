@@ -46,51 +46,55 @@ enum hiteffects {
 	light,
 }
 
-function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _strength, _hiteffect) {
-	var true_attacker = _attacker;
-	while(!is_char(true_attacker)) {
-		true_attacker = true_attacker.owner;
-		if !instance_exists(true_attacker) {
-			true_attacker = noone;
+function get_true_attacker(_obj) {
+	var _attacker = _obj;
+	while(!is_char(_attacker)) {
+		_attacker = _attacker.owner;
+		if !instance_exists(_attacker) {
+			_attacker = noone;
 			break;
 		}
 	}
-	
-	target = true_attacker;
-	
-	var _xspeed = xspeed;
-	var _yspeed = yspeed;
-	xspeed = _xknockback * _attacker.facing;
-	yspeed = _yknockback;
-	
-	hitstun = 20 + (_strength * 5);
-	blockstun = hitstun - 5;
-	hitstop = 8 + power(_strength,1.5);
-	
-	if is_char(_attacker) {
-		var _recovery = _attacker.anim_duration - _attacker.anim_timer;
-		hitstun = max(hitstun,_recovery);
-		blockstun = _recovery - 5;
-	}
-	else {
-		hitstop *= 0.5;
+	return _attacker;
+}
+
+function get_attack_hitstun(_attackstrength) {
+	var _hitstun = 0;
+	if _attackstrength > 0 {
+		_hitstun = 15 + (attack_strength * 5);
 	}
 	
-	hitstun = max(hitstun - (combo_hits_taken / 4), 10);
-		
-	if abs(_xknockback) >= 10
-	or abs(_yknockback) >= 10 {
-		hitstun = max(hitstun,60);
+	return round(_hitstun);
+}
+
+function get_attack_blockstun(_attackstrength) {
+	var _blockstun = get_attack_hitstun(_attackstrength) - 5;
+	_blockstun = max(_blockstun,0);
+	
+	return round(_blockstun);
+}
+
+function get_attack_hitstop(_attackstrength) {
+	var _hitstop = 0;
+	with(_hitbox) {
+		if attack_strength > 0 {
+			_hitstop = 10 + power(attack_strength,1.25);
+		}
 	}
 	
-	hitstun = round(hitstun);
-	blockstun = round(blockstun);
-	hitstop = round(hitstop);
-			
-	var _guarding = is_guarding;
+	return round(_hitstop);
+}
+
+function check_guard(_attacktype) {
+	var _guarding = false;
 	if is_char(id) {
-		if input.back _guarding = true;
-		if (ai_enabled) and chance(map_value(ai_level,1,ai_level_max,20,90)) _guarding = true;
+		if is_guarding _guarding = true;
+		if (!ai_enabled) {
+			if input.back _guarding = true;
+		}
+		else { 
+			if chance(map_value(ai_level,1,ai_level_max,50,100)) _guarding = true;
+		}
 	}
 	
 	var _guard_valid = (can_guard) and (!is_hit);
@@ -102,160 +106,207 @@ function get_hit(_attacker, _damage, _xknockback, _yknockback, _attacktype, _str
 	and is_airborne {
 		_guard_valid = false;
 	}
-	if _guard_valid and _guarding {
-		change_state(guard_state);
-		change_sprite(guard_sprite,3,false);
-		xspeed *= 2;
-		//yspeed /= 2;
-		yspeed = _yspeed;
-		if on_ground {
-			yspeed = 0;
-		}
-		take_damage(_attacker,_damage/20,false);
+	
+	return (_guarding and _guard_valid);
+}
+
+function guard_attack(_hitbox) {
+	change_state(guard_state);
+	change_sprite(guard_sprite,3,false);
+	xspeed *= 1.5;
+	//yspeed /= 2;
+	yspeed = _yspeed;
+	if on_ground {
+		yspeed = 0;
 	}
-	else {
-		var connect = true;
-		if invincible {
+	take_damage(_hitbox.owner,_hitbox.damage/20,false);
+}
+
+function get_hit_by_attack(_hitbox) {
+	var connect = true;
+	if invincible {
+		connect = false;
+	}
+	if is_shot(_attacker) {
+		if immune_to_projectiles {
 			connect = false;
 		}
-		if is_shot(_attacker) {
-			if immune_to_projectiles {
-				connect = false;
+	}
+	if connect {
+		switch(_attacktype) {
+			default:
+			change_state(hit_state);
+			if on_ground and _hitbox.yknockback >= 0 {
+				yspeed = 0;
+			}
+			else if is_airborne and _hitbox.yknockback == 0 {
+				yspeed = -abs(xspeed) / 2;
+			}
+			break;
+				
+			case attacktype.hard_knockdown:
+			change_state(hard_knockdown_state);
+			break;
+				
+			case attacktype.wall_splat:
+			change_state(wall_splat_state);
+			break;
+				
+			case attacktype.wall_bounce:
+			if previous_state != wall_bounce_state {
+				change_state(wall_bounce_state);
+				play_sound(snd_launch);
+				hitstun = max(hitstun,100);
+			}
+			else {
+				change_state(hit_state);
+			}
+			break;
+				
+			case attacktype.slide_knockdown:
+			change_state(slide_knockdown_state);
+			break;
+				
+			case attacktype.grab:
+			with(_hitbox.owner) {
+				init_grab(id,other);
+			}
+			break;
+		}
+			
+		change_sprite(
+			sprite == hit_high_sprite ? hit_low_sprite : hit_high_sprite,
+			3,
+			false
+		);
+		if is_airborne or (yspeed < 0) {
+			change_sprite(hit_air_sprite,frame_duration,false);
+		}
+		if (abs(xspeed) >= 10) or (abs(yspeed) >= 10) {
+			change_sprite(launch_sprite,frame_duration,true);
+			yoffset = -height_half;
+			rotation = point_direction(0,0,abs(xspeed),-yspeed);
+		}
+		if yspeed <= -10 {
+			change_sprite(spinout_sprite,frame_duration,true);
+			yoffset = -height_half;
+			rotation = point_direction(0,0,abs(xspeed),-yspeed);
+		}
+			
+		var _hp = hp;
+		var dmg = take_damage(_attacker,_damage,(!grabbed));
+	
+		combo_timer = hitstun;
+		if active_state == hard_knockdown_state
+		or active_state == wall_bounce_state {
+			combo_timer += 60;
+		}
+			
+		combo_hits_taken++;
+			
+		combo_hits = 0;
+		combo_damage = 0;
+			
+		if is_char(_attacker) {
+			with(_attacker) {
+				combo_timer = other.combo_timer;
+				combo_hits++;
+				combo_damage += dmg;
 			}
 		}
-		if connect {
-			switch(_attacktype) {
-				default:
-				change_state(hit_state);
-				if on_ground and _yknockback >= 0 {
-					yspeed = 0;
+		else {
+			with(_attacker.owner) {
+				combo_timer = other.combo_timer;
+				combo_hits++;
+				combo_damage += dmg;
+			}
+		}
+			
+		if (_hp > 0) {
+			if (hp > 0) {
+				var _heavyattack_speed = 10;
+				var is_heavyattack = ((abs(xspeed) >= _heavyattack_speed) or (abs(yspeed) >= _heavyattack_speed));
+				if on_ground and (yspeed > -_heavyattack_speed) {
+					is_heavyattack = false;
 				}
-				else if is_airborne and _yknockback == 0 {
-					yspeed = -abs(xspeed) / 2;
-				}
-				break;
-				
-				case attacktype.hard_knockdown:
-				change_state(hard_knockdown_state);
-				break;
-				
-				case attacktype.wall_splat:
-				change_state(wall_splat_state);
-				break;
-				
-				case attacktype.wall_bounce:
-				if previous_state != wall_bounce_state {
-					change_state(wall_bounce_state);
-					play_sound(snd_launch);
+				if is_heavyattack {
+					play_voiceline(voice_hurt_heavy,50,true);
+			
+					if meme_enabled {
+						if chance(meme_chance) {
+							stop_sound(voice);
+							voice = play_sound(snd_meme_scream_disappear,3);
+						}
+					}
 				}
 				else {
-					change_state(hit_state);
-				}
-				hitstun = max(hitstun,100);
-				break;
-				
-				case attacktype.slide_knockdown:
-				change_state(slide_knockdown_state);
-				break;
-				
-				case attacktype.grab:
-				with(_attacker) {
-					init_grab(id,other);
-				}
-				break;
-			}
-			
-			change_sprite(choose(hit_high_sprite,hit_low_sprite),3,false);
-			if is_airborne {
-				change_sprite(hit_air_sprite,frame_duration,false);
-			}
-			if (abs(xspeed) >= 10) or (abs(yspeed) >= 10) {
-				change_sprite(launch_sprite,frame_duration,true);
-				yoffset = -height_half;
-				rotation = point_direction(0,0,abs(xspeed),-yspeed);
-			}
-			if yspeed <= -10 {
-				change_sprite(spinout_sprite,frame_duration,true);
-				yoffset = -height_half;
-				rotation = point_direction(0,0,abs(xspeed),-yspeed);
-			}
-			
-			var _hp = hp;
-			var dmg = take_damage(_attacker,_damage,(!grabbed));
-	
-			combo_timer = hitstun + 10;
-			if active_state == hard_knockdown_state
-			or active_state == wall_bounce_state {
-				combo_timer += 40;
-			}
-			
-			combo_hits_taken++;
-			
-			combo_hits = 0;
-			combo_damage = 0;
-			
-			if is_char(_attacker) {
-				with(_attacker) {
-					combo_timer = other.combo_timer;
-					combo_hits++;
-					combo_damage += dmg;
+					play_voiceline(voice_hurt,50,true);
 				}
 			}
 			else {
-				with(_attacker.owner) {
-					combo_timer = other.combo_timer;
-					combo_hits++;
-					combo_damage += dmg;
+				if is_char(id) {
+					play_voiceline(voice_dead,100,true);
 				}
-			}
-			
-			if (_hp > 0) {
-				if (hp > 0) {
-					var _heavyattack_speed = 10;
-					var is_heavyattack = ((abs(xspeed) >= _heavyattack_speed) or (abs(yspeed) >= _heavyattack_speed));
-					if on_ground and (yspeed > -_heavyattack_speed) {
-						is_heavyattack = false;
-					}
-					if is_heavyattack {
-						play_voiceline(voice_hurt_heavy,50,true);
-			
-						if meme_enabled {
-							if chance(meme_chance) {
-								stop_sound(voice);
-								voice = play_sound(snd_meme_scream_disappear,3);
-							}
-						}
-					}
-					else {
-						play_voiceline(voice_hurt,50,true);
-					}
-				}
-				else {
-					if is_char(id) {
-						play_voiceline(voice_dead,100,true);
-					}
-					if on_ground {
-						if yspeed >= 0 {
-							yspeed = -5;
-							xspeed = 5 * _attacker.facing;
-						}
+				if on_ground {
+					if yspeed >= 0 {
+						yspeed = -5;
+						xspeed = 5 * _attacker.facing;
 					}
 				}
 			}
+		}
 			
-			frame = 0;
-			frame_timer = 0;
-			facing = -_attacker.facing;
+		frame = 0;
+		frame_timer = 0;
+		facing = -_attacker.facing;
+	}
+	else {
+		xspeed = _xspeed;
+		yspeed = _yspeed;
+	}
+}
+
+function connect_attack(_hitbox, _hurtbox) {
+	var _attacker = get_true_attacker(_hitbox);
+	
+	hitstun = get_attack_hitstun(_hitbox);
+	blockstun = get_attack_blockstun(_hitbox);
+	hitstop = get_attack_hitstop(_hitbox);
+	
+	hitstun = max(hitstun - (combo_hits_taken / 4), 10);
+	
+	var _is_strong_attack = true;
+	if _hitbox.attack_strength < attackstrength.super { _is_strong_attack = false; }
+	if (abs(xspeed) < 10) and (abs(yspeed) < 10) { _is_strong_attack = false; }
+		
+	if _is_strong_attack {
+		hitstun = max(hitstun,60);
+	}
+	
+	if is_char(_attacker) {
+		with(_attacker) {
+			var _recovery = (anim_frames - frame) * frame_duration;
+			hitstun = _recovery;
 		}
-		else {
-			xspeed = _xspeed;
-			yspeed = _yspeed;
-		}
+	}
+	else {
+		hitstop *= 0.75;
+	}
+	
+	hitstun = round(hitstun);
+	blockstun = round(blockstun);
+	hitstop = round(hitstop);
+	
+	if check_guard(_hitbox.attack_type) {
+		guard_attack(_hitbox);
+	}
+	else {
+		get_hit_by_attack(_hitbox);
 	}
 	
 	if on_wall {
 		if is_char(_attacker) or is_helper(_attacker) {
-			_attacker.xspeed = xspeed * -0.5;
+			_attacker.xspeed = xspeed * -0.75;
 		}
 	}
 	

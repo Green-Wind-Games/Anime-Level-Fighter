@@ -11,6 +11,15 @@ function update_charphysics() {
 		x = approach(x,_xto,1);
 		y = approach(y,_yto,1);
 		
+		with(target) {
+			if on_wall and (is_hit or is_guarding) {
+				var _push = xspeed * 0.75;
+				with(other) {
+					x -= _push;
+				}
+			}
+		}
+		
 		with(obj_char) {
 			if grabbed or other.grabbed continue;
 			if dead or other.dead continue;
