@@ -60,7 +60,7 @@ function basic_wallsplat(_hitframe,_damage,_hiteffect) {
 			_damage,
 			10,
 			-5,
-			attacktype.wall_splat,
+			attacktype.normal,
 			attackstrength.super,
 			_hiteffect
 		);
@@ -80,8 +80,8 @@ function basic_launcher(_hitframe,_damage,_hiteffect) {
 			_w,
 			_h,
 			_damage,
-			2,
-			-10,
+			5,
+			-12,
 			attacktype.antiair,
 			attackstrength.super,
 			_hiteffect
@@ -102,7 +102,7 @@ function basic_smash(_hitframe,_damage,_hiteffect) {
 			max(_w,45),
 			_h,
 			_damage,
-			3,
+			5,
 			15,
 			attacktype.hard_knockdown,
 			attackstrength.super,
@@ -127,23 +127,10 @@ function basic_medium_attack(_hitframe,_hiteffect) {
 function basic_heavy_attack(_hitframe,_hiteffect) {
 	basic_attack_stepforward(_hitframe);
 	basic_wallsplat(_hitframe,500,_hiteffect);
-	if frame >= min(anim_frames-1,_hitframe+2) {
-		if (combo_timer > 10) 
-		and (!input.down) and (!input.back) {
-			xspeed = 20 * facing;
-			yspeed = -5;
-			if on_ground {
-				create_specialeffect(spr_dust_dash,x,y,facing * 0.5,0.5);
-				play_sound(snd_jump);
-			}
-			else {
-				play_sound(snd_airjump);
-			}
-			play_sound(snd_dash);
-			change_state(air_state);
-		}
-		else {
-			return_to_idle();
+	if check_frame(min(anim_frames-1,_hitframe+3)) {
+		if (attack_hits > 0)
+		and ((!input.down) and (!input.back)) {
+			change_state(homing_dash_state);
 		}
 	}
 	return_to_idle();
@@ -165,23 +152,16 @@ function basic_medium_lowattack(_hitframe,_hiteffect) {
 
 function basic_heavy_lowattack(_hitframe,_hiteffect) {
 	if check_frame(max(_hitframe-1,1)) {
-		xspeed = 5 * facing;
-		yspeed = -5;
+		xspeed = 2 * facing;
+		yspeed = -2;
 	}
 	basic_launcher(_hitframe,500,_hiteffect);
-	if frame >= min(anim_frames-1,_hitframe+2) {
-		if combo_timer > 20 {
-			xspeed = 5 * facing;
-			yspeed = -10;
-			create_specialeffect(spr_dust_dash,x,y,facing * 0.5,0.5);
-			play_sound(snd_jump);
-			play_sound(snd_dash);
-			change_state(air_state);
-		}
-		else {
-			return_to_idle();
+	if check_frame(min(anim_frames-1,_hitframe+3)) {
+		if (attack_hits > 0) and (!input.down) {
+			change_state(homing_dash_state);
 		}
 	}
+	return_to_idle();
 }
 
 function basic_light_airattack(_hitframe,_hiteffect) {
@@ -226,10 +206,7 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	var me = id;
 	var shot = instance_create(x+(_x*facing),y+_y,obj_shot);
 	with(shot) {
-		owner = me;
-		if (!is_char(owner)) and (!is_helper(owner)) {
-			owner = owner.owner;
-		}
+		owner = get_true_owner(me);
 		init_sprite(_sprite);
 		change_sprite(sprite,max(1,round(60/sprite_get_speed(_sprite))),true);
 		var _true_scale = _scale / 3;

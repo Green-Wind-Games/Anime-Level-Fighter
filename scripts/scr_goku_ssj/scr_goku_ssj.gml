@@ -9,9 +9,6 @@ function init_goku_ssj() {
 	universe = universes.dragonball;
 
 	max_air_moves = 3;
-	
-	kamehameha_cooldown = 0;
-	kamehameha_cooldown_duration = 150;
 
 	ssj2_active = false;
 	ssj2_timer = 0;
@@ -27,7 +24,28 @@ function init_goku_ssj() {
 		7,
 		spr_goku_ssj_special_kiblast,
 		spr_goku_ssj_special_kiblast2,
-		spr_kiblast_yellow
+		spr_glow_blue
+	);
+	
+	add_kamehameha_state(
+		spr_goku_ssj_special_kamehameha,
+		spr_goku_ssj_special_kamehameha_air,
+		4,
+		5,
+		6,
+		8,
+		snd_goku_kamehameha
+	);
+	
+	add_superkamehameha_state(
+		spr_goku_ssj_special_kamehameha,
+		spr_goku_ssj_special_kamehameha_air,
+		4,
+		5,
+		6,
+		8,
+		snd_goku_kamehame,
+		snd_goku_kamehame_ha
 	);
 	
 	init_charaudio("goku");
@@ -283,128 +301,6 @@ function init_goku_ssj() {
 		}
 	}
 
-	kamehameha = new charstate();
-	kamehameha.start = function() {
-		if attempt_special(1) {
-			change_sprite(spr_goku_ssj_special_kamehameha,5,false);
-			if is_airborne {
-				change_sprite(spr_goku_ssj_special_kamehameha_air,frame_duration,false);
-			}
-			xspeed = 0;
-			yspeed = 0;
-			kamehameha_cooldown = kamehameha_cooldown_duration;
-			play_voiceline(snd_goku_superkamehameha);
-			play_sound(snd_dbz_beam_charge_short);
-		}
-		else {
-			change_state(idle_state);
-		}
-	}
-	kamehameha.run = function() {
-		xspeed = 0;
-		yspeed = 0;
-		if check_frame(6) {
-			play_sound(snd_dbz_beam_fire);
-		}
-		if value_in_range(frame,6,9) {
-			//var _beam = create_shot(
-			//	30,
-			//	-25,
-			//	20,
-			//	0,
-			//	spr_glow_blue,
-			//	1/4,
-			//	200,
-			//	3,
-			//	-3,
-			//	attacktype.beam,
-			//	attackstrength.heavy,
-			//	hiteffects.none
-			//);
-			//with(_beam) {
-			//	hit_limit = -1;
-			//}
-			fire_beam(20,-25,spr_kamehameha,1,0,50);
-		}
-		return_to_idle();
-	}
-
-	super_kamehameha = new charstate();
-	super_kamehameha.start = function() {
-		if attempt_super(2,(kamehameha_cooldown <= 0)) {
-			change_sprite(spr_goku_ssj_special_kamehameha,5,false);
-			if is_airborne {
-				change_sprite(spr_goku_ssj_special_kamehameha_air,frame_duration,false);
-			}
-			xspeed = 0;
-			yspeed = 0;
-			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
-			activate_super(60);
-			play_voiceline(snd_goku_kamehame);
-			//if combo_timer <= 0 {
-			//	superfreeze(200);
-			//	play_voiceline(snd_goku_kamehameha_charge);
-			//}
-		}
-		else {
-			change_state(idle_state);
-		}
-	}
-	super_kamehameha.run = function() {
-		xspeed = 0;
-		yspeed = 0;
-		if superfreeze_active {
-			loop_anim_middle(4,5);
-			if superfreeze_timer == 15 {
-				if (input.forward) and check_tp(1) {
-					spend_tp(2);
-					play_sound(snd_dbz_teleport_long);
-					teleport(target_x + ((width + target.width) * facing), target_y);
-					face_target();
-				
-					var _frame = frame;
-					change_sprite(spr_goku_ssj_special_kamehameha_air,frame_duration,false);
-					frame = _frame;
-				}
-			}
-		}
-		loop_anim_middle_timer(6,9,120);
-		if value_in_range(frame,6,9) {
-			//var _beam = create_shot(
-			//	30,
-			//	-25,
-			//	20,
-			//	0,
-			//	spr_glow_blue,
-			//	3/4,
-			//	25,
-			//	3,
-			//	-3,
-			//	attacktype.beam,
-			//	attackstrength.heavy,
-			//	hiteffects.none
-			//);
-			//with(_beam) {
-			//	hit_limit = -1;
-			//}
-			fire_beam(20,-25,spr_kamehameha,2,0,50);
-		}
-		if check_frame(3) {
-			if superfreeze_timer > 60 {
-				play_sound(snd_dbz_beam_charge_long);
-			}
-			else {
-				play_sound(snd_dbz_beam_charge_short);
-			}
-		}
-		if check_frame(6) {
-			play_voiceline(snd_goku_kamehameha_fire);
-			play_sound(snd_dbz_beam_fire);
-			shake_screen(120,1);
-		}
-		return_to_idle();
-	}
-
 	angry_kamehameha = new charstate();
 	angry_kamehameha.start = function() {
 		if attempt_ultimate(5,(!ssj2_active)) {
@@ -424,29 +320,12 @@ function init_goku_ssj() {
 			loop_anim_middle(0,0);
 		}
 		if check_frame(2) {
-			play_voiceline(snd_goku_kamehameha_fire);
+			play_voiceline(snd_goku_kamehame_ha);
 			play_sound(snd_dbz_beam_fire);
 			shake_screen(120,1);
 		}
 		loop_anim_middle_timer(3,3,120);
 		if value_in_range(frame,3,3) {
-			//var _beam = create_shot(
-			//	30,
-			//	-25,
-			//	20,
-			//	0,
-			//	spr_glow_yellow,
-			//	3/4,
-			//	50,
-			//	3,
-			//	-3,
-			//	attacktype.beam,
-			//	attackstrength.heavy,
-			//	hiteffects.none
-			//);
-			//with(_beam) {
-			//	hit_limit = -1;
-			//}
 			fire_beam(20,-25,spr_kamehameha_gold,2,0,50);
 		}
 		return_to_idle();
@@ -500,12 +379,20 @@ function init_goku_ssj() {
 	
 	signature_move = super_kamehameha;
 	finisher_move = angry_kamehameha;
-
+	
 	victory_state.run = function() {
 		ssj2_timer = 0;
-		if anim_timer >= (anim_duration - 2) {
-			frame = anim_frames - 2;
+		if sound_is_playing(voice) {
+			loop_anim_middle(1,3);
 		}
+		loop_anim_middle(3,4);
+	}
+	defeat_state.run = function() {
+		ssj2_timer = 0;
+		if sound_is_playing(voice) {
+			loop_anim_middle(1,3);
+		}
+		loop_anim_middle(3,4);
 	}
 
 	draw_script = function() {

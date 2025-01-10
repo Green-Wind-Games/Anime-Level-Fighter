@@ -6,8 +6,8 @@ function create_hurtbox(_xoffset, _yoffset, _width, _height) {
 		owner = other;
 		xoffset = _xoffset;
 		yoffset = _yoffset;
-		image_xscale = _width / sprite_get_width(spr_hitbox);
-		image_yscale = _height / sprite_get_width(spr_hitbox);
+		image_xscale = _width / sprite_get_width(spr_hurtbox);
+		image_yscale = _height / sprite_get_width(spr_hurtbox);
 	}
 	return _hurtbox;
 }
@@ -18,8 +18,8 @@ function create_hitbox(_xoffset,_yoffset,_width,_height,_damage,_xknockback,_ykn
 		owner = other;
 		xoffset = _xoffset;
 		yoffset = _yoffset;
-		image_xscale = _width / sprite_get_width(spr_hurtbox);
-		image_yscale = _height / sprite_get_width(spr_hurtbox);
+		image_xscale = _width / sprite_get_width(spr_hitbox);
+		image_yscale = _height / sprite_get_width(spr_hitbox);
 		damage = _damage;
 		xknockback = _xknockback;
 		yknockback = _yknockback;
@@ -32,7 +32,7 @@ function create_hitbox(_xoffset,_yoffset,_width,_height,_damage,_xknockback,_ykn
 	return _hitbox;
 }
 
-function check_hit() {
+function hitbox_check_hit() {
 	var a = id;
 	var a2 = owner;
 	with(obj_hitbox) {
@@ -44,7 +44,7 @@ function check_hit() {
 		if !place_meeting(x,y,a) continue;
 		
 		if is_char(a2) and is_char(b2) {
-			init_clash(a2,b2);
+			init_clash(a,b);
 			ds_list_add(a.hit_list,b2);
 			ds_list_add(b.hit_list,a2);
 		}
@@ -85,7 +85,7 @@ function check_hit() {
 					a2.homing = false;
 					a2.affected_by_gravity = 2;
 				}
-				create_particles(a2.x,a2.y,parry_spark,50);
+				create_particles(a2.x,a2.y,parry_spark);
 				continue;
 			}
 		}
@@ -96,7 +96,7 @@ function check_hit() {
 			if b2.deflecting_attacks {
 				a2.xspeed = 12 * b2.facing;
 				//a2.yspeed = b2.yspeed;
-				create_particles(a2.x,a2.y,parry_spark,50);
+				create_particles(a2.x,a2.y,parry_spark);
 				continue;
 			}
 		}
@@ -113,15 +113,7 @@ function check_hit() {
 		}
 		
 		with(b2) {
-			get_hit(
-				a2,
-				a.damage,
-				a.xknockback,
-				a.yknockback,
-				a.attack_type,
-				a.attack_strength,
-				a.hit_effect
-			);
+			connect_attack(a,b);
 		}
 		with(a2) {
 			if is_shot(id) {

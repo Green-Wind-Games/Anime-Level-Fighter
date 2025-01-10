@@ -12,11 +12,15 @@ function update_charphysics() {
 		y = approach(y,_yto,1);
 		
 		with(target) {
-			if on_wall and (is_hit or is_guarding) {
-				var _push = xspeed * 0.75;
-				with(other) {
-					x -= _push;
-				}
+			if !on_wall break;
+			if (!is_hit) and (!is_guarding) break;
+			if hitstop break;
+			if superfreeze_active break;
+			if timestop_active break;
+			
+			var _push = xspeed * 0.25;
+			with(other) {
+				x -= _push;
 			}
 		}
 		

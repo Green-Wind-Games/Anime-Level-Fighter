@@ -109,7 +109,11 @@ part_type_orientation(parry_spark,0,360,0,0,true);
 part_type_color2(parry_spark,make_color_rgb(0,255,128),c_black);
 part_type_blend(parry_spark,true);
 
-function create_hitspark(_hitbox,_hurtbox,_strength,_hiteffect,_guard) {
+function create_hitspark(_hitbox,_hurtbox) {
+	var _strength = _hitbox.attack_strength;
+	var _hiteffect = _hitbox.hit_effect;
+	var _guard = _hurtbox.owner.is_guarding;
+	
 	var _sound = noone;
 	var _volume = 1;
 	
@@ -190,18 +194,9 @@ function create_hitspark(_hitbox,_hurtbox,_strength,_hiteffect,_guard) {
 			}
 			
 			if _strength >= attackstrength.super {
-				if meme_enabled {
-					if chance(meme_chance) {
-						_sound = choose(
-							snd_meme_hit_dunk,
-							snd_meme_hit_hammer,
-							snd_meme_hit_metal_dayum,
-							snd_meme_hit_tacobell,
-							snd_meme_hit_tf2_critical,
-							snd_meme_hit_tf2_fryingpan
-						);
-						_volume = 2;
-					}
+				if meme_enabled and chance(meme_chance) {
+					_sound = snd_meme_hit;
+					_volume = 2;
 				}
 			}
 		}

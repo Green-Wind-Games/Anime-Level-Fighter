@@ -93,6 +93,123 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_kiblastsprite) {
 	}
 }
 
+function add_kamehameha_state(_groundsprite,_airsprite,_chargeframe1,_chargeframe2,_fireframe1,_fireframe2,_voiceline) {
+	kamehameha_ground_sprite = _groundsprite;
+	kamehameha_air_sprite = _airsprite;
+	
+	kamehameha_charge_frame1 = _chargeframe1;
+	kamehameha_charge_frame2 = _chargeframe2;
+	
+	kamehameha_fire_frame1 = _fireframe1;
+	kamehameha_fire_frame2 = _fireframe2;
+	
+	voice_kamehameha = _voiceline;
+	
+	kamehameha = new charstate();
+	kamehameha.start = function() {
+		if attempt_special(1) {
+			change_sprite(
+				on_ground ? kamehameha_ground_sprite : kamehameha_air_sprite,
+				3,
+				false
+			);
+			xspeed = 0;
+			yspeed = 0;
+			kamehameha_cooldown = kamehameha_cooldown_duration;
+			play_voiceline(voice_kamehameha);
+			play_sound(snd_dbz_beam_charge_short);
+		}
+		else {
+			change_state(idle_state);
+		}
+	}
+	kamehameha.run = function() {
+		xspeed = 0;
+		yspeed = 0;
+		if check_frame(kamehameha_fire_frame1) {
+			play_sound(snd_dbz_beam_fire);
+		}
+		if value_in_range(attack_hits,1,30) {
+			loop_anim_middle(kamehameha_fire_frame1,kamehameha_fire_frame2);
+		}
+		if value_in_range(frame,kamehameha_fire_frame1,kamehameha_fire_frame2) {
+			fire_beam(width*0.75,height_half,spr_kamehameha,1,0,50);
+		}
+		return_to_idle();
+	}
+}
+
+function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_chargeframe2,_fireframe1,_fireframe2,_voice_charge,_voice_fire) {
+	kamehameha_ground_sprite = _groundsprite;
+	kamehameha_air_sprite = _airsprite;
+	
+	kamehameha_charge_frame1 = _chargeframe1;
+	kamehameha_charge_frame2 = _chargeframe2;
+	
+	kamehameha_fire_frame1 = _fireframe1;
+	kamehameha_fire_frame2 = _fireframe2;
+	
+	voice_superkamehameha_charge = _voice_charge;
+	voice_superkamehameha_fire = _voice_fire;
+	
+	kamehameha_cooldown = 0;
+	kamehameha_cooldown_duration = 100;
+	
+	super_kamehameha = new charstate();
+	super_kamehameha.start = function() {
+		if attempt_super(2,(kamehameha_cooldown <= 0)) {
+			change_sprite(
+				on_ground ? kamehameha_ground_sprite : kamehameha_air_sprite,
+				3,
+				false
+			);
+			xspeed = 0;
+			yspeed = 0;
+			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
+			activate_super(60);
+			play_voiceline(voice_superkamehameha_charge);
+			play_sound(snd_energy_start);
+			play_sound(snd_dbz_beam_charge_short,1.5,0.8);
+		}
+		else {
+			change_state(idle_state);
+		}
+	}
+	super_kamehameha.run = function() {
+		xspeed = 0;
+		yspeed = 0;
+		if superfreeze_active {
+			loop_anim_middle(4,5);
+			if superfreeze_timer == 15 {
+				if (input.forward) and check_tp(1) {
+					spend_tp(1);
+					play_sound(snd_dbz_teleport_long);
+					teleport(target_x + ((width + target.width) * facing), target_y);
+					face_target();
+				
+					var _frame = frame;
+					change_sprite(
+						on_ground ? kamehameha_ground_sprite : kamehameha_air_sprite,
+						3,
+						false
+					);
+					frame = _frame;
+				}
+			}
+		}
+		if check_frame(kamehameha_fire_frame1) {
+			play_sound(snd_dbz_beam_fire);
+			play_voiceline(voice_superkamehameha_fire);
+		}
+		loop_anim_middle_timer(kamehameha_fire_frame1,kamehameha_fire_frame2,100);
+		if value_in_range(frame,kamehameha_fire_frame1,kamehameha_fire_frame2) {
+			fire_beam(width*0.75,height_half,spr_kamehameha,1,0,50);
+			shake_screen(5);
+		}
+		return_to_idle();
+	}
+}
+
 function create_kiblast(_x,_y,_sprite) {
 	with(create_shot(
 		_x,

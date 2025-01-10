@@ -7,9 +7,6 @@ function init_goku_baseform() {
 	universe = universes.dragonball;
 
 	max_air_moves = 3;
-	
-	kamehameha_cooldown = 0;
-	kamehameha_cooldown_duration = 150;
 
 	kaioken_active = false;
 	kaioken_timer = 0;
@@ -28,6 +25,27 @@ function init_goku_baseform() {
 		spr_goku_special_kiblast,
 		spr_goku_special_kiblast2,
 		spr_glow_blue
+	);
+	
+	add_kamehameha_state(
+		spr_goku_special_kamehameha,
+		spr_goku_special_kamehameha_air,
+		4,
+		5,
+		6,
+		8,
+		snd_goku_kamehameha
+	);
+	
+	add_superkamehameha_state(
+		spr_goku_special_kamehameha,
+		spr_goku_special_kamehameha_air,
+		4,
+		5,
+		6,
+		8,
+		snd_goku_kamehame,
+		snd_goku_kamehame_ha
 	);
 	
 	init_charaudio("goku");
@@ -259,141 +277,6 @@ function init_goku_baseform() {
 		}
 	}
 
-	kamehameha = new charstate();
-	kamehameha.start = function() {
-		if attempt_special(1,(!kamehameha_cooldown)) {
-			change_sprite(spr_goku_special_kamehameha,5,false);
-			if is_airborne {
-				change_sprite(spr_goku_special_kamehameha_air,frame_duration,false);
-			}
-			xspeed = 0;
-			yspeed = 0;
-			kamehameha_cooldown = kamehameha_cooldown_duration;
-			play_voiceline(snd_goku_kamehameha);
-			play_sound(snd_dbz_beam_charge_short);
-		}
-		else {
-			change_state(idle_state);
-		}
-	}
-	kamehameha.run = function() {
-		xspeed = 0;
-		yspeed = 0;
-		if check_frame(6) {
-			play_sound(snd_dbz_beam_fire);
-		}
-		if state_timer < 30 or value_in_range(combo_hits,1,20) {
-			loop_anim_middle(6,9);
-		}
-		if value_in_range(frame,6,9) {
-			//var _beam = create_shot(
-			//	30,
-			//	-25,
-			//	20,
-			//	0,
-			//	spr_glow_blue,
-			//	1/4,
-			//	200,
-			//	3,
-			//	-3,
-			//	attacktype.beam,
-			//	attackstrength.heavy,
-			//	hiteffects.none
-			//);
-			//with(_beam) {
-			//	hit_limit = -1;
-			//}
-			fire_beam(
-				20,
-				-25,
-				kaioken_active ? spr_kamehameha_red : spr_kamehameha,
-				1,
-				0,
-				80
-			);
-		}
-		return_to_idle();
-	}
-
-	super_kamehameha = new charstate();
-	super_kamehameha.start = function() {
-		if attempt_super(2,(!kamehameha_cooldown)) {
-			change_sprite(spr_goku_special_kamehameha,5,false);
-			if is_airborne {
-				change_sprite(spr_goku_special_kamehameha_air,frame_duration,false);
-			}
-			xspeed = 0;
-			yspeed = 0;
-			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
-			activate_super(60);
-			play_voiceline(snd_goku_kamehame);
-		}
-		else {
-			change_state(idle_state);
-		}
-	}
-	super_kamehameha.run = function() {
-		xspeed = 0;
-		yspeed = 0;
-		if superfreeze_active {
-			loop_anim_middle(4,5);
-			if superfreeze_timer == 15 {
-				if (input.forward) and check_tp(2) {
-					spend_tp(2);
-					play_sound(snd_dbz_teleport_long);
-					teleport(target_x + ((width + target.width) * facing), target_y);
-					face_target();
-				
-					var _frame = frame;
-					change_sprite(spr_goku_special_kamehameha_air,frame_duration,false);
-					frame = _frame;
-				}
-			}
-		}
-		loop_anim_middle_timer(6,9,120);
-		if value_in_range(frame,6,9) {
-			//var _beam = create_shot(
-			//	30,
-			//	-25,
-			//	20,
-			//	0,
-			//	spr_glow_blue,
-			//	3/4,
-			//	25,
-			//	3,
-			//	-3,
-			//	attacktype.beam,
-			//	attackstrength.heavy,
-			//	hiteffects.none
-			//);
-			//with(_beam) {
-			//	hit_limit = -1;
-			//}
-			fire_beam(
-				20,
-				-25,
-				kaioken_active ? spr_kamehameha_red : spr_kamehameha,
-				2,
-				0,
-				50
-			);
-		}
-		if check_frame(3) {
-			if superfreeze_timer > 60 {
-				play_sound(snd_dbz_beam_charge_long);
-			}
-			else {
-				play_sound(snd_dbz_beam_charge_short);
-			}
-		}
-		if check_frame(6) {
-			play_voiceline(snd_goku_kamehameha_fire);
-			play_sound(snd_dbz_beam_fire);
-			shake_screen(120,1);
-		}
-		return_to_idle();
-	}
-
 	//meteor_combo = new charstate();
 	//meteor_combo.start = function() {
 	//	if activate_super(1) {
@@ -584,7 +467,10 @@ function init_goku_baseform() {
 	
 	victory_state.run = function() {
 		kaioken_timer = 0;
-		if check_frame(4) {
+		if sound_is_playing(voice) {
+			loop_anim_middle(1,3)
+		}
+		if check_frame(7) {
 			yspeed = -5;
 			squash_stretch(0.9,1.1);
 		}
@@ -592,8 +478,14 @@ function init_goku_baseform() {
 			if yspeed > 0 {
 				squash_stretch(1.1,0.9);
 				yspeed = 0;
-				frame = 2;
+				frame = 5;
 			}
+		}
+	}
+	defeat_state.run = function() {
+		kaioken_timer = 0;
+		if sound_is_playing(voice) {
+			loop_anim_middle(2,4)
 		}
 	}
 	

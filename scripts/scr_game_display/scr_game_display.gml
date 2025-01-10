@@ -173,7 +173,9 @@ function toggle_fullscreen() {
 }
 
 function shake_screen(_duration, _intensity = 1) {
-	screen_shake_timer = _duration;
+	if screen_shake_timer <= 1 {
+		screen_shake_timer = _duration;
+	}
 	screen_shake_intensity = _intensity;
 }
 

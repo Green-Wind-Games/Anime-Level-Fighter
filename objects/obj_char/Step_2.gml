@@ -20,7 +20,7 @@ switch(sprite) {
 	case walk_sprite:
 	case dash_sprite:
 	if sprite_get_yoffset(sprite) > sprite_get_height(sprite) {
-		yoffset = sine_wave(state_timer,60,2,0);
+		yoffset = sine_wave(anim_timer,anim_duration,2,0);
 	}
 	break;
 	
@@ -41,7 +41,7 @@ switch(sprite) {
 	yoffset = -height_half;
 	rotation = point_direction(0,0,abs(xspeed),-yspeed);
 	if anim_timer mod 15 == 1 {
-		char_specialeffect(
+		create_specialeffect(
 			spr_wind_spin,
 			x,
 			y-height_half,
@@ -67,6 +67,9 @@ switch(active_state) {
 		deactivate_super();
 		attack_hits = 0;
 	}
+	if state_timer < 2 {
+		attack_hits = 0;
+	}
 	break;
 	
 	case special_state:
@@ -89,6 +92,9 @@ if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
 	combo_timer -= game_speed;
 	if combo_timer <= 0 {
 		reset_combo();
+	}
+	if combo_timer <= -30 {
+		reset_combo_counter();
 	}
 }
 
@@ -130,6 +136,9 @@ dmg_percent_visible = max(
 );
 
 dmg_percent_visible = median(dmg_percent_visible,0,hp_percent_visible-100);
+
+combo_hits_visible = lerp(combo_hits_visible,combo_hits_counter,0.5);
+combo_damage_visible = lerp(combo_damage_visible,combo_damage_counter,0.5);
 
 if (!is_hit) {
 	previous_hp = approach(previous_hp,hp,100);

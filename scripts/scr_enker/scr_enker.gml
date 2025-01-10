@@ -413,9 +413,16 @@ function init_enker() {
 
 	victory_state.run = function() {
 		greenwind_timer = 0;
-		if anim_timer >= (anim_duration - 2) {
-			frame = anim_frames - 2;
+		if sound_is_playing(voice) {
+			loop_anim_middle(4,6);
 		}
+	}
+	defeat_state.run = function() {
+		greenwind_timer = 0;
+		if sound_is_playing(voice) {
+			loop_anim_middle(4,7);
+		}
+		loop_anim_middle(8,9);
 	}
 
 	draw_script = function() {

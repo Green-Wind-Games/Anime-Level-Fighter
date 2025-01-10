@@ -43,8 +43,8 @@ function init_charstates() {
 			else {
 				if sign(input.right-input.left) != 0 {
 					xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
-					var walk_anim_speed = width / abs(xspeed);
-					walk_anim_speed /= max(1,sprite_get_number(walk_sprite) / 6);
+					var walk_anim_speed = 50 / abs(xspeed);
+					walk_anim_speed /= max(1,sprite_get_number(walk_sprite) / 4);
 					walk_anim_speed = max(2,round(walk_anim_speed));
 					change_sprite(walk_sprite,walk_anim_speed,true);
 					xscale = abs(xscale) * sign(input.right-input.left) * facing;
@@ -316,8 +316,30 @@ function init_charstates() {
 	hit_state.run = function() {
 		is_hit = true;
 		can_guard = false;
-		if state_timer >= hitstun {
-			if !dead {
+		
+		if ((xspeed < 0) and (on_left_wall)) {
+			if (xspeed <= -10) {
+				create_particles(
+					x - width_half,
+					y - height_half,
+					wall_bang_left_particle
+				);
+			}
+			xspeed = 0;
+		}
+		if ((xspeed > 0) and (on_right_wall)) {
+			if (xspeed >= 10) {
+				create_particles(
+					x + width_half,
+					y - height_half,
+					wall_bang_right_particle
+				);
+			}
+			xspeed = 0;
+		}
+		
+		if (!dead) {
+			if state_timer >= hitstun {
 				if on_ground {
 					change_state(idle_state);
 				}
@@ -325,16 +347,16 @@ function init_charstates() {
 					change_state(tech_state);
 				}
 			}
-			else {
-				if on_ground {
-					xspeed = -1 * facing;
-					yspeed = -5;
-				}
-				change_state(hard_knockdown_state);
+			if (on_ground and (yspeed > 0)) {
+				change_state(tech_state);
 			}
 		}
-		if on_ground and (yspeed > 0) and (!dead) {
-			change_state(tech_state);
+		else {
+			if on_ground {
+				xspeed = -1 * facing;
+				yspeed = -5;
+			}
+			change_state(hard_knockdown_state);
 		}
 	}
 	hit_state.stop = function() {
@@ -480,9 +502,7 @@ function init_charstates() {
 			return_to_idle();
 		}
 		else {
-			if sprite != liedown_sprite {
-				change_sprite(liedown_sprite,6,true);
-			}
+			change_sprite(liedown_sprite,6,true);
 		}
 	}
 	liedown_state.stop = function() {
@@ -501,9 +521,9 @@ function init_charstates() {
 		change_sprite(tech_sprite,6,false);
 		flash_sprite();
 		yoffset = -height_half;
-		rotation_speed = 36;
 		xspeed = 5 * sign(input.right - input.left);
 		yspeed = -3;
+		rotation_speed = (sign(xspeed) == facing) ? -30 : 30;
 		dodging_attacks = true;
 		dodging_projectiles = true;
 		can_cancel = false;
@@ -527,14 +547,12 @@ function init_charstates() {
 		yspeed = 0;
 		can_guard = true;
 		can_cancel = false;
-		homing_dash_state.run();
 	}
 	homing_dash_state.run = function() {
 		if !target_exists() {
 			change_state(idle_state);
 			exit;
 		}
-		var stop_distance = 10;
 		var _my_x = x + (width_half * facing);
 		var _my_y = y - height_half;
 		var _target_x = target.x - (target.width_half * facing);
@@ -542,18 +560,21 @@ function init_charstates() {
 		var _direction = point_direction(_my_x,_my_y,_target_x,_target_y);
 		var _distance = point_distance(_my_x,_my_y,_target_x,_target_y);
 		
-		var _speed = 12;
+		var _speed = clamp(state_timer,5,20);
 		var _xspeed = lengthdir_x(_speed,_direction);
 		var _yspeed = lengthdir_y(_speed,_direction);
-		 
+		
 		face_target();
+		basic_attack(frame,10,attackstrength.light,hiteffects.hit);
+		
 		xspeed = approach(xspeed,_xspeed,2);
 		yspeed = approach(yspeed,_yspeed,2);
 		rotation = point_direction(0,0,abs(xspeed),yspeed);
-		if _distance <= stop_distance {
-			xspeed /= 2;
-			yspeed = -_speed / 2;
-			change_state(idle_state);
+		
+		if (attack_hits > 0) or (state_timer > 100) {
+			xspeed = 3 * facing;
+			yspeed = -3;
+			change_state(air_state);
 		}
 	}
 	
@@ -781,12 +802,12 @@ function init_charstates() {
 	
 	victory_state = new charstate();
 	victory_state.start = function() {
-		change_sprite(victory_sprite,6,false);
+		change_sprite(victory_sprite,5,false);
 		play_voiceline(voice_victory);
 	}
 	defeat_state = new charstate();
 	defeat_state.start = function() {
-		change_sprite(defeat_sprite,6,false);
+		change_sprite(defeat_sprite,5,false);
 		play_voiceline(voice_defeat);
 	}
 	

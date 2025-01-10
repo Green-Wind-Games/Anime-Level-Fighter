@@ -10,7 +10,7 @@ with(input) {
 duration = -1;
 
 helper_script = function() {
-	if (owner.combo_hits > 0) {
+	if (owner.attack_hits > 0) {
 		if (target_distance_x < 80) {
 			change_state(jump_back_state);
 		}

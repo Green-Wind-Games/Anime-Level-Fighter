@@ -16,6 +16,11 @@
     {"$GMSpriteFrame":"","%Name":"93b8c15c-5414-49f9-ab6c-090eda2739be","name":"93b8c15c-5414-49f9-ab6c-090eda2739be","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
     {"$GMSpriteFrame":"","%Name":"b2a4e4e9-a158-45b9-9bf9-71fc3facc595","name":"b2a4e4e9-a158-45b9-9bf9-71fc3facc595","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
     {"$GMSpriteFrame":"","%Name":"7249835e-7b65-4131-b8a8-2c9dd062d70d","name":"7249835e-7b65-4131-b8a8-2c9dd062d70d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"1e7b0193-81fc-403c-bd37-e493940ef0b2","name":"1e7b0193-81fc-403c-bd37-e493940ef0b2","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"c5d9f13c-9f5b-4f84-a5c2-0bfab6d581fd","name":"c5d9f13c-9f5b-4f84-a5c2-0bfab6d581fd","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"aea4c620-6be3-4392-be15-bb5baa2d1a23","name":"aea4c620-6be3-4392-be15-bb5baa2d1a23","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"1698c352-602f-420b-be6f-7a9b109875fe","name":"1698c352-602f-420b-be6f-7a9b109875fe","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"83f28bb0-917c-4010-ba06-7fda73cb481a","name":"83f28bb0-917c-4010-ba06-7fda73cb481a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
@@ -52,7 +57,7 @@
     },
     "eventStubScript":null,
     "eventToFunction":{},
-    "length":4.0,
+    "length":9.0,
     "lockOrigin":false,
     "moments":{
       "$KeyframeStore<MomentsEventKeyframe>":"",
@@ -83,6 +88,21 @@
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
                 "0":{"$SpriteFrameKeyframe":"","Id":{"name":"7249835e-7b65-4131-b8a8-2c9dd062d70d","path":"sprites/spr_genos_defeat/spr_genos_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"95a5e89a-bc5e-4564-99eb-987bed666e3a","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"1e7b0193-81fc-403c-bd37-e493940ef0b2","path":"sprites/spr_genos_defeat/spr_genos_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"0978e23b-a4fe-48b0-8dce-0699e395123c","IsCreationKey":false,"Key":4.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"c5d9f13c-9f5b-4f84-a5c2-0bfab6d581fd","path":"sprites/spr_genos_defeat/spr_genos_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"68759563-533f-465d-a7d5-f0d20d971104","IsCreationKey":false,"Key":5.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"aea4c620-6be3-4392-be15-bb5baa2d1a23","path":"sprites/spr_genos_defeat/spr_genos_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"7353b598-6ad5-4a5c-bcd1-05a7d8a43f00","IsCreationKey":false,"Key":6.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"1698c352-602f-420b-be6f-7a9b109875fe","path":"sprites/spr_genos_defeat/spr_genos_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"35ab3391-27c0-4ed6-abbf-0eb24bdc944c","IsCreationKey":false,"Key":7.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"83f28bb0-917c-4010-ba06-7fda73cb481a","path":"sprites/spr_genos_defeat/spr_genos_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"a346909a-14d8-49ca-a99c-676482265e73","IsCreationKey":false,"Key":8.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

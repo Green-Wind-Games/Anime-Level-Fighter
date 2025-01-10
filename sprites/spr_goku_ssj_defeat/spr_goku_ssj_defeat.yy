@@ -4,7 +4,7 @@
   "bboxMode":0,
   "bbox_bottom":63,
   "bbox_left":0,
-  "bbox_right":28,
+  "bbox_right":27,
   "bbox_top":0,
   "collisionKind":5,
   "collisionTolerance":0,
@@ -12,10 +12,12 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"87555671-a700-4aa9-a4c4-32827fbdabd1","name":"87555671-a700-4aa9-a4c4-32827fbdabd1","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"1f1a595a-e8fa-4639-92e5-3d1d3028838d","name":"1f1a595a-e8fa-4639-92e5-3d1d3028838d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"d08af2ea-7d56-45fd-9d9c-e874f5846f31","name":"d08af2ea-7d56-45fd-9d9c-e874f5846f31","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"c624787e-b86e-4384-a321-2f9ad325136a","name":"c624787e-b86e-4384-a321-2f9ad325136a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"68db52ec-fc35-41f0-abf6-4185921f525b","name":"68db52ec-fc35-41f0-abf6-4185921f525b","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"07b93eaa-528c-4911-b657-475847ca867f","name":"07b93eaa-528c-4911-b657-475847ca867f","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
     {"$GMSpriteFrame":"","%Name":"84c823b6-1955-43f6-990c-35714ed839ff","name":"84c823b6-1955-43f6-990c-35714ed839ff","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"6392852d-2db8-40e3-8a61-0edb9ff3c607","name":"6392852d-2db8-40e3-8a61-0edb9ff3c607","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"7c13c526-54fa-45f7-b01b-1657630193bb","name":"7c13c526-54fa-45f7-b01b-1657630193bb","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
@@ -26,7 +28,7 @@
   ],
   "name":"spr_goku_ssj_defeat",
   "nineSlice":null,
-  "origin":9,
+  "origin":7,
   "parent":{
     "name":"Goku SSJ Sprites",
     "path":"folders/Chars/Dragon Ball Chars/Goku/Goku Sprites/Goku SSJ Sprites.yy",
@@ -52,7 +54,7 @@
     },
     "eventStubScript":null,
     "eventToFunction":{},
-    "length":4.0,
+    "length":6.0,
     "lockOrigin":false,
     "moments":{
       "$KeyframeStore<MomentsEventKeyframe>":"",
@@ -72,22 +74,28 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"87555671-a700-4aa9-a4c4-32827fbdabd1","path":"sprites/spr_goku_ssj_defeat/spr_goku_ssj_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"a1991d93-8a3e-49b8-88e4-51906cfafaae","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"c624787e-b86e-4384-a321-2f9ad325136a","path":"sprites/spr_goku_ssj_defeat/spr_goku_ssj_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"495dc8de-d93d-4cf0-b4e3-97ecb17b90c1","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"1f1a595a-e8fa-4639-92e5-3d1d3028838d","path":"sprites/spr_goku_ssj_defeat/spr_goku_ssj_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"a4401a13-9f0e-467e-bdd6-4bca9e96ca6b","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"68db52ec-fc35-41f0-abf6-4185921f525b","path":"sprites/spr_goku_ssj_defeat/spr_goku_ssj_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"71b58c40-07c9-4cca-a4da-84a7b607f26b","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"d08af2ea-7d56-45fd-9d9c-e874f5846f31","path":"sprites/spr_goku_ssj_defeat/spr_goku_ssj_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"8cdf96ce-84a9-4d94-b6a3-fcafdbd87b09","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"07b93eaa-528c-4911-b657-475847ca867f","path":"sprites/spr_goku_ssj_defeat/spr_goku_ssj_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"7a0e8d57-7d5c-40a7-8955-f6886396060d","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
                 "0":{"$SpriteFrameKeyframe":"","Id":{"name":"84c823b6-1955-43f6-990c-35714ed839ff","path":"sprites/spr_goku_ssj_defeat/spr_goku_ssj_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"08f6525b-2de5-44eb-b3da-bbd79669c03b","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"6392852d-2db8-40e3-8a61-0edb9ff3c607","path":"sprites/spr_goku_ssj_defeat/spr_goku_ssj_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"9b5ed4f4-0f81-42af-8330-c93a011c7222","IsCreationKey":false,"Key":4.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"7c13c526-54fa-45f7-b01b-1657630193bb","path":"sprites/spr_goku_ssj_defeat/spr_goku_ssj_defeat.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"afb9d44f-d8a0-4b74-b667-a05a970a5852","IsCreationKey":false,"Key":5.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":13,
+    "xorigin":14,
     "yorigin":64,
   },
   "swatchColours":null,
@@ -98,5 +106,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":29,
+  "width":28,
 }

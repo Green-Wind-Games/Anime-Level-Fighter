@@ -410,7 +410,7 @@ function init_naruto_baseform() {
 			}
 		}
 		
-		if (combo_hits > 0) {
+		if (attack_hits > 0) {
 			//loop_anim_middle_timer(10,11,50);
 		}
 		if value_in_range(frame,10,11) {
@@ -754,7 +754,7 @@ function init_naruto_baseform() {
 				rasen_shuriken_explosion = _explosion;
 			}
 			if check_frame(16) {
-				take_damage(noone,100,false);
+				take_damage(noone,10,false);
 				change_sprite(launch_sprite,3,true);
 				yoffset = -height_half;
 				xspeed = -10 * facing;
@@ -824,9 +824,16 @@ function init_naruto_baseform() {
 	//voice_hurt_heavy[i++] = snd_naruto_hurt_heavy5;
 
 	victory_state.run = function() {
-		if anim_finished {
-			loop_anim_middle(3,5);
+		if sound_is_playing(voice) {
+			loop_anim_middle(1,3);
 		}
+		loop_anim_middle(6,8);
+	}
+	defeat_state.run = function() {
+		if sound_is_playing(voice) {
+			loop_anim_middle(1,3);
+		}
+		loop_anim_middle(6,8);
 	}
 
 	draw_script = function() {

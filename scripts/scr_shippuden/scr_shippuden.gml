@@ -41,7 +41,7 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 		yspeed = lengthdir_y(15,_direction);
 	}
 	
-	if (combo_hits > 0) {
+	if (attack_hits > 0) {
 		loop_anim_middle_timer(_hitframe1,_hitframe2,100);
 	}
 	if value_in_range(frame,_hitframe1,_hitframe2) {
@@ -67,7 +67,7 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 		}
 	}
 	
-	if check_frame(_hitframe2+1) and (combo_hits > 0) {
+	if check_frame(_hitframe2+1) and (attack_hits > 0) {
 		with(target) {
 			y -= 1;
 		}

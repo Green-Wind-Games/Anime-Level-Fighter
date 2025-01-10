@@ -392,4 +392,16 @@ function init_genos_baseform() {
 	
 	signature_move = super_incinerate;
 	finisher_move = super_incinerate;
+	
+	victory_state.run = function() {
+		if sound_is_playing(voice) {
+			loop_anim_middle(3,5);
+		}
+	}
+	defeat_state.run = function() {
+		if sound_is_playing(voice) {
+			loop_anim_middle(3,5);
+		}
+		loop_anim_middle(6,7);
+	}
 }

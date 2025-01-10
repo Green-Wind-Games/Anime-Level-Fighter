@@ -22,5 +22,5 @@ if !active {
 }
 	
 if (!superfreeze_active) and (!timestop_active) {
-	check_hit();
+	hitbox_check_hit();
 }

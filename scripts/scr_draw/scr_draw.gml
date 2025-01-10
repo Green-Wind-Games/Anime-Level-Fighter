@@ -716,17 +716,15 @@ function draw_combo_counters() {
 }
 
 function draw_my_combo_counter(_x,_y,_color) {
-	if (combo_timer > 0) and (combo_hits > 0) {
+	if (combo_hits_counter > 0) {
 		draw_set_halign(fa_center);
 		draw_set_valign(fa_top);
 		draw_set_font(fnt_combo);
 				
-		var _text = string(combo_hits_visible) + " hit";
-		if combo_hits_visible > 1 {
-			_text += "s";
-		}
+		var _text = string(round(combo_hits_visible)) + " ";
+		_text += (combo_hits_visible > 1) ? "hits" : "hit";
 		_text += "!";
-		_text += "\n" + string(combo_damage_visible) + " damage!";
+		_text += "\n" + string(round(combo_damage_visible)) + " damage!";
 				
 		if (hitstop > 0) and (round_state != roundstates.pause) {
 			var _shake = hitstop / 3;

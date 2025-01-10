@@ -57,9 +57,11 @@ grab_connect_state = noone;
 combo_timer = 0;
 combo_hits = 0;
 combo_hits_taken = 0;
+combo_hits_counter = 0;
 combo_hits_visible = 0;
 combo_damage = 0;
 combo_damage_taken = 0;
+combo_damage_counter = 0;
 combo_damage_visible = 0;
 combo_damage_scaling = 1;
 
@@ -136,3 +138,5 @@ init_charaudio();
 ai_enabled = false;
 ai_timer = 0;
 ai_script = function() {};
+
+owner = noone;

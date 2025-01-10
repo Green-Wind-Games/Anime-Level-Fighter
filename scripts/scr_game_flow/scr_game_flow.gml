@@ -216,7 +216,8 @@ function update_game_substate() {
 function update_fight() {
 	round_state_timer += game_speed;
 	var _roundstate = round_state;
-	if round_state == roundstates.intro {
+	switch(round_state) {
+		case roundstates.intro:
 		var ready = round_state_timer > 100;
 		with(obj_char) {
 			if active_state != idle_state { ready = false; }
@@ -226,20 +227,21 @@ function update_fight() {
 		if ready {
 			round_state = roundstates.countdown;
 		}
-	}
-	else if round_state == roundstates.countdown {
+		break;
+		
+		case roundstates.countdown:
 		if round_state_timer >= round_countdown_duration {
 			round_state = roundstates.fight;
 		}
-	}
-	else if round_state == roundstates.fight {
+		break;
+		
+		case roundstates.fight:
 		if (!superfreeze_active) and (!timestop_active) {
 			round_timer -= game_speed;
 		}
 		if round_timer <= 0 {
 			round_state = roundstates.time_over;
 		}
-		
 		var alldead = instance_number(obj_char) - instance_number(obj_helper);
 		with(obj_char) {
 			if !dead {
@@ -257,8 +259,10 @@ function update_fight() {
 				round_state = roundstates.knockout;
 			}
 		}
-	}
-	else if round_state == roundstates.time_over or round_state == roundstates.knockout {
+		break;
+		
+		case roundstates.time_over:
+		case roundstates.knockout:
 		var ready = round_state_timer > 100;
 		with(obj_char) {
 			if dead {
@@ -272,24 +276,31 @@ function update_fight() {
 		if ready {
 			round_state = roundstates.victory;
 		}
-	}
-	else if round_state == roundstates.victory {
+		break;
+		
+		case roundstates.victory:
 		var team1_score = get_team_score(1);
 		var team2_score = get_team_score(2);
 		var ready = round_state_timer > 100;
 		with(obj_char) {
 			if active_state == idle_state {
-				if (team == 1 and (team1_score > team2_score))
-				or (team == 2 and (team2_score > team1_score)) {
+				if ((team == 1) and (team1_score > team2_score))
+				or ((team == 2) and (team2_score > team1_score)) {
 					change_state(victory_state);
 				}
 				else {
 					change_state(defeat_state);
 				}
 			}
-			if !anim_finished { ready = false; }
-			if sound_is_playing(voice) { ready = false; }
-			if state_timer < 100 { ready = false; }
+			if !dead {
+				if (active_state != victory_state)
+				and (active_state != defeat_state) {
+					ready = false;
+				}
+				if !anim_finished { ready = false; }
+				if sound_is_playing(voice) { ready = false; }
+				if state_timer < 100 { ready = false; }
+			}
 		}
 		if ready {
 			if next_game_state == -1 {
@@ -299,6 +310,7 @@ function update_fight() {
 				}
 			}
 		}
+		break;
 	}
 	if round_state != _roundstate {
 		round_state_timer = 0;

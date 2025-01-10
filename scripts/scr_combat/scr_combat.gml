@@ -1,18 +1,19 @@
 enum attacktype {
 	normal,
+	hard_knockdown,
 	
 	unblockable,
+	
+	hit_grab,
 	grab,
+	command_grab,
+	
 	antiair,
 	
-	beam,
-	
-	hard_knockdown,
-	slide_knockdown,
-	
-	wall_splat,
 	wall_bounce,
 	ground_bounce,
+	
+	beam
 }
 
 enum attackstrength {
@@ -32,6 +33,7 @@ enum hiteffects {
 	pierce,
 	
 	fire,
+	fire_blue,
 	fire_dark,
 	
 	thunder_blue,
@@ -46,22 +48,19 @@ enum hiteffects {
 	light,
 }
 
-function get_true_attacker(_obj) {
-	var _true_attacker = _obj;
-	while(!is_char(_true_attacker)) {
-		_true_attacker = _true_attacker.owner;
-		if !instance_exists(_true_attacker) {
-			_true_attacker = noone;
-			break;
-		}
+function get_true_owner(_obj) {
+	if !instance_exists(_obj) return noone;
+	var _true_owner = _obj;
+	while(instance_exists(_true_owner.owner)) {
+		_true_owner = _true_owner.owner;
 	}
-	return _true_attacker;
+	return _true_owner;
 }
 
 function get_attack_hitstun(_attackstrength) {
 	var _hitstun = 0;
 	if _attackstrength > 0 {
-		_hitstun = 15 + (attack_strength * 5);
+		_hitstun = 15 + (_attackstrength * 5);
 	}
 	
 	return round(_hitstun);
@@ -76,10 +75,8 @@ function get_attack_blockstun(_attackstrength) {
 
 function get_attack_hitstop(_attackstrength) {
 	var _hitstop = 0;
-	with(_hitbox) {
-		if attack_strength > 0 {
-			_hitstop = 10 + power(attack_strength,1.25);
-		}
+	if _attackstrength > 0 {
+		_hitstop = 10 + power(_attackstrength,1.25);
 	}
 	
 	return round(_hitstop);
@@ -114,39 +111,25 @@ function guard_attack(_hitbox) {
 	change_state(guard_state);
 	change_sprite(guard_sprite,3,false);
 	xspeed *= 1.5;
-	//yspeed /= 2;
-	yspeed = _yspeed;
-	if on_ground {
-		yspeed = 0;
-	}
+	yspeed = 0;
 }
 
-function get_hit_by_attack(_hitbox) {
-	var _attacker = _hitbox.owner;
-	var _true_attacker = get_true_attacker(_hitbox);
-	
-	xspeed = _hitbox.xknockback * _attacker.facing;
-	yspeed = _hitbox.yknockback;
-		
+function react_to_attack_type(_attacktype) {
 	switch(_attacktype) {
 		default:
 		change_state(hit_state);
-		if on_ground and _hitbox.yknockback >= 0 {
+		if on_ground and (yspeed >= 0) {
 			yspeed = 0;
 		}
-		else if is_airborne and _hitbox.yknockback == 0 {
+		else if is_airborne and (yspeed == 0) {
 			yspeed = -abs(xspeed) / 2;
 		}
 		break;
-				
+		
 		case attacktype.hard_knockdown:
 		change_state(hard_knockdown_state);
 		break;
-				
-		case attacktype.wall_splat:
-		change_state(wall_splat_state);
-		break;
-				
+		
 		case attacktype.wall_bounce:
 		if previous_state != wall_bounce_state {
 			change_state(wall_bounce_state);
@@ -157,18 +140,16 @@ function get_hit_by_attack(_hitbox) {
 			change_state(hit_state);
 		}
 		break;
-				
-		case attacktype.slide_knockdown:
-		change_state(slide_knockdown_state);
-		break;
-				
+		
 		case attacktype.grab:
 		with(_hitbox.owner) {
 			init_grab(id,other);
 		}
 		break;
 	}
-			
+}
+
+function change_sprite_hit() {
 	change_sprite(
 		sprite == hit_high_sprite ? hit_low_sprite : hit_high_sprite,
 		3,
@@ -187,53 +168,61 @@ function get_hit_by_attack(_hitbox) {
 		yoffset = -height_half;
 		rotation = point_direction(0,0,abs(xspeed),-yspeed);
 	}
-	
+}
+
+function play_hurt_sound(_is_strong_attack) {
 	if (previous_hp > 0) {
 		if (hp > 0) {
-			var _is_strong_attack = true;
-			if _hitbox.attack_strength < attackstrength.super { _is_strong_attack = false; }
-			if (abs(xspeed) < 10) and (abs(yspeed) < 10) { _is_strong_attack = false; }
-			//if (yspeed > -10) and on_ground { _is_strong_attack = false; }
-			
 			if _is_strong_attack {
-				play_voiceline(voice_hurt_heavy,50,true);
-			
-				if meme_enabled {
-					if chance(meme_chance) {
-						stop_sound(voice);
-						voice = play_sound(snd_meme_scream_disappear,3);
-					}
-				}
+				play_voiceline(
+					(meme_enabled and chance(meme_chance)) ? snd_meme_scream_disappear : voice_hurt_heavy,
+					100,
+					false
+				);
 			}
 			else {
-				play_voiceline(voice_hurt,50,true);
+				play_voiceline(
+					(dmg_percent < 10) ? voice_hurt : voice_hurt_heavy,
+					100,
+					false
+				);
 			}
 		}
 		else {
 			if is_char(id) {
 				play_voiceline(voice_dead,100,true);
 			}
-			if on_ground {
-				if yspeed >= 0 {
-					yspeed = -5;
-					xspeed = 5 * _attacker.facing;
-				}
-			}
 		}
 	}
-			
+}
+
+function get_hit_by_attack(_hitbox) {
+	var _attacker = _hitbox.owner;
+	var _true_attacker = get_true_owner(_hitbox);
+	
+	xspeed = _hitbox.xknockback * _attacker.facing;
+	yspeed = _hitbox.yknockback;
+	
+	react_to_attack_type(_hitbox.attack_type);
+	change_sprite_hit();
+	
+	var _is_strong_attack = (abs(xspeed) >= 10) or (abs(yspeed) >= 10);
+	play_hurt_sound(_is_strong_attack);
+	
 	frame = 0;
 	frame_timer = 0;
 	facing = -_attacker.facing;
 }
 
-function connect_attack(_hitbox, _hurtbox) {
+function connect_attack(_hitbox,_hurtbox) {
 	var _attacker = _hitbox.owner;
-	var _true_attacker = get_true_attacker(_hitbox);
+	var _defender = _hurtbox.owner;
 	
-	hitstun = get_attack_hitstun(_hitbox);
-	blockstun = get_attack_blockstun(_hitbox);
-	hitstop = get_attack_hitstop(_hitbox);
+	var _true_attacker = get_true_owner(_hitbox);
+	
+	hitstun = get_attack_hitstun(_hitbox.attack_strength);
+	blockstun = get_attack_blockstun(_hitbox.attack_strength);
+	hitstop = get_attack_hitstop(_hitbox.attack_strength);
 	
 	hitstun = max(hitstun - (combo_hits_taken / 4), 10);
 	
@@ -264,8 +253,7 @@ function connect_attack(_hitbox, _hurtbox) {
 	
 	if check_guard(_hitbox.attack_type) {
 		guard_attack(_hitbox);
-		dmg /= 20;
-		take_damage(_true_attacker,dmg,false);
+		dmg = take_damage(_true_attacker,dmg/20,false);
 	}
 	else {
 		var _stun = true;
@@ -280,15 +268,11 @@ function connect_attack(_hitbox, _hurtbox) {
 		
 		if _stun {
 			get_hit_by_attack(_hitbox);
+		}
+		else {
 			dmg /= 1.5;
 		}
-		take_damage(_true_attacker,dmg,_stun);
-	}
-	
-	if on_wall {
-		if is_char(_attacker) or is_helper(_attacker) {
-			_attacker.xspeed = xspeed * -0.75;
-		}
+		dmg = take_damage(_true_attacker,dmg,_stun);
 	}
 	
 	deactivate_super();
@@ -297,8 +281,7 @@ function connect_attack(_hitbox, _hurtbox) {
 	_attacker.depth = -1;
 	if is_char(_attacker) or is_helper(_attacker) {
 		with(_attacker) {
-			_attacker.hitstop = hitstop;
-			_attacker.can_cancel = true;
+			hitstop = _defender.hitstop;
 		}
 	}
 	
@@ -319,15 +302,19 @@ function connect_attack(_hitbox, _hurtbox) {
 			combo_timer = other.combo_timer;
 			combo_hits++;
 			combo_damage += dmg;
+			
+			combo_hits_counter = combo_hits;
+			combo_damage_counter = combo_damage;
 		}
 	}
 	
 	with(_true_attacker) {
 		attack_hits++;
+		can_cancel = true;
 	}
 	
 	var mp_gain = dmg / 2;
-	var xp_gain = dmg;
+	var xp_gain = dmg * 0.75;
 	
 	var attack_mp_gain = mp_gain * 1.0;
 	var attack_xp_gain = xp_gain * 1.0;
@@ -356,19 +343,20 @@ function connect_attack(_hitbox, _hurtbox) {
 }
 
 function take_damage(_attacker,_amount,_kill) {
-	var dmg = round(_amount / 2);
+	var dmg = round(_amount * 2);
 	
 	var _defender = id;
 	
-	var _true_attacker = get_true_attacker(_attacker);
+	var _true_attacker = get_true_owner(_attacker);
 	if !instance_exists(_true_attacker) {
 		_true_attacker = noone;
-		dmg *= 1/4;
-		_kill = false;
+		//dmg *= 1/4;
+		//_kill = false;
 	}
 	
 	with(_true_attacker) {
-		dmg *= attack_power + ((level - 1) * level_scaling);
+		dmg *= attack_power;
+		dmg *= 1 + ((level - 1) * level_scaling);
 	}
 	
 	if is_char(_defender){
@@ -399,11 +387,8 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	dmg = max(round(dmg),1);
 	
-	hp = approach(hp,0,dmg);
-	if !dead {
-		if !_kill {
-			hp = max(hp,1);
-		}
+	if (hp > 0) {
+		hp = approach(hp,!_kill,dmg);
 	}
 	
 	return dmg;
@@ -448,6 +433,40 @@ function reset_combo() {
 	combo_damage_taken = 0;
 }
 
-function init_clash(_char1, _char2) {
+function reset_combo_counter() {
+	combo_hits_visible = 0;
+	combo_damage_visible = 0;
+	combo_hits_counter = 0;
+	combo_damage_counter = 0;
+}
+
+function init_clash(_hitbox1, _hitbox2) {
+	var _char1 = _hitbox1.owner;
+	var _char2 = _hitbox2.owner;
 	
+	with(_char1) {
+		attack_hits++;
+		can_cancel = true;
+	}
+	with(_char2) {
+		attack_hits++;
+		can_cancel = true;
+	}
+	
+	create_particles(
+		mean(
+			_hitbox1.bbox_left,
+			_hitbox1.bbox_right,
+			_hitbox2.bbox_left,
+			_hitbox2.bbox_right
+		),
+		mean(
+			_hitbox1.bbox_top,
+			_hitbox1.bbox_bottom,
+			_hitbox2.bbox_top,
+			_hitbox2.bbox_bottom
+		),
+		parry_spark,
+		100
+	);
 }
