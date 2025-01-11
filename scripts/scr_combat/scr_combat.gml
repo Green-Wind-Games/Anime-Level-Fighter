@@ -96,12 +96,12 @@ function check_guard(_attacktype) {
 	
 	var _guard_valid = (can_guard) and (!is_hit);
 	if _attacktype == attacktype.unblockable
-	or _attacktype == attacktype.grab {
+	or _attacktype == attacktype.grab
+	or _attacktype == attacktype.command_grab {
 		_guard_valid = false;
 	}
-	if _attacktype == attacktype.antiair
-	and is_airborne {
-		_guard_valid = false;
+	if _attacktype == attacktype.antiair {
+		if is_airborne _guard_valid = false;
 	}
 	
 	return (_guarding and _guard_valid);
