@@ -78,8 +78,7 @@ function update_charphysics() {
 			if _push == 0 then _push = 1;
 			_push *= 0.5;
 			
-			var i = 0;
-			while(_dist < 0) {
+			repeat(ceil(abs(_dist))) {
 				if pushme {
 					x = clamp(x-_push, left_wall, right_wall);
 				}
@@ -87,7 +86,6 @@ function update_charphysics() {
 					other.x = clamp(other.x+_push, left_wall, right_wall);
 				}
 				_dist = point_distance(x,0,other.x,0) - (width_half + other.width_half);
-				if i++ > 10 break;
 			}
 		}
 		
