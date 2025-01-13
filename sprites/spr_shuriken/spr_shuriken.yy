@@ -44,8 +44,8 @@
   },
   "origin":4,
   "parent":{
-    "name":"Sprites",
-    "path":"folders/Sprites.yy",
+    "name":"Weapon Sprites",
+    "path":"folders/Sprites/Weapon Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

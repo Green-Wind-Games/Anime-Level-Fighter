@@ -34,8 +34,8 @@
   "nineSlice":null,
   "origin":7,
   "parent":{
-    "name":"Sprites",
-    "path":"folders/Sprites.yy",
+    "name":"Hitspark Sprites",
+    "path":"folders/Sprites/Special Effect Sprites/Hitspark Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -28,8 +28,8 @@
   "nineSlice":null,
   "origin":7,
   "parent":{
-    "name":"Sprites",
-    "path":"folders/Sprites.yy",
+    "name":"Aura Sprites",
+    "path":"folders/Sprites/Special Effect Sprites/Aura Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

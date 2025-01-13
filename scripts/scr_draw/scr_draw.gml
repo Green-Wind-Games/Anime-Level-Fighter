@@ -304,7 +304,6 @@ function draw_screenfade() {
 function draw_hud() {
 	draw_timer();
 	draw_playerhud();
-	draw_combo_counters();
 }
 
 function draw_playerhud() {
@@ -643,6 +642,8 @@ function draw_playerhud() {
 			draw_set_alpha(1);
 		}
 	}
+	
+	draw_combo_counters();
 	
 	hud_height = hud_h * ceil(active_players / 2);
 }

@@ -71,8 +71,8 @@
   },
   "origin":3,
   "parent":{
-    "name":"Sprites",
-    "path":"folders/Sprites.yy",
+    "name":"Beam Sprites",
+    "path":"folders/Sprites/Special Effect Sprites/Beam Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

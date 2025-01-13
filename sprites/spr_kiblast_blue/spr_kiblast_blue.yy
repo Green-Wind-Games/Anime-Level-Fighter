@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":4,
   "parent":{
-    "name":"Sprites",
-    "path":"folders/Sprites.yy",
+    "name":"Projectile Sprites",
+    "path":"folders/Sprites/Special Effect Sprites/Projectile Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
