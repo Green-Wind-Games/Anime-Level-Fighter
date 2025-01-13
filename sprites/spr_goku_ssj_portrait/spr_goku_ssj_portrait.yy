@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Portraits",
-    "path":"texturegroups/Portraits",
+    "name":"Goku",
+    "path":"texturegroups/Goku",
   },
   "type":0,
   "VTile":false,

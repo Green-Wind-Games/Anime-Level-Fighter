@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Portraits",
-    "path":"texturegroups/Portraits",
+    "name":"Naruto",
+    "path":"texturegroups/Naruto",
   },
   "type":0,
   "VTile":false,

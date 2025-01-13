@@ -101,8 +101,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Default",
-    "path":"texturegroups/Default",
+    "name":"Enker",
+    "path":"texturegroups/Enker",
   },
   "type":0,
   "VTile":false,
