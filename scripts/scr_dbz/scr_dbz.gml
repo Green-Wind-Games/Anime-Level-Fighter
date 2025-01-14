@@ -133,7 +133,7 @@ function add_kamehameha_state(_groundsprite,_airsprite,_chargeframe1,_chargefram
 			loop_anim_middle(kamehameha_fire_frame1,kamehameha_fire_frame2);
 		}
 		if value_in_range(frame,kamehameha_fire_frame1,kamehameha_fire_frame2) {
-			fire_beam(width*0.75,height_half,spr_kamehameha,1,0,50);
+			fire_beam(width*0.6,-height_half,spr_kamehameha,1,0,50);
 		}
 		return_to_idle();
 	}
@@ -203,7 +203,7 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 		}
 		loop_anim_middle_timer(kamehameha_fire_frame1,kamehameha_fire_frame2,100);
 		if value_in_range(frame,kamehameha_fire_frame1,kamehameha_fire_frame2) {
-			fire_beam(width*0.75,height_half,spr_kamehameha,1,0,50);
+			fire_beam(width*0.6,-height_half,spr_kamehameha,1,0,50);
 			shake_screen(5);
 		}
 		return_to_idle();

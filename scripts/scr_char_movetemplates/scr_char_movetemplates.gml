@@ -58,7 +58,7 @@ function basic_wallsplat(_hitframe,_damage,_hiteffect) {
 			_w,
 			_h,
 			_damage,
-			10,
+			12,
 			-5,
 			attacktype.normal,
 			attackstrength.super,
@@ -127,9 +127,9 @@ function basic_medium_attack(_hitframe,_hiteffect) {
 function basic_heavy_attack(_hitframe,_hiteffect) {
 	basic_attack_stepforward(_hitframe);
 	basic_wallsplat(_hitframe,500,_hiteffect);
-	if check_frame(min(anim_frames-1,_hitframe+3)) {
+	if check_frame(min(anim_frames-1,_hitframe+2)) {
 		if (attack_hits > 0)
-		and ((!input.down) and (!input.back)) {
+		and (!input.back) {
 			change_state(homing_dash_state);
 		}
 	}
@@ -156,8 +156,8 @@ function basic_heavy_lowattack(_hitframe,_hiteffect) {
 		yspeed = -2;
 	}
 	basic_launcher(_hitframe,500,_hiteffect);
-	if check_frame(min(anim_frames-1,_hitframe+3)) {
-		if (attack_hits > 0) and (!input.down) {
+	if check_frame(min(anim_frames-1,_hitframe+2)) {
+		if (attack_hits > 0) and (!input.back) {
 			change_state(homing_dash_state);
 		}
 	}

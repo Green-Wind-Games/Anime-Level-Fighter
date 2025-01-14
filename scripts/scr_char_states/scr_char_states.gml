@@ -565,7 +565,7 @@ function init_charstates() {
 		var _direction = point_direction(_my_x,_my_y,_target_x,_target_y);
 		var _distance = point_distance(_my_x,_my_y,_target_x,_target_y);
 		
-		var _speed = clamp(state_timer,5,20);
+		var _speed = 30;
 		var _xspeed = lengthdir_x(_speed,_direction);
 		var _yspeed = lengthdir_y(_speed,_direction);
 		

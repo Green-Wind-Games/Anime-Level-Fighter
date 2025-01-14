@@ -314,7 +314,7 @@ function connect_attack(_hitbox,_hurtbox) {
 	}
 	
 	var mp_gain = dmg / 2;
-	var xp_gain = dmg * 0.75;
+	var xp_gain = dmg / 2;
 	
 	var attack_mp_gain = mp_gain * 1.0;
 	var attack_xp_gain = xp_gain * 1.0;
