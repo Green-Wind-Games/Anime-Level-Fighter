@@ -5,11 +5,14 @@ if ((timestop_active) and (timestop_activator != id)) exit;
 hitstop -= game_speed;
 if hitstop exit;
 
-update_sprite();
+update_charsprite();
 
-if (round_state_timer mod 1 >= 0)
-and (round_state_timer mod 1 < game_speed) {
-	update_state();
+if value_in_range(
+	round_state_timer - floor(round_state_timer),
+	0,
+	game_speed - 0.001
+) {
+	update_charstate();
 }
 
 update_charphysics();

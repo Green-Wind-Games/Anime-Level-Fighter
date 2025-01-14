@@ -96,3 +96,24 @@ function update_charphysics() {
 	
 	update_physics(0);
 }
+
+function jump_towards_x(_x, _time) {
+	var _distance_x = _x - x;
+	
+	var _xspeed = _distance_x / _time;
+	
+	return _xspeed;
+}
+
+function jump_towards_y(_y, _time) {
+	var _distance_y = _y - y;
+	
+	var _yspeed = (_distance_y - 0.5 * (ygravity * ygravity_mod) * sqr(_time)) / _time;
+	
+	return _yspeed;
+}
+
+function jump_towards(_x, _y, _time) {
+	xspeed = jump_towards_x(_x,_time);
+	yspeed = jump_towards_y(_y,_time);
+}

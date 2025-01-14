@@ -106,6 +106,66 @@ function init_charsprites(_name) {
 	);
 }
 
+function update_charsprite() {
+	update_sprite();
+	
+	switch(sprite) {
+		case idle_sprite:
+		case crouch_sprite:
+		case uncrouch_sprite:
+		if anim_frames == 1 {
+			xstretch += sine_wave(state_timer,100,0.02,0);
+			ystretch -= sine_wave(state_timer,100,0.02,0);
+		}
+		if sprite_get_yoffset(sprite) > sprite_get_height(sprite) {
+			yoffset = sine_wave(state_timer,100,2,0);
+		}
+		break;
+	
+		case walk_sprite:
+		case dash_sprite:
+		if sprite_get_yoffset(sprite) > sprite_get_height(sprite) {
+			yoffset = sine_wave(anim_timer,anim_duration,2,0);
+		}
+		break;
+	
+		case air_up_sprite:
+		case air_peak_sprite:
+		case air_down_sprite:
+		var _stretch = clamp(max(ygravity,abs(yspeed)) / 200,0,0.2);
+		xstretch = 1 - _stretch;
+		ystretch = 1 + _stretch;
+		break;
+	
+		case launch_sprite:
+		yoffset = -height_half;
+		rotation = point_direction(0,0,abs(xspeed),-yspeed);
+		break;
+	
+		case spinout_sprite:
+		yoffset = -height_half;
+		rotation = point_direction(0,0,abs(xspeed),-yspeed);
+		if anim_timer mod 15 == 1 {
+			create_specialeffect(
+				spr_wind_spin,
+				x,
+				y-height_half,
+				1,
+				1,
+				point_direction(0,0,xspeed,yspeed)
+			);
+		}
+		break;
+	}
+
+	if sprite_exists(aura_sprite) {
+		aura_frame += sprite_get_speed(aura_sprite) / 60;
+		if aura_frame >= sprite_get_number(aura_sprite) {
+			aura_frame = 0;
+		}
+	}
+}
+
 function apply_hiteffect(_strength,_hiteffect,_guarding) {
 	if !_guarding {
 		switch(_hiteffect) {

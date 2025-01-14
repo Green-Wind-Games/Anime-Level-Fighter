@@ -67,7 +67,7 @@ function check_moves() {
 		var _xspeed = xspeed;
 		var _yspeed = yspeed;
 		var _facing = facing;
-		while(!ds_priority_empty(available_moves)) {
+		repeat(ds_priority_size(available_moves)) {
 			var _state = ds_priority_find_max(available_moves);
 			ds_priority_delete_max(available_moves);
 			reset_cancels();
@@ -148,6 +148,11 @@ function check_input(_input) {
 	}
 	if !string_ends_with(_input_btn,cmd_btn) {
 		valid = false;
+	}
+	if (string_length(cmd_btn) == 1) {
+		if input_buffer_timer > (input_buffer_duration - (input_delay * game_speed * (game_get_speed(gamespeed_fps) / 60))) {
+			valid = false;
+		}
 	}
 	return valid;
 }

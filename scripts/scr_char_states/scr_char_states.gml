@@ -208,29 +208,34 @@ function init_charstates() {
 	
 	backdash_state = new charstate();
 	backdash_state.start = function() {
-		change_sprite(air_up_sprite,2,true);
+		change_sprite(air_peak_sprite,3,true);
 		can_cancel = false;
-		xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * -facing;
-		yspeed = -1.5;
+		jump_towards(x - (100 * facing), y, 10);
+		dodging_attacks = true;
+		dodging_projectiles = true;
 		play_sound(snd_dash);
 		create_specialeffect(spr_dust_dash,x,y,-facing * 0.5,0.5);
 	}
 	backdash_state.run = function() {
 		can_cancel = false;
-		if on_ground and state_timer > 5 {
+		if on_ground and yspeed > 0 {
 			change_state(dash_stop_state);
 		}
+	}
+	backdash_state.stop = function() {
+		dodging_attacks = false;
+		dodging_projectiles = false;
 	}
 	
 	dash_stop_state = new charstate();
 	dash_stop_state.start = function() {
 		can_cancel = false;
-		change_sprite(uncrouch_sprite,3,false);
+		change_sprite(uncrouch_sprite,5,false);
 	}
 	dash_stop_state.run = function() {
 		can_cancel = false;
 		decelerate();
-		if (state_timer > 10) or (xspeed == 0) {
+		if (state_timer > 10) {
 			change_state(idle_state);
 		}
 	}
@@ -815,6 +820,10 @@ function init_charstates() {
 	
 	signature_move = noone;
 	finisher_move = noone;
+}
+
+function update_charstate() {
+	update_state();
 }
 
 function return_to_idle() {

@@ -9,8 +9,9 @@ enum input_types {
 	ai
 }
 
-globalvar input_buffer_duration;
+globalvar input_buffer_duration, input_delay;
 input_buffer_duration = 8;
+input_delay = 3;
 
 function update_input_buffer() {
 	var _buffer = input_buffer;
@@ -20,6 +21,9 @@ function update_input_buffer() {
 	
 	if input_buffer != _buffer {
 		input_buffer_timer = input_buffer_duration;
+		if hitstop {
+			input_buffer_timer -= input_delay;
+		}
 	}
 	else {
 		if (!hitstop) and (!timestop_active) and (!superfreeze_active) {
@@ -62,8 +66,8 @@ function update_input_buffer_buttons() {
 	if input.use_teleport { _command += "F"; }
 	
 	if _command != "" {
-		input_buffer += _command;
 		input_buffer_timer = input_buffer_duration;
+		input_buffer += _command;
 	}
 	return _command;
 }

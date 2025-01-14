@@ -6,7 +6,7 @@ function init_enker() {
 	display_name = "Enker";
 	
 	theme = mus_dbfz_trunks;
-	theme_pitch = 1.1;
+	theme_pitch = 0.95;
 	
 	universe = universes.uniforce;
 
@@ -133,12 +133,7 @@ function init_enker() {
 	}
 	light_lowattack.run = function() {
 		basic_light_attack(2,hiteffects.slash);
-		if check_frame(1) {
-			xspeed = 10 * facing;
-		}
-		if check_frame(3) {
-			xspeed = -5 * facing;
-		}
+		xspeed = sine_wave(anim_timer,anim_duration,5,5) * facing;
 	}
 	
 	light_airattack = new charstate();
@@ -237,8 +232,8 @@ function init_enker() {
 		}
 	}
 	
-	wind_blast = new charstate();
-	wind_blast.start = function() {
+	green_wind_ball = new charstate();
+	green_wind_ball.start = function() {
 		if attempt_special(1/max_windblasts) {
 			change_sprite(
 				sprite == windblast_sprite2 ? windblast_sprite : windblast_sprite2,
@@ -250,7 +245,7 @@ function init_enker() {
 			change_state(idle_state);
 		}
 	}
-	wind_blast.run = function() {
+	green_wind_ball.run = function() {
 		if check_frame(2) {
 			with(create_shot(
 				25,
@@ -318,29 +313,29 @@ function init_enker() {
 			}
 			windblast_count++;
 			
-			add_cancel(wind_blast);
+			add_cancel(green_wind_ball);
 			can_cancel = (windblast_count < max_windblasts) and (check_mp(1/max_windblasts));
 		}
 		if state_timer >= 50 {
 			change_state(idle_state);
 		}
 	}
-	wind_blast.stop = function() {
-		if next_state != wind_blast {
+	green_wind_ball.stop = function() {
+		if next_state != green_wind_ball {
 			windblast_count = 0;
 		}
 	}
 
-	wind_blast_cannon = new charstate();
-	wind_blast_cannon.start = function() {
-		if attempt_super(1) {
+	green_wind_push = new charstate();
+	green_wind_push.start = function() {
+		if attempt_special(1) {
 			change_sprite(spr_enker_special_windblast,3,false);
 		}
 		else {
 			change_state(idle_state)
 		}
 	}
-	wind_blast_cannon.run = function() {
+	green_wind_push.run = function() {
 		if superfreeze_active {
 			frame = 0;
 		}
@@ -369,6 +364,84 @@ function init_enker() {
 			return_to_idle();
 		}
 	}
+	
+	super_wind_blade = new charstate();
+	super_wind_blade.start = function() {
+		if attempt_super(2) {
+			change_sprite(spr_enker_special_wind_summon_raise,3,false);
+			play_sound(snd_dbz_beam_charge_short,1,1);
+			superfreeze(60);
+		}
+		else {
+			change_state(idle_state);
+		}
+	}
+	super_wind_blade.run = function() {
+		if sprite_timer < 30 {
+			loop_anim_middle(2,2);
+		}
+		if superfreeze_active {
+			loop_anim_middle(5,6);
+		}
+		loop_anim_middle_timer(7,7,60);
+		if check_frame(4) {
+			var _blade = create_shot(
+				0,
+				-height,
+				0,
+				0,
+				spr_wind_blade,
+				2,
+				500,
+				3,
+				-3,
+				attacktype.normal,
+				attackstrength.heavy,
+				hiteffects.slash
+			);
+			with(_blade) {
+				play_sound(snd_slash_whiff_heavy,1,0.5);
+				active_script = function() {
+					xspeed = approach(xspeed,width*facing,2);
+				}
+				hit_script = function() {
+					play_sound(snd_launch,1,1.25);
+					repeat(10) {
+						var _smallblade = create_shot(
+							0,
+							0,
+							irandom_range(10,-10),
+							irandom_range(10,-10),
+							spr_wind_blade,
+							0.5,
+							10,
+							3,
+							-3,
+							attacktype.normal,
+							attackstrength.light,
+							hiteffects.slash
+						);
+						with(_smallblade) {
+							homing = true;
+							duration = 60;
+							hit_limit = -1;
+							active_script = function() {
+								homing_max_turn = random(30);
+								homing_speed = random(30);
+								with(hitbox) {
+									ds_list_clear(hit_list);
+								}
+							}
+							expire_script = function() {
+								play_sound(snd_energy_stop,0.1,1.5);
+							}
+						}
+					}
+				}
+			}
+		}
+		return_to_idle();
+	}
 
 	activate_greenwind = new charstate();
 	activate_greenwind.start = function() {
@@ -390,7 +463,7 @@ function init_enker() {
 		}
 	}
 	activate_greenwind.run = function() {
-		if superfreeze_timer mod 10 == 1 {
+		if superfreeze_timer mod 12 == 1 {
 			greenwind_swirls();
 		}
 		xspeed = 0;
@@ -402,14 +475,17 @@ function init_enker() {
 
 	setup_basicmoves();
 	
-	add_move(wind_blast,"D");
+	add_move(green_wind_ball,"D");
 	
-	add_move(wind_blast_cannon,"236D");
+	add_move(green_wind_push,"236D");
 	
-	add_ground_move(activate_greenwind,"2D");
+	add_move(super_wind_blade,"236AB");
+	add_move(super_wind_blade,"236CD");
 	
-	signature_move = wind_blast_cannon;
-	finisher_move = wind_blast_cannon;
+	add_ground_move(activate_greenwind,"252C");
+	
+	signature_move = green_wind_push;
+	finisher_move = super_wind_blade;
 
 	victory_state.run = function() {
 		greenwind_timer = 0;
