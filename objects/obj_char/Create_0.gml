@@ -134,6 +134,7 @@ init_physics();
 init_charsprites("goku");
 init_charstates();
 init_charaudio();
+init_charscripts();
 
 ai_enabled = false;
 ai_timer = 0;

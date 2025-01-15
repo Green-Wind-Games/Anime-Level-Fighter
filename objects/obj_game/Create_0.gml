@@ -90,10 +90,7 @@ globalvar	game_state, previous_game_state, next_game_state, game_state_timer, ga
 			screen_overlay_sprite, screen_overlay_timer,
 			screen_zoom, screen_zoom_target,
 			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha,
-			screen_fade_color, screen_fade_duration, screen_fade_type,
-			
-			vs_fadein_duration, vs_slidein_duration, vs_slidein2_duration, vs_slideout_duration, vs_fadeout_duration,
-			vs_fadein_time, vs_slidein_time, vs_slidein2_time, vs_slideout_time, vs_fadeout_time;
+			screen_fade_color, screen_fade_duration, screen_fade_type;
 			
 
 game_state = gamestates.intro;
@@ -206,18 +203,6 @@ screen_fade_type = fade_types.normal;
 
 screen_zoom = 1;
 screen_zoom_target = noone;
-
-vs_fadein_duration = screen_fade_duration;
-vs_slidein_duration = 90;
-vs_slidein2_duration = 90;
-vs_slideout_duration = 90;
-vs_fadeout_duration = screen_fade_duration;
-
-vs_fadein_time = vs_fadein_duration;
-vs_slidein_time = vs_fadein_time + vs_slidein_duration;
-vs_slidein2_time = vs_slidein_time + vs_slidein2_duration;
-vs_slideout_time = vs_slidein2_time + vs_slideout_duration;
-vs_fadeout_time = vs_slideout_time + vs_fadeout_duration;
 
 ygravity = 0.35;
 left_wall = 0;
