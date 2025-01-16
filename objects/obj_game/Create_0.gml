@@ -6,35 +6,6 @@ if instance_number(object_index) > 1 {
 	exit;
 }
 
-enum gamestates {
-	intro,
-	title,
-	main_menu,
-	options,
-	
-	story_select,
-	story_cutscene,
-	story_vs,
-	story_battle,
-	story_results,
-	
-	arcade_select,
-	arcade_vs,
-	arcade_battle,
-	arcade_results,
-	
-	versus_setup,
-	versus_select,
-	versus_vs,
-	versus_battle,
-	versus_results,
-	
-	training_select,
-	training,
-	
-	credits
-}
-
 enum roundstates {
 	intro,
 	countdown,
@@ -91,24 +62,11 @@ globalvar	game_state, previous_game_state, next_game_state, game_state_timer, ga
 			screen_zoom, screen_zoom_target,
 			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha,
 			screen_fade_color, screen_fade_duration, screen_fade_type;
-			
-
-game_state = gamestates.intro;
-previous_game_state = -1;
-next_game_state = -1;
-game_state_duration = -1;
-game_state_timer = -1;
-
-game_substate = 0;
-previous_game_substate = -1;
-next_game_substate = -1;
-game_substate_duration = -1;
-game_substate_timer = -1;
 
 stage = rm_training;
 round_state = roundstates.intro;
 round_state_timer = 0;
-round_timer_max = 300 * 60;
+round_timer_max = 500 * 60;
 round_timer = round_timer_max;
 round_timer_visible_max = 999;
 round_countdown_duration = (3 * 30) + 30;

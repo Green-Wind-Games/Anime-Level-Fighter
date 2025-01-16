@@ -113,13 +113,6 @@ charge_start_sound = snd_energy_start;
 charge_loop_sound = snd_energy_loop;
 charge_stop_sound = snd_energy_stop;
 
-char_script = function() {};
-
-death_script = function() {};
-death_timer = 0;
-
-draw_script = function() {};
-
 char_id = noone;
 name = "ERROR";
 form_name = "base";

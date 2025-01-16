@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_char_select",
+  "%Name":"scr_game_states",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_char_select",
+  "name":"scr_game_states",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

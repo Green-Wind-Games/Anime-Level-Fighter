@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Goku",
-    "path":"texturegroups/Goku",
+    "name":"Icons",
+    "path":"texturegroups/Icons",
   },
   "type":0,
   "VTile":false,

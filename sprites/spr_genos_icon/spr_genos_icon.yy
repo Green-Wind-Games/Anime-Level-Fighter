@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":2.525,
   "textureGroupId":{
-    "name":"Genos",
-    "path":"texturegroups/Genos",
+    "name":"Icons",
+    "path":"texturegroups/Icons",
   },
   "type":0,
   "VTile":false,

@@ -19,13 +19,14 @@ function get_char_object(_id) {
 }
 
 function update_charselect() {
-	if (next_game_state == -1) {
-		charselect_joinin();
-		charselect_dropout();
-		charselect_changechars();
-		charselect_readyup();
-		charselect_startgame();
-	}
+	if (game_state_timer < screen_fade_duration) exit;
+	if (next_game_state != -1) exit;
+	
+	charselect_joinin();
+	charselect_dropout();
+	charselect_changechars();
+	charselect_readyup();
+	charselect_startgame();
 }
 
 function charselect_joinin() {

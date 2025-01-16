@@ -1,6 +1,10 @@
 function init_charscripts() {
+	char_script = function() {};
+	
 	alive_script = function() {};
+	
 	death_script = function() {};
+	death_timer = 0;
 	
 	attack_whiff_script = function() {};
 	attack_dodge_script = function() {};
@@ -17,6 +21,9 @@ function init_charscripts() {
 	defense_parry_script = function() {};
 	
 	anim_end_script = function() {};
+	state_change_script = function() {};
+
+	draw_script = function() {};
 	
 	ai_script = function() {};
 }

@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Enker",
-    "path":"texturegroups/Enker",
+    "name":"Icons",
+    "path":"texturegroups/Icons",
   },
   "type":0,
   "VTile":false,

@@ -21,6 +21,11 @@ function update_state() {
 function change_state(_state) {
 	next_state = _state;
 	active_state.stop();
+	
+	if object_is_ancestor(object_index,obj_char) {
+		change_charstate();
+	}
+	
 	previous_state = active_state;
 	active_state = next_state;
 	next_state = noone;

@@ -102,7 +102,6 @@
     {"id":{"name":"scr_char_physics","path":"scripts/scr_char_physics/scr_char_physics.yy",},},
     {"id":{"name":"scr_char_roster","path":"scripts/scr_char_roster/scr_char_roster.yy",},},
     {"id":{"name":"scr_char_scripts","path":"scripts/scr_char_scripts/scr_char_scripts.yy",},},
-    {"id":{"name":"scr_char_select","path":"scripts/scr_char_select/scr_char_select.yy",},},
     {"id":{"name":"scr_char_shots","path":"scripts/scr_char_shots/scr_char_shots.yy",},},
     {"id":{"name":"scr_char_sprites","path":"scripts/scr_char_sprites/scr_char_sprites.yy",},},
     {"id":{"name":"scr_char_statemachine","path":"scripts/scr_char_statemachine/scr_char_statemachine.yy",},},
@@ -117,6 +116,8 @@
     {"id":{"name":"scr_enker","path":"scripts/scr_enker/scr_enker.yy",},},
     {"id":{"name":"scr_game_display","path":"scripts/scr_game_display/scr_game_display.yy",},},
     {"id":{"name":"scr_game_flow","path":"scripts/scr_game_flow/scr_game_flow.yy",},},
+    {"id":{"name":"scr_game_states","path":"scripts/scr_game_states/scr_game_states.yy",},},
+    {"id":{"name":"scr_gamestates_charselect","path":"scripts/scr_gamestates_charselect/scr_gamestates_charselect.yy",},},
     {"id":{"name":"scr_genos","path":"scripts/scr_genos/scr_genos.yy",},},
     {"id":{"name":"scr_goku_ssj","path":"scripts/scr_goku_ssj/scr_goku_ssj.yy",},},
     {"id":{"name":"scr_goku","path":"scripts/scr_goku/scr_goku.yy",},},
@@ -644,5 +645,6 @@
     {"$GMTextureGroup":"","%Name":"Portraits","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Portraits","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
     {"$GMTextureGroup":"","%Name":"ScreenEffects","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"ScreenEffects","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
     {"$GMTextureGroup":"","%Name":"Enker","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Enker","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
+    {"$GMTextureGroup":"","%Name":"Icons","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Icons","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
   ],
 }
