@@ -89,10 +89,9 @@ if combo_timer <= -30 {
 
 if dead {
 	death_timer += game_speed;
-	if death_timer >= hitstun {
-		death_script();
-	}
+	death_script();
 }
 else {
 	death_timer = 0;
+	alive_script();
 }

@@ -60,8 +60,21 @@ globalvar	game_state, previous_game_state, next_game_state, game_state_timer, ga
 			screen_flash_color, screen_flash_timer,
 			screen_overlay_sprite, screen_overlay_timer,
 			screen_zoom, screen_zoom_target,
-			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha,
-			screen_fade_color, screen_fade_duration, screen_fade_type;
+			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha;
+			
+game_state = gamestates.intro;
+previous_game_state = -1;
+next_game_state = -1;
+
+game_state_duration = -1;
+game_state_timer = -1;
+
+game_substate = -1;
+next_game_substate = -1;
+previous_game_substate = -1;
+
+game_substate_duration = -1;
+game_substate_timer = -1;
 
 stage = rm_training;
 round_state = roundstates.intro;
@@ -154,10 +167,6 @@ screen_shake_enabled = true;
 screen_overlay_sprite = noone;
 screen_overlay_timer = 0;
 screen_overlay_alpha = 1;
-
-screen_fade_color = c_black;
-screen_fade_duration = 30;
-screen_fade_type = fade_types.normal;
 
 screen_zoom = 1;
 screen_zoom_target = noone;

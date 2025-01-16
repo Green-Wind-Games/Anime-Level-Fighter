@@ -338,6 +338,25 @@ function connect_attack(_hitbox,_hurtbox) {
 		xp += attack_xp_gain;
 	}
 	
+	with(_defender) {
+		defense_connect_script(_attacker);
+		if is_hit {
+			defense_hit_script(_attacker);
+		}
+		else if is_guarding {
+			defense_block_script(_attacker);
+		}
+	}
+	with(_true_attacker) {
+		attack_connect_script(_defender);
+		if is_hit {
+			attack_hit_script(_defender);
+		}
+		else if is_guarding {
+			attack_block_script(_defender);
+		}
+	}
+	
 	create_hitspark(_hitbox,_hurtbox);
 	apply_hiteffect(_hitbox.attack_strength,_hitbox.hit_effect,is_guarding);
 }

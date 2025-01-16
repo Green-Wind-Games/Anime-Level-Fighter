@@ -50,4 +50,5 @@ function change_charstate() {
 	defense_parry_script = function() {};
 	
 	anim_end_script = function() {};
+	state_change_script = function() {};
 }

@@ -72,8 +72,25 @@ function hitbox_check_hit() {
 		if b2.grabbed continue;
 		if !place_meeting(x,y,a) continue;
 		
+		if is_char(b2) {
+			if check_substitution(b2,2) {
+				with(b2) {
+					spend_tp(2);
+					change_state(substitution_state);
+					hitstop = 0;
+				}
+				continue;
+			}
+		}
+		
 		if is_shot(a2) {
 			if b2.dodging_projectiles {
+				with(a2.owner) {
+					attack_dodge_script(b2);
+				}
+				with(b2) {
+					defense_dodge_script(a2);
+				}
 				continue;
 			}
 			if b2.deflecting_projectiles {
@@ -85,29 +102,36 @@ function hitbox_check_hit() {
 					a2.homing = false;
 					a2.affected_by_gravity = 2;
 				}
+				with(a2.owner) {
+					attack_parry_script(b2);
+				}
+				with(b2) {
+					defense_parry_script(a2);
+				}
 				create_particles(a2.x,a2.y,parry_spark);
 				continue;
 			}
 		}
 		else {
 			if b2.dodging_attacks {
+				with(a2) {
+					attack_dodge_script(b2);
+				}
+				with(b2) {
+					defense_dodge_script(a2);
+				}
 				continue;
 			}
 			if b2.deflecting_attacks {
 				a2.xspeed = 12 * b2.facing;
 				//a2.yspeed = b2.yspeed;
-				create_particles(a2.x,a2.y,parry_spark);
-				continue;
-			}
-		}
-		
-		if is_char(b2) {
-			if check_substitution(b2,2) {
-				with(b2) {
-					spend_tp(2);
-					change_state(substitution_state);
-					hitstop = 0;
+				with(a2) {
+					attack_parry_script(b2);
 				}
+				with(b2) {
+					defense_parry_script(a2);
+				}
+				create_particles(a2.x,a2.y,parry_spark);
 				continue;
 			}
 		}

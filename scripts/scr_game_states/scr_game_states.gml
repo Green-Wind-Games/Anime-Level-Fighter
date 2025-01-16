@@ -27,8 +27,6 @@ enum gamestates {
 	credits
 }
 
-
-
 function change_gamestate(_gamestate, _wait = 0) {
 	next_game_state = _gamestate;
 	game_state_timer = min(game_state_timer,screen_fade_duration);

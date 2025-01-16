@@ -2,7 +2,8 @@ globalvar	screen_width, screen_height, screen_aspectratio,
 			game_width, game_height, game_aspectratio,
 			gui_width, gui_height, hud_height,
 			window_width, window_height, window_scale, window_max_scale,
-			fullscreen_scale, fullscreen_width, fullscreen_height;
+			fullscreen_scale, fullscreen_width, fullscreen_height,
+			screen_fade_color, screen_fade_duration, screen_fade_type;
 
 screen_width = display_get_width();
 screen_height = display_get_height();
@@ -58,6 +59,10 @@ window_height = round(game_height * window_scale);
 fullscreen_scale = min(screen_width / game_width, screen_height / game_height);
 fullscreen_width = floor(game_width * fullscreen_scale);
 fullscreen_height = floor(game_height * fullscreen_scale);
+
+screen_fade_color = c_black;
+screen_fade_duration = 30;
+screen_fade_type = fade_types.normal;
 
 function init_view() {
 	view_enabled = true;
