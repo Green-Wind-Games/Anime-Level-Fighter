@@ -48,10 +48,11 @@ function play_sound(_snd,_volume = 1,_pitch = 1) {
 		var _audioname = audio_get_name(_snd);
 		var _sounds;
 		_sounds[0] = _snd;
-		var i = 1;
-		while(audio_exists(asset_get_index(_audioname + string(i+1)))) {
-			_sounds[i] = asset_get_index(_audioname + string(i+1));
-			i++;
+		
+		for(var i = 1; i < 10; i++) {
+			var _snd2 = asset_get_index(_audioname + string(i+1));
+			if !audio_exists(_snd2) continue;
+			_sounds[i] = _snd2;
 		}
 		sound = audio_play_sound(
 			_sounds[irandom(array_length(_sounds)-1)],

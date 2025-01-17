@@ -404,13 +404,12 @@ function init_charstates() {
 					yspeed *= -0.25;
 				
 					xspeed /= 2;
+					
+					play_hurt_sound(false);
 				}
 				else {
 					yspeed = 0;
 					change_state(liedown_state);
-				}
-				if !dead {
-					play_voiceline(voice_hurt,50,true);
 				}
 			}
 		}

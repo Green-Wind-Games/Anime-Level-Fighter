@@ -173,18 +173,19 @@ function change_sprite_hit() {
 function play_hurt_sound(_is_strong_attack) {
 	if (previous_hp > 0) {
 		if (hp > 0) {
+			var _voice_chance = 50 + (dmg_percent * 2);
 			if _is_strong_attack {
 				play_voiceline(
 					(meme_enabled and chance(meme_chance)) ? snd_meme_scream_disappear : voice_hurt_heavy,
-					100,
-					false
+					_voice_chance,
+					true
 				);
 			}
 			else {
 				play_voiceline(
 					(dmg_percent < 10) ? voice_hurt : voice_hurt_heavy,
-					100,
-					false
+					_voice_chance,
+					true
 				);
 			}
 		}

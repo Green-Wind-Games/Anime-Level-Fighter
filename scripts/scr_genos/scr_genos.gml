@@ -1,10 +1,13 @@
 function init_genos_baseform() {
 	init_charsprites("genos");
+	
+	init_charaudio("genos");
 
 	name = "genos";
 	display_name = "Genos";
 	theme = mus_opm_genos;
 	universe = universes.onepunchman;
+	voice_volume_mine = 5;
 
 	move_speed_mod = 1.25;
 	max_air_moves = 3;
@@ -14,9 +17,6 @@ function init_genos_baseform() {
 
 	incinerate_cooldown = 0;
 	incinerate_cooldown_duration = 150;
-	
-	init_charaudio("genos");
-	voice_volume_mine = 3.5;
 
 	char_script = function() {
 		incinerate_cooldown -= 1;

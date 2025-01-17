@@ -54,7 +54,7 @@ function draw_char_shadows() {
 		var _distance_to_ground = ground_height - (y + yoffset);
 		var _x = x + (xoffset*facing);
 		var _y = ground_height - 2;
-		_y += _distance_to_ground * _shadow_scale;
+		_y -= _distance_to_ground * _shadow_scale;
 		_x += hitstop_shake();
 		_y += hitstop_shake() * is_airborne;
 		
