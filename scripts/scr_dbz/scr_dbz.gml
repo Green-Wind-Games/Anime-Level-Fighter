@@ -1,58 +1,12 @@
-//globalvar	kiblast_blue_particle, kiblast_yellow_particle, kiblast_purple_particle, kiblast_green_particle,
-//			kamehameha_particle, kamehameha_spread_particle;
-
-//kiblast_blue_particle = part_type_create();
-//part_type_blend(kiblast_blue_particle,true);
-//part_type_color3(kiblast_blue_particle,c_white,make_color_rgb(0,192,255),c_black);
-//part_type_life(kiblast_blue_particle,10,10);
-//part_type_shape(kiblast_blue_particle,pt_shape_flare)
-//part_type_size(kiblast_blue_particle,0.5,0.5,1/50,0);
-
-//kiblast_yellow_particle = part_type_create();
-//part_type_blend(kiblast_yellow_particle,true);
-//part_type_color3(kiblast_yellow_particle,c_white,make_color_rgb(255,255,0),c_black);
-//part_type_life(kiblast_yellow_particle,10,10);
-//part_type_shape(kiblast_yellow_particle,pt_shape_flare)
-//part_type_size(kiblast_yellow_particle,0.5,0.5,1/50,0);
-
-//kiblast_purple_particle = part_type_create();
-//part_type_blend(kiblast_purple_particle,true);
-//part_type_color3(kiblast_purple_particle,c_white,make_color_rgb(128,0,255),c_black);
-//part_type_life(kiblast_purple_particle,10,10);
-//part_type_shape(kiblast_purple_particle,pt_shape_flare)
-//part_type_size(kiblast_purple_particle,0.5,0.5,1/50,0);
-
-//kiblast_green_particle = part_type_create();
-//part_type_blend(kiblast_green_particle,true);
-//part_type_color3(kiblast_green_particle,c_white,make_color_rgb(0,192,255),c_black);
-//part_type_life(kiblast_green_particle,10,10);
-//part_type_shape(kiblast_green_particle,pt_shape_flare)
-//part_type_size(kiblast_green_particle,0.5,0.5,1/50,0);
-
-//kamehameha_particle = part_type_create();
-//part_type_blend(kamehameha_particle,true);
-//part_type_color3(kamehameha_particle,c_white,make_color_rgb(0,192,255),c_black);
-//part_type_life(kamehameha_particle,20,20);
-//part_type_shape(kamehameha_particle,pt_shape_flare)
-//part_type_size(kamehameha_particle,1,1,1/50,0);
-
-//kamehameha_spread_particle = part_type_create();
-//part_type_blend(kamehameha_spread_particle,true);
-//part_type_color2(kamehameha_spread_particle,c_white,make_color_rgb(0,192,255));
-//part_type_life(kamehameha_spread_particle,10,15);
-//part_type_shape(kamehameha_spread_particle,pt_shape_line)
-//part_type_size(kamehameha_spread_particle,0.1,0.3,-1/100,0);
-//part_type_direction(kamehameha_spread_particle,-60,60,0,0);
-//part_type_orientation(kamehameha_spread_particle,0,0,0,0,true);
-//part_type_speed(kamehameha_spread_particle,5,10);
-
-function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_kiblastsprite) {
+function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_kiblastsprite) {
 	max_kiblasts = _maxrepeats;
 	kiblast_count = 0;
 	
 	kiblast_sprite = _sprite1;
 	kiblast_sprite2 = _sprite2;
 	kiblast_shot_sprite = _kiblastsprite;
+	
+	kiblast_fire_frame = _fireframe;
 	
 	kiblast = new charstate();
 	kiblast.start = function() {
@@ -68,7 +22,7 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_kiblastsprite) {
 		}
 	}
 	kiblast.run = function() {
-		if check_frame(3) {
+		if check_frame(kiblast_fire_frame) {
 			var _x = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
 			var _y = sprite_get_bbox_top(sprite) - sprite_get_yoffset(sprite);
 			create_kiblast(_x,_y,kiblast_shot_sprite);

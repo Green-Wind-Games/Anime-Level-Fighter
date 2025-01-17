@@ -27,13 +27,6 @@ function init_enker() {
 	//next_form = obj_enker_sgw;
 	transform_aura = spr_aura_dbz_green;
 	charge_aura = spr_aura_dbz_green;
-	
-	max_windblasts = 5;
-	windblast_count = 0;
-	
-	windblast_sprite = spr_enker_special_windblast;
-	windblast_sprite2 = spr_enker_special_windblast2;
-	windblast_shot_sprite = spr_glow_green;
 
 	char_script = function() {
 		var _greenwind_active = greenwind_active;
@@ -84,7 +77,7 @@ function init_enker() {
 	//		ai_input_move(kiai_push,10);
 	//	}
 	//	else if target_distance > 200 {
-	//		ai_input_move(wind_blast,10);
+	//		ai_input_move(wind_ball,10);
 	//		ai_input_move(kamehameha,10);
 	//		ai_input_move(super_kamehameha,10);
 	//	}
@@ -234,139 +227,6 @@ function init_enker() {
 		}
 	}
 	
-	green_wind_ball = new charstate();
-	green_wind_ball.start = function() {
-		if attempt_special(1/max_windblasts) {
-			change_sprite(
-				sprite == windblast_sprite2 ? windblast_sprite : windblast_sprite2,
-				2,
-				false
-			);
-		}
-		else {
-			change_state(idle_state);
-		}
-	}
-	green_wind_ball.run = function() {
-		if check_frame(2) {
-			with(create_shot(
-				25,
-				-35,
-				20,
-				sine_wave(windblast_count,max_windblasts/2,2,0),
-				windblast_shot_sprite,
-				32 / sprite_get_height(windblast_shot_sprite),
-				100,
-				3,
-				-3,
-				attacktype.normal,
-				attackstrength.light,
-				hiteffects.wind
-			)) {
-				greenwind_color = owner.greenwind_color;
-				blend = true;
-				active_script = function() {
-					create_specialeffect(
-						spr_wind_spin,
-						0,
-						0,
-						0.5,
-						0.5,
-						point_direction(0,0,abs(xspeed),yspeed),
-						0,
-						greenwind_color
-					);
-				}
-				hit_script = function() {
-					var _dir = point_direction(0,0,abs(xspeed),yspeed);
-					var _xspeed = lengthdir_x(1,_dir);
-					var _yspeed = lengthdir_y(1,_dir);
-					with(create_shot(
-						0,
-						0,
-						_xspeed,
-						_yspeed,
-						spr_wind_spin,
-						0.5,
-						5,
-						1,
-						-1,
-						attacktype.normal,
-						attackstrength.light,
-						hiteffects.slash
-					)) {
-						blend = true;
-						hit_limit = -1;
-						color = owner.greenwind_color;
-						duration = anim_duration;
-						active_script = function() {
-							with(hitbox) {
-								ds_list_clear(hit_list);
-							}
-							loop_sound(snd_punch_whiff_light,0.5,1.5);
-						}
-					}
-				}
-				play_sound(snd_dbz_beam_fire,0.5,1.5);
-			}
-			if is_airborne {
-				xspeed = -2 * facing;
-				yspeed = -2;
-			}
-			windblast_count++;
-			
-			add_cancel(green_wind_ball);
-			can_cancel = (windblast_count < max_windblasts) and (check_mp(1/max_windblasts));
-		}
-		if state_timer >= 50 {
-			change_state(idle_state);
-		}
-	}
-	green_wind_ball.stop = function() {
-		if next_state != green_wind_ball {
-			windblast_count = 0;
-		}
-	}
-
-	green_wind_push = new charstate();
-	green_wind_push.start = function() {
-		if attempt_special(1) {
-			change_sprite(spr_enker_special_windblast,3,false);
-		}
-		else {
-			change_state(idle_state)
-		}
-	}
-	green_wind_push.run = function() {
-		if superfreeze_active {
-			frame = 0;
-		}
-		if check_frame(2) {
-			with(create_shot(
-				25,
-				-height_half,
-				1,
-				0,
-				spr_wind_spin,
-				1,
-				500,
-				30,
-				-2,
-				attacktype.wall_bounce,
-				attackstrength.super,
-				hiteffects.wind
-			)) {
-				duration = anim_duration;
-				hit_limit = -1;
-				color = other.greenwind_color;
-				play_sound(snd_dbz_beam_fire,1,1.5);
-			}
-		}
-		if state_timer > 60 {
-			return_to_idle();
-		}
-	}
-	
 	super_wind_blade = new charstate();
 	super_wind_blade.start = function() {
 		if attempt_super(2) {
@@ -477,16 +337,16 @@ function init_enker() {
 
 	setup_basicmoves();
 	
-	add_move(green_wind_ball,"D");
+	add_move(greenwind_blast,"D");
 	
-	add_move(green_wind_push,"236D");
+	add_move(greenwind_push,"236D");
 	
 	add_move(super_wind_blade,"236AB");
 	add_move(super_wind_blade,"236CD");
 	
 	add_ground_move(activate_greenwind,"252C");
 	
-	signature_move = green_wind_push;
+	signature_move = greenwind_push;
 	finisher_move = super_wind_blade;
 
 	victory_state.run = function() {
