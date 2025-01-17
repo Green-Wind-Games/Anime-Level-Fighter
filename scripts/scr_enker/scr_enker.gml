@@ -9,6 +9,8 @@ function init_enker() {
 	theme_pitch = 0.95;
 	
 	universe = universes.uniforce;
+	
+	voice_volume_mine = 3;
 
 	max_air_moves = 2;
 	

@@ -7,9 +7,8 @@ function draw_chars() {
 		with(ds_priority_find_max(draw_order)) {
 			var _x = x + (xoffset*facing);
 			var _y = y + yoffset;
-			var _shake = hitstop / 3;
-			_x += sine_wave(hitstop,4,_shake,0);
-			_y += sine_wave(hitstop+1,4,_shake,0) * is_airborne;
+			_x += hitstop_shake();
+			_y += hitstop_shake() * is_airborne;
 		
 			if flash {
 				gpu_set_fog(true,flash_color,0,0);
@@ -43,16 +42,21 @@ function draw_chars() {
 	draw_playerindicators();
 }
 
+function hitstop_shake() {
+	var _shake = clamp(hitstop,0,3);
+	return random_range(_shake,-_shake);
+}
+
 function draw_char_shadows() {
-	var shadow_scale = -0.2;
-	var shadow_alpha = 0.5;
+	var _shadow_scale = -0.25;
+	var _shadow_alpha = 0.5;
 	with(obj_char) {
+		var _distance_to_ground = ground_height - (y + yoffset);
 		var _x = x + (xoffset*facing);
-		var _y = ground_height;
-		var _shake = hitstop / 3;
-		_y += map_value(y+yoffset,ground_height,0,-1,-(room_height/2)*shadow_scale);
-		_x += sine_wave(hitstop,4,_shake,0);
-		_y += sine_wave(hitstop+1,4,_shake,0) * is_airborne;
+		var _y = ground_height - 2;
+		_y += _distance_to_ground * _shadow_scale;
+		_x += hitstop_shake();
+		_y += hitstop_shake() * is_airborne;
 		
 		draw_sprite_ext(
 			sprite,
@@ -60,10 +64,10 @@ function draw_char_shadows() {
 			_x,
 			_y,
 			xscale*xstretch*facing,
-			yscale*ystretch*shadow_scale,
+			yscale*ystretch*_shadow_scale,
 			0,
-			c_black,
-			alpha * shadow_alpha
+			flash > 0 ? flash_color : c_black,
+			alpha * _shadow_alpha
 		);
 	}
 }
@@ -727,10 +731,9 @@ function draw_my_combo_counter(_x,_y,_color) {
 		_text += "!";
 		_text += "\n" + string(round(combo_damage_visible)) + " damage!";
 				
-		if (hitstop > 0) and (round_state != roundstates.pause) {
-			var _shake = hitstop / 3;
-			_x += sine_wave(hitstop,4,_shake,0);
-			_y += sine_wave(hitstop+1,4,_shake,0);
+		if (round_state != roundstates.pause) {
+			_x += hitstop_shake();
+			_y += hitstop_shake();
 		}
 				
 		draw_text_outlined(
