@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.474354,
+  "duration":0.670454,
   "name":"snd_enker_heavyattack",
   "parent":{
     "name":"Enker Voice",

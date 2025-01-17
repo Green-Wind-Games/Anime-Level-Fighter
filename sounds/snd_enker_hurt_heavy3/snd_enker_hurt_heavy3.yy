@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.348753,
+  "duration":0.96907,
   "name":"snd_enker_hurt_heavy3",
   "parent":{
     "name":"Enker Voice",

@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.457438,
+  "duration":0.223311,
   "name":"snd_enker_hurt4",
   "parent":{
     "name":"Enker Voice",

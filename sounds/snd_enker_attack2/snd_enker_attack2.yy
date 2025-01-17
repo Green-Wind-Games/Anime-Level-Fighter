@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.225986,
+  "duration":0.177415,
   "name":"snd_enker_attack2",
   "parent":{
     "name":"Enker Voice",
