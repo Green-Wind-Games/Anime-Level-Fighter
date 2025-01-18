@@ -46,10 +46,12 @@ function init_goku_baseform() {
 	);
 	
 	add_temporary_powerup_state(10,1.5);
+	kaioken_active = false;
 	kaioken_color = make_color_rgb(255,128,128);
 
 	char_script = function() {
 		kamehameha_cooldown -= 1;
+		
 		var _kaioken = update_temporary_powerup();
 		if _kaioken > 0 {
 			color = kaioken_color;
@@ -64,6 +66,7 @@ function init_goku_baseform() {
 			aura_sprite = noone;
 			kiblast_shot_sprite = spr_glow_blue;
 		}
+		kaioken_active = _kaioken > 0;
 	}
 
 	//ai_script = function() {
@@ -401,7 +404,7 @@ function init_goku_baseform() {
 	add_move(kamehameha,"236D");
 	add_move(super_kamehameha,"214D");
 	
-	add_ground_move(activate_kaioken,"252C");
+	add_ground_move(temporary_powerup_state,"252C");
 	
 	add_move(super_spirit_bomb,"258C");
 	
