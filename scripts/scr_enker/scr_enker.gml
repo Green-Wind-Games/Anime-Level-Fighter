@@ -5,7 +5,7 @@ function init_enker() {
 	name = "enker";
 	display_name = "Enker";
 	
-	theme = mus_dbfz_trunks_remix;
+	theme = mus_dbfz_trunks;
 	//theme_pitch = 0.95;
 	
 	universe = universes.uniforce;
