@@ -5,12 +5,12 @@ function init_enker() {
 	name = "enker";
 	display_name = "Enker";
 	
-	theme = mus_dbfz_trunks;
-	theme_pitch = 0.95;
+	theme = mus_dbfz_trunks_remix;
+	//theme_pitch = 0.95;
 	
 	universe = universes.uniforce;
 	
-	voice_volume_mine = 8;
+	voice_volume_mine = 5;
 
 	max_air_moves = 2;
 

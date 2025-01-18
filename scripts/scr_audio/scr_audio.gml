@@ -4,44 +4,11 @@ sound_volume = 1;
 music_volume = 1;
 voice_volume = 1;
 
-audio_set_master_gain(0,0.2);
-
-globalvar music, music_timer, music_min_duration;
-music = noone;
-music_timer = 0;
-music_min_duration = 30;
+audio_set_master_gain(0,0.25);
 
 globalvar meme_enabled, meme_chance;
-meme_enabled = true;
+meme_enabled = false;
 meme_chance = 10;
-
-function set_music_loop(_music,_start,_end) {
-	audio_sound_loop_start(_music,_start);
-	audio_sound_loop_end(_music,_end);
-}
-
-function update_music() {
-	if (audio_is_playing(music)) {
-		music_timer = audio_sound_get_track_position(music);
-		if (keyboard_check_pressed(vk_end)) {
-			audio_sound_set_track_position(music,80);
-		}
-	}
-	else {
-		music_timer = 0;
-	}
-}
-
-function play_music(_music,_volume = 1,_pitch = 1,_loop = true) {
-	stop_music();
-	music = audio_play_sound(_music,1,_loop,master_volume*music_volume*_volume,0,_pitch);
-	music_timer = 0;
-	return music;
-}
-
-function stop_music() {
-	audio_stop_sound(music);
-}
 
 function play_sound(_snd,_volume = 1,_pitch = 1) {
 	if (audio_exists(_snd)) {

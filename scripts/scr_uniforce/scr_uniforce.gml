@@ -57,7 +57,6 @@ function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_bal
 			);
 			with(_ball) {
 				play_sound(snd_kiblast_fire,1,1.5);
-				greenwind_color = owner.greenwind_color;
 				blend = true;
 				active_script = function() {
 					create_specialeffect(
@@ -91,7 +90,7 @@ function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_bal
 					)) {
 						blend = true;
 						hit_limit = -1;
-						color = owner.greenwind_color;
+						color = greenwind_color;
 						duration = anim_duration;
 						active_script = function() {
 							if duration mod 3 == 0 {
@@ -158,7 +157,7 @@ function add_greenwind_push_state(_sprite,_fireframe) {
 			)) {
 				duration = anim_duration;
 				hit_limit = -1;
-				color = other.greenwind_color;
+				color = greenwind_color;
 				play_sound(snd_dbz_beam_fire,1,1.5);
 			}
 			if is_airborne {

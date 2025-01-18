@@ -51,16 +51,14 @@ function init_charsprites(_name) {
 	
 	icon = asset_get_index(prefix + "icon");
 	
-	init_grab_sprites(_name);
-	
 	init_sprite(idle_sprite);
 	
-	var _w = max(40,width);
+	var _w = max(35,width);
 	var _h = max(40,height);
 	
 	var _head_size = sprite_get_height(icon);
 	
-	var _body_w = round(_w * 0.8);
+	var _body_w = _w;
 	var _body_h = _h - min(_head_size,round(_h * 0.35));
 	
 	with(obj_hurtbox) {

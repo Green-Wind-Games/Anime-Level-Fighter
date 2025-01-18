@@ -2,7 +2,7 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	var _me = id;
 	var _shot = instance_create(x+(_x*facing),y+_y,obj_shot);
 	with(_shot) {
-		owner = get_true_owner(me);
+		owner = get_true_owner(_me);
 		init_sprite(_sprite);
 		change_sprite(sprite,max(1,round(60/sprite_get_speed(_sprite))),true);
 		var _true_scale = _scale / 2;

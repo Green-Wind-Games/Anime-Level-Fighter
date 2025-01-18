@@ -7,7 +7,7 @@ function init_genos_baseform() {
 	display_name = "Genos";
 	theme = mus_opm_genos;
 	universe = universes.onepunchman;
-	voice_volume_mine = 5;
+	voice_volume_mine = 4;
 
 	move_speed_mod = 1.25;
 	max_air_moves = 3;
