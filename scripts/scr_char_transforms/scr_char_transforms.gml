@@ -98,12 +98,13 @@ function auto_levelup() {
 		var _nextform = instance_create(0,0,next_form);
 		play_chartheme(_nextform);
 		instance_destroy(_nextform);
+		play_voiceline(voice_transform);
 		change_state(transform_state);
 	}
 	else {
+		play_voiceline(voice_powerup);
 		change_state(levelup_state);
 		xp = 0;
-		play_voiceline(voice_powerup);
 		play_chartheme(id);
 	}
 	can_cancel = false;
