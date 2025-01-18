@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":2.217506,
+  "duration":0.888957,
   "name":"snd_enker_powerup",
   "parent":{
     "name":"Enker Voice",
