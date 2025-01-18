@@ -249,6 +249,9 @@ function init_genos_baseform() {
 			change_sprite(spr_genos_attack_punch_straight,2,true);
 			play_voiceline(voice_attack,50,false);
 		}
+		else {
+			change_state(idle_state);
+		}
 	}
 	machinegun_blows.run = function() {
 		xspeed = 1 * facing;

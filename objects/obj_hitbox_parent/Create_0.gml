@@ -7,3 +7,4 @@ yoffset = 0;
 facing = 1;
 image_alpha = 0.5;
 depth = 99;
+visible = false;

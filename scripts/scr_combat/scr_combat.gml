@@ -185,7 +185,7 @@ function play_hurt_sound(_is_strong_attack) {
 				play_voiceline(
 					(dmg_percent < 10) ? voice_hurt : voice_hurt_heavy,
 					_voice_chance,
-					true
+					false
 				);
 			}
 		}
@@ -309,9 +309,13 @@ function connect_attack(_hitbox,_hurtbox) {
 		}
 	}
 	
+	with(_attacker) {
+		if is_char(id) or is_helper(id) {
+			can_cancel = true;
+		}
+	}
 	with(_true_attacker) {
 		attack_hits++;
-		can_cancel = true;
 	}
 	
 	var mp_gain = dmg / 2;
@@ -466,11 +470,9 @@ function init_clash(_hitbox1, _hitbox2) {
 	
 	with(_char1) {
 		attack_hits++;
-		can_cancel = true;
 	}
 	with(_char2) {
 		attack_hits++;
-		can_cancel = true;
 	}
 	
 	create_particles(
@@ -486,7 +488,6 @@ function init_clash(_hitbox1, _hitbox2) {
 			_hitbox2.bbox_top,
 			_hitbox2.bbox_bottom
 		),
-		parry_spark,
-		100
+		parry_spark
 	);
 }

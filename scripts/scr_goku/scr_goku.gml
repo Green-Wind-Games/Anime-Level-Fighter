@@ -1,19 +1,15 @@
 function init_goku_baseform() {
 	init_charsprites("goku");
+	init_charaudio("goku");
 
 	name = "goku";
 	display_name = "Goku";
 	theme = mus_dbfz_goku;
 	universe = universes.dragonball;
+	
+	voice_volume_mine = 1.25;
 
 	max_air_moves = 3;
-
-	kaioken_active = false;
-	kaioken_timer = 0;
-	kaioken_duration = 10 * 60;
-	kaioken_buff = 1.25;
-	kaioken_color = make_color_rgb(255,128,128);
-	kaioken_min_hp = max_hp / 100;
 
 	spirit_bomb_shot = noone;
 
@@ -24,6 +20,7 @@ function init_goku_baseform() {
 		7,
 		spr_goku_special_kiblast,
 		spr_goku_special_kiblast2,
+		2,
 		spr_glow_blue
 	);
 	
@@ -48,52 +45,24 @@ function init_goku_baseform() {
 		snd_goku_kamehame_ha
 	);
 	
-	init_charaudio("goku");
-	voice_volume_mine = 1.25;
+	add_temporary_powerup_state(10,1.5);
+	kaioken_color = make_color_rgb(255,128,128);
 
 	char_script = function() {
 		kamehameha_cooldown -= 1;
-		var _kaioken_active = kaioken_active;
-		//if level >= max_level {
-		//	kaioken_min_hp = 1;
-		//}
-		if dead or hp <= kaioken_min_hp {
-			kaioken_timer = 0;
-		}
-		if kaioken_timer > 0 {
-			kaioken_timer -= !super_active;
-			kaioken_active = true;
-			if kaioken_timer mod ceil(kaioken_duration / (max_hp / 15)) == 0 {
-				hp = approach(hp,kaioken_min_hp,1);
-			}
+		var _kaioken = update_temporary_powerup();
+		if _kaioken > 0 {
 			color = kaioken_color;
 			aura_sprite = spr_aura_dbz_red;
-			
-			loop_sound(snd_energy_loop);
-		}
-		else {
-			kaioken_active = false;
-		}
-		if kaioken_active != _kaioken_active {
-			if kaioken_active {
-				attack_power = kaioken_buff;
-				move_speed_buff = kaioken_buff;
-			
-				kiblast_shot_sprite = spr_glow_red;
+			if temporary_powerup_timer mod 6 == 1 {
+				hp = approach(hp,1,1);
 			}
-			else {
-				attack_power = 1;
-				move_speed_buff = 1;
-				
-				if color == kaioken_color {
-					color = c_white;
-				}
-				aura_sprite = noone;
-				kiblast_shot_sprite = spr_glow_blue;
-				
-				flash_sprite();
-				play_sound(snd_energy_stop);
-			}
+			kiblast_shot_sprite = spr_glow_red;
+		}
+		else if _kaioken == -1 {
+			color = c_white;
+			aura_sprite = noone;
+			kiblast_shot_sprite = spr_glow_blue;
 		}
 	}
 
@@ -170,9 +139,9 @@ function init_goku_baseform() {
 		if check_frame(2) or check_frame(4) or check_frame(6) {
 			play_sound(snd_punch_whiff_light);
 		}
+		basic_light_airattack(1,hiteffects.hit);
+		basic_light_airattack(2,hiteffects.hit);
 		basic_light_airattack(3,hiteffects.hit);
-		basic_light_airattack(5,hiteffects.hit);
-		basic_light_airattack(7,hiteffects.hit);
 	}
 	
 	medium_attack = new charstate();
@@ -182,8 +151,8 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	medium_attack.run = function() {
-		basic_medium_attack(2,hiteffects.hit);
-		if check_frame(2) {
+		basic_medium_attack(1,hiteffects.hit);
+		if check_frame(1) {
 			xspeed = 10 * facing;
 			yspeed = 0;
 		}
@@ -196,7 +165,7 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	medium_lowattack.run = function() {
-		basic_medium_lowattack(4,hiteffects.hit);
+		basic_medium_lowattack(3,hiteffects.hit);
 	}
 	
 	medium_airattack = new charstate();
@@ -208,8 +177,8 @@ function init_goku_baseform() {
 		if check_frame(2) or check_frame(6) {
 			play_sound(snd_punch_whiff_medium);
 		}
-		basic_medium_airattack(4,hiteffects.hit);
-		basic_medium_airattack(8,hiteffects.hit);
+		basic_medium_airattack(3,hiteffects.hit);
+		basic_medium_airattack(7,hiteffects.hit);
 	}
 
 	heavy_attack = new charstate();
@@ -229,7 +198,7 @@ function init_goku_baseform() {
 		play_voiceline(voice_heavyattack,100,true);
 	}
 	launcher_attack.run = function() {
-		basic_heavy_lowattack(3,hiteffects.hit);
+		basic_heavy_lowattack(2,hiteffects.hit);
 	}
 
 	heavy_airattack = new charstate();
@@ -244,8 +213,8 @@ function init_goku_baseform() {
 	
 	heavy_elbow = new charstate();
 	heavy_elbow.start = function() {
-		if attempt_special(1/2) {
-			change_sprite(spr_goku_attack_elbow_bash,3,false);
+		if attempt_special(1) {
+			change_sprite(spr_goku_attack_elbow_bash_spin,3,false);
 			play_sound(snd_punch_whiff_medium);
 			play_voiceline(voice_attack,50,false);
 		}
@@ -253,7 +222,7 @@ function init_goku_baseform() {
 
 	kiai_push = new charstate();
 	kiai_push.start = function() {
-		if attempt_super(1) {
+		if attempt_special(1) {
 			change_sprite(spr_goku_special_kiblast,3,false);
 		}
 		else {
@@ -270,7 +239,8 @@ function init_goku_baseform() {
 				y-height_half,
 				air_shockwave_particle
 			);
-			create_hitbox(-50,-150,200,200,690,20,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
+			create_hitbox(0,-100,100,200,500,20,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
+			create_hitbox(0,-100,-100,200,500,-20,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
 		}
 		if state_timer > 60 {
 			return_to_idle();
@@ -332,33 +302,6 @@ function init_goku_baseform() {
 	//	}
 	//	return_to_idle();
 	//}
-
-	activate_kaioken = new charstate();
-	activate_kaioken.start = function() {
-		if attempt_super(1,((!kaioken_active) and (hp > kaioken_min_hp))) {
-			change_sprite(charge_loop_sprite,3,true);
-			flash_sprite();
-			color = kaioken_color;
-			aura_sprite = spr_aura_dbz_red;
-			
-			kaioken_timer = kaioken_duration;
-			
-			superfreeze(60);
-		
-			play_sound(snd_energy_start);
-			play_voiceline(snd_goku_kaioken);
-		}
-		else {
-			change_state(idle_state);
-		}
-	}
-	activate_kaioken.run = function() {
-		xspeed = 0;
-		yspeed = 0;
-		if !superfreeze_active {
-			change_state(idle_state);
-		}
-	}
 
 	super_spirit_bomb = new charstate();
 	super_spirit_bomb.start = function() {

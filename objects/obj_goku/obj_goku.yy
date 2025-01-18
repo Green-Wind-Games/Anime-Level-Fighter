@@ -8,8 +8,8 @@
   "name":"obj_goku",
   "overriddenProperties":[],
   "parent":{
-    "name":"Goku",
-    "path":"folders/Chars/Dragon Ball Chars/Goku.yy",
+    "name":"Goku Base Form",
+    "path":"folders/Chars/Dragon Ball Chars/Goku/Goku Base Form.yy",
   },
   "parentObjectId":{
     "name":"obj_char",

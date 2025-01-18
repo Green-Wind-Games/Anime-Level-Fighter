@@ -10,7 +10,7 @@ function init_enker() {
 	
 	universe = universes.uniforce;
 	
-	voice_volume_mine = 5;
+	voice_volume_mine = 3;
 
 	max_air_moves = 2;
 

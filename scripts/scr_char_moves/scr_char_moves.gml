@@ -338,7 +338,9 @@ function check_mp(_stocks) {
 }
 
 function spend_mp(_stocks) {
-	mp -= (_stocks * mp_stock_size);
+	if _stocks > 0 {
+		mp -= (_stocks * mp_stock_size);
+	}
 }
 
 function check_tp(_stocks) {
@@ -349,5 +351,7 @@ function check_tp(_stocks) {
 }
 
 function spend_tp(_stocks) {
-	tp -= (_stocks * tp_stock_size);
+	if _stocks > 0 {
+		tp -= (_stocks * tp_stock_size);
+	}
 }

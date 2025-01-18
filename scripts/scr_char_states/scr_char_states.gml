@@ -405,7 +405,7 @@ function init_charstates() {
 				
 					xspeed /= 2;
 					
-					play_hurt_sound(false);
+					play_voiceline(voice_hurt,20,false);
 				}
 				else {
 					yspeed = 0;

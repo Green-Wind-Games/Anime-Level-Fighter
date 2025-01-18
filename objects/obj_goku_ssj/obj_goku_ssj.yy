@@ -8,8 +8,8 @@
   "name":"obj_goku_ssj",
   "overriddenProperties":[],
   "parent":{
-    "name":"Goku",
-    "path":"folders/Chars/Dragon Ball Chars/Goku.yy",
+    "name":"Goku SSJ",
+    "path":"folders/Chars/Dragon Ball Chars/Goku/Goku SSJ.yy",
   },
   "parentObjectId":{
     "name":"obj_char",

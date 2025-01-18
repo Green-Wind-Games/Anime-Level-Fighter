@@ -1,12 +1,15 @@
 function init_goku_ssj() {
 	init_charsprites("goku_ssj");
+	init_charaudio("goku");
 
 	name = "goku";
-	form_name = "ssj1";
+	form_name = "ssj";
 	display_name = "Goku";
 	form_display_name = "Super Saiyan";
 	theme = mus_dbfz_space;
 	universe = universes.dragonball;
+	
+	voice_volume_mine = 1.25;
 
 	max_air_moves = 3;
 
@@ -47,8 +50,6 @@ function init_goku_ssj() {
 		snd_goku_kamehame,
 		snd_goku_kamehame_ha
 	);
-	
-	init_charaudio("goku");
 
 	char_script = function() {
 		kamehameha_cooldown -= 1;
