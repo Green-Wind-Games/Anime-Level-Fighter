@@ -45,28 +45,51 @@ function init_goku_baseform() {
 		snd_goku_kamehame_ha
 	);
 	
-	add_temporary_powerup_state(10,1.5);
 	kaioken_active = false;
+	kaioken_timer = 0;
+	kaioken_duration = 10 * 60;
+	kaioken_buff = 1.25;
 	kaioken_color = make_color_rgb(255,128,128);
+	kaioken_min_hp = 1;
 
 	char_script = function() {
-		kamehameha_cooldown -= 1;
+		kamehameha_cooldown--;
 		
-		var _kaioken = update_temporary_powerup();
-		if _kaioken > 0 {
-			color = kaioken_color;
-			aura_sprite = spr_aura_dbz_red;
-			if temporary_powerup_timer mod 6 == 1 {
-				hp = approach(hp,1,1);
+		var _kaioken_active = kaioken_active;
+		
+		kaioken_timer--;
+		if dead or hp <= kaioken_min_hp {
+			kaioken_timer = 0;
+		}
+		kaioken_active = kaioken_timer > 0;
+		
+		if kaioken_active {
+			if kaioken_timer mod ceil(kaioken_duration / (max_hp * 0.05)) == 1 {
+				hp = approach(hp,kaioken_min_hp,1);
 			}
-			kiblast_shot_sprite = spr_glow_red;
+			aura_sprite = spr_aura_dbz_red;
 		}
-		else if _kaioken == -1 {
-			color = c_white;
-			aura_sprite = noone;
-			kiblast_shot_sprite = spr_glow_blue;
+		if kaioken_active != _kaioken_active {
+			if kaioken_active {
+				attack_power = kaioken_buff;
+				move_speed_buff = kaioken_buff;
+			
+				kiblast_shot_sprite = spr_glow_red;
+			}
+			else {
+				attack_power = 1;
+				move_speed_buff = 1;
+				
+				if color == kaioken_color {
+					color = c_white;
+				}
+				aura_sprite = noone;
+				kiblast_shot_sprite = spr_glow_blue;
+				
+				flash_sprite();
+				play_sound(snd_energy_stop);
+			}
 		}
-		kaioken_active = _kaioken > 0;
 	}
 
 	//ai_script = function() {
@@ -305,6 +328,33 @@ function init_goku_baseform() {
 	//	}
 	//	return_to_idle();
 	//}
+	
+	activate_kaioken = new charstate();
+	activate_kaioken.start = function() {
+		if attempt_super(1,((!kaioken_active) and (hp > kaioken_min_hp))) {
+			change_sprite(charge_loop_sprite,3,true);
+			flash_sprite();
+			color = kaioken_color;
+			aura_sprite = spr_aura_dbz_red;
+			
+			kaioken_timer = kaioken_duration;
+			
+			superfreeze(60);
+		
+			play_sound(snd_energy_start);
+			play_voiceline(snd_goku_kaioken);
+		}
+		else {
+			change_state(idle_state);
+		}
+	}
+	activate_kaioken.run = function() {
+		xspeed = 0;
+		yspeed = 0;
+		if !superfreeze_active {
+			change_state(idle_state);
+		}
+	}
 
 	super_spirit_bomb = new charstate();
 	super_spirit_bomb.start = function() {
@@ -404,7 +454,7 @@ function init_goku_baseform() {
 	add_move(kamehameha,"236D");
 	add_move(super_kamehameha,"214D");
 	
-	add_ground_move(temporary_powerup_state,"252C");
+	add_ground_move(activate_kaioken,"252C");
 	
 	add_move(super_spirit_bomb,"258C");
 	
