@@ -1,15 +1,18 @@
+globalvar greenwind_color;
+greenwind_color = make_color_rgb(128,255,128);
+
 function greenwind_swirls() {
 	char_specialeffect(
 		spr_wind_spin,
 		random_range(-width_half,width_half),
 		-random(height),
-		random(1),
-		random(1),
+		0.25,
+		0.25,
 		random(360),
 		random(20),
 		greenwind_color
 	);
-	play_sound(snd_chakra_loop,1,1.5);
+	play_sound(snd_chakra_loop,0.75,2);
 }
 
 function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_ballsprite) {
@@ -79,7 +82,7 @@ function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_bal
 						_yspeed,
 						spr_wind_spin,
 						0.5,
-						10,
+						5,
 						1,
 						-1,
 						attacktype.normal,

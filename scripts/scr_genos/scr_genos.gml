@@ -144,6 +144,56 @@ function init_genos_baseform() {
 		basic_heavy_airattack(2,hiteffects.hit);
 	}
 
+	fireblast = new charstate();
+	fireblast.start = function() {
+		if attempt_special(1/2) {
+			change_sprite(spr_genos_special_blast,3,false);
+		}
+		else {
+			change_state(idle_state);
+		}
+	}
+	fireblast.run = function() {
+		if check_frame(2) {
+			var _shots = 1 + level;
+			for(var i = 0; i < _shots; i++) {
+				with(create_shot(
+					20,
+					-35,
+					20,
+					((-_shots / 2) + i),
+					spr_glow_orange,
+					0.25,
+					80,
+					3,
+					-3,
+					attacktype.normal,
+					attackstrength.light,
+					hiteffects.fire
+				)) {
+					blend = true;
+					hit_script = function() {
+						create_particles(x,y,explosion_small_particle);
+					}
+					active_script = function() {
+						if y >= ground_height {
+							hit_script();
+							instance_destroy();
+						}
+					}
+					play_sound(snd_kiblast_fire);
+				}
+			}
+			if is_airborne {
+				xspeed = -2 * facing;
+				yspeed = -2;
+			}
+		}
+		if state_timer > 50 {
+			return_to_idle();
+		}
+	}
+
 	dropkick = new charstate();
 	dropkick.start = function() {
 		if attempt_special(1/2,(!dropkick_cooldown)) {
@@ -190,57 +240,6 @@ function init_genos_baseform() {
 				play_sound(snd_explosion_large);
 			};
 			land();
-		}
-	}
-
-	fireblast = new charstate();
-	fireblast.start = function() {
-		if attempt_special(1/2) {
-			change_sprite(spr_genos_special_blast,3,false);
-		}
-		else {
-			change_state(idle_state);
-		}
-	}
-	fireblast.run = function() {
-		if check_frame(3) {
-			var i = 0;
-			var _shots = 1 + level;
-			repeat(_shots) {
-				with(create_shot(
-					20,
-					-35,
-					20,
-					map_value(i++,0,_shots,-2,2),
-					spr_glow_orange,
-					0.2,
-					100,
-					3,
-					-3,
-					attacktype.normal,
-					attackstrength.light,
-					hiteffects.fire
-				)) {
-					blend = true;
-					hit_script = function() {
-						create_particles(x,y,explosion_small_particle);
-					}
-					active_script = function() {
-						if y >= ground_height {
-							hit_script();
-							instance_destroy();
-						}
-					}
-					play_sound(snd_kiblast_fire);
-				}
-			}
-			if is_airborne {
-				xspeed = -2 * facing;
-				yspeed = -2;
-			}
-		}
-		if state_timer > 50 {
-			return_to_idle();
 		}
 	}
 

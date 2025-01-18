@@ -1,23 +1,6 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
-enum grab_point {
-	base,
-	head,
-	body,
-	leg
-}
-
-enum grab_frames {
-	justgrabbed,
-	low,
-	mid,
-	high,
-	air,
-	launch,
-	liedown
-}
-
 function init_charsprites(_name) {
 	var prefix = "spr_" + _name + "_";
 	
@@ -50,21 +33,15 @@ function init_charsprites(_name) {
 	
 	tech_sprite = asset_get_index(prefix + "air_recover");
 	
-	grabbed_sprite[grab_point.base] = asset_get_index(prefix + "grabbed_base");
-	grabbed_sprite[grab_point.head] = asset_get_index(prefix + "grabbed_head");
-	grabbed_sprite[grab_point.body] = asset_get_index(prefix + "grabbed_body");
-	grabbed_sprite[grab_point.leg] = asset_get_index(prefix + "grabbed_leg");
+	init_grab_sprites(_name);
 	
-	fist_rush_sprite = asset_get_index(prefix + "rush_fist");
-	weapon_rush_sprite = asset_get_index(prefix + "rush_weapon");
+	fist_rush_sprite = asset_get_index(prefix + "fist_rush");
+	weapon_rush_sprite = asset_get_index(prefix + "weapon_rush");
 	
-	fist_combat_sprite = asset_get_index(prefix + "combat_fist");
-	weapon_combat_sprite = asset_get_index(prefix + "combat_weapon");
+	fist_combat_sprite = asset_get_index(prefix + "fist_combat");
+	weapon_combat_sprite = asset_get_index(prefix + "weapon_combat");
 	combat_dodge_sprite = crouch_sprite;
 	combat_block_sprite = guard_sprite;
-	
-	fist_bind_sprite = asset_get_index(prefix + "bind_fist");
-	weapon_bind_sprite = asset_get_index(prefix + "bind_weapon");
 	
 	intro_sprite = asset_get_index(prefix + "intro");
 	victory_sprite = asset_get_index(prefix + "victory");
@@ -104,6 +81,70 @@ function init_charsprites(_name) {
 		_head_size,
 		_head_size
 	);
+}
+
+enum grab_anchors {
+	base,
+	head,
+	body,
+	leg,
+	
+	allanchors
+}
+
+enum grab_anims {
+	stun,
+	high,
+	low,
+	air_hit,
+	air_fall,
+	launch,
+	liedown,
+	spinout,
+	
+	allanims
+}
+
+function init_grab_sprites(_name) {
+	var _requiredsprites = grab_anchors.allanchors * grab_anims;
+	var _foundsprites = 0;
+	for(var i = 0; i < grab_anchors.allanchors; i++) {
+		for(var ii = 0; ii < grab_anims.allanims; ii++) {
+			var _anchor = "";
+			var _anim = "";
+			
+			switch(i) {
+				case grab_anchors.base: _anchor = ""; break;
+				case grab_anchors.head: _anchor = "head"; break;
+				case grab_anchors.body: _anchor = "body"; break;
+				case grab_anchors.leg: _anchor = "leg"; break;
+			}
+			switch(ii) {
+				case grab_anims.stun: _anim = "stun"; break;
+				case grab_anims.high: _anim = "high"; break;
+				case grab_anims.low: _anim = "low"; break;
+				case grab_anims.air_hit: _anim = "air_hit"; break;
+				case grab_anims.air_fall: _anim = "air_fall"; break;
+				case grab_anims.launch: _anim = "launch"; break;
+				case grab_anims.liedown: _anim = "liedown"; break;
+				case grab_anims.spinout: _anim = "spinout"; break;
+			}
+			
+			grabbed_sprite[i][ii] = asset_get_index("spr_" + _name + "_" + _anchor + "_" + _anim);
+			
+			if sprite_exists(grabbed_sprite[i][ii]) {
+				_foundsprites++;
+			}
+			else {
+				show_debug_message(_name + " is missing the " + _anchor + " " + _anim + " grab sprite");
+			}
+		}
+	}
+	show_debug_message("required grab sprites = " + string(_requiredsprites));
+	show_debug_message("found grab sprites (" + _name + ") = " + string(_foundsprites));
+	if _foundsprites < _requiredsprites {
+		show_debug_message(_name + " is missing " + string(_requiredsprites - _foundsprites) + " grabsprites");
+	}
 }
 
 function update_charsprite() {

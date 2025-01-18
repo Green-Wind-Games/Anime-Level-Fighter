@@ -13,20 +13,29 @@ function init_enker() {
 	voice_volume_mine = 8;
 
 	max_air_moves = 2;
-	
-	kazedama_cooldown = 0;
-	kazedama_cooldown_duration = 100;
 
 	greenwind_active = false;
 	greenwind_timer = 0;
 	greenwind_duration = 30 * 60;
-	greenwind_mp_drain = ceil(mp_stock_size / (5 * 60))
-	greenwind_buff = 1.10;
-	greenwind_color = make_color_rgb(128,255,128);
+	greenwind_mp_drain = ceil(mp_stock_size / (5 * 60));
+	greenwind_buff = 1.25;
 
 	//next_form = obj_enker_sgw;
 	transform_aura = spr_aura_dbz_green;
 	charge_aura = spr_aura_dbz_green;
+	
+	add_greenwind_blast_state(
+		5,
+		spr_enker_special_windblast,
+		spr_enker_special_windblast2,
+		2,
+		spr_glow_green
+	);
+	
+	add_greenwind_push_state(
+		spr_enker_special_windblast,
+		2
+	);
 
 	char_script = function() {
 		var _greenwind_active = greenwind_active;

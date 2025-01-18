@@ -10,12 +10,13 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_kiblastspri
 	
 	kiblast = new charstate();
 	kiblast.start = function() {
-		if attempt_special(1/max_kiblasts) {
+		if attempt_special(1/max_kiblasts) and (kiblast_count < max_kiblasts) {
 			change_sprite(
 				sprite == kiblast_sprite2 ? kiblast_sprite : kiblast_sprite2,
 				2,
 				false
 			);
+			kiblast_count++;
 		}
 		else {
 			change_state(idle_state);
@@ -23,9 +24,33 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_kiblastspri
 	}
 	kiblast.run = function() {
 		if check_frame(kiblast_fire_frame) {
-			var _x = sprite_get_bbox_right(sprite) - sprite_get_xoffset(sprite);
-			var _y = sprite_get_bbox_top(sprite) - sprite_get_yoffset(sprite);
-			create_kiblast(_x,_y,kiblast_shot_sprite);
+			with(create_shot(
+				width_half,
+				-height_half,
+				20,
+				sine_wave(kiblast_count,max_kiblasts/2,1,0),
+				kiblast_shot_sprite,
+				32 / sprite_get_height(kiblast_shot_sprite),
+				100,
+				3,
+				-3,
+				attacktype.normal,
+				attackstrength.light,
+				hiteffects.fire
+			)) {
+				blend = true;
+				hit_script = function() {
+					create_particles(x,y,explosion_small_particle);
+				}
+				active_script = function() {
+					if y >= ground_height {
+						hit_script();
+						instance_destroy();
+					}
+				}
+				play_sound(snd_kiblast_fire);
+				return id;
+			}
 			if is_airborne {
 				xspeed = -2 * facing;
 				yspeed = -2;
@@ -161,36 +186,6 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 			shake_screen(5);
 		}
 		return_to_idle();
-	}
-}
-
-function create_kiblast(_x,_y,_sprite) {
-	with(create_shot(
-		_x,
-		_y,
-		20,
-		sine_wave(kiblast_count,max_kiblasts/2,2,0),
-		_sprite,
-		32 / sprite_get_height(_sprite),
-		100,
-		3,
-		-3,
-		attacktype.normal,
-		attackstrength.light,
-		hiteffects.fire
-	)) {
-		blend = true;
-		hit_script = function() {
-			create_particles(x,y,explosion_small_particle);
-		}
-		active_script = function() {
-			if y >= ground_height {
-				hit_script();
-				instance_destroy();
-			}
-		}
-		play_sound(snd_kiblast_fire);
-		return id;
 	}
 }
 
