@@ -33,8 +33,6 @@ function init_charsprites(_name) {
 	
 	tech_sprite = asset_get_index(prefix + "air_recover");
 	
-	init_grab_sprites(_name);
-	
 	fist_rush_sprite = asset_get_index(prefix + "fist_rush");
 	weapon_rush_sprite = asset_get_index(prefix + "weapon_rush");
 	
@@ -47,18 +45,20 @@ function init_charsprites(_name) {
 	victory_sprite = asset_get_index(prefix + "victory");
 	defeat_sprite = asset_get_index(prefix + "defeat");
 	
-	charge_start_sprite = asset_get_index(prefix + "energy_charge_start");
-	charge_loop_sprite = asset_get_index(prefix + "energy_charge_loop");
-	charge_stop_sprite = asset_get_index(prefix + "energy_charge_stop");
+	charge_start_sprite = asset_get_index(prefix + "charge_start");
+	charge_loop_sprite = asset_get_index(prefix + "charge_loop");
+	charge_stop_sprite = asset_get_index(prefix + "charge_stop");
 	
 	icon = asset_get_index(prefix + "icon");
+	
+	init_grab_sprites(_name);
 	
 	init_sprite(idle_sprite);
 	
 	var _w = max(40,width);
 	var _h = max(40,height);
 	
-	var _head_size = 16;
+	var _head_size = sprite_get_height(icon);
 	
 	var _body_w = round(_w * 0.8);
 	var _body_h = _h - min(_head_size,round(_h * 0.35));
@@ -81,70 +81,6 @@ function init_charsprites(_name) {
 		_head_size,
 		_head_size
 	);
-}
-
-enum grab_anchors {
-	base,
-	head,
-	body,
-	leg,
-	
-	allanchors
-}
-
-enum grab_anims {
-	stun,
-	high,
-	low,
-	air_hit,
-	air_fall,
-	launch,
-	liedown,
-	spinout,
-	
-	allanims
-}
-
-function init_grab_sprites(_name) {
-	var _requiredsprites = grab_anchors.allanchors * grab_anims;
-	var _foundsprites = 0;
-	for(var i = 0; i < grab_anchors.allanchors; i++) {
-		for(var ii = 0; ii < grab_anims.allanims; ii++) {
-			var _anchor = "";
-			var _anim = "";
-			
-			switch(i) {
-				case grab_anchors.base: _anchor = ""; break;
-				case grab_anchors.head: _anchor = "head"; break;
-				case grab_anchors.body: _anchor = "body"; break;
-				case grab_anchors.leg: _anchor = "leg"; break;
-			}
-			switch(ii) {
-				case grab_anims.stun: _anim = "stun"; break;
-				case grab_anims.high: _anim = "high"; break;
-				case grab_anims.low: _anim = "low"; break;
-				case grab_anims.air_hit: _anim = "air_hit"; break;
-				case grab_anims.air_fall: _anim = "air_fall"; break;
-				case grab_anims.launch: _anim = "launch"; break;
-				case grab_anims.liedown: _anim = "liedown"; break;
-				case grab_anims.spinout: _anim = "spinout"; break;
-			}
-			
-			grabbed_sprite[i][ii] = asset_get_index("spr_" + _name + "_" + _anchor + "_" + _anim);
-			
-			if sprite_exists(grabbed_sprite[i][ii]) {
-				_foundsprites++;
-			}
-			else {
-				show_debug_message(_name + " is missing the " + _anchor + " " + _anim + " grab sprite");
-			}
-		}
-	}
-	show_debug_message("required grab sprites = " + string(_requiredsprites));
-	show_debug_message("found grab sprites (" + _name + ") = " + string(_foundsprites));
-	if _foundsprites < _requiredsprites {
-		show_debug_message(_name + " is missing " + string(_requiredsprites - _foundsprites) + " grabsprites");
-	}
 }
 
 function update_charsprite() {

@@ -457,7 +457,7 @@
     {"name":"spr_goku_ssj_attack_punch_straight","order":24,"path":"sprites/spr_goku_ssj_attack_punch_straight/spr_goku_ssj_attack_punch_straight.yy",},
     {"name":"spr_goku_ssj_attack_smash","order":5,"path":"sprites/spr_goku_ssj_attack_smash/spr_goku_ssj_attack_smash.yy",},
     {"name":"spr_goku_ssj_attack_spin_kick_double","order":11,"path":"sprites/spr_goku_ssj_attack_spin_kick_double/spr_goku_ssj_attack_spin_kick_double.yy",},
-    {"name":"spr_goku_ssj_attack_spin_kick","order":47,"path":"sprites/spr_goku_ssj_attack_spin_kick/spr_goku_ssj_attack_spin_kick.yy",},
+    {"name":"spr_goku_ssj_attack_spin_kick","order":52,"path":"sprites/spr_goku_ssj_attack_spin_kick/spr_goku_ssj_attack_spin_kick.yy",},
     {"name":"spr_goku_ssj_attack_triple_kick","order":40,"path":"sprites/spr_goku_ssj_attack_triple_kick/spr_goku_ssj_attack_triple_kick.yy",},
     {"name":"spr_goku_ssj_crouch","order":8,"path":"sprites/spr_goku_ssj_crouch/spr_goku_ssj_crouch.yy",},
     {"name":"spr_goku_ssj_dash","order":9,"path":"sprites/spr_goku_ssj_dash/spr_goku_ssj_dash.yy",},
