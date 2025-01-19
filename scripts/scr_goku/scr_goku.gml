@@ -91,6 +91,11 @@ function init_goku_baseform() {
 			}
 		}
 	}
+	
+	transform_script = function() {
+		kaioken_timer = 0;
+		color = c_white;
+	}
 
 	//ai_script = function() {
 	//	if kaioken_active {
@@ -482,18 +487,6 @@ function init_goku_baseform() {
 		kaioken_timer = 0;
 		if sound_is_playing(voice) {
 			loop_anim_middle(2,4)
-		}
-	}
-	
-	transform_state.run = function() {
-		kaioken_timer = 0;
-		aura_sprite = spr_aura_dbz_yellow;
-		xspeed = 0;
-		yspeed = 0;
-		shake_screen(superfreeze_timer,1);
-		loop_sound(snd_energy_loop);
-		if superfreeze_timer <= 5 {
-			transform(next_form);
 		}
 	}
 

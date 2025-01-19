@@ -22,6 +22,9 @@ function init_charscripts() {
 	
 	anim_end_script = function() {};
 	state_change_script = function() {};
+	
+	levelup_script = function() {};
+	transform_script = function() {};
 
 	draw_script = function() {};
 	
