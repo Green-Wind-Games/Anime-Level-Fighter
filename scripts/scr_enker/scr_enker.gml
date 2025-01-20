@@ -36,6 +36,14 @@ function init_enker() {
 		spr_enker_special_windblast,
 		2
 	);
+	
+	add_super_greenwind_blade(
+		spr_enker_special_wind_summon_raise,
+		2,
+		4,
+		5,
+		7
+	);
 
 	char_script = function() {
 		var _greenwind_active = greenwind_active;
@@ -235,84 +243,6 @@ function init_enker() {
 			char_specialeffect(spr_slash,24,-32,0.75,0.75);
 		}
 	}
-	
-	super_wind_blade = new charstate();
-	super_wind_blade.start = function() {
-		if attempt_super(2) {
-			change_sprite(spr_enker_special_wind_summon_raise,3,false);
-			play_sound(snd_dbz_beam_charge_short,1,1);
-			superfreeze(60);
-		}
-		else {
-			change_state(idle_state);
-		}
-	}
-	super_wind_blade.run = function() {
-		if sprite_timer < 30 {
-			loop_anim_middle(2,2);
-		}
-		if superfreeze_active {
-			loop_anim_middle(5,6);
-		}
-		loop_anim_middle_timer(7,7,60);
-		if check_frame(4) {
-			var _blade = create_shot(
-				0,
-				-height,
-				0,
-				0,
-				spr_wind_blade,
-				2,
-				500,
-				3,
-				-3,
-				attacktype.normal,
-				attackstrength.heavy,
-				hiteffects.slash
-			);
-			with(_blade) {
-				play_sound(snd_slash_whiff_heavy,1,0.5);
-				active_script = function() {
-					xspeed = approach(xspeed,width*facing,2);
-				}
-				hit_script = function() {
-					play_sound(snd_launch,1,1.25);
-					repeat(10) {
-						var _smallblade = create_shot(
-							0,
-							0,
-							irandom_range(10,-10),
-							irandom_range(10,-10),
-							spr_wind_blade,
-							0.5,
-							10,
-							3,
-							-3,
-							attacktype.normal,
-							attackstrength.light,
-							hiteffects.slash
-						);
-						with(_smallblade) {
-							homing = true;
-							duration = 60;
-							hit_limit = -1;
-							active_script = function() {
-								homing_max_turn = random(30);
-								homing_speed = random(30);
-								with(hitbox) {
-									ds_list_clear(hit_list);
-								}
-							}
-							expire_script = function() {
-								play_sound(snd_energy_stop,0.1,1.5);
-							}
-						}
-					}
-				}
-			}
-		}
-		return_to_idle();
-	}
 
 	activate_greenwind = new charstate();
 	activate_greenwind.start = function() {
@@ -350,13 +280,12 @@ function init_enker() {
 	
 	add_move(greenwind_push,"236D");
 	
-	add_move(super_wind_blade,"236AB");
-	add_move(super_wind_blade,"236CD");
+	add_move(super_greenwind_blade_state,"236AB");
 	
 	add_ground_move(activate_greenwind,"252C");
 	
 	signature_move = greenwind_push;
-	finisher_move = super_wind_blade;
+	finisher_move = super_greenwind_blade_state;
 
 	victory_state.run = function() {
 		greenwind_timer = 0;

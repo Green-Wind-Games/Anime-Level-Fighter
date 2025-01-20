@@ -705,7 +705,7 @@ function init_charstates() {
 		can_cancel = false;
 		loop_sound(snd_energy_loop);
 		if superfreeze_timer <= 1 {
-			change_state(levelup_state);
+			transform(next_form);
 		}
 	}
 	

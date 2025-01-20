@@ -181,8 +181,8 @@ function draw_shots() {
 			frame,
 			x,
 			y,
-			xscale*facing,
-			yscale,
+			xscale*xstretch*facing,
+			yscale*ystretch,
 			rotation*facing,
 			color,
 			alpha
