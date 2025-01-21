@@ -1,14 +1,15 @@
 enum attacktype {
 	normal,
+	multihit,
+	
 	hard_knockdown,
 	
 	unblockable,
+	antiair,
 	
 	hit_grab,
 	grab,
 	command_grab,
-	
-	antiair,
 	
 	wall_bounce,
 	ground_bounce,
