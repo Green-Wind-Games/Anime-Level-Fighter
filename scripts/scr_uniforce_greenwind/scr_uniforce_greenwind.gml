@@ -12,7 +12,7 @@ function greenwind_swirls() {
 		random(20),
 		greenwind_color
 	);
-	play_sound(snd_chakra_loop,0.75,2);
+	play_sound(snd_chakra_loop,0.5,1.5);
 }
 
 function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_ballsprite) {
@@ -93,7 +93,7 @@ function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_bal
 						color = greenwind_color;
 						duration = anim_duration;
 						active_script = function() {
-							if duration mod 3 == 0 {
+							if duration mod 4 == 0 {
 								with(hitbox) {
 									ds_list_clear(hit_list);
 								}
