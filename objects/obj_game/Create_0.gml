@@ -96,7 +96,7 @@ for(var i = 0; i < max_players; i++) {
 	player_ready[i] = false;
 }
 
-for(var i = 0; i <= 10 + max_players; i++) {
+for(var i = 0; i < 10 + max_players; i++) {
 	with(instance_create(0,0,obj_input)) {
 		player_input[i] = id;
 		persistent = true;
@@ -111,7 +111,7 @@ for(var i = 0; i <= 10 + max_players; i++) {
 		else if i == 10 {
 			type = input_types.touch;
 		}
-		else if i > 10 {
+		else if i >= 11 {
 			type = input_types.ai;
 		}
 	}
