@@ -34,17 +34,18 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 		xspeed = _xspeed * owner.facing;
 		yspeed = _yspeed;
 		team = owner.team;
+		facing = owner.facing;
 		target = owner.target;
 		
 		homing_speed = max(abs(xspeed),abs(yspeed));
 		
-		rotation = point_direction(0,0,abs(xspeed),yspeed);
+		rotation = point_direction(0,0,xspeed,yspeed);
 
-		if xspeed != 0 {
-			facing = sign(xspeed);
+		if xspeed > 0 {
+			facing = 1;
 		}
-		else {
-			facing = owner.facing;
+		else if xspeed < 0 {
+			facing = -1;
 		}
 	}
 	return _shot;
