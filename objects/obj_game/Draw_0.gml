@@ -14,7 +14,7 @@ switch(game_state) {
 	draw_superfreeze();
 	draw_particles();
 	
-	draw_hitboxes();
+	//draw_hitboxes();
 	break;
 	
 	case gamestates.story_results:
