@@ -25,8 +25,8 @@ function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_bal
 	
 	windblast_fire_frame = _fireframe;
 	
-	greenwind_blast = new charstate();
-	greenwind_blast.start = function() {
+	greenwind_blast_state = new charstate();
+	greenwind_blast_state.start = function() {
 		if attempt_special(1/max_windblasts) and (windblast_count < max_windblasts) {
 			change_sprite(
 				sprite == windblast_sprite ? windblast_sprite2 : windblast_sprite,
@@ -39,7 +39,7 @@ function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_bal
 			change_state(idle_state);
 		}
 	}
-	greenwind_blast.run = function() {
+	greenwind_blast_state.run = function() {
 		if check_frame(windblast_fire_frame) {
 			var _ball = create_shot(
 				width_half,
@@ -108,15 +108,15 @@ function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_bal
 				yspeed = -2;
 			}
 			
-			add_cancel(greenwind_blast);
+			add_cancel(greenwind_blast_state);
 			can_cancel = (windblast_count < max_windblasts) and (check_mp(1/max_windblasts));
 		}
 		if state_timer >= 50 {
 			change_state(idle_state);
 		}
 	}
-	greenwind_blast.stop = function() {
-		if next_state != greenwind_blast {
+	greenwind_blast_state.stop = function() {
+		if next_state != greenwind_blast_state {
 			windblast_count = 0;
 		}
 	}
@@ -127,16 +127,16 @@ function add_greenwind_push_state(_sprite,_fireframe) {
 	
 	greenwind_push_fire_frame = _fireframe;
 
-	greenwind_push = new charstate();
-	greenwind_push.start = function() {
+	greenwind_push_state = new charstate();
+	greenwind_push_state.start = function() {
 		if attempt_special(1) {
-			change_sprite(windblast_sprite,3,false);
+			change_sprite(greenwind_push_sprite,3,false);
 		}
 		else {
-			change_state(idle_state)
+			change_state(idle_state);
 		}
 	}
-	greenwind_push.run = function() {
+	greenwind_push_state.run = function() {
 		if superfreeze_active {
 			frame = 0;
 		}
@@ -242,7 +242,7 @@ function add_super_greenwind_blade(_sprite,_raiseframe,_lowerframe,_fireframe,_h
 							lengthdir_y(_speed,_dir),
 							spr_wind_blade,
 							0.5,
-							5,
+							10,
 							3,
 							-3,
 							attacktype.normal,
@@ -251,12 +251,12 @@ function add_super_greenwind_blade(_sprite,_raiseframe,_lowerframe,_fireframe,_h
 						);
 						with(_smallblade) {
 							homing = true;
-							duration = 60;
+							duration = 60 - i;
 							hit_limit = -1;
+							homing_max_turn = 20 + i;
+							homing_speed = 20 + i;
 							active_script = function() {
-								homing_max_turn = 1 + random(30);
-								homing_speed = 1 + random(30);
-								if duration mod 6 == 1 {
+								if duration mod 10 == 1 {
 									with(hitbox) {
 										ds_list_clear(hit_list);
 									}

@@ -136,7 +136,7 @@ function init_naruto_baseform_clone() {
 					xspeed /= 2;
 					yspeed /= 2;
 					homing = false;
-					affected_by_gravity = true;
+					ygravity_mod = true;
 				}
 			}
 		}

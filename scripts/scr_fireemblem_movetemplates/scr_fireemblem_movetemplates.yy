@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_char_movetemplates",
+  "%Name":"scr_fireemblem_movetemplates",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_char_movetemplates",
+  "name":"scr_fireemblem_movetemplates",
   "parent":{
     "name":"Move Templates",
     "path":"folders/Scripts/Move Templates.yy",

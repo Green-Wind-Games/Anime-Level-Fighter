@@ -200,7 +200,7 @@ function play_hurt_sound(_is_strong_attack) {
 
 function get_hit_by_attack(_hitbox) {
 	var _attacker = _hitbox.owner;
-	var _true_attacker = get_true_owner(_hitbox);
+	var _true_attacker = get_true_owner(_attacker);
 	
 	xspeed = _hitbox.xknockback * _attacker.facing;
 	yspeed = _hitbox.yknockback;
@@ -219,8 +219,7 @@ function get_hit_by_attack(_hitbox) {
 function connect_attack(_hitbox,_hurtbox) {
 	var _attacker = _hitbox.owner;
 	var _defender = _hurtbox.owner;
-	
-	var _true_attacker = get_true_owner(_hitbox);
+	var _true_attacker = get_true_owner(_attacker);
 	
 	hitstun = get_attack_hitstun(_hitbox.attack_strength);
 	blockstun = get_attack_blockstun(_hitbox.attack_strength);
@@ -345,21 +344,21 @@ function connect_attack(_hitbox,_hurtbox) {
 	}
 	
 	with(_defender) {
-		defense_connect_script(_attacker);
+		defense_connect_script(_attacker,_defender);
 		if is_hit {
-			defense_hit_script(_attacker);
+			defense_hit_script(_attacker,_defender);
 		}
 		else if is_guarding {
-			defense_block_script(_attacker);
+			defense_block_script(_attacker,_defender);
 		}
 	}
 	with(_true_attacker) {
-		attack_connect_script(_defender);
-		if is_hit {
-			attack_hit_script(_defender);
+		attack_connect_script(_attacker,_defender);
+		if _defender.is_hit {
+			attack_hit_script(_attacker,_defender);
 		}
-		else if is_guarding {
-			attack_block_script(_defender);
+		else if _defender.is_guarding {
+			attack_block_script(_attacker,_defender);
 		}
 	}
 	
@@ -368,7 +367,7 @@ function connect_attack(_hitbox,_hurtbox) {
 }
 
 function take_damage(_attacker,_amount,_kill) {
-	var dmg = round(_amount * 2);
+	var dmg = round(_amount);
 	
 	var _defender = id;
 	

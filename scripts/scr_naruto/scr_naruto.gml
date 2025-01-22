@@ -287,7 +287,7 @@ function init_naruto_baseform() {
 					xspeed /= 2;
 					yspeed /= 2;
 					homing = false;
-					affected_by_gravity = true;
+					ygravity_mod = true;
 				}
 			}
 		}
@@ -339,7 +339,7 @@ function init_naruto_baseform() {
 						xspeed /= 2;
 						yspeed /= 2;
 						homing = false;
-						affected_by_gravity = true;
+						ygravity_mod = true;
 					}
 				}
 				i++;
@@ -619,7 +619,7 @@ function init_naruto_baseform() {
 				with(_clone) {
 					hit_limit = -1;
 					
-					affected_by_gravity = true;
+					ygravity_mod = true;
 					
 					blend = false;
 					rotation_speed = 0.1;

@@ -4,7 +4,7 @@ if !instance_exists(owner) {
 	owner = noone;
 	x += xspeed;
 	y += yspeed;
-	gravitate(affected_by_gravity);
+	gravitate(ygravity_mod);
 }
 else {
 	x = owner.x;

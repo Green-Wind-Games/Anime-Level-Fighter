@@ -100,7 +100,7 @@ function hitbox_check_hit() {
 					a2.xspeed = lengthdir_x(_speed * b2.facing,_dir);
 					a2.yspeed = lengthdir_y(_speed,_dir);
 					a2.homing = false;
-					a2.affected_by_gravity = 2;
+					a2.ygravity_mod = 2;
 				}
 				with(a2.owner) {
 					attack_parry_script(b2);

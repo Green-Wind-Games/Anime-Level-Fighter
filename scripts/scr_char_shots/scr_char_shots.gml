@@ -124,7 +124,7 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 		xspeed = _xlength * other.facing;
 		yspeed = _ylength;
 		
-		affected_by_gravity = false;
+		ygravity_mod = false;
 		
 		x = owner.x + (_x * other.facing);
 		y = owner.y + _y;

@@ -38,11 +38,18 @@ function init_enker() {
 	);
 	
 	add_super_greenwind_blade(
-		spr_enker_special_wind_summon_raise,
+		spr_enker_special_windblade,
 		2,
 		4,
 		5,
 		7
+	);
+	
+	add_myrmidon_slash_state(
+		spr_enker_special_slashcombo_charge,
+		spr_enker_attack_slash_down,
+		spr_enker_attack_slash_upper,
+		spr_enker_attack_slash_dash_spin,
 	);
 
 	char_script = function() {
@@ -276,15 +283,15 @@ function init_enker() {
 
 	setup_basicmoves();
 	
-	add_move(greenwind_blast,"D");
+	add_move(greenwind_blast_state,"D");
+	add_move(greenwind_push_state,"236D");
+	add_move(super_greenwind_blade_state,"214D");
 	
-	add_move(greenwind_push,"236D");
-	
-	add_move(super_greenwind_blade_state,"236AB");
+	add_move(myrmidon_slash_state,"236AB");
 	
 	add_ground_move(activate_greenwind,"252C");
 	
-	signature_move = greenwind_push;
+	signature_move = greenwind_push_state;
 	finisher_move = super_greenwind_blade_state;
 
 	victory_state.run = function() {

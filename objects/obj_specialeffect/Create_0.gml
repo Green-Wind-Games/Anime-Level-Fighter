@@ -1,5 +1,5 @@
 xspeed = 0;
 yspeed = 0;
-affected_by_gravity = false;
+ygravity_mod = false;
 
 owner = noone;

@@ -25,7 +25,7 @@ if !active {
 	exit;
 }
 
-gravitate(affected_by_gravity);
+gravitate(ygravity_mod);
 if bounce {
 	if x <= left_wall {
 		xspeed = abs(xspeed);

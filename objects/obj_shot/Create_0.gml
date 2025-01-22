@@ -6,7 +6,7 @@ init_physics();
 hit_limit = 1;
 hit_count = 0;
 
-affected_by_gravity = false;
+ygravity_mod = 0;
 bounce = false;
 homing = false;
 homing_speed = 1;
