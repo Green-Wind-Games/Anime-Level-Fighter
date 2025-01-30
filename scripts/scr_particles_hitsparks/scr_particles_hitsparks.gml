@@ -114,9 +114,6 @@ function create_hitspark(_hitbox,_hurtbox) {
 	var _hiteffect = _hitbox.hit_effect;
 	var _guard = _hurtbox.owner.is_guarding;
 	
-	var _sound = noone;
-	var _volume = 1;
-	
 	var _x = 0;
 	var _y = 0;
 	
@@ -138,77 +135,77 @@ function create_hitspark(_hitbox,_hurtbox) {
 	_x = clamp(_x,_hurtbox.bbox_left,_hurtbox.bbox_right);
 	_y = clamp(_y,_hurtbox.bbox_top,_hurtbox.bbox_bottom);
 	
-	switch(_hiteffect) {
-		default:
-		if !_guard {
-			switch(_hiteffect) {	
-				case hiteffects.none:
-				//none lol
-				break;
+	with(_hitbox.owner) {
+		switch(_hiteffect) {
+			default:
+			if !_guard {
+				switch(_hiteffect) {	
+					case hiteffects.none:
+					//none lol
+					break;
 				
-				default:
-				if _strength < attackstrength.medium {
-					_sound = snd_punch_hit_light;
-					create_particles(_x,_y,hitspark_light,20);
-				}
-				else if _strength < attackstrength.heavy {
-					_sound = snd_punch_hit_medium;
-					create_particles(_x,_y,hitspark_medium,30);
-				}
-				else if _strength < attackstrength.super {
-					_sound = snd_punch_hit_heavy;
-					create_particles(_x,_y,hitspark_heavy,40);
-				}
-				else if _strength < attackstrength.ultimate {
-					_sound = snd_punch_hit_super;
-					create_particles(_x,_y,hitspark_heavy,50);
-				}
-				else {
-					_sound = snd_punch_hit_ultimate;
-					create_particles(_x,_y,hitspark_heavy,60);
-				}
-				break;
+					default:
+					if _strength < attackstrength.medium {
+						play_sound(snd_punch_hit_light);
+						create_particles(_x,_y,hitspark_light,20);
+					}
+					else if _strength < attackstrength.heavy {
+						play_sound(snd_punch_hit_medium);
+						create_particles(_x,_y,hitspark_medium,30);
+					}
+					else if _strength < attackstrength.super {
+						play_sound(snd_punch_hit_heavy);
+						create_particles(_x,_y,hitspark_heavy,40);
+					}
+					else if _strength < attackstrength.ultimate {
+						play_sound(snd_punch_hit_super);
+						create_particles(_x,_y,hitspark_heavy,50);
+					}
+					else {
+						play_sound(snd_punch_hit_ultimate);
+						create_particles(_x,_y,hitspark_heavy,60);
+					}
+					break;
 				
-				case hiteffects.slash:
-				if _strength < attackstrength.medium {
-					_sound = snd_slash_hit_light;
-					create_particles(_x,_y,slashspark_light);
+					case hiteffects.slash:
+					if _strength < attackstrength.medium {
+						play_sound(snd_slash_hit_light);
+						create_particles(_x,_y,slashspark_light);
+					}
+					else if _strength < attackstrength.heavy {
+						play_sound(snd_slash_hit_medium);
+						create_particles(_x,_y,slashspark_medium);
+					}
+					else if _strength < attackstrength.super {
+						play_sound(snd_slash_hit_heavy);
+						create_particles(_x,_y,slashspark_heavy);
+					}
+					else if _strength < attackstrength.ultimate {
+						play_sound(snd_slash_hit_super);
+						create_particles(_x,_y,slashspark_heavy);
+					}
+					else {
+						play_sound(snd_slash_hit_ultimate);
+						create_particles(_x,_y,slashspark_heavy);
+					}
+					break;
 				}
-				else if _strength < attackstrength.heavy {
-					_sound = snd_slash_hit_medium;
-					create_particles(_x,_y,slashspark_medium);
-				}
-				else if _strength < attackstrength.super {
-					_sound = snd_slash_hit_heavy;
-					create_particles(_x,_y,slashspark_heavy);
-				}
-				else if _strength < attackstrength.ultimate {
-					_sound = snd_slash_hit_super;
-					create_particles(_x,_y,slashspark_heavy);
-				}
-				else {
-					_sound = snd_slash_hit_ultimate;
-					create_particles(_x,_y,slashspark_heavy);
-				}
-				break;
-			}
 			
-			if _strength >= attackstrength.super {
-				if meme_enabled and chance(meme_chance) {
-					_sound = snd_meme_hit;
-					_volume = 2;
+				if _strength >= attackstrength.super {
+					if meme_enabled and chance(meme_chance) {
+						play_sound(snd_meme_hit,2);
+					}
 				}
 			}
-		}
-		else {
-			switch(_hiteffect) {
-				default: 
-				_sound = snd_punch_guard;
-				create_particles(_x,_y,guardspark);
-				break;
+			else {
+				switch(_hiteffect) {
+					default: 
+					play_sound(snd_punch_guard);
+					create_particles(_x,_y,guardspark);
+					break;
+				}
 			}
+			break;
 		}
-		break;
 	}
-	play_sound(_sound,_volume);
 }

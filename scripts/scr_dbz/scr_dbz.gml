@@ -158,7 +158,7 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 		xspeed = 0;
 		yspeed = 0;
 		if superfreeze_active {
-			loop_anim_middle(4,5);
+			loop_anim_middle(kamehameha_charge_frame1,kamehameha_charge_frame2);
 			if superfreeze_timer == 15 {
 				if (input.forward) and check_tp(1) {
 					spend_tp(1);

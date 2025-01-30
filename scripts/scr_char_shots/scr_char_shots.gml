@@ -77,13 +77,10 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 			duration = 10;
 			xscale = 100 / sprite_get_width(sprite);
 			with(hitbox) {
+				width = sprite_get_width(owner.sprite);
+				height = sprite_get_height(owner.sprite) / 2;
 				xoffset = 0;
-				
-				var hitbox_scale = 1/3;
-				
-				image_yscale = (sprite_get_height(other.sprite) / sprite_get_height(spr_hitbox));
-				image_yscale *= hitbox_scale * _scale;
-				yoffset = -(image_yscale * sprite_get_height(spr_hitbox)) / 2;
+				yoffset = -height / 2;
 			}
 			active_script = function() {
 				xscale += 50 / sprite_get_width(sprite);

@@ -846,12 +846,15 @@ function draw_pause() {
 function draw_countdown() {
 	var text_x = gui_width/2;
 	var text_y = gui_height/2;
-	var _number = map_value(round_state_timer,0,round_ready_countdown_duration,3,0);
-	_number = ceil(_number);
-	var text = string(_number);
+	//var _number = 3 - floor((round_state_timer / round_ready_countdown_duration) * 3);
+	var _number = max(1, 1 + floor((1 - (round_state_timer / round_ready_countdown_duration)) * 3));
+	_number = clamp(_number,1,3);
+	var text = string(_number) + "...";
 	if round_state_timer > round_ready_countdown_duration {
 		text = "LET IT RIP!";
-		if round_state_timer < round_ready_fight_duration / 3 {
+		var _shake_t1 = round_ready_countdown_duration;
+		var _shake_t2 = _shake_t1 + 10;
+		if value_in_range(round_state_timer,_shake_t1,_shake_t2) {
 			text_x += random_range(-5,5);
 			text_y += random_range(-5,5);
 		}
