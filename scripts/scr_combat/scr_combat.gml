@@ -293,7 +293,7 @@ function connect_attack(_hitbox,_hurtbox) {
 		combo_timer = hitstun;
 		if active_state == hard_knockdown_state
 		or active_state == wall_bounce_state {
-			combo_timer += 60;
+			combo_timer += 30;
 		}
 			
 		combo_hits = 0;
@@ -318,8 +318,8 @@ function connect_attack(_hitbox,_hurtbox) {
 		attack_hits++;
 	}
 	
-	var mp_gain = dmg / 2;
-	var xp_gain = dmg / 2;
+	var mp_gain = map_value(dmg*2,0,max_hp,0,max_mp);
+	var xp_gain = map_value(dmg/2,0,max_hp,0,base_max_xp) * max_level;
 	
 	var attack_mp_gain = mp_gain * 1.0;
 	var attack_xp_gain = xp_gain * 1.0;
@@ -381,6 +381,12 @@ function take_damage(_attacker,_amount,_kill) {
 	with(_true_attacker) {
 		dmg *= attack_power;
 		dmg *= 1 + ((level - 1) * level_scaling);
+		
+		if (!special_active)
+		and (!super_active)
+		and (!ultimate_active) {
+			dmg /= attack_hits < 2 ? 1 : 3;
+		}
 	}
 	
 	if is_char(_defender){
@@ -409,6 +415,8 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	dmg /= max(_defender.defense,0.1);
 	
+	dmg *= ((80/1000) / (2500 / base_max_hp));
+	
 	dmg = max(round(dmg),1);
 	
 	if (hp > 0) {
@@ -425,7 +433,7 @@ function get_damage_scaling(_defender) {
 			0,
 			50,
 			1,
-			0.1
+			0
 		);
 		scaling = clamp(scaling,0.1,1);
 		return scaling;

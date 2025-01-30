@@ -13,18 +13,20 @@ function draw_chars() {
 			if flash {
 				gpu_set_fog(true,flash_color,0,0);
 			}
-
-			draw_sprite_ext(
-				sprite,
-				frame,
-				_x,
-				_y,
-				xscale*xstretch*facing,
-				yscale*ystretch,
-				rotation*facing*sign(xscale)*sign(xstretch),
-				color,
-				alpha
-			);
+			
+			if sprite_exists(sprite) {
+				draw_sprite_ext(
+					sprite,
+					frame,
+					_x,
+					_y,
+					xscale*xstretch*facing,
+					yscale*ystretch,
+					rotation*facing*sign(xscale)*sign(xstretch),
+					color,
+					alpha
+				);
+			}
 
 			gpu_set_fog(false,c_white,0,0);
 			
@@ -43,8 +45,11 @@ function draw_chars() {
 }
 
 function hitstop_shake() {
-	var _shake = clamp(hitstop,0,3);
-	return random_range(_shake,-_shake);
+	var _shake = hitstop;
+	_shake = random(_shake);
+	_shake = clamp(_shake,0,3);
+	_shake *= hitstop mod 2 == 0 ? -1 : 1;
+	return _shake;
 }
 
 function draw_char_shadows() {

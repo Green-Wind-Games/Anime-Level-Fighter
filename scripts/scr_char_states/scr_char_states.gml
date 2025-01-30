@@ -27,10 +27,6 @@ function init_charstates() {
 		if round_state == roundstates.fight {
 			can_cancel = true;
 			
-			if auto_levelup() {
-				exit;
-			}
-			
 			if check_charge() {
 				change_state(charge_state);
 			}
@@ -693,10 +689,10 @@ function init_charstates() {
 	transform_state = new charstate();
 	transform_state.start = function() {
 		change_sprite(charge_loop_sprite,3,true);
-		aura_sprite = transform_aura;
+		play_voiceline(voice_transform);
 		superfreeze(audio_sound_length(voice) * 30);
 		shake_screen(superfreeze_timer,1);
-		level_up();
+		aura_sprite = transform_aura;
 		can_cancel = false;
 	}
 	transform_state.run = function() {
@@ -706,6 +702,9 @@ function init_charstates() {
 		loop_sound(snd_energy_loop);
 		if superfreeze_timer <= 1 {
 			transform(next_form);
+			flash_sprite();
+			play_sound(snd_energy_start);
+			change_state(levelup_state);
 		}
 	}
 	
@@ -734,10 +733,10 @@ function init_charstates() {
 		else if sprite == charge_loop_sprite {
 			if check_charge() {
 				aura_sprite = charge_aura;
-				mp += max(1,round(mp_stock_size / 60));
+				mp += (mp_stock_size / (60*1)) * (state_timer / (60*1));
 				if mp >= max_mp {
 					aura_sprite = transform_aura;
-					xp += max(1,round(max_xp / (5 * 60)));
+					xp += (max_xp / (60*10)) * (state_timer / (60*1));
 					if xp >= max_xp {
 						auto_levelup();
 					}

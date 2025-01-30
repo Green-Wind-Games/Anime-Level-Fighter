@@ -131,7 +131,7 @@ base_max_xp = 10000;
 max_level = 5;
 level_scaling = 0.5;
 
-base_max_hp = base_max_xp * max_level;
+base_max_hp = 1000;
 base_movespeed = 5;
 base_jumpspeed = 8;
 

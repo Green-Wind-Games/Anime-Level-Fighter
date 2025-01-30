@@ -50,6 +50,8 @@ function transform(_form) {
 	var _target = target;
 	var _input = input;
 	
+	var _levelup = _form == next_form;
+	
 	array_delete(ground_movelist,0,array_length(ground_movelist));
 	array_delete(air_movelist,0,array_length(air_movelist));
 	
@@ -63,7 +65,7 @@ function transform(_form) {
 	hp = map_value(_hp,0,_maxhp,0,max_hp);
 	mp = _mp;
 	tp = _tp;
-	xp = 0;
+	xp = _xp;
 	
 	hp_percent = _hp_p;
 	mp_percent = _mp_p;
@@ -80,7 +82,10 @@ function transform(_form) {
 	input = _input;
 	
 	face_target();
-	change_state(levelup_state);
+	
+	if _levelup {
+		level_up();
+	}
 }
 
 function auto_levelup() {
@@ -99,14 +104,12 @@ function auto_levelup() {
 		play_chartheme(_nextform);
 		instance_destroy(_nextform);
 		
-		play_voiceline(voice_transform);
 		transform_script();
 		change_state(transform_state);
 	}
 	else {
 		play_chartheme(id);
 		
-		play_voiceline(voice_powerup);
 		levelup_script();
 		change_state(levelup_state);
 		
