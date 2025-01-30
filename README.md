@@ -6,9 +6,9 @@ All commands assume your character is facing right. Invert the horizontal comman
 Most moves can be done both in the ground or in the air. They have (on ground) or (in air) if they can't.
 
 ## Numpad For Reference
-7 8 9
-4 5 6
-1 2 3
+- 7 8 9
+- 4 5 6
+- 1 2 3
 
 ## Directional Inputs
 5: Neutral
