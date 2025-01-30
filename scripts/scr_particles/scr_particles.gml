@@ -86,7 +86,7 @@ function create_particles(_x,_y,_particle,_number = 1) {
 		break;
 		
 		case air_shockwave_particle:
-		play_sound(snd_shockwave);
+		play_sound(snd_dbz_shockwave);
 		shake_screen(20,1);
 		break;
 		
@@ -98,7 +98,7 @@ function create_particles(_x,_y,_particle,_number = 1) {
 		break;
 		
 		case jutsu_smoke_particle:
-		play_sound(snd_jutsu_smoke);
+		play_sound(snd_naruto_jutsu_smoke);
 		break;
 	}
 }

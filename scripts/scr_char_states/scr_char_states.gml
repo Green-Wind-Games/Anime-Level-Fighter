@@ -90,7 +90,7 @@ function init_charstates() {
 			squash_stretch(0.8,1.2);
 			yspeed = -jump_speed;
 			xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
-			play_sound(snd_jump);
+			play_sound(snd_dbz_jump);
 		}
 	}
 
@@ -106,7 +106,7 @@ function init_charstates() {
 			squash_stretch(0.75,1.25);
 			yspeed = -jump_speed * 1.5;
 			xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
-			play_sound(snd_jump,1,0.8);
+			play_sound(snd_dbz_jump,1,0.8);
 		}
 	}
 
@@ -135,7 +135,7 @@ function init_charstates() {
 					yspeed = -jump_speed * 0.75;
 					air_moves += 1;
 					squash_stretch(0.8,1.2);
-					play_sound(snd_airjump);
+					play_sound(snd_dbz_jump_air);
 				}
 			}
 			else if input.down {
@@ -163,8 +163,8 @@ function init_charstates() {
 		yoffset = -height_half;
 		xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 		yspeed = 0;
-		play_sound(snd_dash);
-		play_sound(snd_dash_loop);
+		play_sound(snd_dbz_dash);
+		play_sound(snd_dbz_dash_loop);
 		if sprite_get_yoffset(walk_sprite) <= sprite_get_height(walk_sprite) {
 			change_sprite(walk_sprite,frame_duration,true);
 		}
@@ -184,12 +184,12 @@ function init_charstates() {
 			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 			yspeed = 0;
 			if sprite == dash_sprite {
-				loop_sound(snd_dash_loop);
+				loop_sound(snd_dbz_dash_loop);
 			}
 			if input.up {
 				yspeed = -jump_speed/2;
 				change_state(air_state);
-				play_sound(snd_jump);
+				play_sound(snd_dbz_jump);
 			}
 		}
 		else {
@@ -209,7 +209,7 @@ function init_charstates() {
 		jump_towards(x - (100 * facing), y, 10);
 		dodging_attacks = true;
 		dodging_projectiles = true;
-		play_sound(snd_dash);
+		play_sound(snd_dbz_dash);
 		create_specialeffect(spr_dust_dash,x,y,-facing * 0.5,0.5);
 	}
 	backdash_state.run = function() {
@@ -244,7 +244,7 @@ function init_charstates() {
 			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 			yspeed = 0;
 			air_moves += 1;
-			play_sound(snd_dash);
+			play_sound(snd_dbz_dash);
 		}
 		else {
 			change_state(air_state);
@@ -268,7 +268,7 @@ function init_charstates() {
 			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * -facing;
 			yspeed = 0;
 			air_moves += 1;
-			play_sound(snd_dash);
+			play_sound(snd_dbz_dash);
 		}
 		else {
 			change_state(air_state);
@@ -619,7 +619,7 @@ function init_charstates() {
 			change_sprite(crouch_sprite,3,false);
 			reset_sprite();
 			timestop();
-			play_sound(snd_dbz_teleport_short);
+			play_sound(snd_dbz_teleport);
 			can_cancel = false;
 		}
 		else {
@@ -672,7 +672,7 @@ function init_charstates() {
 		aura_sprite = transform_aura;
 		superfreeze(150);
 		shake_screen(superfreeze_timer,1);
-		play_sound(snd_energy_start);
+		play_sound(snd_dbz_energy_start);
 		level_up();
 		can_cancel = false;
 	}
@@ -699,11 +699,11 @@ function init_charstates() {
 		xspeed = 0;
 		yspeed = 0;
 		can_cancel = false;
-		loop_sound(snd_energy_loop);
+		loop_sound(snd_dbz_energy_loop);
 		if superfreeze_timer <= 1 {
 			transform(next_form);
 			flash_sprite();
-			play_sound(snd_energy_start);
+			play_sound(snd_dbz_energy_start);
 			change_state(levelup_state);
 		}
 	}

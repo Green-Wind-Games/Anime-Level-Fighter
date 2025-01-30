@@ -17,7 +17,7 @@ function update_fight() {
 		break;
 		
 		case roundstates.countdown:
-		if round_state_timer >= round_countdown_duration {
+		if round_state_timer >= (round_ready_countdown_duration + round_ready_fight_duration) {
 			round_state = roundstates.fight;
 		}
 		break;
@@ -42,7 +42,6 @@ function update_fight() {
 						hitstop = 100;
 					}
 				}
-				play_sound(snd_round_end_knockout);
 				round_state = roundstates.knockout;
 			}
 		}

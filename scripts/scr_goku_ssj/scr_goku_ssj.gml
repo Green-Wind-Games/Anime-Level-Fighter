@@ -24,10 +24,11 @@ function init_goku_ssj() {
 	charge_aura = spr_aura_dbz_yellow;
 	
 	add_kiblast_state(
-		7,
 		spr_goku_ssj_special_kiblast,
 		spr_goku_ssj_special_kiblast2,
-		spr_glow_blue
+		spr_glow_yellow,
+		2,
+		7
 	);
 	
 	add_kamehameha_state(
@@ -37,7 +38,7 @@ function init_goku_ssj() {
 		5,
 		6,
 		8,
-		snd_goku_kamehameha
+		vc_goku_kamehameha
 	);
 	
 	add_superkamehameha_state(
@@ -47,8 +48,8 @@ function init_goku_ssj() {
 		5,
 		6,
 		8,
-		snd_goku_kamehame,
-		snd_goku_kamehame_ha
+		vc_goku_kamehame,
+		vc_goku_kamehame_ha
 	);
 
 	char_script = function() {
@@ -74,7 +75,7 @@ function init_goku_ssj() {
 			}
 			else {
 				flash_sprite();
-				play_sound(snd_energy_stop);
+				play_sound(snd_dbz_energy_stop);
 				attack_power = 1;
 				move_speed_buff = 1;
 				aura_sprite = noone;
@@ -321,7 +322,7 @@ function init_goku_ssj() {
 			loop_anim_middle(0,0);
 		}
 		if check_frame(2) {
-			play_voiceline(snd_goku_kamehame_ha);
+			play_voiceline(vc_goku_kamehame_ha);
 			play_sound(snd_dbz_beam_fire);
 			shake_screen(120,1);
 		}
@@ -342,7 +343,7 @@ function init_goku_ssj() {
 			
 			ssj2_timer = ssj2_duration;
 		
-			play_sound(snd_energy_start);
+			play_sound(snd_dbz_energy_start);
 			play_voiceline(voice_powerup);
 			
 			repeat(20) {

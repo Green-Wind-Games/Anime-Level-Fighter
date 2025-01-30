@@ -5,7 +5,7 @@ function init_charaudio(_name = "") {
 	voice_volume_mine = 1;
 	voice_pitch_mine = 1;
 	
-	var _prefix = "snd_" + _name + "_";
+	var _prefix = "vc_" + _name + "_";
 	
 	voice_attack = asset_get_index(_prefix + "attack");
 	voice_heavyattack = asset_get_index(_prefix + "heavyattack");

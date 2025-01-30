@@ -109,9 +109,9 @@ aura_sprite = noone;
 aura_frame = 0;
 
 charge_aura = spr_aura_dbz_white;
-charge_start_sound = snd_energy_start;
-charge_loop_sound = snd_energy_loop;
-charge_stop_sound = snd_energy_stop;
+charge_start_sound = snd_dbz_energy_start;
+charge_loop_sound = snd_dbz_energy_loop;
+charge_stop_sound = snd_dbz_energy_stop;
 
 char_id = noone;
 name = "ERROR";

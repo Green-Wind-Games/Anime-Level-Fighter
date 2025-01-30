@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.328,
+  "duration":0.240021,
   "name":"snd_punch_whiff_light",
   "parent":{
     "name":"Sounds",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_punch_whiff_light.ogg",
+  "soundFile":"snd_punch_whiff_light.wav",
   "type":0,
   "volume":1.0,
 }

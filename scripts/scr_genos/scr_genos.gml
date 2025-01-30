@@ -181,7 +181,7 @@ function init_genos_baseform() {
 							instance_destroy();
 						}
 					}
-					play_sound(snd_kiblast_fire);
+					play_sound(snd_dbz_kiblast_fire);
 				}
 			}
 			if is_airborne {
@@ -306,7 +306,7 @@ function init_genos_baseform() {
 			xspeed = 0;
 			yspeed = 0;
 			incinerate_cooldown = incinerate_cooldown_duration;
-			play_voiceline(snd_genos_incinerate);
+			play_voiceline(vc_genos_incinerate);
 			play_sound(snd_dbz_beam_charge_short);
 		}
 		else {
@@ -371,7 +371,7 @@ function init_genos_baseform() {
 			fire_beam(10,-25,spr_incinerate,1+(level / 3),0,50);
 		}
 		if check_frame(3) {
-			play_voiceline(snd_genos_incinerate);
+			play_voiceline(vc_genos_incinerate);
 			play_sound(snd_dbz_beam_charge_short);
 		}
 		if check_frame(5) {

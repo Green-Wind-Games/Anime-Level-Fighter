@@ -6,8 +6,10 @@ function create_hurtbox(_xoffset, _yoffset, _width, _height) {
 		owner = other;
 		xoffset = _xoffset;
 		yoffset = _yoffset;
-		image_xscale = _width / sprite_get_width(spr_hurtbox);
-		image_yscale = _height / sprite_get_width(spr_hurtbox);
+		width = _width;
+		height = _height;
+		image_xscale = width / sprite_get_width(spr_hurtbox);
+		image_yscale = height / sprite_get_width(spr_hurtbox);
 	}
 	return _hurtbox;
 }
@@ -18,8 +20,10 @@ function create_hitbox(_xoffset,_yoffset,_width,_height,_damage,_xknockback,_ykn
 		owner = other;
 		xoffset = _xoffset;
 		yoffset = _yoffset;
-		image_xscale = _width / sprite_get_width(spr_hitbox);
-		image_yscale = _height / sprite_get_width(spr_hitbox);
+		width = _width;
+		height = _height;
+		image_xscale = width / sprite_get_width(spr_hurtbox);
+		image_yscale = height / sprite_get_width(spr_hurtbox);
 		damage = _damage;
 		xknockback = _xknockback;
 		yknockback = _yknockback;

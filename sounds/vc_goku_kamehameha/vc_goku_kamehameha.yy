@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"vc_goku_kamehameha",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":0,
+  "conversionMode":0,
+  "duration":1.546667,
+  "name":"vc_goku_kamehameha",
+  "parent":{
+    "name":"Goku Voice",
+    "path":"folders/Chars/Dragon Ball Chars/Goku/Goku Voice.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"vc_goku_kamehameha.ogg",
+  "type":0,
+  "volume":1.0,
+}

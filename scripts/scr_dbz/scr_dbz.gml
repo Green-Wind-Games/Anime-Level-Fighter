@@ -1,4 +1,4 @@
-function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_kiblastsprite) {
+function add_kiblast_state(_sprite1,_sprite2,_kiblastsprite,_fireframe,_maxrepeats) {
 	max_kiblasts = _maxrepeats;
 	kiblast_count = 0;
 	
@@ -48,7 +48,7 @@ function add_kiblast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_kiblastspri
 						instance_destroy();
 					}
 				}
-				play_sound(snd_kiblast_fire);
+				play_sound(snd_dbz_kiblast_fire);
 				return id;
 			}
 			if is_airborne {
@@ -147,7 +147,7 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
 			activate_super(60);
 			play_voiceline(voice_superkamehameha_charge);
-			play_sound(snd_energy_start);
+			play_sound(snd_dbz_energy_start);
 			play_sound(snd_dbz_beam_charge_short,1.5,0.8);
 		}
 		else {
@@ -162,7 +162,7 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 			if superfreeze_timer == 15 {
 				if (input.forward) and check_tp(1) {
 					spend_tp(1);
-					play_sound(snd_dbz_teleport_long);
+					play_sound(snd_dbz_teleport);
 					teleport(target_x + ((width + target.width) * facing), target_y);
 					face_target();
 				

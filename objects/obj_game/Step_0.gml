@@ -6,5 +6,6 @@ if round_state != roundstates.pause {
 }
 
 update_music();
+update_announcer();
 
 update_view();

@@ -11,7 +11,7 @@ if assigned_input != -1 {
 	}
 
 	if hover != _hover {
-		play_sound(snd_menu_scroll,1,1);
+		play_sound(snd_ui_menu_scroll,1,1);
 	}
 	
 	if hover >= options_count {
@@ -26,7 +26,7 @@ if assigned_input != -1 {
 			var _func = options[hover][i];
 			if (_func != -1) then _func();
 		}
-		play_sound(snd_menu_select,1,1);
+		play_sound(snd_ui_menu_select,1,1);
 		instance_destroy();
 	}
 

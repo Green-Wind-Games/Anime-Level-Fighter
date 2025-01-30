@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"vc_enker_attack2",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":0,
+  "conversionMode":0,
+  "duration":0.177415,
+  "name":"vc_enker_attack2",
+  "parent":{
+    "name":"Enker Voice",
+    "path":"folders/Chars/Uni-Force Chars/Enker/Enker Voice.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"vc_enker_attack2.ogg",
+  "type":0,
+  "volume":1.0,
+}

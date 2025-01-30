@@ -14,6 +14,7 @@ function update_charphysics() {
 		with(target) {
 			if !on_wall break;
 			if (!is_hit) and (!is_guarding) break;
+			if state_timer > (hitstun / 2) break;
 			if hitstop break;
 			if superfreeze_active break;
 			if timestop_active break;

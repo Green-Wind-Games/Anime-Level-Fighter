@@ -40,7 +40,7 @@ function charselect_joinin() {
 				player_ready[ii] = false;
 				player_input[i].assigned = true;
 				player_input[i].confirm = false;
-				play_sound(snd_menu_select,1,1);
+				play_sound(snd_ui_menu_select,1,1);
 				break;
 			}
 		}
@@ -98,10 +98,10 @@ function charselect_changechars() {
 				}
 				if player_char[i] != _previous_char {
 					if player_input[player_slot[i]].char_random {
-						play_sound(snd_menu_scroll,0.5,1.25);
+						play_sound(snd_ui_menu_scroll,0.5,1.25);
 					}
 					else {
-						play_sound(snd_menu_scroll,1,1);
+						play_sound(snd_ui_menu_scroll,1,1);
 					}
 				}
 			}
@@ -123,7 +123,7 @@ function charselect_readyup() {
 					if object_exists(get_char_object(player_char[i])) {
 						player_ready[i] = true;
 						player_input[i].confirm = false;
-						play_sound(snd_menu_select,1,1);
+						play_sound(snd_ui_menu_select,1,1);
 					}
 				}
 			}

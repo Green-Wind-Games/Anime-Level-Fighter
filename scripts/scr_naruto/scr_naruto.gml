@@ -20,7 +20,7 @@ function init_naruto_baseform() {
 	
 	charge_aura = spr_aura_chakra;
 	charge_start_sound = noone;
-	charge_loop_sound = snd_chakra_loop;
+	charge_loop_sound = snd_naruto_chakra_loop;
 	charge_stop_sound = noone;
 	
 	transform_aura = spr_aura_chakra;
@@ -136,7 +136,7 @@ function init_naruto_baseform() {
 	heavy_attack.start = function() {
 		change_sprite(spr_naruto_attack_dash_slash,5,false);
 		xspeed = 20 * facing;
-		play_sound(snd_dash);
+		play_sound(snd_dbz_dash);
 		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -193,8 +193,8 @@ function init_naruto_baseform() {
 	uzumaki_barrage_start.start = function() {
 		if attempt_special(1) {
 			change_sprite(spr_naruto_jutsu,3,false);
-			play_sound(snd_jutsu_activate);
-			play_voiceline(snd_naruto_uzumaki);
+			play_sound(snd_naruto_jutsu_activate);
+			play_voiceline(vc_naruto_uzumaki);
 			if (instance_number(obj_char) <= 2) and (combo_timer > 0) {
 				timestop(60);
 			}
@@ -237,7 +237,7 @@ function init_naruto_baseform() {
 		}
 		if state_timer >= 30 {
 			change_state(heavy_airattack);
-			play_voiceline(snd_naruto_uzumakibarrage);
+			play_voiceline(vc_naruto_uzumakibarrage);
 		}
 	}
 	
@@ -361,10 +361,10 @@ function init_naruto_baseform() {
 		rasengan_script(5,6,11,12,0,0.25,100,1000,attacktype.hard_knockdown);
 		
 		if check_frame(4) {
-			play_sound(snd_rasengan_charge);
+			play_sound(snd_naruto_rasengan_charge);
 		}
 		if check_frame(7) {
-			play_voiceline(snd_naruto_rasengan);
+			play_voiceline(vc_naruto_rasengan);
 		}
 		if check_frame(4) or check_frame(7) {
 			create_particles(
@@ -382,7 +382,7 @@ function init_naruto_baseform() {
 			change_sprite(spr_naruto_special_rasengan_dive,3,false);
 			xspeed = 0;
 			yspeed = 0;
-			play_voiceline(snd_naruto_rasengan);
+			play_voiceline(vc_naruto_rasengan);
 		}
 		else {
 			change_state(idle_state);
@@ -471,7 +471,7 @@ function init_naruto_baseform() {
 			);
 		}
 		if check_frame(5) {
-			play_sound(snd_rasengan_charge,1,1.5);
+			play_sound(snd_naruto_rasengan_charge,1,1.5);
 		}
 		if anim_finished {
 			land();
@@ -493,12 +493,12 @@ function init_naruto_baseform() {
 		}
 		
 		if check_frame(4) {
-			play_sound(snd_rasengan_charge,1,1.25);
-			play_sound(snd_rasengan_charge,1,0.75);
+			play_sound(snd_naruto_rasengan_charge,1,1.25);
+			play_sound(snd_naruto_rasengan_charge,1,0.75);
 		}
 		if check_frame(7) {
-			play_voiceline(snd_naruto_rasengan);
-			play_sound(snd_naruto_rasengan,1,1.25);
+			play_voiceline(vc_naruto_rasengan);
+			play_sound(vc_naruto_rasengan,1,1.25);
 		}
 		if check_frame(4) or check_frame(7) {
 			create_particles(
@@ -528,10 +528,10 @@ function init_naruto_baseform() {
 		rasengan_script(5,6,11,12,0,2,200,2000,attacktype.hard_knockdown);
 		
 		if check_frame(4) {
-			play_sound(snd_rasengan_charge,1,0.8);
+			play_sound(snd_naruto_rasengan_charge,1,0.8);
 		}
 		if check_frame(7) {
-			play_voiceline(snd_naruto_giantrasengan);
+			play_voiceline(vc_naruto_giantrasengan);
 		}
 		if check_frame(4) {
 			create_particles(
@@ -554,8 +554,8 @@ function init_naruto_baseform() {
 	shadow_clone_jutsu.start = function() {
 		if attempt_special(2,(!shadow_clone_jutsu_cooldown)) {
 			change_sprite(spr_naruto_jutsu,5,false);
-			play_sound(snd_jutsu_activate);
-			play_voiceline(snd_naruto_shadowclonejutsu);
+			play_sound(snd_naruto_jutsu_activate);
+			play_voiceline(vc_naruto_shadowclonejutsu);
 		}
 		else {
 			change_state(idle_state);
@@ -584,8 +584,8 @@ function init_naruto_baseform() {
 	shadow_clone_barrage.start = function() {
 		if attempt_super(1.5,(!shadow_clone_jutsu_cooldown)) {
 			change_sprite(spr_naruto_jutsu,3,false);
-			play_sound(snd_jutsu_activate);
-			play_voiceline(snd_naruto_shadowclonejutsu);
+			play_sound(snd_naruto_jutsu_activate);
+			play_voiceline(vc_naruto_shadowclonejutsu);
 		}
 		else {
 			change_state(idle_state);
@@ -666,13 +666,13 @@ function init_naruto_baseform() {
 	rasen_shuriken.run = function() {
 		if sprite == spr_naruto_special_rasenshuriken {
 			if check_frame(5) {
-				play_sound(snd_rasen_shuriken_spin);
+				play_sound(snd_naruto_rasenshuriken_spin);
 			}
 			if (frame > 6) and (superfreeze_timer > 100) {
 				frame = 5;
 			}
 			if check_frame(7) {
-				play_voiceline(snd_naruto_rasenshuriken);
+				play_voiceline(vc_naruto_rasenshuriken);
 			}
 			if (frame > 9) and (superfreeze_active) {
 				frame = 8;
@@ -737,7 +737,7 @@ function init_naruto_baseform() {
 						}
 						else {
 							if alpha == 1 {
-								play_sound(snd_rasen_shuriken_end);
+								play_sound(snd_naruto_rasenshuriken_end);
 							}
 							alpha = map_value(duration,0,30,1,0);
 						}
@@ -749,7 +749,7 @@ function init_naruto_baseform() {
 							}
 						}
 					}
-					play_sound(snd_rasen_shuriken_hit);
+					play_sound(snd_naruto_rasenshuriken_hit);
 				}
 				rasen_shuriken_explosion = _explosion;
 			}
@@ -759,7 +759,7 @@ function init_naruto_baseform() {
 				yoffset = -height_half;
 				xspeed = -10 * facing;
 				yspeed = -5;
-				stop_sound(snd_rasen_shuriken_spin);
+				stop_sound(snd_naruto_rasenshuriken_spin);
 				play_voiceline(voice_hurt_heavy);
 			}
 		}
@@ -799,29 +799,6 @@ function init_naruto_baseform() {
 	
 	signature_move = mini_rasengan;
 	finisher_move = rasen_shuriken;
-	
-	//var i = 0;
-	//voice_attack[i++] = snd_naruto_attack1;
-	//voice_attack[i++] = snd_naruto_attack2;
-	//voice_attack[i++] = snd_naruto_attack3;
-	//voice_attack[i++] = snd_naruto_attack4;
-	//voice_attack[i++] = snd_naruto_attack5;
-	//i = 0;
-	//voice_heavyattack[i++] = snd_naruto_heavyattack1;
-	//voice_heavyattack[i++] = snd_naruto_heavyattack2;
-	//voice_heavyattack[i++] = snd_naruto_heavyattack3;
-	//i = 0;
-	//voice_hurt[i++] = snd_naruto_hurt1;
-	//voice_hurt[i++] = snd_naruto_hurt2;
-	//voice_hurt[i++] = snd_naruto_hurt3;
-	//voice_hurt[i++] = snd_naruto_hurt4;
-	//voice_hurt[i++] = snd_naruto_hurt5;
-	//i = 0;
-	//voice_hurt_heavy[i++] = snd_naruto_hurt_heavy1;
-	//voice_hurt_heavy[i++] = snd_naruto_hurt_heavy2;
-	//voice_hurt_heavy[i++] = snd_naruto_hurt_heavy3;
-	//voice_hurt_heavy[i++] = snd_naruto_hurt_heavy4;
-	//voice_hurt_heavy[i++] = snd_naruto_hurt_heavy5;
 
 	victory_state.run = function() {
 		if sound_is_playing(voice) {

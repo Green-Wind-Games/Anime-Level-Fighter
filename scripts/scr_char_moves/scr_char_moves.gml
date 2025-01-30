@@ -150,7 +150,7 @@ function check_input(_input) {
 		valid = false;
 	}
 	if (string_length(cmd_btn) == 1) {
-		if input_buffer_timer > (input_buffer_duration - (input_delay * game_speed * (game_get_speed(gamespeed_fps) / 60))) {
+		if input_buffer_timer > max(1, input_buffer_duration - (input_delay * game_speed * (game_get_speed(gamespeed_fps) / 60))) {
 			valid = false;
 		}
 	}
@@ -255,15 +255,18 @@ function superfreeze(_duration = 30) {
 	}
 }
 
-function activate_special() {
+function activate_special(_cost) {
 	if special_state != active_state {
 		special_state = active_state;
-		play_sound(snd_activate_super,1,1.25);
-		create_particles(
-			x,
-			y-height_half,
-			super_activate_particle
-		);
+		if _cost > 0 {
+			spend_mp(_cost);
+			play_sound(snd_activate_super,1,1.25);
+			create_particles(
+				x,
+				y-height_half,
+				super_activate_particle
+			);
+		}
 	}
 }
 
@@ -303,16 +306,20 @@ function deactivate_super() {
 	ultimate_active = false;
 }
 
-function attempt_special(_cost, _condition = true) {
-	if !check_mp(_cost) return false;
-	if !_condition return false;
+function attempt_special(_cost = 1, _condition = true) {
+	var _valid = check_mp(_cost) and (_condition);
 	
-	activate_special();
-	spend_mp(_cost);
-	return true;
+	if _valid {
+		activate_special(_cost);
+		return true;
+	}
+	else {
+		change_state(idle_state);
+		return false;
+	}
 }
 
-function attempt_super(_cost, _condition = true) {
+function attempt_super(_cost = 2, _condition = true) {
 	if !check_mp(_cost) return false;
 	if !_condition return false;
 	
@@ -321,7 +328,7 @@ function attempt_super(_cost, _condition = true) {
 	return true;
 }
 
-function attempt_ultimate(_cost, _condition = true) {
+function attempt_ultimate(_cost = 5, _condition = true) {
 	if !check_mp(_cost) return false;
 	if !_condition return false;
 	

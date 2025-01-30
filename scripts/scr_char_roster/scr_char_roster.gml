@@ -2,11 +2,11 @@ enum universes {
 	dragonball,
 	narutoshippuden,
 	jojos,
+	onepiece,
 	
 	onepunchman,
-	onepiece,
 	nanatsu,
-	bleach,
+	kimetsu,
 	
 	uniforce,
 	
@@ -20,10 +20,10 @@ char_list = array_create(0);
 
 chars_per_universe = 8;
 
-max_characters = chars_per_universe * universes.alluniverses;
+max_characters = 0;
 
-chars_per_row = chars_per_universe;
-chars_per_column = ceil(max_characters / chars_per_row);
+chars_per_row = 1;
+chars_per_column = 1;
 
 function char(_name) constructor {
 	name = _name;
@@ -37,10 +37,10 @@ function char(_name) constructor {
 function add_char(_name) {
 	var newchar = new char(_name);
 	array_push(char_list,newchar);
-	//max_characters++;
+	max_characters++;
 
-	//chars_per_row = clamp(max_characters, 1, chars_per_universe);
-	//chars_per_column = ceil(max_characters / chars_per_row);
+	chars_per_row = clamp(max_characters, 1, chars_per_universe);
+	chars_per_column = ceil(max_characters / chars_per_row);
 }
 
 function add_char_multiple(_chars) {
@@ -73,4 +73,24 @@ add_char_multiple(
 
 repeat(max_characters-array_length(char_list)) {
 	add_char("");
+}
+
+function get_universe_shortname(_universe) {
+	switch(_universe) {
+		case universes.dragonball:		return "dbz";		break;
+		case universes.narutoshippuden: return "naruto";	break;
+		case universes.onepunchman:		return "opm";		break;
+		case universes.uniforce:		return "uniforce";	break;
+	}
+	return "ERROR";
+}
+
+function get_universe_longname(_universe) {
+	switch(_universe) {
+		case universes.dragonball:		return "Dragon Ball";		break;
+		case universes.narutoshippuden: return "Naruto Shippuden";	break;
+		case universes.onepunchman:		return "One Punch Man";		break;
+		case universes.uniforce:		return "Uni-Force";			break;
+	}
+	return "ERROR";
 }

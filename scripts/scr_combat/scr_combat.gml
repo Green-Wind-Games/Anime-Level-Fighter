@@ -134,7 +134,7 @@ function react_to_attack_type(_attacktype) {
 		case attacktype.wall_bounce:
 		if previous_state != wall_bounce_state {
 			change_state(wall_bounce_state);
-			play_sound(snd_launch);
+			play_sound(snd_dbz_hit_launch);
 			hitstun = max(hitstun,100);
 		}
 		else {
@@ -177,7 +177,7 @@ function play_hurt_sound(_is_strong_attack) {
 			var _voice_chance = 50 + (dmg_percent * 2);
 			if _is_strong_attack {
 				play_voiceline(
-					(meme_enabled and chance(meme_chance)) ? snd_meme_scream_disappear : voice_hurt_heavy,
+					(meme_enabled and chance(meme_chance)) ? snd_meme_scream : voice_hurt_heavy,
 					_voice_chance,
 					true
 				);
@@ -343,15 +343,6 @@ function connect_attack(_hitbox,_hurtbox) {
 		xp += attack_xp_gain;
 	}
 	
-	with(_defender) {
-		defense_connect_script(_attacker,_defender);
-		if is_hit {
-			defense_hit_script(_attacker,_defender);
-		}
-		else if is_guarding {
-			defense_block_script(_attacker,_defender);
-		}
-	}
 	with(_true_attacker) {
 		attack_connect_script(_attacker,_defender);
 		if _defender.is_hit {
@@ -359,6 +350,15 @@ function connect_attack(_hitbox,_hurtbox) {
 		}
 		else if _defender.is_guarding {
 			attack_block_script(_attacker,_defender);
+		}
+	}
+	with(_defender) {
+		defense_connect_script(_attacker,_defender);
+		if is_hit {
+			defense_hit_script(_attacker,_defender);
+		}
+		else if is_guarding {
+			defense_block_script(_attacker,_defender);
 		}
 	}
 	

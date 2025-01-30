@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.596062,
+  "duration":1.369104,
   "name":"snd_slash_hit_heavy2",
   "parent":{
     "name":"Sounds",

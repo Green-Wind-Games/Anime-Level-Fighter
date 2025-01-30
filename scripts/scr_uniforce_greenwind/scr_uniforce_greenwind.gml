@@ -12,7 +12,7 @@ function greenwind_swirls() {
 		random(20),
 		greenwind_color
 	);
-	play_sound(snd_chakra_loop,0.5,1.5);
+	play_sound(snd_naruto_chakra_loop,0.5,1.5);
 }
 
 function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_ballsprite) {
@@ -263,7 +263,7 @@ function add_super_greenwind_blade(_sprite,_raiseframe,_lowerframe,_fireframe,_h
 								}
 							}
 							expire_script = function() {
-								play_sound(snd_energy_stop,0.2,1.5);
+								play_sound(snd_dbz_energy_stop,0.2,1.5);
 							}
 						}
 					}

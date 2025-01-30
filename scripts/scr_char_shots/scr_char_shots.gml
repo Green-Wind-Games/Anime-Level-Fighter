@@ -5,22 +5,24 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 		owner = get_true_owner(_me);
 		init_sprite(_sprite);
 		change_sprite(sprite,max(1,round(60/sprite_get_speed(_sprite))),true);
-		var _true_scale = _scale / 2;
+		var _true_scale = 0.5;
 		xscale = _scale;
 		yscale = _scale;
-		width = sprite_get_width(sprite) * _true_scale;
-		height = sprite_get_height(sprite) * _true_scale;
+		width = sprite_get_width(sprite) * _true_scale * _scale;
+		height = sprite_get_height(sprite) * _true_scale * _scale;
 		width_half = floor(width / 2);
 		height_half = floor(height / 2);
 		
-		var _xoffset = -sprite_get_xoffset(sprite) * _true_scale;
-		var _yoffset = -sprite_get_yoffset(sprite) * _true_scale;
+		var _width = sprite_get_width(sprite) * _true_scale;
+		var _height = sprite_get_height(sprite) * _true_scale;
+		var _xoffset = ((sprite_get_width(sprite) - _width) / 2) - sprite_get_xoffset(sprite);
+		var _yoffset = ((sprite_get_height(sprite) - _height) / 2) - sprite_get_yoffset(sprite);
 		
 		hitbox = create_hitbox(
 			_xoffset,
 			_yoffset,
-			width,
-			height,
+			_width,
+			_height,
 			_damage,
 			_xknockback,
 			_yknockback,
@@ -49,8 +51,6 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	}
 	return _shot;
 }
-
-
 
 function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 	var _xlength = lengthdir_x(1,_angle);

@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"snd_dbz_punch_whiff_super",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":0,
+  "conversionMode":0,
+  "duration":0.358458,
+  "name":"snd_dbz_punch_whiff_super",
+  "parent":{
+    "name":"Sounds",
+    "path":"folders/Sounds.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_dbz_punch_whiff_super.wav",
+  "type":0,
+  "volume":1.0,
+}

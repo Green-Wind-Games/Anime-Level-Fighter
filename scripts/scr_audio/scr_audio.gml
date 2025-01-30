@@ -19,7 +19,35 @@ function play_sound(_snd,_volume = 1,_pitch = 1) {
 		for(var i = 1; i < 10; i++) {
 			var _snd2 = asset_get_index(_audioname + string(i+1));
 			if !audio_exists(_snd2) continue;
-			_sounds[i] = _snd2;
+			_sounds[array_length(_sounds)] = _snd2;
+		}
+		if is_char(id) {
+			var _prefix = "snd_" + get_universe_shortname(universe) + "_";
+			var _noprefix = string_delete(_audioname,1,4);
+			for(var i = 0; i < 10; i++) {
+				var _audioname2 = _prefix + _noprefix;
+				if i > 0 {
+					_audioname2 += string(i+1);
+				}
+				var _snd2 = asset_get_index(_audioname2);
+				if !audio_exists(_snd2) continue;
+				_sounds[array_length(_sounds)] = _snd2;
+			}
+		}
+		if is_helper(id) or is_shot(id) or is_beam(id) {
+			if instance_exists(owner) {
+				var _prefix = "snd_" + get_universe_shortname(owner.universe) + "_";
+				var _noprefix = string_delete(_audioname,1,4);
+				for(var i = 0; i < 10; i++) {
+					var _audioname2 = _prefix + _noprefix;
+					if i > 0 {
+						_audioname2 += string(i+1);
+					}
+					var _snd2 = asset_get_index(_audioname2);
+					if !audio_exists(_snd2) continue;
+					_sounds[array_length(_sounds)] = _snd2;
+				}
+			}
 		}
 		sound = audio_play_sound(
 			_sounds[irandom(array_length(_sounds)-1)],

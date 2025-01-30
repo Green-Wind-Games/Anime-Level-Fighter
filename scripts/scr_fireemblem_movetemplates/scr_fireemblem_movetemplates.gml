@@ -45,7 +45,7 @@ function add_myrmidon_slash_state(_chargesprite,_sprite1,_sprite2,_sprite3) {
 					0,
 					-height,
 					30,
-					3,
+					5,
 					myrmidon_slash_sprite1,
 					1,
 					500,
@@ -59,7 +59,7 @@ function add_myrmidon_slash_state(_chargesprite,_sprite1,_sprite2,_sprite3) {
 					0,
 					height,
 					25,
-					-3,
+					-5,
 					myrmidon_slash_sprite2,
 					1,
 					500,
@@ -112,15 +112,12 @@ function add_myrmidon_slash_state(_chargesprite,_sprite1,_sprite2,_sprite3) {
 					width*2,
 					height,
 					2000,
-					10,
+					0,
 					-10,
 					attacktype.hard_knockdown,
 					attackstrength.super,
 					hiteffects.slash
 				);
-				with(hitbox) {
-					duration = other.anim_duration;
-				}
 			}
 		}
 		if state_timer > 60 {

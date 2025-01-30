@@ -34,7 +34,7 @@ enum vs_screen_substates {
 
 globalvar	game_state, previous_game_state, next_game_state, game_state_timer, game_state_duration,
 			game_substate, previous_game_substate, next_game_substate, game_substate_timer, game_substate_duration,
-			round_state, round_timer, round_state_timer, round_timer_max, round_timer_visible_max, round_countdown_duration, round_is_infinite,
+			round_state, round_timer, round_state_timer, round_timer_max, round_timer_visible_max, round_ready_countdown_duration, round_ready_fight_duration, round_is_infinite,
 			stage,
 			
 			max_players, player, player_char, player_input,
@@ -82,7 +82,8 @@ round_state_timer = 0;
 round_timer_max = 500 * 60;
 round_timer = round_timer_max;
 round_timer_visible_max = 999;
-round_countdown_duration = (3 * 30) + 30;
+round_ready_countdown_duration = 100;
+round_ready_fight_duration = 50;
 round_is_infinite = false;
 
 game_speed = 1;
@@ -178,6 +179,10 @@ ground_height = room_height;
 battle_x = room_width / 2;
 battle_y = ground_height;
 ground_sprite = noone;
+
+voice = noone;
+voice_volume_mine = 1;
+voice_pitch_mine = 1;
 
 depth = -9999;
 

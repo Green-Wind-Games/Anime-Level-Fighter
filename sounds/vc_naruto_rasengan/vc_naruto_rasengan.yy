@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"vc_naruto_rasengan",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":0,
+  "conversionMode":0,
+  "duration":0.85,
+  "name":"vc_naruto_rasengan",
+  "parent":{
+    "name":"Naruto Voice",
+    "path":"folders/Chars/Naruto Shippuden Chars/Naruto/Naruto Voice.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"vc_naruto_rasengan.wav",
+  "type":0,
+  "volume":1.0,
+}

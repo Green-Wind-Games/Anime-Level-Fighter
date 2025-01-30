@@ -17,32 +17,32 @@ function init_goku_baseform() {
 	transform_aura = spr_aura_dbz_yellow;
 	
 	add_kiblast_state(
-		7,
 		spr_goku_special_kiblast,
 		spr_goku_special_kiblast2,
+		spr_glow_blue,
 		2,
-		spr_glow_blue
+		7
 	);
 	
 	add_kamehameha_state(
 		spr_goku_special_kamehameha,
 		spr_goku_special_kamehameha_air,
+		3,
 		4,
 		5,
-		6,
-		8,
-		snd_goku_kamehameha
+		7,
+		vc_goku_kamehameha
 	);
 	
 	add_superkamehameha_state(
 		spr_goku_special_kamehameha,
 		spr_goku_special_kamehameha_air,
+		3,
 		4,
 		5,
-		6,
-		8,
-		snd_goku_kamehame,
-		snd_goku_kamehame_ha
+		7,
+		vc_goku_kamehame,
+		vc_goku_kamehame_ha
 	);
 	
 	kaioken_active = false;
@@ -87,7 +87,7 @@ function init_goku_baseform() {
 				kiblast_shot_sprite = spr_glow_blue;
 				
 				flash_sprite();
-				play_sound(snd_energy_stop);
+				play_sound(snd_dbz_energy_stop);
 			}
 		}
 	}
@@ -124,7 +124,7 @@ function init_goku_baseform() {
 
 	light_attack = new charstate();
 	light_attack.start = function() {
-		change_sprite(spr_goku_attack_punch_straight,4,false);
+		change_sprite(spr_goku_attack_punch_straight,3,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -139,7 +139,7 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	light_attack2.run = function() {
-		basic_medium_attack(3,hiteffects.hit);
+		basic_medium_attack(2,hiteffects.hit);
 	}
 
 	light_attack3 = new charstate();
@@ -158,7 +158,7 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	light_lowattack.run = function() {
-		basic_light_lowattack(3,hiteffects.hit);
+		basic_light_lowattack(2,hiteffects.hit);
 	}
 	
 	light_airattack = new charstate();
@@ -167,12 +167,12 @@ function init_goku_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	light_airattack.run = function() {
-		if check_frame(2) or check_frame(4) or check_frame(6) {
+		if check_frame(0) or check_frame(2) or check_frame(4) {
 			play_sound(snd_punch_whiff_light);
 		}
 		basic_light_airattack(1,hiteffects.hit);
-		basic_light_airattack(2,hiteffects.hit);
 		basic_light_airattack(3,hiteffects.hit);
+		basic_light_airattack(5,hiteffects.hit);
 	}
 	
 	medium_attack = new charstate();
@@ -242,9 +242,9 @@ function init_goku_baseform() {
 		basic_heavy_airattack(2,hiteffects.hit);
 	}
 	
-	heavy_elbow = new charstate();
-	heavy_elbow.start = function() {
-		if attempt_special(1) {
+	dash_elbow = new charstate();
+	dash_elbow.start = function() {
+		if attempt_special(0) {
 			change_sprite(spr_goku_attack_elbow_bash_spin,3,false);
 			play_sound(snd_punch_whiff_medium);
 			play_voiceline(voice_attack,50,false);
@@ -256,22 +256,33 @@ function init_goku_baseform() {
 		if attempt_special(1) {
 			change_sprite(spr_goku_special_kiblast,3,false);
 		}
-		else {
-			change_state(idle_state);
-		}
 	}
 	kiai_push.run = function() {
 		if superfreeze_active {
 			frame = 0;
 		}
 		if check_frame(3) {
-			create_particles(
-				x+(width_half*facing),
-				y-height_half,
-				air_shockwave_particle
+			var _shockwave = create_shot(
+				width_half,
+				-height_half,
+				0,
+				0,
+				spr_shockwave,
+				0.1,
+				500,
+				10,
+				-10,
+				attacktype.hard_knockdown,
+				attackstrength.medium,
+				hiteffects.none
 			);
-			create_hitbox(0,-100,100,200,500,20,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
-			create_hitbox(0,-100,-100,200,500,-20,-5,attacktype.hard_knockdown,attackstrength.light,hiteffects.none);
+			with(_shockwave) {
+				active_script = function() {
+					var _speed = 0.2;
+					xscale += _speed;
+					yscale += _speed;
+				}
+			}
 		}
 		if state_timer > 60 {
 			return_to_idle();
@@ -308,7 +319,7 @@ function init_goku_baseform() {
 	//		if check_frame(1) {
 	//			teleport(target_x - (100 * facing), target_y - 50);
 	//			face_target();
-	//			play_sound(snd_dbz_teleport_short);
+	//			play_sound(snd_dbz_teleport);
 	//		}
 	//		kamehameha.run();
 	//	}
@@ -346,8 +357,8 @@ function init_goku_baseform() {
 			
 			superfreeze(60);
 		
-			play_sound(snd_energy_start);
-			play_voiceline(snd_goku_kaioken);
+			play_sound(snd_dbz_energy_start);
+			play_voiceline(vc_goku_kaioken);
 		}
 		else {
 			change_state(idle_state);
@@ -438,7 +449,7 @@ function init_goku_baseform() {
 			}
 		}
 		if check_frame(6) {
-			play_voiceline(snd_goku_spiritbomb);
+			play_voiceline(vc_goku_spiritbomb);
 		}
 		if frame > 11 {
 			if instance_exists(spirit_bomb_shot) {

@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.358458,
+  "duration":0.480635,
   "name":"snd_punch_whiff_super",
   "parent":{
     "name":"Sounds",

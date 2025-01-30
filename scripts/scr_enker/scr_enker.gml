@@ -74,7 +74,7 @@ function init_enker() {
 			}
 			else {
 				flash_sprite();
-				play_sound(snd_energy_stop);
+				play_sound(snd_dbz_energy_stop);
 				attack_power = 1;
 				move_speed_buff = 1;
 				aura_sprite = noone;
@@ -259,7 +259,7 @@ function init_enker() {
 			
 			greenwind_timer = greenwind_duration;
 		
-			play_sound(snd_energy_start);
+			play_sound(snd_dbz_energy_start);
 			play_voiceline(voice_powerup);
 			
 			repeat(20) {
