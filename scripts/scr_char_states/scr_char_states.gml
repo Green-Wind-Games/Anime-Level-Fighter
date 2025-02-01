@@ -15,7 +15,7 @@ function init_charstates() {
 			change_sprite(idle_sprite,6,true);
 			xspeed = 0;
 			yspeed = 0;
-			air_moves = 0;
+			air_actions = 0;
 		}
 		else {
 			change_state(air_state);
@@ -130,10 +130,10 @@ function init_charstates() {
 		
 		if yspeed >= 0 {
 			if input.up {
-				if air_moves < max_air_moves {
+				if air_actions < max_air_actions {
 					xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
 					yspeed = -jump_speed * 0.75;
-					air_moves += 1;
+					air_actions += 1;
 					squash_stretch(0.8,1.2);
 					play_sound(snd_dbz_jump_air);
 				}
@@ -238,12 +238,12 @@ function init_charstates() {
 	
 	airdash_state = new charstate();
 	airdash_state.start = function() {
-		if air_moves < max_air_moves {
+		if air_actions < max_air_actions {
 			change_sprite(dash_sprite,2,true);
 			yoffset = -height_half;
 			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
 			yspeed = 0;
-			air_moves += 1;
+			air_actions += 1;
 			play_sound(snd_dbz_dash);
 		}
 		else {
@@ -261,13 +261,13 @@ function init_charstates() {
 	
 	air_backdash_state = new charstate();
 	air_backdash_state.start = function() {
-		if air_moves < max_air_moves {
+		if air_actions < max_air_actions {
 			change_sprite(dash_sprite,2,true);
 			yoffset = -height_half;
 			xscale = -1;
 			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * -facing;
 			yspeed = 0;
-			air_moves += 1;
+			air_actions += 1;
 			play_sound(snd_dbz_dash);
 		}
 		else {

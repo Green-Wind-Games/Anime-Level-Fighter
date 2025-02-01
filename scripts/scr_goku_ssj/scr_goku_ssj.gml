@@ -11,7 +11,7 @@ function init_goku_ssj() {
 	
 	voice_volume_mine = 1.25;
 
-	max_air_moves = 3;
+	max_air_actions = 3;
 
 	ssj2_active = false;
 	ssj2_timer = 0;

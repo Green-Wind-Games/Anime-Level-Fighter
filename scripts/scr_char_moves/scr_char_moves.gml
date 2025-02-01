@@ -35,41 +35,35 @@ function add_air_move(_move,_input) {
 }
 
 function check_moves() {
-	var moved = false;
-	var available_moves = ds_priority_create();
-	var min_cancel = 0;
-	
-	var _movelist = ground_movelist;
-	if is_airborne {
-		_movelist = air_movelist;
-	}
+	var _moved = false;
+	var _available_moves = ds_priority_create();
+	var _min_cancel = 0;
+	var _movelist = on_ground ? ground_movelist : air_movelist;
 	
 	if (ds_list_empty(cancelable_moves)) {
-		for(var i = min_cancel; i < array_length(_movelist); i++) {
-			if (active_state == _movelist[i][0]) {
-				min_cancel = i+1;
-				break;
-			}
+		var _moveid = get_movelist_index(active_state)[1];
+		if _moveid != -1 {
+			_min_cancel = _moveid + 1;
+			break;
 		}
 	}
-	for(var i = min_cancel; i < array_length(_movelist); i++) {
-		var move = _movelist[i][0];
-		var input = _movelist[i][1];
-		if (ds_list_find_index(cancelable_moves,move) != -1)
+	for(var i = _min_cancel; i < array_length(_movelist); i++) {
+		var _move = _movelist[i][0];
+		if (ds_list_find_index(cancelable_moves,_move) != -1)
 		or ds_list_empty(cancelable_moves) {
-			if (check_input(input)) {
-				ds_priority_add(available_moves,move,string_length(input));
+			if (check_input(get_move_input(_move))) {
+				ds_priority_add(_available_moves,_move,string_length(get_move_input(_move)));
 			}
 		}
 	}
 	
-	if (!ds_priority_empty(available_moves)) {
+	if (!ds_priority_empty(_available_moves)) {
 		var _xspeed = xspeed;
 		var _yspeed = yspeed;
 		var _facing = facing;
-		repeat(ds_priority_size(available_moves)) {
-			var _state = ds_priority_find_max(available_moves);
-			ds_priority_delete_max(available_moves);
+		repeat(ds_priority_size(_available_moves)) {
+			var _state = ds_priority_find_max(_available_moves);
+			ds_priority_delete_max(_available_moves);
 			reset_cancels();
 			face_target();
 			change_state(_state);
@@ -90,7 +84,7 @@ function check_moves() {
 			if moved { break; }
 		}
 	}
-	ds_priority_destroy(available_moves);
+	ds_priority_destroy(_available_moves);
 	
 	return moved;
 }
@@ -155,6 +149,32 @@ function check_input(_input) {
 		}
 	}
 	return valid;
+}
+
+function get_move_input(_move) {
+	var _movelist = ground_movelist;
+	repeat(2) {
+		for(var i = 0; i < array_length(_movelist); i++) {
+			if _move == _movelist[i][0] {
+				return _movelist[i][1];
+			}
+		}
+		_movelist = air_movelist;
+	}
+	return "ERROR";
+}
+
+function get_movelist_index(_move) {
+	var _movelist = ground_movelist;
+	repeat(2) {
+		for(var i = 0; i < array_length(_movelist); i++) {
+			if _move == _movelist[i][0] {
+				return [_movelist, i];
+			}
+		}
+		_movelist = air_movelist;
+	}
+	return [_movelist, -1];
 }
 
 function setup_autocombo() {

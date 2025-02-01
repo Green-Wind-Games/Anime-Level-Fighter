@@ -7,7 +7,7 @@ function init_naruto_baseform() {
 	universe = universes.narutoshippuden;
 	
 	move_speed_mod = 1.25;
-	max_air_moves = 1;
+	max_air_actions = 1;
 
 	rasengan_cooldown = 0;
 	rasengan_cooldown_duration = 100;

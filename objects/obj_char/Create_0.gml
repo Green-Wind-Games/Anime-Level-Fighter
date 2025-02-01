@@ -94,8 +94,8 @@ ultimate_active = false;
 
 beam = noone;
 
-air_moves = 0;
-max_air_moves = 1;
+air_actions = 0;
+max_air_actions = 1;
 
 ygravity_mod = 1;
 

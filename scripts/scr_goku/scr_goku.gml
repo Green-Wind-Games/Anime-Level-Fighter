@@ -9,7 +9,7 @@ function init_goku_baseform() {
 	
 	voice_volume_mine = 1.25;
 
-	max_air_moves = 3;
+	max_air_actions = 3;
 
 	spirit_bomb_shot = noone;
 

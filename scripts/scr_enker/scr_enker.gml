@@ -12,7 +12,7 @@ function init_enker() {
 	
 	voice_volume_mine = 3;
 
-	max_air_moves = 2;
+	max_air_actions = 2;
 
 	greenwind_active = false;
 	greenwind_timer = 0;

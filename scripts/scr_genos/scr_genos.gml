@@ -10,7 +10,7 @@ function init_genos_baseform() {
 	voice_volume_mine = 4;
 
 	move_speed_mod = 1.25;
-	max_air_moves = 3;
+	max_air_actions = 3;
 
 	dropkick_cooldown = 0;
 	dropkick_cooldown_duration = 100;

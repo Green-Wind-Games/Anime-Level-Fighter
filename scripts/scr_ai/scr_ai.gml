@@ -58,7 +58,7 @@ function ai_default_movement() {
 	var _y = 0;
 	
 	if chance(10) { _y = 1; }
-	if chance(10 + (10 * max_air_moves)) { _y = -1; }
+	if chance(10 + (10 * max_air_actions)) { _y = -1; }
 	if chance(30) { _x = -facing; }
 	if chance(40) { _x = facing; }
 	
@@ -86,21 +86,12 @@ function ai_default_movement() {
 
 function ai_perform_random_moves() {
 	var _inputs = ds_list_create();
-	if on_ground {
-		for(var i = 0; i < array_length(ground_movelist); i++) {
-			if (ds_list_find_index(_inputs,ground_movelist[i][1]) == -1) {
-				ds_list_add(_inputs,ground_movelist[i][1]);
-			}
+	var _movelist = on_ground ? ground_movelist : air_movelist;
+	for(var i = 0; i < array_length(_movelist); i++) {
+		if (ds_list_find_index(_inputs,_movelist[i][1]) == -1) {
+			ds_list_add(_inputs,_movelist[i][1]);
 		}
 	}
-	else {
-		for(var i = 0; i < array_length(air_movelist); i++) {
-			if (ds_list_find_index(_inputs,air_movelist[i][1]) == -1) {
-				ds_list_add(_inputs,air_movelist[i][1]);
-			}
-		}
-	}
-	
 	var _move = ds_list_find_value(_inputs,irandom(ds_list_size(_inputs)-1));
 	ai_input_command(_move,map_value(target_distance,right_wall-left_wall,0,10,100));
 	
@@ -115,7 +106,7 @@ function ai_combo() {
 			_move = ds_list_find_value(cancelable_moves,irandom(ds_list_size(cancelable_moves)-1));
 		}
 		else {
-			var _ahead = irandom_range(1,5);
+			var _ahead = irandom_range(1,3);
 			var _moveid = 0;
 			for(var i = 0; i < array_length(_movelist)-1; i++) {
 				if (active_state == _movelist[i][0]) {
@@ -143,14 +134,7 @@ function ai_input_command(_command,_chance = 100) {
 
 function ai_input_move(_move,_chance = 100) {
 	if chance(_chance) {
-		var _movelist = on_ground ? ground_movelist : air_movelist;
-		var _move_input = "";
-		for(var i = 0; i < array_length(_movelist); i++) {
-			if (_movelist[i][0] == _move) {
-				_move_input = _movelist[i][1];
-			}
-		}
-		ai_input_command(_move_input,100);
+		ai_input_command(get_move_input(_move),100);
 	}
 }
 
