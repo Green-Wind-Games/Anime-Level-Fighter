@@ -24,19 +24,10 @@ for(var i = 0; i < max_players; i++) {
 		active_players++;
 	}
 }
-
-var team1_members = 0;
-var team2_members = 0;
-for(var i = 0; i < max_players; i++) {
-	if player_slot[i] != noone {
-		if i < ceil(active_players / 2) {
-			team1_members++;
-		}
-		else {
-			team2_members++;
-		}
-	}
-}
+	
+var team1_members = ceil(active_players/2);
+var team2_members = floor(active_players/2);
+	
 var _w = game_width / 2;
 var _w2 = _w / 2;
 var _w3 = _w2 / 2;
@@ -86,7 +77,7 @@ switch(room) {
 				with(instance_create(_x,_y,get_char_object(player_char[i]))) {
 					player[i] = id;
 					input = player_input[player_slot[i]];
-					if x <= battle_x {
+					if spawned_players < (team1_members) {
 						team = 1;
 						facing = 1;
 						spawned_team1_players++

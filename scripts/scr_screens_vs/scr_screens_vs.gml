@@ -21,18 +21,8 @@ function draw_versus() {
 		}
 	}
 	
-	var team1_members = 0;
-	var team2_members = 0;
-	for(var i = 0; i < max_players; i++) {
-		if player_slot[i] != noone {
-			if i < ceil(active_players / 2) {
-				team1_members++;
-			}
-			else {
-				team2_members++;
-			}
-		}
-	}
+	var team1_members = ceil(active_players/2);
+	var team2_members = floor(active_players/2);
 	
 	var _w = gui_width;
 	var _h = gui_height;

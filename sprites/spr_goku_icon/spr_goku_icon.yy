@@ -23,7 +23,7 @@
   ],
   "name":"spr_goku_icon",
   "nineSlice":null,
-  "origin":4,
+  "origin":7,
   "parent":{
     "name":"Goku Base Sprites",
     "path":"folders/Chars/Dragon Ball Chars/Goku/Goku Base Form/Goku Base Sprites.yy",
@@ -76,7 +76,7 @@
     "visibleRange":null,
     "volume":1.0,
     "xorigin":13,
-    "yorigin":10,
+    "yorigin":21,
   },
   "swatchColours":null,
   "swfPrecision":2.525,

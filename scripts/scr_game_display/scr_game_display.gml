@@ -23,28 +23,11 @@ if os_type == os_android or _test {
 //game_width = round(game_height * (4 / 3));
 //game_height = round(game_width / (4 / 3));
 //game_width = round(game_height * (16 / 9));
-//game_height = round(game_width / (16 / 9));
+game_height = round(game_width / (16 / 9));
 //game_width = round(game_height * screen_aspectratio);
-game_height = round(game_width / screen_aspectratio);
+//game_height = round(game_width / screen_aspectratio);
 
 game_aspectratio = game_width / game_height;
-
-gui_width = 640;
-gui_height = 360;
-
-if os_type == os_android or _test {
-	gui_width = floor(gui_width * _factor);
-	gui_height = floor(gui_height * _factor);
-}
-
-//gui_width = round(game_width / 2);
-//gui_height = round(game_height / 2);
-//gui_width = round(screen_width / 2);
-//gui_height = round(screen_height / 2);
-gui_width = round(gui_height * game_aspectratio);
-//gui_height = round(gui_width / game_aspectratio);
-
-hud_height = gui_height / 3;
 
 window_max_scale = min(screen_width / game_width, (screen_height - 80) / game_height);
 //if (game_width * window_max_scale) >= screen_width
@@ -59,6 +42,18 @@ window_height = round(game_height * window_scale);
 fullscreen_scale = min(screen_width / game_width, screen_height / game_height);
 fullscreen_width = floor(game_width * fullscreen_scale);
 fullscreen_height = floor(game_height * fullscreen_scale);
+
+var gui_scale = 0.75;
+
+gui_width = round(game_width * gui_scale);
+gui_height = round(game_height * gui_scale);
+
+if os_type == os_android or _test {
+	gui_width = floor(gui_width * _factor);
+	gui_height = floor(gui_height * _factor);
+}
+
+hud_height = gui_height / 3;
 
 screen_fade_color = c_black;
 screen_fade_duration = 30;
@@ -133,10 +128,8 @@ function update_view() {
 
 function resize_window(_factor = 0) {
 	_factor = round(_factor);
-	if window_scale >= window_max_scale {
-		window_scale = ceil(window_max_scale);
-	}
 	window_scale += _factor;
+	window_scale = round(window_scale);
 	if window_scale < 1 {
 		window_scale = 1;
 	}

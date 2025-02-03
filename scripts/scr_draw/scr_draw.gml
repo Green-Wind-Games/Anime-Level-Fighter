@@ -321,7 +321,7 @@ function draw_playerhud() {
 	var _w2 = _w / 2;
 	var _h2 = _h / 2;
 	var _spacing = 8;
-	var icon_size = 24;
+	var icon_size = average_char_icon_height;
 	var icon_scale = 0.5;
 	
 	var active_players = 0;
@@ -330,6 +330,9 @@ function draw_playerhud() {
 			active_players++;
 		}
 	}
+	
+	var team1_members = ceil(active_players/2);
+	var team2_members = floor(active_players/2);
 	
 	var hud_w = _w2;
 	var hud_h = 0;
@@ -345,7 +348,7 @@ function draw_playerhud() {
 	var tp_xscale = tp_border_width / sprite_get_width(spr_bar_tp_border);
 	var xp_xscale = xp_border_width / sprite_get_width(spr_bar_xp_border);
 	
-	var hud_yscale = max(1,1.5 / ceil(active_players / 2));
+	var hud_yscale = min(1,1.5 / max(team1_members,team2_members));
 	
 	var hp_border_height = 15 * hud_yscale;
 	var mp_border_height = 10 * hud_yscale;
@@ -406,9 +409,11 @@ function draw_playerhud() {
 	var playertext_height = string_height(playertext);
 	
 	var drawn_players = 0;
+	var drawn_t1_players = 0;
+	var drawn_t2_players = 0;
 
 	for (var i = 0; i < max_players; i++) {
-		var _right = hud_x >= _w2;
+		var _right = drawn_players >= team1_members;
 		var hp_border_x1, hp_border_x2, hp_border_y1, hp_border_y2;
 		var mp_border_x1, mp_border_x2, mp_border_y1, mp_border_y2;
 		var tp_border_x1, tp_border_x2, tp_border_y1, tp_border_y2;
@@ -640,14 +645,20 @@ function draw_playerhud() {
 			
 			hud_h = (_spacing * 2) + hp_border_height + mp_border_height + tp_border_height + playertext_height;
 			
-			drawn_players++;
-			if drawn_players == ceil(active_players / 2) {
-				hud_x += hud_w;
-				hud_y = 0;
+			hud_y += hud_h - _spacing;
+			
+			if drawn_players <= team1_members {
+				drawn_t1_players++;
+				if drawn_t1_players == team1_members {
+					hud_x += hud_w;
+					hud_y = 0;
+				}
 			}
 			else {
-				hud_y += hud_h - _spacing;
+				drawn_t2_players++;
 			}
+			drawn_players++;
+			
 			draw_set_alpha(1);
 		}
 	}

@@ -36,6 +36,10 @@ function char(_name) constructor {
 
 function add_char(_name) {
 	var newchar = new char(_name);
+	if !object_exists(newchar.object) {
+		delete newchar;
+		exit;
+	}
 	array_push(char_list,newchar);
 	max_characters++;
 
@@ -63,8 +67,8 @@ add_char_multiple(
 		"Tanjiro", "Nezuko", "Inosuke", "Zenitsu",
 		"Muzan", "Rui", "Akaza", "Doma",
 		
-		"Enker", "Derek", "Linda", "Angelo",
-		"Erika", "Diana", "Azuri", "Gabriel",
+		//"Enker", "Derek", "Linda", "Angelo",
+		//"Erika", "Diana", "Azuri", "Gabriel",
 		
 		"Saitama", "Genos", "Luffy", "Zoro",
 		"Meliodas", "Ban", "Ichigo", "Aizen",

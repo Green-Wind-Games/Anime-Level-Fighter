@@ -44,7 +44,6 @@ function check_moves() {
 		var _moveid = get_movelist_index(active_state)[1];
 		if _moveid != -1 {
 			_min_cancel = _moveid + 1;
-			break;
 		}
 	}
 	for(var i = _min_cancel; i < array_length(_movelist); i++) {
@@ -71,7 +70,7 @@ function check_moves() {
 				xspeed = _xspeed;
 				yspeed = _yspeed;
 				facing = _facing;
-				moved = false;
+				_moved = false;
 			}
 			else {
 				attack_hits = 0;
@@ -79,14 +78,14 @@ function check_moves() {
 				can_cancel = false;
 				input_buffer = update_input_buffer_direction();
 				input_buffer_timer = 0;
-				moved = true;
+				_moved = true;
 			}
-			if moved { break; }
+			if _moved { break; }
 		}
 	}
 	ds_priority_destroy(_available_moves);
 	
-	return moved;
+	return _moved;
 }
 
 function add_cancel(_move) {

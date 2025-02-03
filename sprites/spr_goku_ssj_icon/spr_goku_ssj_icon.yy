@@ -23,7 +23,7 @@
   ],
   "name":"spr_goku_ssj_icon",
   "nineSlice":null,
-  "origin":4,
+  "origin":7,
   "parent":{
     "name":"Goku SSJ Sprites",
     "path":"folders/Chars/Dragon Ball Chars/Goku/Goku SSJ/Goku SSJ Sprites.yy",
@@ -76,7 +76,7 @@
     "visibleRange":null,
     "volume":1.0,
     "xorigin":10,
-    "yorigin":12,
+    "yorigin":24,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

@@ -4,7 +4,7 @@
   "bboxMode":0,
   "bbox_bottom":17,
   "bbox_left":0,
-  "bbox_right":21,
+  "bbox_right":15,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -14,8 +14,8 @@
   "frames":[
     {"$GMSpriteFrame":"","%Name":"aa04b04b-02f6-47ab-ae6d-e93edd1d4b69","name":"aa04b04b-02f6-47ab-ae6d-e93edd1d4b69","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
-  "gridX":0,
-  "gridY":0,
+  "gridX":16,
+  "gridY":16,
   "height":18,
   "HTile":false,
   "layers":[
@@ -23,7 +23,7 @@
   ],
   "name":"spr_naruto_icon",
   "nineSlice":null,
-  "origin":9,
+  "origin":7,
   "parent":{
     "name":"Naruto Base Sprites",
     "path":"folders/Chars/Naruto Shippuden Chars/Naruto/Naruto Sprites/Naruto Base Sprites.yy",
@@ -75,8 +75,8 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":14,
-    "yorigin":9,
+    "xorigin":8,
+    "yorigin":18,
   },
   "swatchColours":null,
   "swfPrecision":0.5,
@@ -86,5 +86,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":22,
+  "width":16,
 }

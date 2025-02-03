@@ -23,7 +23,7 @@
   ],
   "name":"spr_enker_icon",
   "nineSlice":null,
-  "origin":4,
+  "origin":7,
   "parent":{
     "name":"Enker Green Base Sprites",
     "path":"folders/Chars/Uni-Force Chars/Enker/Enker Sprites/Enker Green Base Sprites.yy",
@@ -76,7 +76,7 @@
     "visibleRange":null,
     "volume":1.0,
     "xorigin":9,
-    "yorigin":9,
+    "yorigin":18,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

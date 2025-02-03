@@ -1,5 +1,5 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+globalvar average_char_icon_height;
+average_char_icon_height = 18;
 
 function init_charsprites(_name) {
 	var prefix = "spr_" + _name + "_";
