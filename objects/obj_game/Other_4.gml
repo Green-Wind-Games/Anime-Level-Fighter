@@ -99,8 +99,8 @@ switch(room) {
 		play_music(
 			choose(
 				mus_dbfz_westcity,
-				mus_ff4_ds_bossbattle,
-				mus_yakuza_zero_tusk,
+				//mus_ff4_ds_bossbattle,
+				//mus_yakuza_zero_tusk,
 			)
 		);
 		//var picked_player = instance_find(obj_char,irandom(instance_number(obj_char)-1));

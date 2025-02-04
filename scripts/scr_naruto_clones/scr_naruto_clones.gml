@@ -26,7 +26,7 @@ function init_naruto_baseform_clone() {
 	
 	punch = new charstate();
 	punch.start = function() {
-		change_sprite(spr_naruto_attack_punch_straight,3,false);
+		change_sprite(spr_naruto_attack_punch_straight,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -43,7 +43,7 @@ function init_naruto_baseform_clone() {
 	}
 	punch2 = new charstate();
 	punch2.start = function() {
-		change_sprite(spr_naruto_attack_punch_hook,5,false);
+		change_sprite(spr_naruto_attack_punch_hook,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -56,7 +56,7 @@ function init_naruto_baseform_clone() {
 	
 	slash = new charstate();
 	slash.start = function() {
-		change_sprite(spr_naruto_attack_slash,3,false);
+		change_sprite(spr_naruto_attack_slash,false);
 		play_sound(snd_slash_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -76,7 +76,7 @@ function init_naruto_baseform_clone() {
 	}
 	slash2 = new charstate();
 	slash2.start = function() {
-		change_sprite(spr_naruto_attack_slash_up,5,false);
+		change_sprite(spr_naruto_attack_slash_up,false);
 		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -95,7 +95,7 @@ function init_naruto_baseform_clone() {
 	
 	shuriken_throw = new charstate();
 	shuriken_throw.start = function() {
-		change_sprite(spr_naruto_special_throw_shuriken,7,false);
+		change_sprite(spr_naruto_special_throw_shuriken,false);
 		play_voiceline(voice_attack,20,false);
 	}
 	shuriken_throw.run = function() {
@@ -151,7 +151,7 @@ function init_naruto_baseform_clone_barrage() {
 
 	barrage_kick = new charstate();
 	barrage_kick.start = function() {
-		change_sprite(spr_naruto_attack_slide_kick_up,8,false);
+		change_sprite(spr_naruto_attack_slide_kick_up,false);
 		xoffset = width / 3;
 		face_target();
 		xspeed = 20 * facing;

@@ -30,7 +30,6 @@ function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_bal
 		if attempt_special(1/max_windblasts) and (windblast_count < max_windblasts) {
 			change_sprite(
 				sprite == windblast_sprite ? windblast_sprite2 : windblast_sprite,
-				2,
 				false
 			);
 			windblast_count++;
@@ -130,7 +129,7 @@ function add_greenwind_push_state(_sprite,_fireframe) {
 	greenwind_push_state = new charstate();
 	greenwind_push_state.start = function() {
 		if attempt_special(1) {
-			change_sprite(greenwind_push_sprite,3,false);
+			change_sprite(greenwind_push_sprite,false);
 		}
 		else {
 			change_state(idle_state);
@@ -182,7 +181,7 @@ function add_super_greenwind_blade(_sprite,_raiseframe,_lowerframe,_fireframe,_h
 	super_greenwind_blade_state = new charstate();
 	super_greenwind_blade_state.start = function() {
 		if attempt_super(2) {
-			change_sprite(super_greenwind_blade_sprite,3,false);
+			change_sprite(super_greenwind_blade_sprite,false);
 			play_sound(snd_dbz_beam_charge_short,1,1);
 			superfreeze(50);
 		}

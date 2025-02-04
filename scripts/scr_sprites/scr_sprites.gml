@@ -60,11 +60,11 @@ function init_sprite(_sprite = sprite_index) {
 	width_half = floor(width/2);
 	height_half = floor(height/2);
 	
-	change_sprite(_sprite,5,true);
+	change_sprite(_sprite,true);
 	reset_sprite();
 }
 
-function change_sprite(_sprite,_frameduration, _loop) {
+function change_sprite(_sprite,_loop) {
 	if sprite != _sprite {
 		previous_sprite_frame_duration = frame_duration;
 		previous_sprite_loop_count = anim_loop_count;
@@ -84,6 +84,8 @@ function change_sprite(_sprite,_frameduration, _loop) {
 		frame = 0;
 		frame_timer = -1;
 		anim_finished = false;
+		frame_duration = 60 / sprite_get_speed(sprite);
+		anim_speed = 1;
 		
 		sprite_timer = -1;
 		
@@ -143,7 +145,7 @@ function update_sprite_animation() {
 					frame_timer = frame_duration - 1;
 				}
 				else {
-					change_sprite(next_sprite,next_sprite_frame_duration,next_sprite_frame_duration);
+					change_sprite(next_sprite);
 				}
 			}
 		}

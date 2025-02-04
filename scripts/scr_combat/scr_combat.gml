@@ -110,7 +110,7 @@ function check_guard(_attacktype) {
 
 function guard_attack(_hitbox) {
 	change_state(guard_state);
-	change_sprite(guard_sprite,3,false);
+	change_sprite(guard_sprite,false);
 	xspeed *= 1.5;
 	yspeed = 0;
 }
@@ -153,19 +153,18 @@ function react_to_attack_type(_attacktype) {
 function change_sprite_hit() {
 	change_sprite(
 		sprite == hit_high_sprite ? hit_low_sprite : hit_high_sprite,
-		3,
 		false
 	);
 	if is_airborne or (yspeed < 0) {
 		change_sprite(hit_air_sprite,frame_duration,false);
 	}
 	if (abs(xspeed) >= 10) or (abs(yspeed) >= 10) {
-		change_sprite(launch_sprite,frame_duration,true);
+		change_sprite(launch_sprite,true);
 		yoffset = -height_half;
 		rotation = point_direction(0,0,abs(xspeed),-yspeed);
 	}
 	if yspeed <= -10 {
-		change_sprite(spinout_sprite,frame_duration,true);
+		change_sprite(spinout_sprite,true);
 		yoffset = -height_half;
 		rotation = point_direction(0,0,abs(xspeed),-yspeed);
 	}

@@ -13,7 +13,6 @@ function add_kiblast_state(_sprite1,_sprite2,_kiblastsprite,_fireframe,_maxrepea
 		if attempt_special(1/max_kiblasts) and (kiblast_count < max_kiblasts) {
 			change_sprite(
 				sprite == kiblast_sprite2 ? kiblast_sprite : kiblast_sprite2,
-				2,
 				false
 			);
 			kiblast_count++;
@@ -89,7 +88,6 @@ function add_kamehameha_state(_groundsprite,_airsprite,_chargeframe1,_chargefram
 		if attempt_special(1) {
 			change_sprite(
 				on_ground ? kamehameha_ground_sprite : kamehameha_air_sprite,
-				3,
 				false
 			);
 			xspeed = 0;
@@ -139,7 +137,6 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 		if attempt_super(2,(kamehameha_cooldown <= 0)) {
 			change_sprite(
 				on_ground ? kamehameha_ground_sprite : kamehameha_air_sprite,
-				3,
 				false
 			);
 			xspeed = 0;
@@ -169,7 +166,6 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 					var _frame = frame;
 					change_sprite(
 						on_ground ? kamehameha_ground_sprite : kamehameha_air_sprite,
-						3,
 						false
 					);
 					frame = _frame;

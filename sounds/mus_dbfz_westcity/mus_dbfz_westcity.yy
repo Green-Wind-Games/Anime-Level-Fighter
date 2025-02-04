@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":196.032,
+  "duration":369.71103,
   "name":"mus_dbfz_westcity",
   "parent":{
     "name":"Music",

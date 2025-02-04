@@ -107,7 +107,7 @@ function create_specialeffect(_sprite,_x,_y,_xscale = 1,_yscale = 1,_rotation = 
 	var _effect = instance_create(_x,_y,obj_specialeffect);
 	with(_effect) {
 		init_sprite(_sprite);
-		change_sprite(_sprite,60 / sprite_get_speed(_sprite),false);
+		change_sprite(_sprite,false);
 		xscale = _xscale;
 		yscale = _yscale;
 		rotation = _rotation;

@@ -7,7 +7,7 @@ function add_myrmidon_slash_state(_chargesprite,_sprite1,_sprite2,_sprite3) {
 	myrmidon_slash_state = new charstate();
 	myrmidon_slash_state.start = function() {
 		if attempt_super(3) {
-			change_sprite(tech_sprite,3,false);
+			change_sprite(tech_sprite,false);
 			yoffset = -height_half;
 			face_target();
 			
@@ -31,14 +31,14 @@ function add_myrmidon_slash_state(_chargesprite,_sprite1,_sprite2,_sprite3) {
 		if sprite == tech_sprite {
 			gravitate(1);
 			if on_ground and yspeed > 0 {
-				change_sprite(myrmidon_slash_sprite_charge,3,false);
+				change_sprite(myrmidon_slash_sprite_charge,false);
 				xspeed = 0;
 				yspeed = 0;
 			}
 		}
 		else if sprite == myrmidon_slash_sprite_charge {
 			if !superfreeze_active {
-				change_sprite(myrmidon_slash_sprite3,5,false);
+				change_sprite(myrmidon_slash_sprite3,false);
 				alpha = 0;
 				
 				var _slash1 = create_shot(
@@ -84,17 +84,17 @@ function add_myrmidon_slash_state(_chargesprite,_sprite1,_sprite2,_sprite3) {
 					hiteffects.slash
 				);
 				with(_slash1) {
-					change_sprite(sprite,3,false);
+					change_sprite(sprite,false);
 					blend = false;
 					hit_limit = -1;
 				}
 				with(_slash2) {
-					change_sprite(sprite,4,false);
+					change_sprite(sprite,false);
 					blend = false;
 					hit_limit = -1;
 				}
 				with(_slash3) {
-					change_sprite(sprite,5,false);
+					change_sprite(sprite,false);
 					blend = false;
 					hit_limit = -1;
 				}

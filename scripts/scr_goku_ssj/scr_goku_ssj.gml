@@ -110,7 +110,7 @@ function init_goku_ssj() {
 
 	light_attack = new charstate();
 	light_attack.start = function() {
-		change_sprite(spr_goku_ssj_attack_punch_straight,3,false);
+		change_sprite(spr_goku_ssj_attack_punch_straight,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -120,7 +120,7 @@ function init_goku_ssj() {
 
 	light_attack2 = new charstate();
 	light_attack2.start = function() {
-		change_sprite(spr_goku_ssj_attack_kick_side,3,false);
+		change_sprite(spr_goku_ssj_attack_kick_side,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -130,7 +130,7 @@ function init_goku_ssj() {
 
 	light_attack3 = new charstate();
 	light_attack3.start = function() {
-		change_sprite(spr_goku_ssj_attack_kick_lift,3,false);
+		change_sprite(spr_goku_ssj_attack_kick_lift,false);
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	light_attack3.run = function() {
@@ -139,7 +139,7 @@ function init_goku_ssj() {
 	
 	light_lowattack = new charstate();
 	light_lowattack.start = function() {
-		change_sprite(spr_goku_ssj_attack_triple_kick,2,false);
+		change_sprite(spr_goku_ssj_attack_triple_kick,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	light_lowattack.run = function() {
@@ -153,7 +153,7 @@ function init_goku_ssj() {
 	
 	light_airattack = new charstate();
 	light_airattack.start = function() {
-		change_sprite(spr_goku_ssj_attack_triple_kick,2,false);
+		change_sprite(spr_goku_ssj_attack_triple_kick,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	light_airattack.run = function() {
@@ -171,7 +171,7 @@ function init_goku_ssj() {
 	
 	medium_attack = new charstate();
 	medium_attack.start = function() {
-		change_sprite(spr_goku_ssj_attack_elbow_bash,3,false);
+		change_sprite(spr_goku_ssj_attack_elbow_bash,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -185,7 +185,7 @@ function init_goku_ssj() {
 	
 	medium_lowattack = new charstate();
 	medium_lowattack.start = function() {
-		change_sprite(spr_goku_ssj_attack_spin_kick,2,false);
+		change_sprite(spr_goku_ssj_attack_spin_kick,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -195,7 +195,7 @@ function init_goku_ssj() {
 	
 	medium_airattack = new charstate();
 	medium_airattack.start = function() {
-		change_sprite(spr_goku_ssj_attack_spin_kick_double,2,false);
+		change_sprite(spr_goku_ssj_attack_spin_kick_double,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	medium_airattack.run = function() {
@@ -208,7 +208,7 @@ function init_goku_ssj() {
 
 	heavy_attack = new charstate();
 	heavy_attack.start = function() {
-		change_sprite(spr_goku_ssj_attack_kick_back,5,false);
+		change_sprite(spr_goku_ssj_attack_kick_back,false);
 		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
@@ -218,7 +218,7 @@ function init_goku_ssj() {
 
 	launcher_attack = new charstate();
 	launcher_attack.start = function() {
-		change_sprite(spr_goku_ssj_attack_backflip_kick,3,false);
+		change_sprite(spr_goku_ssj_attack_backflip_kick,false);
 		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
@@ -228,7 +228,7 @@ function init_goku_ssj() {
 
 	heavy_airattack = new charstate();
 	heavy_airattack.start = function() {
-		change_sprite(spr_goku_ssj_attack_smash,5,false);
+		change_sprite(spr_goku_ssj_attack_smash,false);
 		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
@@ -239,7 +239,7 @@ function init_goku_ssj() {
 	dragon_fist = new charstate();
 	dragon_fist.start = function() {
 		if attempt_super(1) {
-			change_sprite(spr_goku_ssj_attack_punch_straight,8,false);
+			change_sprite(spr_goku_ssj_attack_punch_straight,false);
 		}
 		else {
 			change_state(idle_state);
@@ -267,7 +267,7 @@ function init_goku_ssj() {
 	ki_blast_cannon = new charstate();
 	ki_blast_cannon.start = function() {
 		if attempt_super(1) {
-			change_sprite(spr_goku_ssj_special_kiblast,3,false);
+			change_sprite(spr_goku_ssj_special_kiblast,false);
 		}
 		else {
 			change_state(idle_state)
@@ -306,7 +306,7 @@ function init_goku_ssj() {
 	angry_kamehameha = new charstate();
 	angry_kamehameha.start = function() {
 		if attempt_ultimate(5,(!ssj2_active)) {
-			change_sprite(spr_goku_ssj_special_kiblast,5,false);
+			change_sprite(spr_goku_ssj_special_kiblast,false);
 			xspeed = 0;
 			yspeed = 0;
 			kamehameha_cooldown = kamehameha_cooldown_duration * 2;
@@ -336,7 +336,7 @@ function init_goku_ssj() {
 	activate_ssj2 = new charstate();
 	activate_ssj2.start = function() {
 		if attempt_super(1,(!ssj2_timer)) {
-			change_sprite(charge_loop_sprite,3,true);
+			change_sprite(charge_loop_sprite,true);
 			flash_sprite();
 			
 			superfreeze(60);

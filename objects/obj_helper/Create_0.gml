@@ -16,10 +16,10 @@ helper_script = function() {
 		}
 	}
 	else if chance(80) and (target_distance_x > 10) {
-		change_sprite(walk_sprite,4,true);
+		change_sprite(walk_sprite,true);
 	}
 	else {
-		change_sprite(idle_sprite,6,true);
+		change_sprite(idle_sprite,true);
 	}
 }
 

@@ -36,7 +36,7 @@ function init_genos_baseform() {
 
 	light_attack = new charstate();
 	light_attack.start = function() {
-		change_sprite(spr_genos_attack_punch_straight,3-(level / 3),false);
+		change_sprite(spr_genos_attack_punch_straight,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -46,7 +46,7 @@ function init_genos_baseform() {
 
 	light_attack2 = new charstate();
 	light_attack2.start = function() {
-		change_sprite(spr_genos_attack_kick_straight,3-(level / 3),false);
+		change_sprite(spr_genos_attack_kick_straight,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -56,7 +56,7 @@ function init_genos_baseform() {
 
 	light_attack3 = new charstate();
 	light_attack3.start = function() {
-		change_sprite(spr_genos_attack_kick_up,3-(level / 3),false);
+		change_sprite(spr_genos_attack_kick_up,false);
 		play_sound(snd_punch_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -66,7 +66,7 @@ function init_genos_baseform() {
 	
 	light_lowattack = new charstate();
 	light_lowattack.start = function() {
-		change_sprite(spr_genos_attack_punch_straight,3-(level / 3),false);
+		change_sprite(spr_genos_attack_punch_straight,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -76,7 +76,7 @@ function init_genos_baseform() {
 	
 	medium_attack = new charstate();
 	medium_attack.start = function() {
-		change_sprite(spr_genos_attack_uppercut,3-(level / 3),false);
+		change_sprite(spr_genos_attack_uppercut,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -86,7 +86,7 @@ function init_genos_baseform() {
 	
 	medium_lowattack = new charstate();
 	medium_lowattack.start = function() {
-		change_sprite(spr_genos_attack_kick_up,3-(level / 3),false);
+		change_sprite(spr_genos_attack_kick_up,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -96,7 +96,7 @@ function init_genos_baseform() {
 
 	heavy_attack = new charstate();
 	heavy_attack.start = function() {
-		change_sprite(spr_genos_attack_kick_straight,4-(level / 3),false);
+		change_sprite(spr_genos_attack_kick_straight,false);
 		play_sound(snd_punch_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -106,7 +106,7 @@ function init_genos_baseform() {
 
 	launcher_attack = new charstate();
 	launcher_attack.start = function() {
-		change_sprite(spr_genos_attack_uppercut,3-(level / 3),false);
+		change_sprite(spr_genos_attack_uppercut,false);
 		play_sound(snd_punch_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -116,7 +116,7 @@ function init_genos_baseform() {
 	
 	light_airattack = new charstate();
 	light_airattack.start = function() {
-		change_sprite(spr_genos_attack_kick_straight,5-(level / 3),false);
+		change_sprite(spr_genos_attack_kick_straight,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -126,7 +126,7 @@ function init_genos_baseform() {
 	
 	medium_airattack = new charstate();
 	medium_airattack.start = function() {
-		change_sprite(spr_genos_attack_kick_up,5-(level / 3),false);
+		change_sprite(spr_genos_attack_kick_up,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -136,7 +136,7 @@ function init_genos_baseform() {
 
 	heavy_airattack = new charstate();
 	heavy_airattack.start = function() {
-		change_sprite(spr_genos_attack_smash,4-(level / 3),false);
+		change_sprite(spr_genos_attack_smash,false);
 		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
@@ -147,10 +147,7 @@ function init_genos_baseform() {
 	fireblast = new charstate();
 	fireblast.start = function() {
 		if attempt_special(1/2) {
-			change_sprite(spr_genos_special_blast,3,false);
-		}
-		else {
-			change_state(idle_state);
+			change_sprite(spr_genos_special_blast,false);
 		}
 	}
 	fireblast.run = function() {
@@ -197,7 +194,7 @@ function init_genos_baseform() {
 	dropkick = new charstate();
 	dropkick.start = function() {
 		if attempt_special(1/2,(!dropkick_cooldown)) {
-			change_sprite(spr_genos_special_dropkick,2,false);
+			change_sprite(spr_genos_special_dropkick,false);
 			dropkick_cooldown = dropkick_cooldown_duration;
 			xspeed = (10 + (level * 3)) * facing;
 			yspeed = -20;
@@ -246,11 +243,8 @@ function init_genos_baseform() {
 	machinegun_blows = new charstate();
 	machinegun_blows.start = function() {
 		if attempt_special(1/2) {
-			change_sprite(spr_genos_attack_punch_straight,2,true);
+			change_sprite(spr_genos_attack_punch_straight,true);
 			play_voiceline(voice_attack,50,false);
-		}
-		else {
-			change_state(idle_state);
 		}
 	}
 	machinegun_blows.run = function() {
@@ -302,7 +296,7 @@ function init_genos_baseform() {
 	incinerate = new charstate();
 	incinerate.start = function() {
 		if attempt_special(1,(!incinerate_cooldown)) {
-			change_sprite(spr_genos_special_incinerate,5-(level / 2),false);
+			change_sprite(spr_genos_special_incinerate,false);
 			xspeed = 0;
 			yspeed = 0;
 			incinerate_cooldown = incinerate_cooldown_duration;
@@ -351,7 +345,7 @@ function init_genos_baseform() {
 	super_incinerate = new charstate();
 	super_incinerate.start = function() {
 		if attempt_special(2,(!incinerate_cooldown)) {
-			change_sprite(spr_genos_special_incinerate2,12,false);
+			change_sprite(spr_genos_special_incinerate2,false);
 			xspeed = 0;
 			yspeed = 0;
 			incinerate_cooldown = incinerate_cooldown_duration * 1.5;

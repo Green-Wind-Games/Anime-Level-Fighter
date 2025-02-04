@@ -109,7 +109,7 @@ function init_enker() {
 
 	light_attack = new charstate();
 	light_attack.start = function() {
-		change_sprite(spr_enker_attack_stab,3,false);
+		change_sprite(spr_enker_attack_stab,false);
 		play_sound(snd_slash_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -119,7 +119,7 @@ function init_enker() {
 
 	light_attack2 = new charstate();
 	light_attack2.start = function() {
-		change_sprite(spr_enker_attack_slash_down,3,false);
+		change_sprite(spr_enker_attack_slash_down,false);
 		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -132,7 +132,7 @@ function init_enker() {
 
 	light_attack3 = new charstate();
 	light_attack3.start = function() {
-		change_sprite(spr_enker_attack_slash_upper,3,false);
+		change_sprite(spr_enker_attack_slash_upper,false);
 		play_sound(snd_slash_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -145,7 +145,7 @@ function init_enker() {
 	
 	light_lowattack = new charstate();
 	light_lowattack.start = function() {
-		change_sprite(spr_enker_attack_stab,4,false);
+		change_sprite(spr_enker_attack_stab,false);
 		play_sound(snd_slash_whiff_light);
 		play_voiceline(voice_attack,50,false);
 		xspeed = -5 * facing;
@@ -157,7 +157,7 @@ function init_enker() {
 	
 	light_airattack = new charstate();
 	light_airattack.start = function() {
-		change_sprite(spr_enker_attack_stab,3,false);
+		change_sprite(spr_enker_attack_stab,false);
 		play_sound(snd_slash_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -167,7 +167,7 @@ function init_enker() {
 	
 	medium_attack = new charstate();
 	medium_attack.start = function() {
-		change_sprite(spr_enker_attack_slash_side,2,false);
+		change_sprite(spr_enker_attack_slash_side,false);
 		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -180,7 +180,7 @@ function init_enker() {
 	
 	medium_lowattack = new charstate();
 	medium_lowattack.start = function() {
-		change_sprite(spr_enker_attack_slash_dash,3,false);
+		change_sprite(spr_enker_attack_slash_dash,false);
 		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -197,7 +197,7 @@ function init_enker() {
 	
 	medium_airattack = new charstate();
 	medium_airattack.start = function() {
-		change_sprite(spr_enker_attack_slash_dash,3,false);
+		change_sprite(spr_enker_attack_slash_dash,false);
 		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -214,7 +214,7 @@ function init_enker() {
 
 	heavy_attack = new charstate();
 	heavy_attack.start = function() {
-		change_sprite(spr_enker_attack_slash_down,5,false);
+		change_sprite(spr_enker_attack_slash_down,false);
 		play_sound(snd_slash_whiff_heavy);
 		play_voiceline(voice_heavyattack,100,false);
 	}
@@ -227,7 +227,7 @@ function init_enker() {
 
 	launcher_attack = new charstate();
 	launcher_attack.start = function() {
-		change_sprite(spr_enker_attack_slash_upper,3,false);
+		change_sprite(spr_enker_attack_slash_upper,false);
 		play_sound(snd_slash_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -240,7 +240,7 @@ function init_enker() {
 
 	heavy_airattack = new charstate();
 	heavy_airattack.start = function() {
-		change_sprite(spr_enker_attack_slash_down,5,false);
+		change_sprite(spr_enker_attack_slash_down,false);
 		play_sound(snd_slash_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -254,7 +254,7 @@ function init_enker() {
 	activate_greenwind = new charstate();
 	activate_greenwind.start = function() {
 		if attempt_super(1,(!greenwind_active)) {
-			change_sprite(charge_loop_sprite,3,true);
+			change_sprite(charge_loop_sprite,true);
 			flash_sprite();
 			
 			greenwind_timer = greenwind_duration;

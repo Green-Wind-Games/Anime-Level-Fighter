@@ -4,7 +4,7 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	with(_shot) {
 		owner = get_true_owner(_me);
 		init_sprite(_sprite);
-		change_sprite(sprite,max(1,round(60/sprite_get_speed(_sprite))),true);
+		change_sprite(sprite,true);
 		var _true_scale = 0.5;
 		xscale = _scale;
 		yscale = _scale;

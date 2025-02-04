@@ -229,7 +229,7 @@ function add_temporary_powerup_state(_duration,_boost) {
 	temporary_powerup_state = new charstate();
 	temporary_powerup_state.start = function() {
 		if attempt_super(ceil(temporary_powerup_boost-1),!temporary_powerup_active) {
-			change_sprite(charge_start_sprite,3,false);
+			change_sprite(charge_start_sprite,false);
 			superfreeze(20);
 		}
 		else {
@@ -241,7 +241,7 @@ function add_temporary_powerup_state(_duration,_boost) {
 		yspeed = 0;
 		if sprite == charge_start_sprite {
 			if superfreeze_timer <= 5 {
-				change_sprite(charge_loop_sprite,3,true);
+				change_sprite(charge_loop_sprite,true);
 				flash_sprite();
 				play_voiceline(voice_powerup);
 				superfreeze(30);
@@ -253,7 +253,7 @@ function add_temporary_powerup_state(_duration,_boost) {
 			shake_screen(5,1);
 			aura_sprite = charge_aura;
 			if superfreeze_timer <= 5 {
-				change_sprite(charge_stop_sprite,3,false);
+				change_sprite(charge_stop_sprite,false);
 				superfreeze(10);
 			}
 		}

@@ -9,7 +9,7 @@ part_type_alpha3(jutsu_smoke_particle,1,1,0);
 
 function set_substitution_jutsu() {
 	substitution_state.start = function() {
-		change_sprite(air_peak_sprite,3,false);
+		change_sprite(air_peak_sprite,false);
 		reset_sprite();
 		timestop();
 		can_cancel = false;

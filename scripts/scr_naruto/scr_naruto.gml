@@ -52,7 +52,7 @@ function init_naruto_baseform() {
 	
 	light_attack = new charstate();
 	light_attack.start = function() {
-		change_sprite(spr_naruto_attack_punch_straight,4,false);
+		change_sprite(spr_naruto_attack_punch_straight,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -62,7 +62,7 @@ function init_naruto_baseform() {
 
 	light_attack2 = new charstate();
 	light_attack2.start = function() {
-		change_sprite(spr_naruto_attack_dash_punch,4,false);
+		change_sprite(spr_naruto_attack_dash_punch,false);
 		xspeed = 10 * facing;
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
@@ -73,7 +73,7 @@ function init_naruto_baseform() {
 
 	light_attack3 = new charstate();
 	light_attack3.start = function() {
-		change_sprite(spr_naruto_attack_uppercut,4,false);
+		change_sprite(spr_naruto_attack_uppercut,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -83,7 +83,7 @@ function init_naruto_baseform() {
 	
 	light_lowattack = new charstate();
 	light_lowattack.start = function() {
-		change_sprite(spr_naruto_attack_uppercut,2,false);
+		change_sprite(spr_naruto_attack_uppercut,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -93,7 +93,7 @@ function init_naruto_baseform() {
 	
 	light_airattack = new charstate();
 	light_airattack.start = function() {
-		change_sprite(spr_naruto_attack_back_kick_air,3,false);
+		change_sprite(spr_naruto_attack_back_kick_air,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -103,7 +103,7 @@ function init_naruto_baseform() {
 
 	medium_attack = new charstate();
 	medium_attack.start = function() {
-		change_sprite(spr_naruto_attack_punch_hook,3,false);
+		change_sprite(spr_naruto_attack_punch_hook,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -113,7 +113,7 @@ function init_naruto_baseform() {
 
 	medium_lowattack = new charstate();
 	medium_lowattack.start = function() {
-		change_sprite(spr_naruto_attack_spinkick,3,false);
+		change_sprite(spr_naruto_attack_spinkick,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -123,7 +123,7 @@ function init_naruto_baseform() {
 	
 	medium_airattack = new charstate();
 	medium_airattack.start = function() {
-		change_sprite(spr_naruto_attack_dash_punch,4,false);
+		change_sprite(spr_naruto_attack_dash_punch,false);
 		xspeed = 10 * facing;
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
@@ -134,7 +134,7 @@ function init_naruto_baseform() {
 	
 	heavy_attack = new charstate();
 	heavy_attack.start = function() {
-		change_sprite(spr_naruto_attack_dash_slash,5,false);
+		change_sprite(spr_naruto_attack_dash_slash,false);
 		xspeed = 20 * facing;
 		play_sound(snd_dbz_dash);
 		play_sound(snd_slash_whiff_medium);
@@ -149,7 +149,7 @@ function init_naruto_baseform() {
 	
 	launcher_attack = new charstate();
 	launcher_attack.start = function() {
-		change_sprite(spr_naruto_attack_slash_up,3,false);
+		change_sprite(spr_naruto_attack_slash_up,false);
 		play_sound(snd_slash_whiff_medium);
 		play_voiceline(voice_heavyattack,50,false);
 	}
@@ -162,7 +162,7 @@ function init_naruto_baseform() {
 
 	heavy_airattack = new charstate();
 	heavy_airattack.start = function() {
-		change_sprite(spr_naruto_attack_smash_kick,4,false);
+		change_sprite(spr_naruto_attack_smash_kick,false);
 		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
@@ -174,7 +174,6 @@ function init_naruto_baseform() {
 	divekick.start = function() {
 		change_sprite(
 			choose(spr_naruto_attack_divekick,spr_naruto_attack_divekick2),
-			2,
 			true
 		);
 		play_sound(snd_punch_whiff_medium);
@@ -192,7 +191,7 @@ function init_naruto_baseform() {
 	uzumaki_barrage_start = new charstate();
 	uzumaki_barrage_start.start = function() {
 		if attempt_special(1) {
-			change_sprite(spr_naruto_jutsu,3,false);
+			change_sprite(spr_naruto_jutsu,false);
 			play_sound(snd_naruto_jutsu_activate);
 			play_voiceline(vc_naruto_uzumaki);
 			if (instance_number(obj_char) <= 2) and (combo_timer > 0) {
@@ -225,7 +224,7 @@ function init_naruto_baseform() {
 
 	uzumaki_barrage_flip = new charstate();
 	uzumaki_barrage_flip.start = function() {
-		change_sprite(spr_naruto_flip,3,true);
+		change_sprite(spr_naruto_flip,true);
 		yoffset = -height_half;
 		rotation_speed = -45;
 		xspeed = (target_distance_x / 30) * facing;
@@ -243,7 +242,7 @@ function init_naruto_baseform() {
 	
 	shuriken_throw = new charstate();
 	shuriken_throw.start = function() {
-		change_sprite(spr_naruto_special_throw_shuriken,3,false);
+		change_sprite(spr_naruto_special_throw_shuriken,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	shuriken_throw.run = function() {
@@ -296,7 +295,7 @@ function init_naruto_baseform() {
 	
 	triple_shuriken_throw = new charstate();
 	triple_shuriken_throw.start = function() {
-		change_sprite(spr_naruto_special_throw_shuriken,3,false);
+		change_sprite(spr_naruto_special_throw_shuriken,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	triple_shuriken_throw.run = function() {
@@ -351,7 +350,7 @@ function init_naruto_baseform() {
 	mini_rasengan = new charstate();
 	mini_rasengan.start = function() {
 		if attempt_special(1,(!rasengan_cooldown)) {
-			change_sprite(spr_naruto_special_rasengan,1,false);
+			change_sprite(spr_naruto_special_rasengan,false);
 		}
 		else {
 			change_state(idle_state);
@@ -379,7 +378,7 @@ function init_naruto_baseform() {
 	rasengan_dive = new charstate();
 	rasengan_dive.start = function() {
 		if attempt_special(1,(!rasengan_cooldown)) {
-			change_sprite(spr_naruto_special_rasengan_dive,3,false);
+			change_sprite(spr_naruto_special_rasengan_dive,false);
 			xspeed = 0;
 			yspeed = 0;
 			play_voiceline(vc_naruto_rasengan);
@@ -481,7 +480,7 @@ function init_naruto_baseform() {
 	double_rasengan = new charstate();
 	double_rasengan.start = function() {
 		if attempt_super(2,(!rasengan_cooldown)) {
-			change_sprite(spr_naruto_special_doublerasengan,4,false);
+			change_sprite(spr_naruto_special_doublerasengan,false);
 		}
 		else {
 			change_state(idle_state);
@@ -518,7 +517,7 @@ function init_naruto_baseform() {
 	giant_rasengan = new charstate();
 	giant_rasengan.start = function() {
 		if attempt_super(3,(!rasengan_cooldown)) {
-			change_sprite(spr_naruto_special_giantrasengan,5,false);
+			change_sprite(spr_naruto_special_giantrasengan,false);
 		}
 		else {
 			change_state(idle_state);
@@ -553,7 +552,7 @@ function init_naruto_baseform() {
 	shadow_clone_jutsu = new charstate();
 	shadow_clone_jutsu.start = function() {
 		if attempt_special(2,(!shadow_clone_jutsu_cooldown)) {
-			change_sprite(spr_naruto_jutsu,5,false);
+			change_sprite(spr_naruto_jutsu,false);
 			play_sound(snd_naruto_jutsu_activate);
 			play_voiceline(vc_naruto_shadowclonejutsu);
 		}
@@ -583,7 +582,7 @@ function init_naruto_baseform() {
 	shadow_clone_barrage = new charstate();
 	shadow_clone_barrage.start = function() {
 		if attempt_super(1.5,(!shadow_clone_jutsu_cooldown)) {
-			change_sprite(spr_naruto_jutsu,3,false);
+			change_sprite(spr_naruto_jutsu,false);
 			play_sound(snd_naruto_jutsu_activate);
 			play_voiceline(vc_naruto_shadowclonejutsu);
 		}
@@ -657,7 +656,7 @@ function init_naruto_baseform() {
 	rasen_shuriken = new charstate();
 	rasen_shuriken.start = function() {
 		if attempt_ultimate(7,(!rasengan_cooldown)) {
-			change_sprite(spr_naruto_special_rasenshuriken,3,false);
+			change_sprite(spr_naruto_special_rasenshuriken,false);
 		}
 		else {
 			change_state(idle_state);
@@ -708,7 +707,7 @@ function init_naruto_baseform() {
 					hiteffects.none
 				);
 				with(_explosion) {
-					change_sprite(sprite,1,true);
+					change_sprite(sprite,true);
 					blend = true;
 					duration = 60 * 3;
 					alpha = 0;
@@ -755,7 +754,7 @@ function init_naruto_baseform() {
 			}
 			if check_frame(16) {
 				take_damage(noone,10,false);
-				change_sprite(launch_sprite,3,true);
+				change_sprite(launch_sprite,true);
 				yoffset = -height_half;
 				xspeed = -10 * facing;
 				yspeed = -5;
@@ -765,7 +764,7 @@ function init_naruto_baseform() {
 		}
 		else if sprite == launch_sprite {
 			if on_ground {
-				change_sprite(liedown_sprite,3,true);
+				change_sprite(liedown_sprite,true);
 			}
 		}
 		else if sprite == liedown_sprite {
