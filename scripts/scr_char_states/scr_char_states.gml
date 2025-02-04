@@ -670,11 +670,11 @@ function init_charstates() {
 		change_sprite(charge_loop_sprite,3,true);
 		flash_sprite();
 		aura_sprite = transform_aura;
-		superfreeze(150);
+		superfreeze(120);
 		shake_screen(superfreeze_timer,1);
 		play_sound(snd_dbz_energy_start);
-		level_up();
 		can_cancel = false;
+		level_up();
 	}
 	levelup_state.run = function() {
 		xspeed = 0;
@@ -686,16 +686,15 @@ function init_charstates() {
 		}
 	}
 	
-	transform_state = new charstate();
-	transform_state.start = function() {
+	levelup_transform_state = new charstate();
+	levelup_transform_state.start = function() {
 		change_sprite(charge_loop_sprite,3,true);
-		play_voiceline(voice_transform);
 		superfreeze(audio_sound_length(voice) * 30);
 		shake_screen(superfreeze_timer,1);
 		aura_sprite = transform_aura;
 		can_cancel = false;
 	}
-	transform_state.run = function() {
+	levelup_transform_state.run = function() {
 		xspeed = 0;
 		yspeed = 0;
 		can_cancel = false;
@@ -704,9 +703,35 @@ function init_charstates() {
 			transform(next_form);
 			flash_sprite();
 			play_sound(snd_dbz_energy_start);
-			change_state(levelup_state);
+			change_state(levelup_transform_finish_state);
 		}
 	}
+	
+	levelup_transform_finish_state = new charstate();
+	levelup_transform_finish_state.start = function() {
+		change_sprite(charge_loop_sprite,3,true);
+		flash_sprite();
+		aura_sprite = transform_aura;
+		superfreeze(120);
+		shake_screen(superfreeze_timer,1);
+		play_sound(snd_dbz_energy_start);
+		can_cancel = false;
+		
+		level_up();
+	}
+	levelup_transform_finish_state.run = function() {
+		xspeed = 0;
+		yspeed = 0;
+		can_cancel = false;
+		if !superfreeze_active {
+			aura_sprite = noone;
+			change_state(idle_state);
+		}
+	}
+	
+	transform_redo_state = new charstate();
+	
+	transform_undo_state = new charstate();
 	
 	charge_state = new charstate();
 	charge_state.start = function() {

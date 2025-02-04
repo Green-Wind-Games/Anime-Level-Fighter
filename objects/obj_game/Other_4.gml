@@ -14,9 +14,11 @@ screen_fade_type = fade_types.normal;
 ground_height = room_height - floor(game_height * 0.2);
 		
 battle_x = room_width / 2;
-battle_y = -520;
+battle_y = ground_height;
 left_wall = 0;
 right_wall = room_width;
+
+ds_list_clear(music_played_list);
 
 var active_players = 0;
 for(var i = 0; i < max_players; i++) {
@@ -70,14 +72,14 @@ switch(room) {
 					_x += _w4_t1 * (spawned_team1_players + 1);
 				}
 				else {
-					_x += _w2;
-					_x -= _w4_t2 * (spawned_team2_players + 1);
+					//_x += _w2;
+					_x += _w4_t2 * (spawned_team2_players + 1);
 				}
-				var _y = battle_y;
+				var _y = ground_height - 1000;
 				with(instance_create(_x,_y,get_char_object(player_char[i]))) {
 					player[i] = id;
 					input = player_input[player_slot[i]];
-					if spawned_players < (team1_members) {
+					if spawned_players < team1_members {
 						team = 1;
 						facing = 1;
 						spawned_team1_players++
@@ -94,8 +96,16 @@ switch(room) {
 		}
 	
 		stop_music();
-		var picked_player = instance_find(obj_char,irandom(instance_number(obj_char)-1));
-		play_chartheme(picked_player);
+		play_music(
+			choose(
+				mus_dbfz_westcity,
+				mus_ff4_ds_bossbattle,
+				mus_yakuza_zero_tusk,
+			)
+		);
+		//var picked_player = instance_find(obj_char,irandom(instance_number(obj_char)-1));
+		//play_chartheme(picked_player);
+		
 	}
 	
 	switch(room) {

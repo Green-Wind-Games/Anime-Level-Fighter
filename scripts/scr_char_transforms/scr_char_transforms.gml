@@ -50,8 +50,6 @@ function transform(_form) {
 	var _target = target;
 	var _input = input;
 	
-	var _levelup = _form == next_form;
-	
 	array_delete(ground_movelist,0,array_length(ground_movelist));
 	array_delete(air_movelist,0,array_length(air_movelist));
 	
@@ -82,10 +80,6 @@ function transform(_form) {
 	input = _input;
 	
 	face_target();
-	
-	if _levelup {
-		level_up();
-	}
 }
 
 function auto_levelup() {
@@ -101,19 +95,17 @@ function auto_levelup() {
 	
 	if object_exists(next_form) {
 		var _nextform = instance_create(0,0,next_form);
-		play_chartheme(_nextform);
+		play_music(_nextform.theme,1,_nextform.theme_pitch);
 		instance_destroy(_nextform);
 		
 		transform_script();
-		change_state(transform_state);
+		change_state(levelup_transform_state);
 	}
 	else {
-		play_chartheme(id);
+		play_leveluptheme(id);
 		
 		levelup_script();
 		change_state(levelup_state);
-		
-		xp = 0;
 	}
 	
 	can_cancel = false;

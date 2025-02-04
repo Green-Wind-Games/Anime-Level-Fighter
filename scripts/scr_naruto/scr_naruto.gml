@@ -351,7 +351,7 @@ function init_naruto_baseform() {
 	mini_rasengan = new charstate();
 	mini_rasengan.start = function() {
 		if attempt_special(1,(!rasengan_cooldown)) {
-			change_sprite(spr_naruto_special_rasengan,3 - (combo_timer > 0),false);
+			change_sprite(spr_naruto_special_rasengan,1,false);
 		}
 		else {
 			change_state(idle_state);

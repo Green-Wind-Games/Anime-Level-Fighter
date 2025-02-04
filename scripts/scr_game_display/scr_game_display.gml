@@ -43,10 +43,10 @@ fullscreen_scale = min(screen_width / game_width, screen_height / game_height);
 fullscreen_width = floor(game_width * fullscreen_scale);
 fullscreen_height = floor(game_height * fullscreen_scale);
 
-var gui_scale = 0.75;
+var gui_scale = 1.25;
 
-gui_width = round(game_width * gui_scale);
-gui_height = round(game_height * gui_scale);
+gui_width = round(game_width / gui_scale);
+gui_height = round(game_height / gui_scale);
 
 if os_type == os_android or _test {
 	gui_width = floor(gui_width * _factor);
@@ -171,9 +171,7 @@ function toggle_fullscreen() {
 }
 
 function shake_screen(_duration, _intensity = 1) {
-	if screen_shake_timer <= 1 {
-		screen_shake_timer = _duration;
-	}
+	screen_shake_timer = _duration;
 	screen_shake_intensity = _intensity;
 }
 

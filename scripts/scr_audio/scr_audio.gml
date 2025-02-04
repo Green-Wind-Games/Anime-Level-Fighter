@@ -13,13 +13,13 @@ meme_chance = 10;
 function play_sound(_snd,_volume = 1,_pitch = 1) {
 	if (audio_exists(_snd)) {
 		var _audioname = audio_get_name(_snd);
-		var _sounds;
+		var _sounds = array_create(0);
 		_sounds[0] = _snd;
 		
 		for(var i = 1; i < 10; i++) {
 			var _snd2 = asset_get_index(_audioname + string(i+1));
 			if !audio_exists(_snd2) continue;
-			_sounds[array_length(_sounds)] = _snd2;
+			array_push(_sounds,_snd2);
 		}
 		
 		var _universe = -1;
@@ -40,11 +40,16 @@ function play_sound(_snd,_volume = 1,_pitch = 1) {
 			}
 			var _snd2 = asset_get_index(_audioname2);
 			if !audio_exists(_snd2) continue;
-			_sounds[array_length(_sounds)] = _snd2;
+			if i == 0 {
+				array_delete(_sounds,0,array_length(_sounds));
+			}
+			array_push(_sounds,_snd2);
 		}
 		
+		array_shuffle(_sounds);
+		
 		sound = audio_play_sound(
-			_sounds[irandom(array_length(_sounds)-1)],
+			_sounds[0],
 			1,
 			false,
 			_volume*master_volume*sound_volume,

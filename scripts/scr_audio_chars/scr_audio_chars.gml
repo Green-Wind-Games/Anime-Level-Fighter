@@ -33,7 +33,68 @@ function play_chartheme(_char) {
 		if (audio_is_playing(theme)) {
 			return false;
 		}
-		play_music(theme,1,theme_pitch);
-		return true;
+		if ds_list_find_index(music_played_list,theme) == -1 {
+			play_music(theme,1,theme_pitch);
+			return true;
+		}
+		else {
+			play_music(theme,1,theme_pitch);
+			return false;
+		}
+	}
+	return false;
+}
+
+function play_leveluptheme(_char) {
+	with(_char) {
+		if ds_list_find_index(music_played_list,theme) == -1 {
+			play_chartheme(id);
+		}
+		else {
+			if music_timer < min(music_min_duration, audio_sound_get_loop_start(music)) {
+				exit;
+			}
+			
+			var _musiclist = array_create(0);
+			var _nextlevel = level+1;
+			switch(_nextlevel) {
+				default:
+				array_push(_musiclist,
+					mus_extremebutoden_snakeway
+				);
+				break;
+				
+				case max_level:
+				array_push(_musiclist,
+					mus_extremebutoden_kaisworld
+				);
+				break;
+			}
+			
+			var _already = 0;
+			
+			for(var i = 0; i < array_length(_musiclist); i++) {
+				if ds_list_find_index(music_played_list,_musiclist[i]) != -1 {
+					_already++;
+				}
+			}
+			
+			if _already < array_length(_musiclist) - 1 {
+				for(var i = 0; i < array_length(_musiclist); i++) {
+					if ds_list_find_index(music_played_list,_musiclist[i]) != -1 {
+						array_delete(_musiclist,i,1);
+						i--;
+					}
+				}
+			}
+			
+			if array_length(_musiclist) >= 1 {
+				array_shuffle(_musiclist);
+				play_music(_musiclist[0]);
+			}
+			else {
+				play_music(theme,1,theme_pitch);
+			}
+		}
 	}
 }

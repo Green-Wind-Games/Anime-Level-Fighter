@@ -268,21 +268,32 @@ function init_goku_baseform() {
 				0,
 				0,
 				spr_shockwave,
-				0.1,
+				3,
 				500,
 				10,
 				-10,
 				attacktype.hard_knockdown,
-				attackstrength.medium,
+				attackstrength.heavy,
 				hiteffects.none
 			);
 			with(_shockwave) {
-				active_script = function() {
-					var _speed = 0.2;
-					xscale += _speed;
-					yscale += _speed;
+				alpha = 0;
+				duration = 10;
+				hit_limit = -1;
+				hit_script = function(_hit) {
+					if is_char(_hit) or is_helper(_hit) {
+						var _dir = point_direction(x,y,_hit.x,_hit.y-_hit.height_half);
+						var _speed = 10;
+						_hit.xspeed = lengthdir_x(_speed,_dir);
+						_hit.yspeed = lengthdir_y(_speed,_dir);
+					}
 				}
 			}
+			create_particles(
+				x+(width_half*facing),
+				y-height_half,
+				air_shockwave_particle
+			);
 		}
 		if state_timer > 60 {
 			return_to_idle();
