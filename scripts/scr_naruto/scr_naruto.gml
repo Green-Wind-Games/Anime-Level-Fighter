@@ -290,7 +290,7 @@ function init_naruto_baseform() {
 				}
 			}
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 	
 	triple_shuriken_throw = new charstate();
@@ -344,7 +344,7 @@ function init_naruto_baseform() {
 				i++;
 			}
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 	
 	mini_rasengan = new charstate();
@@ -372,7 +372,7 @@ function init_naruto_baseform() {
 				jutsu_smoke_particle
 			);
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 	
 	rasengan_dive = new charstate();
@@ -511,7 +511,7 @@ function init_naruto_baseform() {
 				jutsu_smoke_particle
 			);
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 	
 	giant_rasengan = new charstate();
@@ -546,7 +546,7 @@ function init_naruto_baseform() {
 				jutsu_smoke_particle
 			);
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 
 	shadow_clone_jutsu = new charstate();
@@ -576,7 +576,7 @@ function init_naruto_baseform() {
 				init_naruto_baseform_clone
 			);
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 	
 	shadow_clone_barrage = new charstate();
@@ -650,7 +650,7 @@ function init_naruto_baseform() {
 				}
 			}
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 	
 	rasen_shuriken = new charstate();

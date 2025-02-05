@@ -3,7 +3,8 @@ globalvar	screen_width, screen_height, screen_aspectratio,
 			gui_width, gui_height, hud_height,
 			window_width, window_height, window_scale, window_max_scale,
 			fullscreen_scale, fullscreen_width, fullscreen_height,
-			screen_fade_color, screen_fade_duration, screen_fade_type;
+			screen_fade_color, screen_fade_duration, screen_fade_type,
+			camera, camera_x, camera_y, camera_zoom, camera_target;
 
 screen_width = display_get_width();
 screen_height = display_get_height();
@@ -62,8 +63,11 @@ screen_fade_type = fade_types.normal;
 function init_view() {
 	view_enabled = true;
 	view_visible[0] = true;
-	#macro view view_camera[0]
-	camera_set_view_size(view,game_width,game_height);
+	camera = view_camera[0];
+	camera_target = noone;
+	camera_x = 0;
+	camera_y = 0;
+	camera_set_view_size(camera,game_width,game_height);
 }
 
 function update_view() {
@@ -77,64 +81,98 @@ function update_view() {
 		screen_shake_x = 0;
 		screen_shake_y = 0;
 	}
+	
+	if superfreeze_active {
+		camera_target = superfreeze_activator;
+	}
+	
+	if !instance_exists(camera_target) {
+		camera_target = noone;
+	}
+	
 	var _x1 = room_width;
 	var _y1 = room_height;
 	var _x2 = 0;
 	var _y2 = 0;
-	with(obj_char) {
-		if ((!dead) or (xspeed != 0) or (yspeed != 0)) and is_char(id) {
+	var desired_zoom = 1;
+	if instance_exists(camera_target) {
+		with(camera_target) {
 			_x1 = min(_x1,x-width_half);
 			_y1 = min(_y1,y-height);
 			_x2 = max(_x2,x+width_half);
 			_y2 = max(_y2,y);
 		}
 	}
-	
-	var playerdist = abs(_x1 - _x2);
-	var max_dist = (right_wall-left_wall) + 25;
-	var desired_zoom = game_width / (min(playerdist+50,max_dist));
-	desired_zoom = min(desired_zoom,1.25);
-	if superfreeze_active {
-		desired_zoom = 1.5;
+	else {
+		if instance_exists(obj_char) {
+			with(obj_char) {
+				if !is_char(id) continue;
+				if dead {
+					if (active_state == liedown_state) and (state_timer > 60) {
+						continue;
+					}
+				}
+				else {
+					if (active_state == defeat_state) and (anim_finished) {
+						continue;
+					}
+				}
+				if superfreeze_active {
+					if superfreeze_activator != id {
+						continue;
+					}
+				}
+			
+				_x1 = min(_x1,x-width_half);
+				_y1 = min(_y1,y-height);
+				_x2 = max(_x2,x+width_half);
+				_y2 = max(_y2,y);
+			}
+			if superfreeze_active {
+				desired_zoom = 1.5;
+			}
+			else {
+				var playerdist = abs(_x1 - _x2);
+				var max_dist = (right_wall-left_wall) + 25;
+				desired_zoom = game_width / (min(playerdist+50,max_dist));
+			}
+		}
 	}
-	if game_state == gamestates.versus_results {
-		desired_zoom = 1;
-		screen_zoom_target = noone;
-	}
-	screen_zoom = approach(screen_zoom,desired_zoom,1/10);
+	camera_zoom = approach(camera_zoom,desired_zoom,1/10);
 	
-	var _w = round(game_width / screen_zoom);
-	var _h = round(game_height / screen_zoom);
+	var _w = round(game_width / camera_zoom);
+	var _h = round(game_height / camera_zoom);
 	var _w2 = round(_w/2);
 	var _h2 = round(_h/2);
 	
 	var _view_x = mean(_x1,_x2);
-	var _view_y = lerp(_y1,_y2,0.25);
-	
-	if superfreeze_active {
-		_view_x = superfreeze_activator.x;
-		_view_y = superfreeze_activator.y-superfreeze_activator.height_half;
-	}
+	var _view_y = mean(_y1,_y2);
 	
 	_view_x = clamp(_view_x,_w2,room_width-_w2-1);
 	_view_y = clamp(_view_y,_h2,room_height-_h2-1);
 	
+	camera_x = _view_x;
+	camera_y = _view_y;
+	
 	_view_x += screen_shake_x;
 	_view_y += screen_shake_y;
 		
-	camera_set_view_size(view,_w,_h);
-	camera_set_view_pos(view,_view_x-_w2,_view_y-_h2);
+	camera_set_view_size(camera,_w,_h);
+	camera_set_view_pos(camera,_view_x-_w2,_view_y-_h2);
 }
 
 function resize_window(_factor = 0) {
 	_factor = round(_factor);
 	window_scale += _factor;
-	window_scale = round(window_scale);
+	window_scale = window_scale;
 	if window_scale < 1 {
 		window_scale = 1;
 	}
-	else if window_scale > window_max_scale {
+	else if window_scale >= floor(window_max_scale) {
 		window_scale = window_max_scale;
+	}
+	else if window_scale < window_max_scale {
+		window_scale = floor(window_scale);
 	}
 	window_width = round(game_width * window_scale);
 	window_height = round(game_height * window_scale);

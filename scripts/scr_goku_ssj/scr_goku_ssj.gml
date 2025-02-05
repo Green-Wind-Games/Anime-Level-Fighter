@@ -260,7 +260,7 @@ function init_goku_ssj() {
 			xspeed /= 10;
 		}
 		if (state_timer > 50) {
-			return_to_idle();
+			anim_finish_idle();
 		}
 	}
 
@@ -299,7 +299,7 @@ function init_goku_ssj() {
 			}
 		}
 		if state_timer > 60 {
-			return_to_idle();
+			anim_finish_idle();
 		}
 	}
 
@@ -330,7 +330,7 @@ function init_goku_ssj() {
 		if value_in_range(frame,3,3) {
 			fire_beam(20,-25,spr_kamehameha_gold,2,0,50);
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 
 	activate_ssj2 = new charstate();

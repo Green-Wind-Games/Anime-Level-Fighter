@@ -71,7 +71,7 @@ function init_charstates() {
 			if sprite != uncrouch_sprite {
 				change_sprite(uncrouch_sprite,false);
 			}
-			return_to_idle();
+			anim_finish_idle();
 		}
 	}
 
@@ -498,7 +498,7 @@ function init_charstates() {
 			if sprite != wakeup_sprite {
 				change_sprite(wakeup_sprite,false);
 			}
-			return_to_idle();
+			anim_finish_idle();
 		}
 		else {
 			change_sprite(liedown_sprite,true);
@@ -851,8 +851,12 @@ function update_charstate() {
 }
 
 function return_to_idle() {
+	change_state(idle_state);
+}
+
+function anim_finish_idle() {
 	if anim_finished {
-		change_state(idle_state);
+		return_to_idle();
 	}
 }
 

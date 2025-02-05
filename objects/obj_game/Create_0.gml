@@ -59,7 +59,6 @@ globalvar	game_state, previous_game_state, next_game_state, game_state_timer, ga
 			screen_shake_x, screen_shake_y, screen_shake_intensity, screen_shake_timer,
 			screen_flash_color, screen_flash_timer,
 			screen_overlay_sprite, screen_overlay_timer,
-			screen_zoom, screen_zoom_target,
 			screen_flash_alpha, screen_shake_enabled, screen_overlay_alpha;
 			
 game_state = gamestates.intro;
@@ -168,9 +167,6 @@ screen_shake_enabled = true;
 screen_overlay_sprite = noone;
 screen_overlay_timer = 0;
 screen_overlay_alpha = 1;
-
-screen_zoom = 1;
-screen_zoom_target = noone;
 
 ygravity = 0.35;
 left_wall = 0;

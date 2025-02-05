@@ -140,7 +140,7 @@ function init_naruto_baseform_clone() {
 				}
 			}
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 }
 

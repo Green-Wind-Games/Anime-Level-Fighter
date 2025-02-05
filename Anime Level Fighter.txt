@@ -2,8 +2,9 @@
 This game uses the Numpad Notation for move commands.
 Directions are written as numbers, and buttons as letters.
 A sequence of numbers indicate a motion you make with the D-Pad or Stick.
-All commands assume your character is facing right. Invert the horizontal commands if your character is facing left.
-Most moves can be done both in the ground or in the air. They have (on ground) or (in air) if they can't.
+All commands assume your character is facing right.
+Invert the horizontal commands if your character is facing left.
+Most moves can be done both in the ground or in the air.
 
 [Numpad For Reference]
 7 8 9
@@ -100,10 +101,10 @@ A+B (in air): Air Throw
 A+B (when about to be grabbed): Grab Escape
 
 66A+B (some characters): Dash Grab/Tackle
-2A+B (some characters, on ground): Hold/Pummel Grab
 
-Tap any direction/button (while getting pummeled/held): Struggle to Escape
-Tap any direction/button (while pummeling/holding): Increase Grab Damage
+2A+B (some characters, on ground): Hold/Pummel Grab
+Tap any direction (while getting pummeled/held): Struggle to Escape
+Tap A/B/C (while pummeling/holding): Increase Grab Damage
 
 [Universal Mechanics]
 E (hold): MP Charge
@@ -121,7 +122,7 @@ E (hold, with Max XP): Level Up!
 
 236A+B: Super Move 1 (Costs 2-3 MP)
 214A+B: Super Move 2 (Costs 2-3 MP)
-236C+D: Ultimate Finisher (Costs 3-7 MP)
+236C+D: Ultimate Finisher (Costs 5-7 MP)
 214C+D (some characters): Secret Finisher (Costs 7-10 MP, usable only once)
 
 [Combos]
@@ -132,7 +133,7 @@ A x7: Full Autocombo
 
 B x4: Medium Autocombo (automatically uses 236A and 236A+B)
 
-CCC: Heavy Autocombo
+C x3: Heavy Autocombo
 2C, CC: Launcher Autocombo
 
 {Universal Combos}
@@ -150,7 +151,7 @@ HP, short for Hit Points, is a vital resource in this game.
 You start with maximum HP. If your HP is reduced to zero, your character is knocked out, and you lose.
 To prevent HP loss, you can do a number of things, including but not limited to:
 -Guard against attacks, greatly reducing the damage taken. The remaining damage is what we call "chip damage".
--Parry attacks, which, while risky, prevents all damage, and gives you plenty of advantages.
+-Parry attacks, which, while risky, prevents all damage and gives you plenty of advantages.
 -Dodge attacks, either by being far away, dodging them with movement, or spending TP on TP Dodges/Teleports.
 Some characters have abilities that drain or heal their own HP. Goku's Kaioken is an example of a technique that harms both the user and the target.
 Some characters have abilities that drain the enemy's HP, healing their own in the process.

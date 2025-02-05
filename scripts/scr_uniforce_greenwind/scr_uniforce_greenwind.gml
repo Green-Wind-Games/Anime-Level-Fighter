@@ -164,7 +164,7 @@ function add_greenwind_push_state(_sprite,_fireframe) {
 			}
 		}
 		if state_timer > 60 {
-			return_to_idle();
+			anim_finish_idle();
 		}
 	}
 }
@@ -269,6 +269,6 @@ function add_super_greenwind_blade(_sprite,_raiseframe,_lowerframe,_fireframe,_h
 				}
 			}
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 }

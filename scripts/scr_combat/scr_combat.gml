@@ -226,6 +226,10 @@ function connect_attack(_hitbox,_hurtbox) {
 	
 	hitstun = max(hitstun - (combo_hits_taken / 4), 10);
 	
+	if _hitbox.attack_type == attacktype.multihit {
+		hitstop = 1;
+	}
+	
 	var _is_strong_attack = true;
 	if _hitbox.attack_strength < attackstrength.super { _is_strong_attack = false; }
 	if (abs(xspeed) < 10) and (abs(yspeed) < 10) { _is_strong_attack = false; }

@@ -112,7 +112,7 @@ function add_kamehameha_state(_groundsprite,_airsprite,_chargeframe1,_chargefram
 		if value_in_range(frame,kamehameha_fire_frame1,kamehameha_fire_frame2) {
 			fire_beam(width*0.6,-height_half,spr_kamehameha,1,0,50);
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 }
 
@@ -181,7 +181,7 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 			fire_beam(width*0.6,-height_half,spr_kamehameha,1,0,50);
 			shake_screen(5);
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 }
 

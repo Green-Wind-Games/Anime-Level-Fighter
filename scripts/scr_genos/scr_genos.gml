@@ -187,7 +187,7 @@ function init_genos_baseform() {
 			}
 		}
 		if state_timer > 50 {
-			return_to_idle();
+			anim_finish_idle();
 		}
 	}
 
@@ -317,7 +317,7 @@ function init_genos_baseform() {
 		if value_in_range(frame,3,4) {
 			fire_beam(5,-25,spr_incinerate,0.75+(level / 4),0,50);
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 	
 	incinerate_medium = new charstate();
@@ -372,7 +372,7 @@ function init_genos_baseform() {
 			play_sound(snd_dbz_beam_fire);
 			shake_screen(20,1);
 		}
-		return_to_idle();
+		anim_finish_idle();
 	}
 
 	setup_basicmoves();

@@ -1,7 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-//draw_text(0,0,"X " + string(camera_get_view_x(view)) + " / Y " + string(camera_get_view_y(view)));
+//draw_text(0,0,"X " + string(camera_get_view_x(camera)) + " / Y " + string(camera_get_view_y(camera)));
 
 var _w = gui_width;
 var _h = gui_height;

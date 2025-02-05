@@ -131,7 +131,7 @@ function draw_my_playerindicator(_playerid = 0) {
 	draw_set_valign(fa_bottom);
 	draw_set_font(fnt_playerindicator);
 	
-	var _scale = 1/screen_zoom;
+	var _scale = 1/camera_zoom;
 	var _border = string_height("[]") * _scale;
 	
 	var _height = sprite_get_height(idle_sprite);
@@ -144,8 +144,8 @@ function draw_my_playerindicator(_playerid = 0) {
 		
 		indicator_y = clamp(
 			indicator_y,
-			camera_get_view_y(view)+(hud_height*_scale)+_border,
-			camera_get_view_y(view)+camera_get_view_height(view)
+			camera_get_view_y(camera)+(hud_height*_scale)+_border,
+			camera_get_view_y(camera)+camera_get_view_height(camera)
 		);
 	}
 	
@@ -201,10 +201,10 @@ function draw_superfreeze() {
 	if superfreeze_active {
 		draw_set_alpha(0.5);
 		draw_set_color(c_black);
-		var _x1 = camera_get_view_x(view);
-		var _y1 = camera_get_view_y(view);
-		var _x2 = _x1 + camera_get_view_width(view);
-		var _y2 = _y1 + camera_get_view_height(view);
+		var _x1 = camera_get_view_x(camera);
+		var _y1 = camera_get_view_y(camera);
+		var _x2 = _x1 + camera_get_view_width(camera);
+		var _y2 = _y1 + camera_get_view_height(camera);
 		draw_rectangle(_x1,_y1,_x2,_y2,false);
 		draw_set_alpha(1);
 		draw_set_color(c_white);

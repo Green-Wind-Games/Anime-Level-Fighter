@@ -1,6 +1,6 @@
 {
   "$GMSprite":"",
-  "%Name":"spr_goku_ssj_attack_kick_straight",
+  "%Name":"spr_goku_ssj_attack_kick",
   "bboxMode":0,
   "bbox_bottom":61,
   "bbox_left":0,
@@ -25,7 +25,7 @@
   "layers":[
     {"$GMImageLayer":"","%Name":"b937c8b6-2c02-499e-a7a3-0f23b813ee57","blendMode":0,"displayName":"default","isLocked":false,"name":"b937c8b6-2c02-499e-a7a3-0f23b813ee57","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"spr_goku_ssj_attack_kick_straight",
+  "name":"spr_goku_ssj_attack_kick",
   "nineSlice":null,
   "origin":9,
   "parent":{
@@ -37,7 +37,7 @@
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"",
-    "%Name":"spr_goku_ssj_attack_kick_straight",
+    "%Name":"spr_goku_ssj_attack_kick",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -61,7 +61,7 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"spr_goku_ssj_attack_kick_straight",
+    "name":"spr_goku_ssj_attack_kick",
     "playback":1,
     "playbackSpeed":20.0,
     "playbackSpeedType":0,
@@ -73,19 +73,19 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"592d6b79-436e-4516-ac41-7ae63ea2284c","path":"sprites/spr_goku_ssj_attack_kick_straight/spr_goku_ssj_attack_kick_straight.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"592d6b79-436e-4516-ac41-7ae63ea2284c","path":"sprites/spr_goku_ssj_attack_kick/spr_goku_ssj_attack_kick.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"f6499f83-8300-497a-bdd5-633132fde252","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"4ad93bb8-a04e-46d4-b84a-8009c76b55b5","path":"sprites/spr_goku_ssj_attack_kick_straight/spr_goku_ssj_attack_kick_straight.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"4ad93bb8-a04e-46d4-b84a-8009c76b55b5","path":"sprites/spr_goku_ssj_attack_kick/spr_goku_ssj_attack_kick.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"8ff1e008-ace6-488b-b8ec-964a99ff40e8","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"a1367d8e-971f-4a1a-830c-e0105f2e2864","path":"sprites/spr_goku_ssj_attack_kick_straight/spr_goku_ssj_attack_kick_straight.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"a1367d8e-971f-4a1a-830c-e0105f2e2864","path":"sprites/spr_goku_ssj_attack_kick/spr_goku_ssj_attack_kick.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"982b0e05-58cd-4762-87f9-851a72d00845","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"a0ec7df7-3917-4d2b-b23b-08236628caeb","path":"sprites/spr_goku_ssj_attack_kick_straight/spr_goku_ssj_attack_kick_straight.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"a0ec7df7-3917-4d2b-b23b-08236628caeb","path":"sprites/spr_goku_ssj_attack_kick/spr_goku_ssj_attack_kick.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"aff0cfe6-5f8d-49c1-ac69-ce273706a95d","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"8404becf-0795-48c7-afea-37801f2502bb","path":"sprites/spr_goku_ssj_attack_kick_straight/spr_goku_ssj_attack_kick_straight.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"8404becf-0795-48c7-afea-37801f2502bb","path":"sprites/spr_goku_ssj_attack_kick/spr_goku_ssj_attack_kick.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"528561bd-7d67-4b9c-914a-078f9a83668c","IsCreationKey":false,"Key":4.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
