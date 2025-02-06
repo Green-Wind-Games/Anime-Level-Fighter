@@ -183,50 +183,6 @@ function setup_autocombo() {
 }
 
 function setup_basicmoves() {
-	medium_attack2 = new charstate();
-	medium_attack2.start = function() {
-		medium_lowattack.start();
-	}
-	medium_attack2.run = function() {
-		medium_lowattack.run();
-	}
-	
-	medium_attack3 = new charstate();
-	medium_attack3.start = function() {
-		medium_attack.start();
-	}
-	medium_attack3.run = function() {
-		medium_attack.run();
-	}
-	
-	medium_attack4 = new charstate();
-	medium_attack4.start = function() {
-		signature_move.start();
-		
-		if active_state != medium_attack4 {
-			change_state(backdash_state);
-		}
-	}
-	medium_attack4.run = function() {
-		signature_move.run();
-	}
-	
-	light_airattack2 = new charstate();
-	light_airattack2.start = function() {
-		medium_airattack.start();
-	}
-	light_airattack2.run = function() {
-		medium_airattack.run();
-	}
-	
-	light_airattack3 = new charstate();
-	light_airattack3.start = function() {
-		heavy_airattack.start();
-	}
-	light_airattack3.run = function() {
-		heavy_airattack.run();
-	}
-	
 	add_ground_move(dash_state,"656");
 	add_ground_move(backdash_state,"454");
 	
@@ -256,7 +212,7 @@ function setup_basicmoves() {
 	add_air_move(medium_airattack,"B");
 	
 	add_ground_move(heavy_attack,"C");
-	add_ground_move(launcher_attack,"2C");
+	add_ground_move(heavy_lowattack,"2C");
 	add_air_move(heavy_airattack,"C");
 }
 

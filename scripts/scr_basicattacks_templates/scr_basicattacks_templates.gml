@@ -3,7 +3,7 @@ function basic_attack_stepforward(_hitframe) {
 		if target_distance <= 30 {
 			xspeed = max(5,target_distance_x / 5) * facing;
 			if is_airborne {
-				yspeed = min(-1.75,(target_y-y) / 5);
+				yspeed = min(-1.8,(target_y-y) / 5);
 			}
 		}
 		else {
@@ -239,6 +239,7 @@ function add_basic_light_attack3_state(_sprite, _hitframe, _hiteffect) {
 	light_attack3.run = function() {
 		basic_attack_stepforward(light_attack3_sprite_hit_frame);
 		basic_launcherattack(light_attack3_sprite_hit_frame,500,light_attack3_hit_effect);
+		basic_attack_chase(light_attack3_sprite_hit_frame);
 		anim_finish_idle();
 	}
 }

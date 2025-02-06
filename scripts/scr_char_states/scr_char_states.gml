@@ -840,6 +840,70 @@ function init_charstates() {
 		play_voiceline(voice_defeat);
 	}
 	
+	light_attack = new charstate();
+	
+	light_attack2 = new charstate();
+	
+	light_attack3 = new charstate();
+	
+	medium_attack = new charstate();
+	
+	medium_attack2 = new charstate();
+	medium_attack2.start = function() {
+		medium_lowattack.start();
+	}
+	medium_attack2.run = function() {
+		medium_lowattack.run();
+	}
+	
+	medium_attack3 = new charstate();
+	medium_attack3.start = function() {
+		medium_attack.start();
+	}
+	medium_attack3.run = function() {
+		medium_attack.run();
+	}
+	
+	medium_attack4 = new charstate();
+	medium_attack4.start = function() {
+		signature_move.start();
+		
+		if active_state != medium_attack4 {
+			change_state(backdash_state);
+		}
+	}
+	medium_attack4.run = function() {
+		signature_move.run();
+	}
+	
+	heavy_attack = new charstate();
+	
+	light_lowattack = new charstate();
+	medium_lowattack = new charstate();
+	heavy_lowattack = new charstate();
+	
+	light_airattack = new charstate();
+	
+	light_airattack2 = new charstate();
+	light_airattack2.start = function() {
+		medium_airattack.start();
+	}
+	light_airattack2.run = function() {
+		medium_airattack.run();
+	}
+	
+	light_airattack3 = new charstate();
+	light_airattack3.start = function() {
+		heavy_airattack.start();
+	}
+	light_airattack3.run = function() {
+		heavy_airattack.run();
+	}
+	
+	medium_airattack = new charstate();
+	
+	heavy_airattack = new charstate();
+	
 	init_states(idle_state);
 	
 	signature_move = noone;

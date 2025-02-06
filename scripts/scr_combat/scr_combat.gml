@@ -119,16 +119,15 @@ function react_to_attack_type(_attacktype) {
 	switch(_attacktype) {
 		default:
 		change_state(hit_state);
-		if on_ground and (yspeed >= 0) {
-			yspeed = 0;
-		}
-		else if is_airborne and (yspeed == 0) {
-			yspeed = -abs(xspeed) / 2;
-		}
 		break;
 		
 		case attacktype.hard_knockdown:
-		change_state(hard_knockdown_state);
+		if on_ground and (yspeed >= 0) {
+			change_state(hit_state);
+		}
+		else {
+			change_state(hard_knockdown_state);
+		}
 		break;
 		
 		case attacktype.wall_bounce:
@@ -148,6 +147,7 @@ function react_to_attack_type(_attacktype) {
 		}
 		break;
 	}
+	change_sprite_hit();
 }
 
 function change_sprite_hit() {
@@ -156,7 +156,7 @@ function change_sprite_hit() {
 		false
 	);
 	if is_airborne or (yspeed < 0) {
-		change_sprite(hit_air_sprite,frame_duration,false);
+		change_sprite(hit_air_sprite,false);
 	}
 	if (abs(xspeed) >= 10) or (abs(yspeed) >= 10) {
 		change_sprite(launch_sprite,true);
@@ -204,14 +204,18 @@ function get_hit_by_attack(_hitbox) {
 	xspeed = _hitbox.xknockback * _attacker.facing;
 	yspeed = _hitbox.yknockback;
 	
+	if on_ground and (yspeed >= 0) {
+		yspeed = 0;
+	}
+	else if is_airborne and (yspeed == 0) {
+		yspeed = -abs(xspeed);
+	}
+	
 	react_to_attack_type(_hitbox.attack_type);
-	change_sprite_hit();
 	
 	var _is_strong_attack = (abs(xspeed) >= 10) or (abs(yspeed) >= 10);
 	play_hurt_sound(_is_strong_attack);
 	
-	frame = 0;
-	frame_timer = 0;
 	facing = -_attacker.facing;
 }
 
@@ -227,7 +231,7 @@ function connect_attack(_hitbox,_hurtbox) {
 	hitstun = max(hitstun - (combo_hits_taken / 4), 10);
 	
 	if _hitbox.attack_type == attacktype.multihit {
-		hitstop = 1;
+		hitstop *= 0.5;
 	}
 	
 	var _is_strong_attack = true;

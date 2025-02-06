@@ -225,13 +225,13 @@ function init_enker() {
 		}
 	}
 
-	launcher_attack = new charstate();
-	launcher_attack.start = function() {
+	heavy_lowattack = new charstate();
+	heavy_lowattack.start = function() {
 		change_sprite(spr_enker_attack_slash_upper,false);
 		play_sound(snd_slash_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
-	launcher_attack.run = function() {
+	heavy_lowattack.run = function() {
 		basic_heavy_lowattack(2,hiteffects.slash);
 		if check_frame(2) {
 			char_specialeffect(spr_slash2,24,-48,0.75,-0.75);

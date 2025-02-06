@@ -67,6 +67,7 @@ function init_view() {
 	camera_target = noone;
 	camera_x = 0;
 	camera_y = 0;
+	camera_zoom = 1;
 	camera_set_view_size(camera,game_width,game_height);
 }
 
@@ -80,10 +81,6 @@ function update_view() {
 		screen_shake_timer = 0;
 		screen_shake_x = 0;
 		screen_shake_y = 0;
-	}
-	
-	if superfreeze_active {
-		camera_target = superfreeze_activator;
 	}
 	
 	if !instance_exists(camera_target) {
@@ -135,6 +132,7 @@ function update_view() {
 				var playerdist = abs(_x1 - _x2);
 				var max_dist = (right_wall-left_wall) + 25;
 				desired_zoom = game_width / (min(playerdist+50,max_dist));
+				desired_zoom = min(desired_zoom,1.25);
 			}
 		}
 	}

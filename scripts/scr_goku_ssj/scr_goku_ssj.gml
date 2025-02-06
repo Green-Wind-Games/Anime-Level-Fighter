@@ -216,13 +216,13 @@ function init_goku_ssj() {
 		basic_heavy_attack(2,hiteffects.hit);
 	}
 
-	launcher_attack = new charstate();
-	launcher_attack.start = function() {
+	heavy_lowattack = new charstate();
+	heavy_lowattack.start = function() {
 		change_sprite(spr_goku_ssj_attack_backflip_kick,false);
 		play_sound(snd_punch_whiff_super);
 		play_voiceline(voice_heavyattack,100,true);
 	}
-	launcher_attack.run = function() {
+	heavy_lowattack.run = function() {
 		basic_heavy_lowattack(3,hiteffects.hit);
 	}
 

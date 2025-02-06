@@ -144,6 +144,9 @@ function init_goku_baseform() {
 		if check_frame(0) or check_frame(2) or check_frame(4) {
 			play_sound(snd_punch_whiff_light);
 		}
+		basic_attack_stepforward(1);
+		basic_attack_stepforward(3);
+		basic_attack_stepforward(5);
 		basic_multihit_attack(1,50,attackstrength.light,hiteffects.hit);
 		basic_multihit_attack(3,50,attackstrength.light,hiteffects.hit);
 		basic_multihit_attack(5,50,attackstrength.light,hiteffects.hit);
@@ -152,15 +155,18 @@ function init_goku_baseform() {
 	
 	medium_airattack = new charstate();
 	medium_airattack.start = function() {
-		change_sprite(spr_goku_attack_spin_kick_double,2,false);
+		change_sprite(spr_goku_attack_spin_kick_double,false);
 		play_voiceline(voice_attack,50,false);
 	}
 	medium_airattack.run = function() {
 		if check_frame(2) or check_frame(6) {
 			play_sound(snd_punch_whiff_medium);
 		}
+		basic_attack_stepforward(3);
+		basic_attack_stepforward(5);
 		basic_multihit_attack(3,150,attackstrength.medium,hiteffects.hit);
 		basic_multihit_attack(7,150,attackstrength.medium,hiteffects.hit);
+		anim_finish_idle();
 	}
 	
 	dash_elbow = new charstate();

@@ -104,13 +104,13 @@ function init_genos_baseform() {
 		basic_heavy_attack(2,hiteffects.hit);
 	}
 
-	launcher_attack = new charstate();
-	launcher_attack.start = function() {
+	heavy_lowattack = new charstate();
+	heavy_lowattack.start = function() {
 		change_sprite(spr_genos_attack_uppercut,false);
 		play_sound(snd_punch_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
-	launcher_attack.run = function() {
+	heavy_lowattack.run = function() {
 		basic_heavy_lowattack(2,hiteffects.hit);
 	}
 	
@@ -276,7 +276,7 @@ function init_genos_baseform() {
 		if state_timer > (120 * (level / 3)) {
 			if combo_timer > 0 {
 				if on_ground {
-					change_state(launcher_attack);
+					change_state(heavy_lowattack);
 				}
 				else {
 					change_state(heavy_airattack);
