@@ -328,7 +328,7 @@ function init_goku_ssj() {
 		}
 		loop_anim_middle_timer(3,3,120);
 		if value_in_range(frame,3,3) {
-			fire_beam(20,-25,spr_kamehameha_gold,2,0,50);
+			fire_beam(spr_kamehameha_gold,2,0,50);
 		}
 		anim_finish_idle();
 	}

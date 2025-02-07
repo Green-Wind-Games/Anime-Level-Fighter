@@ -46,8 +46,6 @@
     {"name":"fnt_menu","order":3,"path":"fonts/fnt_menu/fnt_menu.yy",},
     {"name":"fnt_playerindicator","order":5,"path":"fonts/fnt_playerindicator/fnt_playerindicator.yy",},
     {"name":"fnt_timer","order":6,"path":"fonts/fnt_timer/fnt_timer.yy",},
-    {"name":"obj_cinematic_attacker","order":10,"path":"objects/obj_cinematic_attacker/obj_cinematic_attacker.yy",},
-    {"name":"obj_cinematic_defender","order":11,"path":"objects/obj_cinematic_defender/obj_cinematic_defender.yy",},
     {"name":"obj_enker","order":2,"path":"objects/obj_enker/obj_enker.yy",},
     {"name":"obj_game","order":1,"path":"objects/obj_game/obj_game.yy",},
     {"name":"obj_goku_ssj","order":1,"path":"objects/obj_goku_ssj/obj_goku_ssj.yy",},

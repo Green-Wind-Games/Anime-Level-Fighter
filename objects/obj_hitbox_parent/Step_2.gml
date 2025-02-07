@@ -9,10 +9,15 @@ var _yscale = owner.yscale * owner.ystretch;
 var _rotation = owner.rotation * owner.facing;
 
 x = owner.x;
-y = owner.y;
+y = owner.y - owner.height_half;
 
 var _xoffset = xoffset * _xscale;
 var _yoffset = yoffset * _yscale;
+
+//_xoffset /= 2;
+//_yoffset /= 2;
+
+_yoffset += owner.height_half;
 
 x += lengthdir_x(_xoffset, _rotation) + lengthdir_x(_yoffset, _rotation - 90);
 y += lengthdir_y(_xoffset, _rotation) + lengthdir_y(_yoffset, _rotation - 90);

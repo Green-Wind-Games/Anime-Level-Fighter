@@ -315,7 +315,7 @@ function init_genos_baseform() {
 		}
 		loop_anim_middle_timer(3,4,30);
 		if value_in_range(frame,3,4) {
-			fire_beam(5,-25,spr_incinerate,0.75+(level / 4),0,50);
+			fire_beam(spr_incinerate,0.75+(level / 4),0,50);
 		}
 		anim_finish_idle();
 	}
@@ -362,7 +362,7 @@ function init_genos_baseform() {
 		}
 		loop_anim_middle_timer(5,6,120);
 		if value_in_range(frame,5,6) {
-			fire_beam(10,-25,spr_incinerate,1+(level / 3),0,50);
+			fire_beam(spr_incinerate,1+(level / 3),0,50);
 		}
 		if check_frame(3) {
 			play_voiceline(vc_genos_incinerate);

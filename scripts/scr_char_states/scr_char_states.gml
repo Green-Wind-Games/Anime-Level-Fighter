@@ -41,6 +41,7 @@ function init_charstates() {
 					xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
 					change_sprite(walk_sprite,true);
 					xscale = abs(xscale) * sign(input.right-input.left) * facing;
+					
 				}
 				else {
 					change_sprite(idle_sprite,6,true);
@@ -54,7 +55,7 @@ function init_charstates() {
 
 	crouch_state = new charstate();
 	crouch_state.start = function() {
-		change_sprite(crouch_sprite,2,false);
+		change_sprite(crouch_sprite,false);
 		face_target();
 	}
 	crouch_state.run = function() {

@@ -52,13 +52,13 @@ function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_y
 	return _shot;
 }
 
-function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
+function fire_beam(_sprite,_scale,_angle,_damage) {
 	var _xlength = lengthdir_x(1,_angle);
 	var _ylength = lengthdir_y(1,_angle);
 	if !instance_exists(beam) {
 		beam = create_shot(
-			_x,
-			_y,
+			width_half,
+			height_half,
 			_xlength,
 			_ylength,
 			_sprite,
@@ -124,11 +124,18 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 		
 		ygravity_mod = false;
 		
-		x = owner.x + lengthdir_x(_x * other.facing, rotation);
-		y = owner.y + lengthdir_y(_y, rotation);
+		x = owner.x;
+		y = owner.y;
+		y -= owner.height_half * owner.yscale * owner.ystretch;
 		
-		//x += lengthdir_x(sprite_get_xoffset(sprite)*xscale,_angle) * facing;
-		//y += lengthdir_y(sprite_get_xoffset(sprite)*xscale,_angle);
+		var _xoffset = sprite_get_width(owner.sprite) - sprite_get_xoffset(owner.sprite) - 2;
+		var _yoffset = 0;
+		
+		_xoffset *= owner.xscale * owner.xstretch * owner.facing;
+		_yoffset *= owner.yscale * owner.ystretch;
+		
+		x += lengthdir_x(_xoffset, _rotation) + lengthdir_x(_yoffset, _rotation - 90);	
+		y += lengthdir_y(_xoffset, _rotation) + lengthdir_y(_yoffset, _rotation - 90);
 		
 		with(hitbox) {
 			xknockback = _xlength * 8;
