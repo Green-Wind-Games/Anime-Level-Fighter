@@ -71,6 +71,8 @@
     {"id":{"name":"fnt_playerindicator","path":"fonts/fnt_playerindicator/fnt_playerindicator.yy",},},
     {"id":{"name":"fnt_timer","path":"fonts/fnt_timer/fnt_timer.yy",},},
     {"id":{"name":"obj_char","path":"objects/obj_char/obj_char.yy",},},
+    {"id":{"name":"obj_cinematic_attacker","path":"objects/obj_cinematic_attacker/obj_cinematic_attacker.yy",},},
+    {"id":{"name":"obj_cinematic_defender","path":"objects/obj_cinematic_defender/obj_cinematic_defender.yy",},},
     {"id":{"name":"obj_enker","path":"objects/obj_enker/obj_enker.yy",},},
     {"id":{"name":"obj_game","path":"objects/obj_game/obj_game.yy",},},
     {"id":{"name":"obj_genos","path":"objects/obj_genos/obj_genos.yy",},},

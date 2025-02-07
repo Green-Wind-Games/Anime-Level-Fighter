@@ -115,6 +115,7 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 	}
 	with(beam) {
 		ds_list_clear(hitbox.hit_list);
+		rotation = _angle;
 		alpha = 1;
 		duration = 12;
 		
@@ -123,8 +124,8 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 		
 		ygravity_mod = false;
 		
-		x = owner.x + (_x * other.facing);
-		y = owner.y + _y;
+		x = owner.x + lengthdir_x(_x * other.facing, rotation);
+		y = owner.y + lengthdir_y(_y, rotation);
 		
 		//x += lengthdir_x(sprite_get_xoffset(sprite)*xscale,_angle) * facing;
 		//y += lengthdir_y(sprite_get_xoffset(sprite)*xscale,_angle);
@@ -132,7 +133,7 @@ function fire_beam(_x,_y,_sprite,_scale,_angle,_damage) {
 		with(hitbox) {
 			xknockback = _xlength * 8;
 			yknockback = _ylength * 8;
-			if yknockback == 0 then yknockback -= 0.1;
+			if yknockback == 0 then yknockback -= 0.01;
 		}
 	}
 }

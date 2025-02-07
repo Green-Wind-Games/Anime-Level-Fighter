@@ -90,6 +90,7 @@ function add_kamehameha_state(_groundsprite,_airsprite,_chargeframe1,_chargefram
 				on_ground ? kamehameha_ground_sprite : kamehameha_air_sprite,
 				false
 			);
+			yoffset = -sprite_get_yoffset(sprite);
 			xspeed = 0;
 			yspeed = 0;
 			kamehameha_cooldown = kamehameha_cooldown_duration;
@@ -104,13 +105,19 @@ function add_kamehameha_state(_groundsprite,_airsprite,_chargeframe1,_chargefram
 		xspeed = 0;
 		yspeed = 0;
 		if check_frame(kamehameha_fire_frame1) {
+			if input.up {
+				rotation = 45;
+			}
+			else if is_airborne and input.down {
+				rotation = -45;
+			}
 			play_sound(snd_dbz_beam_fire);
 		}
 		if value_in_range(attack_hits,1,30) {
 			loop_anim_middle(kamehameha_fire_frame1,kamehameha_fire_frame2);
 		}
 		if value_in_range(frame,kamehameha_fire_frame1,kamehameha_fire_frame2) {
-			fire_beam(width*0.6,-height_half,spr_kamehameha,1,0,50);
+			fire_beam(width*0.6,-height_half,spr_kamehameha,1,rotation,50);
 		}
 		anim_finish_idle();
 	}
@@ -139,6 +146,7 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 				on_ground ? kamehameha_ground_sprite : kamehameha_air_sprite,
 				false
 			);
+			yoffset = -sprite_get_yoffset(sprite);
 			xspeed = 0;
 			yspeed = 0;
 			kamehameha_cooldown = kamehameha_cooldown_duration * 1.5;
@@ -173,12 +181,18 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 			}
 		}
 		if check_frame(kamehameha_fire_frame1) {
+			if input.up {
+				rotation = 45;
+			}
+			else if is_airborne and input.down {
+				rotation = -45;
+			}
 			play_sound(snd_dbz_beam_fire);
 			play_voiceline(voice_superkamehameha_fire);
 		}
 		loop_anim_middle_timer(kamehameha_fire_frame1,kamehameha_fire_frame2,100);
 		if value_in_range(frame,kamehameha_fire_frame1,kamehameha_fire_frame2) {
-			fire_beam(width*0.6,-height_half,spr_kamehameha,1,0,50);
+			fire_beam(width*0.6,-height_half,spr_kamehameha,1,rotation,50);
 			shake_screen(5);
 		}
 		anim_finish_idle();
