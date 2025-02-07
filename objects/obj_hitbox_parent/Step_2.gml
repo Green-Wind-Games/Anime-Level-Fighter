@@ -4,19 +4,20 @@ if !instance_exists(owner) {
 	exit;
 }
 
-facing = owner.facing;
+var _xscale = owner.xscale * owner.xstretch * owner.facing;
+var _yscale = owner.yscale * owner.ystretch;
+var _rotation = owner.rotation * owner.facing;
 
-var _xoffset = lengthdir_x(xoffset * facing,image_angle) + lengthdir_y(yoffset, image_angle);
-var _yoffset = lengthdir_x(yoffset,image_angle) + lengthdir_y(xoffset * facing, image_angle);
-var _width = width * facing;
-var _height = height;
+x = owner.x;
+y = owner.y;
 
-_xoffset *= owner.xscale;
-_yoffset *= owner.yscale;
-_width *= owner.xscale;
-_height *= owner.yscale;
+var _xoffset = xoffset * _xscale;
+var _yoffset = yoffset * _yscale;
 
-x = owner.x + _xoffset;
-y = owner.y + _yoffset;
-image_xscale = _width / sprite_get_width(sprite_index);
-image_yscale = _height / sprite_get_height(sprite_index);
+x += lengthdir_x(_xoffset, _rotation) + lengthdir_x(_yoffset, _rotation - 90);
+y += lengthdir_y(_xoffset, _rotation) + lengthdir_y(_yoffset, _rotation - 90);
+
+image_xscale = width * _xscale / sprite_get_width(sprite_index);
+image_yscale = height * _yscale / sprite_get_height(sprite_index);
+
+image_angle = _rotation;
