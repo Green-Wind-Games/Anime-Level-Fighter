@@ -145,7 +145,7 @@ function update_sprite_animation() {
 					frame_timer = frame_duration - 1;
 				}
 				else {
-					change_sprite(next_sprite);
+					change_sprite(next_sprite,next_sprite_anim_loop);
 				}
 			}
 		}

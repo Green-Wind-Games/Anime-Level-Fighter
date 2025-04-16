@@ -55,7 +55,7 @@ function add_greenwind_blast_state(_maxrepeats,_sprite1,_sprite2,_fireframe,_bal
 				hiteffects.wind
 			);
 			with(_ball) {
-				play_sound(snd_kiblast_fire,1,1.5);
+				play_sound(snd_dbz_kiblast_fire,1,1.5);
 				blend = true;
 				active_script = function() {
 					create_specialeffect(

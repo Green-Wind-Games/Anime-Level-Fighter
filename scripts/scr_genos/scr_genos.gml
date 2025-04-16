@@ -36,7 +36,7 @@ function init_genos_baseform() {
 
 	light_attack = new charstate();
 	light_attack.start = function() {
-		change_sprite(spr_genos_attack_punch_straight,false);
+		change_sprite(spr_genos_attack_punch,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -46,7 +46,7 @@ function init_genos_baseform() {
 
 	light_attack2 = new charstate();
 	light_attack2.start = function() {
-		change_sprite(spr_genos_attack_kick_straight,false);
+		change_sprite(spr_genos_attack_kick,false);
 		play_sound(snd_punch_whiff_medium);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -66,7 +66,7 @@ function init_genos_baseform() {
 	
 	light_lowattack = new charstate();
 	light_lowattack.start = function() {
-		change_sprite(spr_genos_attack_punch_straight,false);
+		change_sprite(spr_genos_attack_punch,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}
@@ -324,7 +324,7 @@ function init_genos_baseform() {
 	incinerate_medium.start = function() {
 		incinerate_light.start();
 		if active_state == incinerate_medium {
-			change_sprite(sprite,frame_duration + 2,false);
+			anim_speed = 0.8;
 		}
 	}
 	incinerate_medium.run = function() {
@@ -335,7 +335,7 @@ function init_genos_baseform() {
 	incinerate_heavy.start = function() {
 		incinerate_light.start();
 		if active_state == incinerate_heavy {
-			change_sprite(sprite,frame_duration + 3,false);
+			anim_speed = 0.6;
 		}
 	}
 	incinerate_heavy.run = function() {

@@ -152,7 +152,7 @@ HP, short for Hit Points, is a vital resource in this game.
 You start with maximum HP. If your HP is reduced to zero, your character is knocked out, and you lose.
 To prevent HP loss, you can do a number of things, including but not limited to:
 -Guard against attacks, greatly reducing the damage taken. The remaining damage is what we call "chip damage".
--Parry attacks, which, while risky, prevents all damage and gives you plenty of advantages.
+-Parry attacks, which, while risky, prevents all damage and gives you a window to counter-attack.
 -Dodge attacks, either by being far away, dodging them with movement, or spending TP on TP Dodges/Teleports.
 Some characters have abilities that drain or heal their own HP. Goku's Kaioken is an example of a technique that harms both the user and the target.
 Some characters have abilities that drain the enemy's HP, healing their own in the process.

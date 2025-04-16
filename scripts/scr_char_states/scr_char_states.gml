@@ -44,12 +44,12 @@ function init_charstates() {
 					
 				}
 				else {
-					change_sprite(idle_sprite,6,true);
+					change_sprite(idle_sprite,true);
 				}
 			}
 		}
 		else {
-			change_sprite(idle_sprite,6,true);
+			change_sprite(idle_sprite,true);
 		}
 	}
 
@@ -145,7 +145,7 @@ function init_charstates() {
 		
 		var peak_speed = 2;
 		if value_in_range(yspeed,-peak_speed,peak_speed) {
-			change_sprite(air_peak_sprite,5,true);
+			change_sprite(air_peak_sprite,true);
 		}
 		else if yspeed < 0 {
 			change_sprite(air_up_sprite,true);
@@ -385,7 +385,7 @@ function init_charstates() {
 	hard_knockdown_state.run = function() {
 		if (yspeed > 0) {
 			if is_airborne {
-				change_sprite(launch_sprite,3,true);
+				change_sprite(launch_sprite,true);
 				yoffset = -height_half;
 			}
 			else {
