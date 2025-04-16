@@ -123,7 +123,7 @@ E (hold, with Max XP): Level Up!
 236A+B: Super Move 1 (Costs 2-3 MP)
 214A+B: Super Move 2 (Costs 2-3 MP)
 236C+D: Ultimate Finisher (Costs 5-7 MP)
-214C+D (some characters): Secret Finisher (Costs 7-10 MP, usable only once)
+214C+D (some characters): Secret Finisher (Costs near-max MP, usable only once)
 
 [Combos]
 {Autocombos}
@@ -137,12 +137,13 @@ C x3: Heavy Autocombo
 2C, CC: Launcher Autocombo
 
 {Universal Combos}
-AA, BB, 2C, AAA: Universal Combo 1
-AA, BB, 2C, AA, 2C, A x3: Universal Combo 2
-AA, BB, 2C, AA, 2C, AA, 2C, AAA: Universal Combo 3
+A, B, C, A, B, C
 
+AA, BB, 2C, AAA
+AA, BB, 2C, AA, 2C, A x3
+AA, BB, 2C, AA, 2C, AA, 2C, AAA
 
-
+2B, B, 9, B, AA, 2C, C, B, AA, 2C, AAA
 
 
 (Game System)
