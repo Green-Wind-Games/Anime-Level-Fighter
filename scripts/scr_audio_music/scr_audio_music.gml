@@ -45,6 +45,10 @@ function set_music_loop(_music,_start,_end) {
 	audio_sound_loop_end(_music,_end);
 }
 
+function set_music_loop_length(_music,_start,_length) {
+	set_music_loop(_music, _start, _start+_length);
+}
+
 set_music_loop(mus_umvc3_charselect,40.819,86.862);
 
 set_music_loop(mus_dbfz_space,120.022,236.846);
@@ -57,6 +61,7 @@ set_music_loop(mus_naruto_clashofninja_qualifiers,12.544,118.476);
 
 set_music_loop(mus_ff4_ds_bossbattle,14.827,76.940);
 set_music_loop(mus_yakuza_zero_tusk,24.706,156.364);
+set_music_loop(mus_guiltygear_fatalduel,25.000,91.002);
 
 set_music_loop(mus_dbfz_goku,11.993,166.397);
 set_music_loop(mus_dbfz_trunks,10.808,153.298);

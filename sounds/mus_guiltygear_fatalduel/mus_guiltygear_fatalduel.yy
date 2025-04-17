@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"mus_umvc3_charselect",
+  "%Name":"mus_guiltygear_fatalduel",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":106.21333,
-  "name":"mus_umvc3_charselect",
+  "duration":158.8,
+  "name":"mus_guiltygear_fatalduel",
   "parent":{
     "name":"Music",
     "path":"folders/Music.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"mus_umvc3_charselect.mp3",
+  "soundFile":"mus_guiltygear_fatalduel.mp3",
   "type":0,
   "volume":1.0,
 }

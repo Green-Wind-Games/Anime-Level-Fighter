@@ -8,13 +8,12 @@ switch(game_state) {
 	case gamestates.training:
 	draw_ground();
 	
-	//draw_player_outlines();
 	draw_chars();
 	draw_shots();
 	draw_superfreeze();
 	draw_particles();
 	
-	draw_hitboxes();
+	//draw_hitboxes();
 	break;
 	
 	case gamestates.story_results:
@@ -26,14 +25,11 @@ switch(game_state) {
 	break;
 }
 
-with(obj_specialeffect) {
-	draw_set_halign(fa_center);
-	draw_set_valign(fa_top);
-	draw_set_color(c_white);
-	draw_text(x,y+20,string(frame_duration));
-	draw_text(x,y+30,string(frame_timer));
-}
-
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_color(c_white);
+
+//with(obj_specialeffect) {
+//	draw_text(x,y+20,string(frame_duration));
+//	draw_text(x,y+30,string(frame_timer));
+//}

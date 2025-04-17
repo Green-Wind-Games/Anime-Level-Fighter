@@ -134,8 +134,8 @@ function fire_beam(_sprite,_scale,_angle,_damage) {
 		_xoffset *= owner.xscale * owner.xstretch * owner.facing;
 		_yoffset *= owner.yscale * owner.ystretch;
 		
-		x += lengthdir_x(_xoffset, _rotation) + lengthdir_x(_yoffset, _rotation - 90);	
-		y += lengthdir_y(_xoffset, _rotation) + lengthdir_y(_yoffset, _rotation - 90);
+		x += lengthdir_x(_xoffset, _angle) + lengthdir_x(_yoffset, _angle - 90);	
+		y += lengthdir_y(_xoffset, _angle) + lengthdir_y(_yoffset, _angle - 90);
 		
 		with(hitbox) {
 			xknockback = _xlength * 8;

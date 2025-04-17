@@ -6,6 +6,15 @@ voice_volume = 1;
 
 audio_set_master_gain(0,0.25);
 
+globalvar bitcrusher_effect, lowpass_effect;
+var i = 0;
+bitcrusher_effect = audio_effect_create(AudioEffectType.Bitcrusher);
+bitcrusher_effect.factor = 8;
+audio_bus_main.effects[i++] = bitcrusher_effect;
+lowpass_effect = audio_effect_create(AudioEffectType.LPF2);
+lowpass_effect.cutoff = 1000;
+audio_bus_main.effects[i++] = lowpass_effect;
+
 globalvar meme_enabled, meme_chance;
 meme_enabled = false;
 meme_chance = 10;

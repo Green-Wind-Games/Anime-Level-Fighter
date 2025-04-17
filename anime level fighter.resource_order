@@ -125,6 +125,7 @@
     {"name":"mus_extremebutoden_kaisworld","order":8,"path":"sounds/mus_extremebutoden_kaisworld/mus_extremebutoden_kaisworld.yy",},
     {"name":"mus_extremebutoden_snakeway","order":9,"path":"sounds/mus_extremebutoden_snakeway/mus_extremebutoden_snakeway.yy",},
     {"name":"mus_ff4_ds_bossbattle","order":11,"path":"sounds/mus_ff4_ds_bossbattle/mus_ff4_ds_bossbattle.yy",},
+    {"name":"mus_guiltygear_fatalduel","order":14,"path":"sounds/mus_guiltygear_fatalduel/mus_guiltygear_fatalduel.yy",},
     {"name":"mus_naruto_clashofninja_qualifiers","order":6,"path":"sounds/mus_naruto_clashofninja_qualifiers/mus_naruto_clashofninja_qualifiers.yy",},
     {"name":"mus_naruto_strongandstrike","order":3,"path":"sounds/mus_naruto_strongandstrike/mus_naruto_strongandstrike.yy",},
     {"name":"mus_opm_genos","order":1,"path":"sounds/mus_opm_genos/mus_opm_genos.yy",},

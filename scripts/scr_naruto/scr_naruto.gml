@@ -72,23 +72,34 @@ function init_naruto_baseform() {
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	heavy_attack.run = function() {
-		basic_heavy_attack(2,hiteffects.slash);
+		if check_frame(1) {
+			xspeed = 10 * facing;
+		}
+		basic_wallsplat(2,500,hiteffects.slash);
+		basic_attack_chase(2);
 		if check_frame(2) {
 			char_specialeffect(spr_slash,width_half,-height_half,0.5,-0.5,-45);
 		}
+		anim_finish_idle();
 	}
 	
 	heavy_lowattack = new charstate();
 	heavy_lowattack.start = function() {
 		change_sprite(spr_naruto_attack_slash_up,false);
-		play_sound(snd_slash_whiff_medium);
+		play_sound(snd_slash_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	heavy_lowattack.run = function() {
-		basic_heavy_lowattack(3,hiteffects.slash);
+		if check_frame(1) {
+			xspeed = 3 * facing;
+			yspeed = -5;
+		}
+		basic_wallsplat(3,500,hiteffects.slash);
+		basic_attack_chase(3);
 		if check_frame(3) {
 			char_specialeffect(spr_slash2,width_half,-height*0.75,0.5,-0.5,-45);
 		}
+		anim_finish_idle();
 	}
 	
 	divekick = new charstate();

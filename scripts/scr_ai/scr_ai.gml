@@ -25,8 +25,9 @@ function update_ai() {
 		//input.back = false;
 		
 		ai_default_movement();
-		ai_perform_random_moves();
-		ai_combo();
+		
+		ai_default_attacks();
+		
 		ai_script();
 		
 		input.left = false;
@@ -57,10 +58,10 @@ function ai_default_movement() {
 	var _x = sign(input.right-input.left);
 	var _y = 0;
 	
-	if chance(10) { _y = 1; }
-	if chance(10 + (10 * max_air_actions)) { _y = -1; }
-	if chance(30) { _x = -facing; }
-	if chance(40) { _x = facing; }
+	if chance(1) { _y = 1; }
+	if chance(5) { _x = -facing; }
+	if chance(5 + (5 * max_air_actions)) { _y = -1; }
+	if chance(80) { _x = facing; }
 	
 	input.up = _y < 0;
 	input.down = _y > 0;
@@ -84,6 +85,37 @@ function ai_default_movement() {
 	}
 }
 
+function ai_default_attacks() {
+	if target_distance < 20 {
+		ai_input_move(heavy_attack,20);
+		ai_input_move(heavy_lowattack,20);
+		
+		ai_input_move(light_lowattack,20);
+		ai_input_move(light_attack,20);
+		
+		ai_input_move(medium_attack,20);
+		ai_input_move(medium_lowattack,20);
+	}
+	if (combo_hits > 0) and (target_distance < 10) {
+		switch(active_state) {
+			case light_attack:
+			case light_attack2:
+			case light_attack3:
+			case air_state:
+			case light_airattack:
+			case light_airattack2:
+			ai_input_move(light_attack,100);
+			break;
+			
+			case medium_attack:
+			case medium_attack2:
+			case medium_attack3:
+			ai_input_move(medium_attack,100);
+			break;
+		}
+	}
+}
+
 function ai_perform_random_moves() {
 	var _inputs = ds_list_create();
 	var _movelist = on_ground ? ground_movelist : air_movelist;
@@ -99,14 +131,14 @@ function ai_perform_random_moves() {
 }
 
 function ai_combo() {
-	if (attack_hits > 0) {
+	if (combo_hits > 0) {
 		var _movelist = on_ground ? ground_movelist : air_movelist;
 		var _move = noone;
 		if !ds_list_empty(cancelable_moves) {
 			_move = ds_list_find_value(cancelable_moves,irandom(ds_list_size(cancelable_moves)-1));
 		}
 		else {
-			var _ahead = irandom_range(1,3);
+			var _ahead = 1;
 			var _moveid = 0;
 			for(var i = 0; i < array_length(_movelist)-1; i++) {
 				if (active_state == _movelist[i][0]) {
@@ -116,7 +148,7 @@ function ai_combo() {
 			}
 			var _move = _movelist[_moveid][0];
 		}
-		ai_input_move(_move,map_value(ai_level,1,ai_level_max,50,100));
+		ai_input_move(_move,100);
 		//for(var i = 0; i < array_length(autocombo)-1; i++) {
 		//	if (active_state == autocombo[i]) {
 		//		ai_input_move(autocombo[0],100);
