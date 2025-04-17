@@ -195,7 +195,7 @@ function init_goku_baseform() {
 				0,
 				0,
 				spr_shockwave,
-				3,
+				2,
 				500,
 				10,
 				-10,
@@ -212,7 +212,7 @@ function init_goku_baseform() {
 						var _dir = point_direction(x,y,_hit.x,_hit.y-_hit.height_half);
 						var _speed = 10;
 						_hit.xspeed = lengthdir_x(_speed,_dir);
-						_hit.yspeed = lengthdir_y(_speed,_dir);
+						_hit.yspeed = _hit.is_airborne ? lengthdir_y(_speed,_dir) : (-_speed / 2);
 					}
 				}
 			}
