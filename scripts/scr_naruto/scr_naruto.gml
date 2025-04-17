@@ -1,5 +1,8 @@
 function init_naruto_baseform() {
 	init_charsprites("naruto");
+	
+	init_charaudio("naruto");
+	voice_volume_mine = 1.5;
 
 	name = "naruto";
 	display_name = "Naruto";
@@ -26,9 +29,6 @@ function init_naruto_baseform() {
 	transform_aura = spr_aura_chakra;
 	
 	set_substitution_jutsu();
-	
-	init_charaudio("naruto");
-	voice_volume_mine = 1.5;
 
 	char_script = function() {
 		rasengan_cooldown--;
@@ -50,87 +50,18 @@ function init_naruto_baseform() {
 		}
 	}
 	
-	light_attack = new charstate();
-	light_attack.start = function() {
-		change_sprite(spr_naruto_attack_punch_straight,false);
-		play_sound(snd_punch_whiff_light);
-		play_voiceline(voice_attack,50,false);
-	}
-	light_attack.run = function() {
-		basic_light_attack(2,hiteffects.hit);
-	}
-
-	light_attack2 = new charstate();
-	light_attack2.start = function() {
-		change_sprite(spr_naruto_attack_dash_punch,false);
-		xspeed = 10 * facing;
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	light_attack2.run = function() {
-		basic_light_attack(2,hiteffects.hit);
-	}
-
-	light_attack3 = new charstate();
-	light_attack3.start = function() {
-		change_sprite(spr_naruto_attack_uppercut,false);
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	light_attack3.run = function() {
-		basic_heavy_lowattack(3,hiteffects.hit);
-	}
+	add_basic_light_attack_state(spr_naruto_attack_punch,2,hiteffects.hit);
+	add_basic_light_attack2_state(spr_naruto_attack_dash_punch,2,hiteffects.hit);
+	add_basic_light_attack3_state(spr_naruto_attack_uppercut,2,hiteffects.hit);
 	
-	light_lowattack = new charstate();
-	light_lowattack.start = function() {
-		change_sprite(spr_naruto_attack_uppercut,false);
-		play_sound(snd_punch_whiff_light);
-		play_voiceline(voice_attack,50,false);
-	}
-	light_lowattack.run = function() {
-		basic_light_lowattack(3,hiteffects.hit);
-	}
+	add_basic_medium_attack_state(spr_naruto_attack_punch_hook,2,hiteffects.hit);
 	
-	light_airattack = new charstate();
-	light_airattack.start = function() {
-		change_sprite(spr_naruto_attack_back_kick_air,false);
-		play_sound(snd_punch_whiff_light);
-		play_voiceline(voice_attack,50,false);
-	}
-	light_airattack.run = function() {
-		basic_light_airattack(1,hiteffects.hit);
-	}
-
-	medium_attack = new charstate();
-	medium_attack.start = function() {
-		change_sprite(spr_naruto_attack_punch_hook,false);
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	medium_attack.run = function() {
-		basic_medium_attack(2,hiteffects.hit);
-	}
-
-	medium_lowattack = new charstate();
-	medium_lowattack.start = function() {
-		change_sprite(spr_naruto_attack_spinkick,false);
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	medium_lowattack.run = function() {
-		basic_medium_lowattack(3,hiteffects.hit);
-	}
+	add_basic_light_lowattack_state(spr_naruto_attack_punch_hook,2,hiteffects.hit);
+	add_basic_medium_lowattack_state(spr_naruto_attack_spinkick,3,hiteffects.hit);
 	
-	medium_airattack = new charstate();
-	medium_airattack.start = function() {
-		change_sprite(spr_naruto_attack_dash_punch,false);
-		xspeed = 10 * facing;
-		play_sound(snd_punch_whiff_medium);
-		play_voiceline(voice_attack,50,false);
-	}
-	medium_airattack.run = function() {
-		basic_medium_attack(2,hiteffects.hit);
-	}
+	add_basic_light_airattack_state(spr_naruto_attack_back_kick_air,1,hiteffects.hit);
+	add_basic_medium_airattack_state(spr_naruto_attack_spinkick,3,hiteffects.hit);
+	add_basic_heavy_airattack_state(spr_naruto_attack_smash_kick,3,hiteffects.hit);
 	
 	heavy_attack = new charstate();
 	heavy_attack.start = function() {
@@ -158,16 +89,6 @@ function init_naruto_baseform() {
 		if check_frame(3) {
 			char_specialeffect(spr_slash2,width_half,-height*0.75,0.5,-0.5,-45);
 		}
-	}
-
-	heavy_airattack = new charstate();
-	heavy_airattack.start = function() {
-		change_sprite(spr_naruto_attack_smash_kick,false);
-		play_sound(snd_punch_whiff_super);
-		play_voiceline(voice_heavyattack,100,true);
-	}
-	heavy_airattack.run = function() {
-		basic_heavy_airattack(3,hiteffects.hit);
 	}
 	
 	divekick = new charstate();
@@ -227,7 +148,7 @@ function init_naruto_baseform() {
 		change_sprite(spr_naruto_flip,true);
 		yoffset = -height_half;
 		rotation_speed = -45;
-		xspeed = (target_distance_x / 30) * facing;
+		jump_towards_x(target_x - (width * facing), 30);
 		yspeed = target.yspeed * 1.05;
 	}
 	uzumaki_barrage_flip.run = function() {
