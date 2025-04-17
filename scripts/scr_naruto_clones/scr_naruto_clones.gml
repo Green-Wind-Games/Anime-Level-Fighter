@@ -26,7 +26,7 @@ function init_naruto_baseform_clone() {
 	
 	punch = new charstate();
 	punch.start = function() {
-		change_sprite(spr_naruto_attack_punch_straight,false);
+		change_sprite(spr_naruto_attack_punch,false);
 		play_sound(snd_punch_whiff_light);
 		play_voiceline(voice_attack,50,false);
 	}

@@ -157,7 +157,7 @@ function init_goku_ssj() {
 	dragon_fist = new charstate();
 	dragon_fist.start = function() {
 		if attempt_super(1) {
-			change_sprite(spr_goku_ssj_attack_punch_straight,false);
+			change_sprite(spr_goku_ssj_attack_punch,false);
 		}
 		else {
 			change_state(idle_state);

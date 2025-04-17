@@ -60,7 +60,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.13.0.190",
+    "IDEVersion":"2024.13.1.193",
   },
   "name":"anime level fighter",
   "resources":[
@@ -135,6 +135,7 @@
     {"id":{"name":"scr_menus","path":"scripts/scr_menus/scr_menus.yy",},},
     {"id":{"name":"scr_naruto_clones","path":"scripts/scr_naruto_clones/scr_naruto_clones.yy",},},
     {"id":{"name":"scr_naruto","path":"scripts/scr_naruto/scr_naruto.yy",},},
+    {"id":{"name":"scr_onepunchman","path":"scripts/scr_onepunchman/scr_onepunchman.yy",},},
     {"id":{"name":"scr_particles_generic","path":"scripts/scr_particles_generic/scr_particles_generic.yy",},},
     {"id":{"name":"scr_particles_hitsparks","path":"scripts/scr_particles_hitsparks/scr_particles_hitsparks.yy",},},
     {"id":{"name":"scr_particles","path":"scripts/scr_particles/scr_particles.yy",},},

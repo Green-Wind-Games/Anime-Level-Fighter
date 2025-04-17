@@ -56,6 +56,8 @@ switch(room) {
 	
 	case stage:
 	if round_state != roundstates.fight {
+		randomize();
+		
 		screen_fade_type = fade_types.bottom;
 		round_state = roundstates.intro;
 		round_timer = round_timer_max;

@@ -1,5 +1,3 @@
-randomize();
-
 function update_fight() {
 	round_state_timer += game_speed;
 	var _roundstate = round_state;
@@ -9,7 +7,7 @@ function update_fight() {
 		with(obj_char) {
 			if active_state != idle_state { ready = false; }
 			if sound_is_playing(voice) { ready = false; }
-			if state_timer < 100 { ready = false; }
+			//if state_timer < 100 { ready = false; }
 		}
 		if ready {
 			round_state = roundstates.countdown;

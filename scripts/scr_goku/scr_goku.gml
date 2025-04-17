@@ -230,7 +230,7 @@ function init_goku_baseform() {
 	//meteor_combo = new charstate();
 	//meteor_combo.start = function() {
 	//	if activate_super(1) {
-	//		change_sprite(spr_goku_attack_punch_straight,3,false);
+	//		change_sprite(spr_goku_attack_punch,3,false);
 	//	}
 	//	else {
 	//		change_state(idle_state);
@@ -243,7 +243,7 @@ function init_goku_baseform() {
 	//	if combo_hits > 0 {
 	//		sprite_sequence(
 	//			[
-	//				spr_goku_attack_punch_straight,
+	//				spr_goku_attack_punch,
 	//				spr_goku_attack_elbow_bash,
 	//				spr_goku_attack_kick_side,
 	//				spr_goku_attack_kick_arc,
