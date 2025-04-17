@@ -350,9 +350,9 @@ function draw_playerhud() {
 	
 	var hud_yscale = min(1,1.5 / max(team1_members,team2_members));
 	
-	var hp_border_height = 15 * hud_yscale;
-	var mp_border_height = 10 * hud_yscale;
-	var tp_border_height = 8;
+	var hp_border_height = 20 * hud_yscale;
+	var mp_border_height = 15 * hud_yscale;
+	var tp_border_height = 10;
 	var xp_border_height = tp_border_height;
 	var hp_yscale = hp_border_height / sprite_get_height(spr_bar_hp_border);
 	var mp_yscale = mp_border_height / sprite_get_height(spr_bar_mp_border);

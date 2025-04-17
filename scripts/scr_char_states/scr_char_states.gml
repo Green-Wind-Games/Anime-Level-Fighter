@@ -555,7 +555,7 @@ function init_charstates() {
 		}
 		var _my_x = x + (width_half * facing);
 		var _my_y = y - height_half;
-		var _target_x = target.x - (target.width_half * facing);
+		var _target_x = target.x - ((target.width_half - 1) * facing);
 		var _target_y = target.y - target.height_half;
 		var _direction = point_direction(_my_x,_my_y,_target_x,_target_y);
 		var _distance = point_distance(_my_x,_my_y,_target_x,_target_y);

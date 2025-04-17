@@ -94,6 +94,9 @@ function change_sprite(_sprite,_loop) {
 	if !_loop {
 		frame = 0;
 		frame_timer = -1;
+		anim_finished = false;
+		frame_duration = 60 / sprite_get_speed(sprite);
+		anim_speed = 1;
 	}
 	//frame_duration = max(frame_duration,1);
 	anim_loop = _loop;
