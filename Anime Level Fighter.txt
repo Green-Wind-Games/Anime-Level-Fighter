@@ -109,7 +109,7 @@ Tap A/B/C (while pummeling/holding): Increase Grab Damage
 [Universal Mechanics]
 E (hold): MP Charge
 E (hold, with Max MP): XP Charge
-E (hold, with Max XP): Level Up!
+E (hold, with Max XP): Level Up
 
 214E (while transformed): Undo Transform
 236E (while in a lower level form): Redo Transform
@@ -136,14 +136,6 @@ B x4: Medium Autocombo (automatically uses 236A and 236A+B)
 C x3: Heavy Autocombo
 2C, CC: Launcher Autocombo
 
-{Universal Combos}
-A, B, C, A, B, C
-
-AA, BB, 2C, AAA
-AA, BB, 2C, AA, 2C, A x3
-AA, BB, 2C, AA, 2C, AA, 2C, AAA
-
-2B, B, 9, B, AA, 2C, C, B, AA, 2C, AAA
 
 
 (Game System)
@@ -176,7 +168,7 @@ You start with a maximum of 4 TP, and you regenerate lost TP over time.
 TP regenerates slowly, so be careful about how you use it.
 TP can be used to teleport a short distance in any direction, or to dodge attacks.
 TP Dodges teleport you behind your opponent, so you can attempt a quick counterattack before they turn around to block.
-Certain Special moves can use TP to increase the distance covered, so make sure to have some spare TP when you can.
+Certain Special moves can use TP to increase the distance covered.
 
 [XP]
 XP, or Experience Points, are this game's primary mechanic, alongside LVL.
@@ -194,7 +186,7 @@ Most characters also become faster with each Level Up, increasing mobility and a
 
 [Transformations]
 Transformations, or Transforms, are a system which is mostly tied to the Level Up system.
-Certain characters can transform when Leveling Up, which changes their moveset and abilities.
+Certain characters can transform when Leveling Up, which changes their appearance, moveset and abilities.
 Some characters have multiple forms they can take when transforming. You can hold Up or Down to choose one of the alternate forms.
 You can also transform by using the Undo/Redo Transform commands. This assumes you have transformed before.
 
