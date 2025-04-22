@@ -396,24 +396,6 @@ function init_goku_baseform() {
 		}
 		anim_finish_idle();
 	}
-
-	setup_basicmoves();
-	
-	add_move(kiblast,"D");
-	
-	add_ground_move(kiai_push,"236A");
-	add_ground_move(kiai_push,"236B");
-	add_ground_move(kiai_push,"236C");
-	
-	add_move(kamehameha,"236D");
-	add_move(super_kamehameha,"214D");
-	
-	add_ground_move(activate_kaioken,"252C");
-	
-	add_move(super_spirit_bomb,"258C");
-	
-	signature_move = super_kamehameha;
-	finisher_move = super_spirit_bomb;
 	
 	victory_state.run = function() {
 		kaioken_timer = 0;
@@ -438,15 +420,18 @@ function init_goku_baseform() {
 			loop_anim_middle(2,4)
 		}
 	}
+	
+	init_goku_baseform_movelist();
 
 	draw_script = function() {
-		if sprite == spr_goku_special_kamehameha
-		or sprite == spr_goku_special_kamehameha_air {
-			gpu_set_blendmode(bm_add);
-			if value_in_range(frame,3,5) {
+		gpu_set_blendmode(bm_add);
+		switch(active_state) {
+			case kamehameha:
+			case super_kamehameha:
+			if value_in_range(frame,3,4) {
 				var _x = x - (10 * facing);
 				var _y = y - 25;
-				var _scale = anim_timer / 120;
+				var _scale = anim_timer / 100;
 				draw_sprite_ext(
 					spr_kamehameha_charge,
 					0,
@@ -459,6 +444,7 @@ function init_goku_baseform() {
 					1
 				);
 			}
+			break;
 		}
 		gpu_set_blendmode(bm_normal);
 	}

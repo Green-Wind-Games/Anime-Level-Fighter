@@ -462,7 +462,7 @@ function get_damage_scaling_guts(_defender) {
 }
 
 function reset_combo() {
-	if combo_hits_taken > 1 {
+	if combo_hits_taken > 0 {
 		show_debug_message("combo hits: " + string(combo_hits_taken));
 		show_debug_message("combo damage: " + string(combo_damage_taken));
 	}
@@ -470,6 +470,8 @@ function reset_combo() {
 	combo_damage = 0;
 	combo_hits_taken = 0;
 	combo_damage_taken = 0;
+	
+	array_delete(combo_moves,0,array_length(combo_moves));
 }
 
 function reset_combo_counter() {

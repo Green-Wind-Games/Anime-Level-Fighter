@@ -30,9 +30,6 @@ function init_charstates() {
 			if check_charge() {
 				change_state(charge_state);
 			}
-			else if input.up {
-				change_state(jump_state);
-			}
 			else if input.down {
 				change_state(crouch_state);
 			}
@@ -65,9 +62,6 @@ function init_charstates() {
 				change_sprite(crouch_sprite,false);
 			}
 		}
-		else if input.up {
-			change_state(superjump_state);
-		}
 		else {
 			if sprite != uncrouch_sprite {
 				change_sprite(uncrouch_sprite,false);
@@ -83,7 +77,7 @@ function init_charstates() {
 		face_target();
 	}
 	jump_state.run = function() {
-		if state_timer > 5 {
+		if (state_timer > 3) {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -jump_speed;
@@ -99,7 +93,7 @@ function init_charstates() {
 		face_target();
 	}
 	superjump_state.run = function() {
-		if state_timer > 5 {
+		if (state_timer > 3) {
 			change_state(air_state);
 			squash_stretch(0.75,1.25);
 			yspeed = -jump_speed * 1.5;
@@ -126,23 +120,6 @@ function init_charstates() {
 		}
 		face_target();
 		
-		if yspeed >= 0 {
-			if input.up {
-				if air_actions < max_air_actions {
-					xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
-					yspeed = -jump_speed * 0.75;
-					air_actions += 1;
-					squash_stretch(0.8,1.2);
-					play_sound(snd_dbz_jump_air);
-				}
-			}
-			else if input.down {
-				if yspeed < move_speed {
-					yspeed = move_speed;
-				}
-			}
-		}
-		
 		var peak_speed = 2;
 		if value_in_range(yspeed,-peak_speed,peak_speed) {
 			change_sprite(air_peak_sprite,true);
@@ -153,6 +130,18 @@ function init_charstates() {
 		else {
 			change_sprite(air_down_sprite,true);
 		}
+	}
+	
+	airjump_state = new charstate();
+	airjump_state.start = function() {
+		if air_actions < max_air_actions {
+			xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
+			yspeed = -jump_speed * 0.75;
+			air_actions += 1;
+			squash_stretch(0.8,1.2);
+			play_sound(snd_dbz_jump_air);
+		}
+		change_state(air_state);
 	}
 	
 	dash_state = new charstate();
@@ -171,7 +160,7 @@ function init_charstates() {
 		can_cancel = true;
 		var dash_duration = 10;
 		if ((!ai_enabled) and (input.forward)) 
-		or ((ai_enabled) and (target_distance_x > 20)){
+		or ((ai_enabled) and (target_distance_x > 10)){
 			dash_duration = 60;
 		}
 		if state_timer mod 5 == 1 {

@@ -49,8 +49,9 @@ function check_moves() {
 	for(var i = _min_cancel; i < array_length(_movelist); i++) {
 		var _move = _movelist[i][0];
 		if (ds_list_find_index(cancelable_moves,_move) != -1)
-		or ds_list_empty(cancelable_moves) {
+		or (ds_list_empty(cancelable_moves)) {
 			if (check_input(get_move_input(_move))) {
+				var _priority = i;
 				ds_priority_add(_available_moves,_move,string_length(get_move_input(_move)));
 			}
 		}
@@ -80,7 +81,10 @@ function check_moves() {
 				input_buffer_timer = 0;
 				_moved = true;
 			}
-			if _moved { break; }
+			if _moved { 
+				ds_list_add(active_state);
+				break;
+			}
 		}
 	}
 	ds_priority_destroy(_available_moves);
@@ -180,40 +184,6 @@ function setup_autocombo() {
 	for(var i = 0; i < array_length(autocombo); i++) {
 		add_move(autocombo[i],"A");
 	}
-}
-
-function setup_basicmoves() {
-	add_ground_move(dash_state,"656");
-	add_ground_move(backdash_state,"454");
-	
-	add_air_move(airdash_state,"656");
-	add_air_move(airdash_state,"956");
-	add_air_move(air_backdash_state,"454");
-	add_air_move(air_backdash_state,"754");
-	
-	add_move(teleport_state,"F");
-	
-	add_ground_move(light_attack,"A");
-	add_ground_move(light_attack2,"A");
-	add_ground_move(light_attack3,"A");
-	
-	add_ground_move(light_lowattack,"2A");
-	
-	add_air_move(light_airattack,"A");
-	add_air_move(light_airattack2,"A");
-	add_air_move(light_airattack3,"A");
-	
-	add_ground_move(medium_attack,"B");
-	add_ground_move(medium_attack2,"B");
-	add_ground_move(medium_attack3,"B");
-	add_ground_move(medium_attack4,"B");
-	
-	add_ground_move(medium_lowattack,"2B");
-	add_air_move(medium_airattack,"B");
-	
-	add_ground_move(heavy_attack,"C");
-	add_ground_move(heavy_lowattack,"2C");
-	add_air_move(heavy_airattack,"C");
 }
 
 function timestop(_duration = 30) {
