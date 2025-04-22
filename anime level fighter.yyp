@@ -101,7 +101,7 @@
     {"id":{"name":"scr_audio_chars","path":"scripts/scr_audio_chars/scr_audio_chars.yy",},},
     {"id":{"name":"scr_audio_music","path":"scripts/scr_audio_music/scr_audio_music.yy",},},
     {"id":{"name":"scr_audio","path":"scripts/scr_audio/scr_audio.yy",},},
-    {"id":{"name":"scr_basicattacks_templates","path":"scripts/scr_basicattacks_templates/scr_basicattacks_templates.yy",},},
+    {"id":{"name":"scr_basicattacks_movetemplates","path":"scripts/scr_basicattacks_movetemplates/scr_basicattacks_movetemplates.yy",},},
     {"id":{"name":"scr_char_movelists","path":"scripts/scr_char_movelists/scr_char_movelists.yy",},},
     {"id":{"name":"scr_char_moves","path":"scripts/scr_char_moves/scr_char_moves.yy",},},
     {"id":{"name":"scr_char_movetemplates","path":"scripts/scr_char_movetemplates/scr_char_movetemplates.yy",},},

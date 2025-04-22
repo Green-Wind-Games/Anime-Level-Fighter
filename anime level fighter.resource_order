@@ -70,7 +70,7 @@
     {"name":"scr_audio_chars","order":27,"path":"scripts/scr_audio_chars/scr_audio_chars.yy",},
     {"name":"scr_audio_music","order":26,"path":"scripts/scr_audio_music/scr_audio_music.yy",},
     {"name":"scr_audio","order":1,"path":"scripts/scr_audio/scr_audio.yy",},
-    {"name":"scr_basicattacks_templates","order":2,"path":"scripts/scr_basicattacks_templates/scr_basicattacks_templates.yy",},
+    {"name":"scr_basicattacks_movetemplates","order":2,"path":"scripts/scr_basicattacks_movetemplates/scr_basicattacks_movetemplates.yy",},
     {"name":"scr_char_movelists","order":42,"path":"scripts/scr_char_movelists/scr_char_movelists.yy",},
     {"name":"scr_char_moves","order":2,"path":"scripts/scr_char_moves/scr_char_moves.yy",},
     {"name":"scr_char_physics","order":32,"path":"scripts/scr_char_physics/scr_char_physics.yy",},

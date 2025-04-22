@@ -134,6 +134,7 @@ function init_goku_baseform() {
 	add_basic_heavy_lowattack_state(spr_goku_attack_backflip_kick,2,hiteffects.hit);
 	
 	add_basic_heavy_airattack_state(spr_goku_attack_smash,2,hiteffects.hit);
+	add_basic_heavy_air_launcher_state(spr_goku_attack_uppercut,1,hiteffects.hit);
 	
 	light_airattack = new charstate();
 	light_airattack.start = function() {

@@ -77,7 +77,7 @@ function get_attack_blockstun(_attackstrength) {
 function get_attack_hitstop(_attackstrength) {
 	var _hitstop = 0;
 	if _attackstrength > 0 {
-		_hitstop = 10 + power(_attackstrength,1.25);
+		_hitstop = 15 + power(_attackstrength,1.25);
 	}
 	
 	return round(_hitstop);
@@ -220,8 +220,8 @@ function get_hit_by_attack(_hitbox) {
 }
 
 function connect_attack(_hitbox,_hurtbox) {
-	var _attacker = _hitbox.owner;
-	var _defender = _hurtbox.owner;
+	var _attacker = _hitbox.owner.id;
+	var _defender = _hurtbox.owner.id;
 	var _true_attacker = get_true_owner(_attacker);
 	
 	hitstun = get_attack_hitstun(_hitbox.attack_strength);
@@ -319,6 +319,9 @@ function connect_attack(_hitbox,_hurtbox) {
 	with(_attacker) {
 		if is_char(id) or is_helper(id) {
 			can_cancel = true;
+			if is_char(id) {
+				ds_list_add(combo_moves, _hitbox.my_state);
+			}
 		}
 	}
 	with(_true_attacker) {
@@ -471,7 +474,7 @@ function reset_combo() {
 	combo_hits_taken = 0;
 	combo_damage_taken = 0;
 	
-	array_delete(combo_moves,0,array_length(combo_moves));
+	ds_list_clear(combo_moves);
 }
 
 function reset_combo_counter() {

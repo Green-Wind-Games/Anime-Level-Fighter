@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":239.56898,
+  "duration":239.51776,
   "name":"mus_yakuza_zero_tusk",
   "parent":{
     "name":"Music",

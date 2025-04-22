@@ -39,20 +39,29 @@ function check_moves() {
 	var _available_moves = ds_priority_create();
 	var _min_cancel = 0;
 	var _movelist = on_ground ? ground_movelist : air_movelist;
+	var _jump_cancel = false;
+	
+	if input.up {
+		if (air_actions < max_air_actions) or on_ground {
+			_movelist = air_movelist;
+			_jump_cancel = true;
+		}
+	}
 	
 	if (ds_list_empty(cancelable_moves)) {
-		var _moveid = get_movelist_index(active_state)[1];
+		var _moveid = get_movelist_index(_movelist, active_state);
 		if _moveid != -1 {
 			_min_cancel = _moveid + 1;
 		}
 	}
 	for(var i = _min_cancel; i < array_length(_movelist); i++) {
 		var _move = _movelist[i][0];
+		var _moveinput = get_move_input(_move);
 		if (ds_list_find_index(cancelable_moves,_move) != -1)
 		or (ds_list_empty(cancelable_moves)) {
-			if (check_input(get_move_input(_move))) {
-				var _priority = i;
-				ds_priority_add(_available_moves,_move,string_length(get_move_input(_move)));
+			if (check_input(_moveinput)) {
+				var _priority = (string_length(_moveinput) * 100) - i;
+				ds_priority_add(_available_moves,_move,_priority);
 			}
 		}
 	}
@@ -66,6 +75,10 @@ function check_moves() {
 			ds_priority_delete_max(_available_moves);
 			reset_cancels();
 			face_target();
+			if _jump_cancel {
+				xspeed = 5 * facing;
+				yspeed = -5;
+			}
 			change_state(_state);
 			if (active_state == idle_state) or (active_state == air_state) {
 				xspeed = _xspeed;
@@ -79,10 +92,14 @@ function check_moves() {
 				can_cancel = false;
 				input_buffer = update_input_buffer_direction();
 				input_buffer_timer = 0;
+				
+				if _jump_cancel {
+					if is_airborne {
+						air_actions++;
+					}
+				}
+				
 				_moved = true;
-			}
-			if _moved { 
-				ds_list_add(active_state);
 				break;
 			}
 		}
@@ -167,17 +184,13 @@ function get_move_input(_move) {
 	return "ERROR";
 }
 
-function get_movelist_index(_move) {
-	var _movelist = ground_movelist;
-	repeat(2) {
-		for(var i = 0; i < array_length(_movelist); i++) {
-			if _move == _movelist[i][0] {
-				return [_movelist, i];
-			}
+function get_movelist_index(_movelist, _move) {
+	for(var i = 0; i < array_length(_movelist); i++) {
+		if _move == _movelist[i][0] {
+			return i;
 		}
-		_movelist = air_movelist;
 	}
-	return [_movelist, -1];
+	return -1;
 }
 
 function setup_autocombo() {

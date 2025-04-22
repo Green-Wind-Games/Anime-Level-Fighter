@@ -30,6 +30,9 @@ function init_charstates() {
 			if check_charge() {
 				change_state(charge_state);
 			}
+			else if input.up {
+				change_state(jump_state);
+			}
 			else if input.down {
 				change_state(crouch_state);
 			}
@@ -65,6 +68,9 @@ function init_charstates() {
 		else {
 			if sprite != uncrouch_sprite {
 				change_sprite(uncrouch_sprite,false);
+			}
+			if input.up {
+				change_state(superjump_state);
 			}
 			anim_finish_idle();
 		}
@@ -120,6 +126,16 @@ function init_charstates() {
 		}
 		face_target();
 		
+		if input.up_pressed {
+			if air_actions < max_air_actions {
+				xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
+				yspeed = -jump_speed * 0.75;
+				air_actions += 1;
+				squash_stretch(0.8,1.2);
+				play_sound(snd_dbz_jump_air);
+			}
+		}
+		
 		var peak_speed = 2;
 		if value_in_range(yspeed,-peak_speed,peak_speed) {
 			change_sprite(air_peak_sprite,true);
@@ -130,18 +146,6 @@ function init_charstates() {
 		else {
 			change_sprite(air_down_sprite,true);
 		}
-	}
-	
-	airjump_state = new charstate();
-	airjump_state.start = function() {
-		if air_actions < max_air_actions {
-			xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
-			yspeed = -jump_speed * 0.75;
-			air_actions += 1;
-			squash_stretch(0.8,1.2);
-			play_sound(snd_dbz_jump_air);
-		}
-		change_state(air_state);
 	}
 	
 	dash_state = new charstate();
@@ -544,17 +548,17 @@ function init_charstates() {
 		}
 		var _my_x = x + (width_half * facing);
 		var _my_y = y - height_half;
-		var _target_x = target.x - ((target.width_half - 1) * facing);
+		var _target_x = target.x; //- ((target.width_half - 5) * facing);
 		var _target_y = target.y - target.height_half;
 		
-		if target_distance_y > target_distance_x {
-			_target_x = _my_x;
+		if _my_y > (_target_y + 50) {
+			_target_x = _my_x - (facing * 10);
 		}
 		
 		var _direction = point_direction(_my_x,_my_y,_target_x,_target_y);
 		var _distance = point_distance(_my_x,_my_y,_target_x,_target_y);
 		
-		var _speed = 30;
+		var _speed = 20;
 		var _xspeed = lengthdir_x(_speed,_direction);
 		var _yspeed = lengthdir_y(_speed,_direction);
 		
@@ -563,7 +567,7 @@ function init_charstates() {
 		
 		xspeed = approach(xspeed,_xspeed,2);
 		yspeed = approach(yspeed,_yspeed,2);
-		rotation = point_direction(0,0,abs(xspeed),yspeed);
+		rotation = point_direction(0,0,xspeed * facing,yspeed);
 		
 		if (attack_hits > 0) or (state_timer > 100) {
 			xspeed = 3 * facing;
@@ -879,6 +883,28 @@ function init_charstates() {
 	
 	light_airattack = new charstate();
 	
+	light_airattack_repeat = new charstate();
+	light_airattack_repeat.start = function() {
+		light_airattack.start();
+	}
+	light_airattack_repeat.run = function() {
+		light_airattack.run();
+	}
+	light_airattack_repeat.stop = function() {
+		light_airattack.stop();
+	}
+	
+	light_airattack_repeat2 = new charstate();
+	light_airattack_repeat2.start = function() {
+		light_airattack_repeat.start();
+	}
+	light_airattack_repeat2.run = function() {
+		light_airattack_repeat.run();
+	}
+	light_airattack_repeat2.stop = function() {
+		light_airattack_repeat.stop();
+	}
+	
 	light_airattack2 = new charstate();
 	light_airattack2.start = function() {
 		medium_airattack.start();
@@ -893,11 +919,13 @@ function init_charstates() {
 	}
 	light_airattack3.run = function() {
 		heavy_airattack.run();
+		can_cancel = false;
 	}
 	
 	medium_airattack = new charstate();
 	
 	heavy_airattack = new charstate();
+	heavy_air_launcher = new charstate();
 	
 	init_states(idle_state);
 	

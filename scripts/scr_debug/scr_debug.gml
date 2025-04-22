@@ -1,3 +1,7 @@
+function print(_message = "") {
+	show_debug_message(string(_message));
+}
+
 function test_ai_matchup(_char1,_char2) {
 	if timeskip_active return;
 	

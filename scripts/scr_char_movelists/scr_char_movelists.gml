@@ -2,39 +2,42 @@ function setup_basicmoves() {
 	add_ground_move(dash_state,"656");
 	add_ground_move(backdash_state,"454");
 	
-	add_move(teleport_state,"F");
-	
-	add_ground_move(light_attack,"A");
-	add_ground_move(light_attack2,"A");
-	add_ground_move(light_attack3,"A");
-	
-	//add_ground_move(light_lowattack,"2A");
-	
-	add_ground_move(medium_attack,"B");
-	add_ground_move(medium_attack2,"B");
-	add_ground_move(medium_attack3,"B");
-	add_ground_move(medium_attack4,"B");
-	
-	add_ground_move(medium_lowattack,"2B");
-	
-	add_ground_move(heavy_attack,"C");
-	add_ground_move(heavy_lowattack,"2C");
-	
-	add_ground_move(jump_state,"8");
-	
-	add_air_move(light_airattack,"A");
-	add_air_move(light_airattack2,"A");
-	add_air_move(light_airattack3,"A");
-	add_air_move(medium_airattack,"B");
-	add_air_move(heavy_airattack,"C");
-	add_air_move(heavy_air_launcher,"2C");
-	
-	add_air_move(airjump_state,"8");
-	
 	add_air_move(airdash_state,"656");
 	add_air_move(airdash_state,"956");
 	add_air_move(air_backdash_state,"454");
 	add_air_move(air_backdash_state,"754");
+	
+	add_move(teleport_state,"F");
+	
+	add_ground_move(light_attack,"A");
+	add_ground_move(light_attack2,"A");
+	
+	//add_ground_move(light_lowattack,"2A");
+	
+	add_ground_move(medium_lowattack,"2B");
+	
+	add_ground_move(medium_attack,"B");
+	add_ground_move(medium_attack2,"B");
+	add_ground_move(medium_attack3,"B");
+	
+	add_ground_move(light_attack3,"A");
+	
+	add_ground_move(heavy_attack,"C");
+	add_ground_move(heavy_lowattack,"2C");
+	
+	add_ground_move(medium_attack4,"B");
+	
+	add_air_move(light_airattack,"A");
+	add_air_move(light_airattack2,"A");
+	add_air_move(light_airattack3,"A");
+	
+	add_air_move(medium_airattack,"B");
+	
+	add_air_move(light_airattack_repeat,"A");
+	add_air_move(light_airattack_repeat2,"A");
+	
+	add_air_move(heavy_airattack,"C");
+	add_air_move(heavy_air_launcher,"2C");
 }
 
 function init_goku_baseform_movelist() {

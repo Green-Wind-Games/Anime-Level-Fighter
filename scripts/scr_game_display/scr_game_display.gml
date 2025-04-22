@@ -14,7 +14,7 @@ var _test = false;
 var _factor = 0.75;
 
 game_width = 640;
-game_height = 360;
+game_height = 480;
 
 if os_type == os_android or _test {
 	game_width = floor(game_width * _factor);
@@ -23,8 +23,8 @@ if os_type == os_android or _test {
 
 //game_width = round(game_height * (4 / 3));
 //game_height = round(game_width / (4 / 3));
-//game_width = round(game_height * (16 / 9));
-game_height = round(game_width / (16 / 9));
+game_width = round(game_height * (16 / 9));
+//game_height = round(game_width / (16 / 9));
 //game_width = round(game_height * screen_aspectratio);
 //game_height = round(game_width / screen_aspectratio);
 
@@ -44,7 +44,7 @@ fullscreen_scale = min(screen_width / game_width, screen_height / game_height);
 fullscreen_width = floor(game_width * fullscreen_scale);
 fullscreen_height = floor(game_height * fullscreen_scale);
 
-var gui_scale = 1.25;
+var gui_scale = 2;
 
 gui_width = round(game_width / gui_scale);
 gui_height = round(game_height / gui_scale);
@@ -125,14 +125,17 @@ function update_view() {
 				_x2 = max(_x2,x+width_half);
 				_y2 = max(_y2,y);
 			}
-			if superfreeze_active {
-				desired_zoom = 1.5;
+			if room != stage {
+				desired_zoom = 1;
+			}
+			else if superfreeze_active {
+				desired_zoom = 2;
 			}
 			else {
 				var playerdist = abs(_x1 - _x2);
 				var max_dist = (right_wall-left_wall) + 25;
 				desired_zoom = game_width / (min(playerdist+50,max_dist));
-				desired_zoom = min(desired_zoom,1.25);
+				desired_zoom = min(desired_zoom,2);
 			}
 		}
 	}

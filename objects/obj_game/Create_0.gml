@@ -183,13 +183,19 @@ voice_pitch_mine = 1;
 depth = -9999;
 
 for(var i = 0; i <= room_last; i++) {
+	var _stage_size = game_width * 1.5;
+	var _stage_width = round(_stage_size);
+	var _stage_height = round(_stage_size / (16/9));
+	var _menu_size = game_width;
+	var _menu_width = round(_menu_size);
+	var _menu_height = round(_menu_size);
 	if i >= rm_training {
-		room_set_width(i,1000);
-		room_set_height(i,400);
+		room_set_width(i,_stage_width);
+		room_set_height(i,_stage_height);
 	}
 	else if i != rm_start {
-		room_set_width(i,game_width);
-		room_set_height(i,game_height);
+		room_set_width(i,_menu_width);
+		room_set_height(i,_menu_height);
 	}
 }
 

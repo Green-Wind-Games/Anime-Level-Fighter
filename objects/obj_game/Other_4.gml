@@ -11,7 +11,7 @@ for(var i = 0; i < max_players; i++) {
 
 screen_fade_type = fade_types.normal;
 
-ground_height = room_height - floor(game_height * 0.2);
+ground_height = room_height - 64;
 		
 battle_x = room_width / 2;
 battle_y = ground_height;
@@ -56,7 +56,7 @@ switch(room) {
 	
 	case stage:
 	if round_state != roundstates.fight {
-		randomize();
+		//randomize();
 		
 		screen_fade_type = fade_types.bottom;
 		round_state = roundstates.intro;
@@ -102,12 +102,12 @@ switch(room) {
 			choose(
 				mus_dbfz_westcity,
 				mus_ff4_ds_bossbattle,
+				mus_guiltygear_fatalduel,
 				mus_yakuza_zero_tusk,
 			)
 		);
 		//var picked_player = instance_find(obj_char,irandom(instance_number(obj_char)-1));
 		//play_chartheme(picked_player);
-		
 	}
 	
 	switch(room) {

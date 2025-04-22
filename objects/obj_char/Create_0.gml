@@ -67,7 +67,7 @@ combo_damage_counter = 0;
 combo_damage_visible = 0;
 combo_damage_scaling = 1;
 
-combo_moves = array_create(0);
+combo_moves = ds_list_create();
 
 invincible = false;
 dodging_attacks = false;
