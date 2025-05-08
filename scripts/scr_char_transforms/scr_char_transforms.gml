@@ -16,16 +16,16 @@ function level_up() {
 	
 	hp = map_value(_hp,0,100,0,max_hp);
 	
-	//hp += _heal;
-	//hp = min(round(hp),max_hp);
+	hp += _heal;
+	hp = min(round(hp),max_hp);
 	
 	mp += mp_stock_size;
 	tp += tp_stock_size;
 	
-	max_xp = base_max_xp * power(level,2);
+	max_xp = round(base_max_xp * (1 + ((level-1) * level_scaling)));
 	xp = 0;
 	
-	move_speed = map_value(level,1,max_level,base_movespeed,base_movespeed+5);
+	move_speed = map_value(level,1,max_level,base_movespeed,base_movespeed*1.5);
 	
 	reset_combo();
 }
@@ -33,11 +33,17 @@ function level_up() {
 function transform(_form) {
 	var _level = level;
 	var _maxhp = max_hp;
+	var _maxmp = max_mp;
+	var _maxtp = max_tp;
 	var _maxxp = max_xp;
 	var _hp = hp;
 	var _mp = mp;
 	var _tp = tp;
 	var _xp = xp;
+	var _mp_s = mp_stocks;
+	var _mp_ss = mp_stock_size;
+	var _tp_s = tp_stocks;
+	var _tp_ss = tp_stock_size;
 	var _hp_p = hp_percent;
 	var _mp_p = mp_percent;
 	var _tp_p = tp_percent;
@@ -58,12 +64,20 @@ function transform(_form) {
 	level = _level;
 	
 	max_hp = _maxhp;
+	max_mp = _maxmp;
+	max_tp = _maxtp;
 	max_xp = _maxxp;
 	
 	hp = map_value(_hp,0,_maxhp,0,max_hp);
 	mp = _mp;
 	tp = _tp;
 	xp = _xp;
+	
+	mp_stocks = _mp_s;
+	mp_stock_size = _mp_ss;
+	
+	tp_stocks = _tp_s;
+	tp_stock_size = _tp_ss;
 	
 	hp_percent = _hp_p;
 	mp_percent = _mp_p;
@@ -98,13 +112,11 @@ function auto_levelup() {
 		play_music(_nextform.theme,1,_nextform.theme_pitch);
 		instance_destroy(_nextform);
 		
-		transform_script();
 		change_state(levelup_transform_state);
 	}
 	else {
 		play_leveluptheme(id);
 		
-		levelup_script();
 		change_state(levelup_state);
 	}
 	

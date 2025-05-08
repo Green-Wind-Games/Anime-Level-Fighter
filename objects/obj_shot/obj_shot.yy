@@ -9,8 +9,8 @@
   "name":"obj_shot",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Chars",
+    "path":"folders/Chars.yy",
   },
   "parentObjectId":null,
   "persistent":false,

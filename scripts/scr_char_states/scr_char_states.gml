@@ -666,6 +666,7 @@ function init_charstates() {
 	levelup_state = new charstate();
 	levelup_state.start = function() {
 		change_sprite(charge_loop_sprite,true);
+		play_voiceline(voice_powerup);
 		flash_sprite();
 		aura_sprite = transform_aura;
 		superfreeze(120);
@@ -687,7 +688,9 @@ function init_charstates() {
 	levelup_transform_state = new charstate();
 	levelup_transform_state.start = function() {
 		change_sprite(charge_loop_sprite,true);
-		superfreeze(audio_sound_length(voice) * 30);
+		play_voiceline(voice_transform);
+		superfreeze(ceil(audio_sound_length(voice) * 30));
+		print("screaming for " + string(superfreeze_timer) + " frames");
 		shake_screen(superfreeze_timer,1);
 		aura_sprite = transform_aura;
 		can_cancel = false;
@@ -700,7 +703,6 @@ function init_charstates() {
 		if superfreeze_timer <= 1 {
 			transform(next_form);
 			flash_sprite();
-			play_sound(snd_dbz_energy_start);
 			change_state(levelup_transform_finish_state);
 		}
 	}

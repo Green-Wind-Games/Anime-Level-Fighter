@@ -45,10 +45,11 @@ globalvar	game_state, previous_game_state, next_game_state, game_state_timer, ga
 			
 			ygravity, ground_height, battle_x, battle_y, left_wall, right_wall,
 			
-			base_max_hp, base_movespeed, base_jumpspeed,
-			max_mp, max_mp_stocks, mp_stock_size,
-			max_tp, max_tp_stocks, tp_stock_size,
+			base_max_hp,
+			base_max_mp_stocks, base_mp_stock_size,
+			base_max_tp_stocks, base_tp_stock_size,
 			base_max_xp, max_level, level_scaling,
+			base_movespeed, base_jumpspeed,
 			
 			transform_heal_percent, transform_late_heal_percent_increase,
 			
@@ -127,24 +128,23 @@ player_color[i++] = make_color_rgb(255,0,255);
 player_color[i++] = make_color_rgb(255,128,0);
 player_color[i++] = make_color_rgb(128,64,32);
 
+base_max_hp = 10000;
+
+base_mp_stock_size = 1000;
+base_max_mp_stocks = 10;
+
+base_tp_stock_size = 8 * 60;
+base_max_tp_stocks = 4;
+
 base_max_xp = 10000;
 max_level = 5;
 level_scaling = 0.5;
 
-base_max_hp = 10000;
 base_movespeed = 5;
 base_jumpspeed = 8;
 
-mp_stock_size = 1000;
-max_mp_stocks = 10;
-max_mp = max_mp_stocks * mp_stock_size;
-
-tp_stock_size = 8 * 60;
-max_tp_stocks = 4;
-max_tp = max_tp_stocks * tp_stock_size;
-
-transform_heal_percent = 60;
-transform_late_heal_percent_increase = 10;
+transform_heal_percent = 0;
+transform_late_heal_percent_increase = 0;
 
 superfreeze_active = false;
 superfreeze_activator = noone;
@@ -183,7 +183,7 @@ voice_pitch_mine = 1;
 depth = -9999;
 
 for(var i = 0; i <= room_last; i++) {
-	var _stage_size = game_width * 1.5;
+	var _stage_size = game_width * 1.25;
 	var _stage_width = round(_stage_size);
 	var _stage_height = round(_stage_size / (16/9));
 	var _menu_size = game_width;

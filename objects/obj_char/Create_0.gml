@@ -6,15 +6,21 @@ hp = max_hp;
 previous_hp = hp;
 dead = false;
 
+mp_stock_size = base_mp_stock_size;
+max_mp_stocks = base_max_mp_stocks;
+max_mp = max_mp_stocks * mp_stock_size;
 mp = 0;
 mp_stocks = 0;
 
+tp_stock_size = base_tp_stock_size;
+max_tp_stocks = base_max_tp_stocks;
+max_tp = max_tp_stocks * tp_stock_size;
 tp = max_tp;
 tp_stocks = max_tp_stocks;
 
-level = 1;
 max_xp = base_max_xp;
 xp = 0;
+level = 1;
 
 hp_percent = (hp / max_hp) * 100;
 mp_percent = (mp / max_mp) * 100;

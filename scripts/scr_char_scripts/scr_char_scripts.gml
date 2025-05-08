@@ -22,13 +22,6 @@ function init_charscripts() {
 	
 	anim_end_script = function() {};
 	state_change_script = function() {};
-	
-	levelup_script = function() {
-		play_voiceline(voice_powerup);
-	};
-	transform_script = function() {
-		play_voiceline(voice_transform);
-	};
 
 	draw_script = function() {};
 	

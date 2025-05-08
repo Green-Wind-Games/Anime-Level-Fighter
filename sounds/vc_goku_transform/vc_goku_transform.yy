@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":4.527479,
+  "duration":4.527483,
   "name":"vc_goku_transform",
   "parent":{
     "name":"Goku Voice",

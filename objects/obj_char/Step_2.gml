@@ -3,7 +3,7 @@ if facing == 0 {
 }
 
 if !check_charge() {
-	xp = min(xp,max_xp * 0.75);
+	//xp = min(xp,max_xp - 1);
 }
 if level >= max_level {
 	 xp = 0;

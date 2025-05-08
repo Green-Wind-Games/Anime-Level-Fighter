@@ -10,8 +10,8 @@
   "name":"obj_helper",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Chars",
+    "path":"folders/Chars.yy",
   },
   "parentObjectId":{
     "name":"obj_char",

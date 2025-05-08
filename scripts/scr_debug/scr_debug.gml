@@ -1,3 +1,5 @@
+randomize();
+
 function print(_message = "") {
 	show_debug_message(string(_message));
 }
