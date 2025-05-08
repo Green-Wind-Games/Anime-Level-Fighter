@@ -84,7 +84,7 @@ function change_sprite(_sprite,_loop) {
 		frame = 0;
 		frame_timer = -1;
 		anim_finished = false;
-		frame_duration = 60 / sprite_get_speed(sprite);
+		frame_duration = round(60 / sprite_get_speed(sprite));
 		anim_speed = 1;
 		
 		sprite_timer = -1;
@@ -95,7 +95,7 @@ function change_sprite(_sprite,_loop) {
 		frame = 0;
 		frame_timer = -1;
 		anim_finished = false;
-		frame_duration = 60 / sprite_get_speed(sprite);
+		frame_duration = round(60 / sprite_get_speed(sprite));
 		anim_speed = 1;
 	}
 	//frame_duration = max(frame_duration,1);
@@ -135,7 +135,7 @@ function update_sprite_animation() {
 	frame_timer += anim_speed * game_speed;
 	if frame_timer >= frame_duration {
 		frame += 1;
-		frame_timer -= frame_duration;
+		frame_timer = 0;
 		if frame >= anim_frames {
 			anim_finished = true;
 			if anim_loop {

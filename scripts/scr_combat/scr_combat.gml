@@ -59,9 +59,9 @@ function get_true_owner(_obj) {
 }
 
 function get_attack_hitstun(_attackstrength) {
-	var _hitstun = 0;
+	var _hitstun = 5;
 	if _attackstrength > 0 {
-		_hitstun = 15 + (_attackstrength * 5);
+		_hitstun = 10 + (_attackstrength * 5);
 	}
 	
 	return round(_hitstun);

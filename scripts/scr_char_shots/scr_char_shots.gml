@@ -128,7 +128,7 @@ function fire_beam(_sprite,_scale,_angle,_damage) {
 		y = owner.y;
 		y -= owner.height_half * owner.yscale * owner.ystretch;
 		
-		var _xoffset = sprite_get_width(owner.sprite) - sprite_get_xoffset(owner.sprite) - 2;
+		var _xoffset = sprite_get_width(owner.sprite) - sprite_get_xoffset(owner.sprite) - 5;
 		var _yoffset = 0;
 		
 		_xoffset *= owner.xscale * owner.xstretch * owner.facing;

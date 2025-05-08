@@ -485,6 +485,7 @@
     {"id":{"name":"spr_goku_crouch","path":"sprites/spr_goku_crouch/spr_goku_crouch.yy",},},
     {"id":{"name":"spr_goku_dash","path":"sprites/spr_goku_dash/spr_goku_dash.yy",},},
     {"id":{"name":"spr_goku_defeat","path":"sprites/spr_goku_defeat/spr_goku_defeat.yy",},},
+    {"id":{"name":"spr_goku_grab","path":"sprites/spr_goku_grab/spr_goku_grab.yy",},},
     {"id":{"name":"spr_goku_grabbed_base","path":"sprites/spr_goku_grabbed_base/spr_goku_grabbed_base.yy",},},
     {"id":{"name":"spr_goku_grabbed_body","path":"sprites/spr_goku_grabbed_body/spr_goku_grabbed_body.yy",},},
     {"id":{"name":"spr_goku_grabbed_head","path":"sprites/spr_goku_grabbed_head/spr_goku_grabbed_head.yy",},},

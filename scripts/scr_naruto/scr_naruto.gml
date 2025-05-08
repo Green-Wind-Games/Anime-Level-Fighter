@@ -52,7 +52,7 @@ function init_naruto_baseform() {
 	
 	add_basic_light_attack_state(spr_naruto_attack_punch,2,hiteffects.hit);
 	add_basic_light_attack2_state(spr_naruto_attack_dash_punch,2,hiteffects.hit);
-	add_basic_light_attack3_state(spr_naruto_attack_uppercut,2,hiteffects.hit);
+	add_basic_light_attack3_state(spr_naruto_attack_uppercut,3,hiteffects.hit);
 	
 	add_basic_medium_attack_state(spr_naruto_attack_punch_hook,2,hiteffects.hit);
 	
@@ -62,6 +62,8 @@ function init_naruto_baseform() {
 	add_basic_light_airattack_state(spr_naruto_attack_back_kick_air,1,hiteffects.hit);
 	add_basic_medium_airattack_state(spr_naruto_attack_spinkick,3,hiteffects.hit);
 	add_basic_heavy_airattack_state(spr_naruto_attack_smash_kick,3,hiteffects.hit);
+	
+	add_basic_heavy_air_launcher_state(spr_naruto_attack_spinkick_up,4,hiteffects.hit);
 	
 	heavy_attack = new charstate();
 	heavy_attack.start = function() {
@@ -91,15 +93,15 @@ function init_naruto_baseform() {
 	}
 	heavy_lowattack.run = function() {
 		if check_frame(1) {
-			xspeed = 3 * facing;
-			yspeed = -5;
+			xspeed = 1.5 * facing;
+			yspeed = -3;
 		}
-		basic_wallsplat(3,500,hiteffects.slash);
+		basic_launcherattack(3,500,hiteffects.slash);
 		basic_attack_chase(3);
 		if check_frame(3) {
 			char_specialeffect(spr_slash2,width_half,-height*0.75,0.5,-0.5,-45);
 		}
-		anim_finish_idle();
+		land();
 	}
 	
 	divekick = new charstate();

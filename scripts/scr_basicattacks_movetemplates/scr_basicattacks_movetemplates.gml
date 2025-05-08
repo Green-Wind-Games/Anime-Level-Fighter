@@ -15,7 +15,8 @@ function basic_attack_stepforward(_hitframe) {
 }
 
 function basic_attack_chase(_hitframe) {
-	if check_frame(min(anim_frames-1,_hitframe+2)) {
+	var chase_time = (_hitframe * frame_duration) + 8;
+	if (state_timer >= chase_time) {
 		if (attack_hits > 0) {
 			if (!input.back) {
 				change_state(homing_dash_state);
@@ -384,12 +385,12 @@ function add_basic_heavy_lowattack_state(_sprite, _hitframe, _hiteffect) {
 	}
 	heavy_lowattack.run = function() {
 		if check_frame(1) {
-			xspeed = 3 * facing;
-			yspeed = -5;
+			xspeed = 1.5 * facing;
+			yspeed = -3;
 		}
 		basic_launcherattack(heavy_lowattack_sprite_hit_frame,500,heavy_lowattack_hit_effect);
 		basic_attack_chase(heavy_lowattack_sprite_hit_frame);
-		anim_finish_idle();
+		land();
 	}
 }
 
