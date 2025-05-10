@@ -157,10 +157,11 @@ function init_genos_baseform() {
 		yspeed = 0;
 		if state_timer mod 3 == 1 {
 			play_sound(snd_punch_whiff_medium);
-			repeat(2) {
+			var _punches = 2;
+			for(var i = 0; i < _punches; i++) {
 				with(create_shot(
-					-random(15),
-					-random_range(height*0.8,height_half),
+					-10,
+					-sine_between(state_timer+i,5,height*0.4,height*0.8),
 					10,
 					0,
 					spr_genos_blur_fist,

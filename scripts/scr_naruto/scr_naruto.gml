@@ -1,13 +1,13 @@
 function init_naruto_baseform() {
 	init_charsprites("naruto");
-	
 	init_charaudio("naruto");
-	voice_volume_mine = 1.5;
 
 	name = "naruto";
 	display_name = "Naruto";
-	theme = mus_naruto_clashofninja_qualifiers;
+	theme = mus_naruto_strongandstrike;
 	universe = universes.narutoshippuden;
+	
+	voice_volume_mine = 1.5;
 	
 	move_speed_mod = 1.25;
 	max_air_actions = 1;

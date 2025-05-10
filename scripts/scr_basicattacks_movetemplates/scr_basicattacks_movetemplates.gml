@@ -157,7 +157,7 @@ function basic_multihit_attack(_hitframe,_damage,_strength,_hiteffect) {
 			_hiteffect
 		);
 	}
-	if frame < _hitframe {
+	if frame < (_hitframe - 1) {
 		can_cancel = false;
 	}
 }
