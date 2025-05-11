@@ -11,7 +11,7 @@ for(var i = 0; i < max_players; i++) {
 
 screen_fade_type = fade_types.normal;
 
-ground_height = room_height - 64;
+ground_height = room_height - 100;
 		
 battle_x = room_width / 2;
 battle_y = ground_height;

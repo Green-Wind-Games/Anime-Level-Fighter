@@ -563,7 +563,10 @@ function init_charstates() {
 		var _yspeed = lengthdir_y(_speed,_direction);
 		
 		face_target();
-		basic_attack(frame,10,attackstrength.light,hiteffects.hit);
+		
+		if state_timer > 10 {
+			basic_attack(frame,10,attackstrength.light,hiteffects.hit);
+		}
 		
 		xspeed = approach(xspeed,_xspeed,2);
 		yspeed = approach(yspeed,_yspeed,2);

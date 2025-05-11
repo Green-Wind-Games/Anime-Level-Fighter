@@ -16,10 +16,14 @@ function basic_attack_stepforward(_hitframe) {
 
 function basic_attack_chase(_hitframe) {
 	var chase_time = (_hitframe * frame_duration) + 8;
-	if (state_timer >= chase_time) {
+	if chase_time >= anim_duration - 1 {
+		chase_time = anim_duration - 1;
+	}
+	if (state_timer == chase_time) {
 		if (attack_hits > 0) {
 			if (!input.back) {
 				change_state(homing_dash_state);
+				print("chasing");
 			}
 		}
 	}
@@ -180,12 +184,16 @@ function add_basic_light_attack_state(_sprite, _hitframe, _hiteffect) {
 	
 	light_attack.start = function() {
 		change_sprite(light_attack_sprite,false);
+		anim_speed = (light_attack_sprite_hit_frame * frame_duration) / 3;
 		play_sound(light_attack_whiff_sound);
 		play_voiceline(voice_attack,50,false);
 	}
 	light_attack.run = function() {
 		basic_attack_stepforward(light_attack_sprite_hit_frame);
 		basic_attack(light_attack_sprite_hit_frame,200,attackstrength.light,light_attack_hit_effect);
+		if check_frame(light_attack_sprite_hit_frame) {
+			anim_speed = 1;
+		}
 		anim_finish_idle();
 	}
 }
@@ -509,13 +517,23 @@ function add_basic_heavy_air_launcher_state(_sprite, _hitframe, _hiteffect) {
 		yspeed = -5;
 	}
 	heavy_air_launcher.run = function() {
-		if ds_list_find_index(combo_moves, homing_dash_state) == -1 {
+		var _strong = ds_list_find_index(combo_moves, homing_dash_state) == -1;
+		if _strong {
 			basic_launcherattack(heavy_air_launcher_sprite_hit_frame,500,heavy_air_launcher_hit_effect);
 			basic_attack_chase(heavy_air_launcher_sprite_hit_frame);
 		}
 		else {
 			basic_attack_stepforward(heavy_air_launcher_sprite_hit_frame);
 			basic_attack(heavy_air_launcher_sprite_hit_frame,400,attackstrength.heavy,heavy_air_launcher_hit_effect);
+		}
+		if check_frame(heavy_air_launcher_sprite_hit_frame)
+		or check_frame(heavy_air_launcher_sprite_hit_frame + 1) {
+			if _strong {
+				print("heavy air launcher is strong");
+			}
+			else {
+				print("heavy air launcher is weak");
+			}
 		}
 		anim_finish_idle();
 	}

@@ -1,4 +1,4 @@
-function init_sprite(_sprite = sprite_index, _scale = 1) {
+function init_sprite(_sprite = sprite_index) {
 	sprite = _sprite;
 	
 	previous_sprite = noone;
@@ -38,7 +38,6 @@ function init_sprite(_sprite = sprite_index, _scale = 1) {
 	
 	facing = 1;
 	
-	scale = _scale;
 	xscale = 1;
 	yscale = 1;
 	xstretch = 1;
@@ -54,9 +53,9 @@ function init_sprite(_sprite = sprite_index, _scale = 1) {
 	flash = 0;
 	flash_color = c_white;
 	
-	var _scale2 = scale * 0.9;
-	width = floor(sprite_get_width(sprite) * _scale2);
-	height = floor(sprite_get_height(sprite) * _scale2);
+	var _scale = 0.9;
+	width = floor(sprite_get_width(sprite) * _scale);
+	height = floor(sprite_get_height(sprite) * _scale);
 	
 	width_half = floor(width/2);
 	height_half = floor(height/2);

@@ -37,7 +37,7 @@ function setup_basicmoves() {
 	add_air_move(light_airattack_repeat2,"A");
 	
 	add_air_move(heavy_airattack,"C");
-	add_air_move(heavy_air_launcher,"2C");
+	add_air_move(heavy_air_launcher,"8C");
 }
 
 function init_goku_baseform_movelist() {
