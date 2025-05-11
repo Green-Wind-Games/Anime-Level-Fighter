@@ -498,17 +498,17 @@ function draw_playerhud() {
 				}
 
 				if (mp_percent_visible > 0) {
-					var _mp_w = map_value(mp, 0, max_mp, 0, mp_bar_width);
+					var _mp_w = map_value(mp_percent_visible, 0, 100, 0, mp_bar_width);
 					draw_sprite_stretched(spr_bar_mp_bar,0,mp_bar_x1,mp_bar_y1,_mp_w,mp_bar_height);
 				}
 				
 				if (tp_percent_visible > 0) {
-					var _tp_w = map_value(tp, 0, max_tp, 0, tp_bar_width);
+					var _tp_w = map_value(tp_percent_visible, 0, 100, 0, tp_bar_width);
 					draw_sprite_stretched(spr_bar_tp_bar,0,tp_bar_x1,tp_bar_y1,_tp_w,tp_bar_height);
 				}
 				
 				if (xp_percent_visible > 0) {
-					var _xp_w = map_value(xp, 0, max_xp, 0, xp_bar_width);
+					var _xp_w = map_value(xp_percent_visible, 0, 100, 0, xp_bar_width);
 					draw_sprite_stretched(spr_bar_xp_bar,0,xp_bar_x1,xp_bar_y1,_xp_w,xp_bar_height);
 				}
 				

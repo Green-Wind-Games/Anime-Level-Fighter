@@ -23,19 +23,19 @@ if os_type == os_android or _test {
 
 //game_width = round(game_height * (4 / 3));
 //game_height = round(game_width / (4 / 3));
-game_width = round(game_height * (16 / 9));
+//game_width = round(game_height * (16 / 9));
 //game_height = round(game_width / (16 / 9));
 //game_width = round(game_height * screen_aspectratio);
-//game_height = round(game_width / screen_aspectratio);
+game_height = round(game_width / screen_aspectratio);
 
 game_aspectratio = game_width / game_height;
 
-window_max_scale = min(screen_width / game_width, (screen_height - 80) / game_height);
+window_max_scale = min(screen_width / game_width, (screen_height / 10) / game_height);
 //if (game_width * window_max_scale) >= screen_width
 //or (game_height * window_max_scale) >= (screen_height - 48) {
 //	window_max_scale -= 1;
 //}
-window_max_scale = max(1,window_max_scale);
+window_max_scale = max(1,round(window_max_scale));
 window_scale = window_max_scale;
 window_width = round(game_width * window_scale);
 window_height = round(game_height * window_scale);
@@ -44,7 +44,7 @@ fullscreen_scale = min(screen_width / game_width, screen_height / game_height);
 fullscreen_width = floor(game_width * fullscreen_scale);
 fullscreen_height = floor(game_height * fullscreen_scale);
 
-var gui_scale = 2;
+var gui_scale = max(1,round(game_height / 360));
 
 gui_width = round(game_width / gui_scale);
 gui_height = round(game_height / gui_scale);
@@ -134,8 +134,8 @@ function update_view() {
 			else {
 				var playerdist = abs(_x1 - _x2);
 				var max_dist = (right_wall-left_wall) + 25;
-				desired_zoom = game_width / (min(playerdist+50,max_dist));
-				desired_zoom = min(desired_zoom,2);
+				desired_zoom = game_width / (min(playerdist+64,max_dist));
+				desired_zoom = min(desired_zoom,1);
 			}
 		}
 	}
@@ -227,4 +227,4 @@ else {
 		display_set_ui_visibility(_flags);
 	}
 }
-//enable_fullscreen();
+enable_fullscreen();

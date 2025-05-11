@@ -1,6 +1,6 @@
 function create_shot(_x,_y,_xspeed,_yspeed,_sprite,_scale,_damage,_xknockback,_yknockback,_attacktype,_strength,_hiteffect) {
 	var _me = id;
-	var _shot = instance_create(x+(_x*facing),y+_y,obj_shot);
+	var _shot = instance_create(x+(_x*facing),y+(_y),obj_shot);
 	with(_shot) {
 		owner = get_true_owner(_me);
 		init_sprite(_sprite);

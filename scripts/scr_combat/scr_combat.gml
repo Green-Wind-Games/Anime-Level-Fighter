@@ -61,7 +61,7 @@ function get_true_owner(_obj) {
 function get_attack_hitstun(_attackstrength) {
 	var _hitstun = 5;
 	if _attackstrength > 0 {
-		_hitstun = 10 + (_attackstrength * 5);
+		_hitstun = 15 + (_attackstrength * 5);
 	}
 	
 	return round(_hitstun);
@@ -69,15 +69,15 @@ function get_attack_hitstun(_attackstrength) {
 
 function get_attack_blockstun(_attackstrength) {
 	var _blockstun = get_attack_hitstun(_attackstrength) - 5;
-	_blockstun = max(_blockstun,0);
+	_blockstun = max(_blockstun,5);
 	
 	return round(_blockstun);
 }
 
 function get_attack_hitstop(_attackstrength) {
-	var _hitstop = 0;
+	var _hitstop = 5;
 	if _attackstrength > 0 {
-		_hitstop = 15 + power(_attackstrength,1.25);
+		_hitstop = 10 + power(_attackstrength,1.5);
 	}
 	
 	return round(_hitstop);
