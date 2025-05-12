@@ -56,7 +56,7 @@ function add_kiblast_state(_sprite1,_sprite2,_kiblastsprite,_fireframe,_maxrepea
 			}
 			kiblast_count += 1;
 		}
-		if frame > 3 {
+		if frame > kiblast_fire_frame {
 			add_cancel(kiblast);
 			can_cancel = (kiblast_count < max_kiblasts) and (check_mp(1/max_kiblasts));
 		}

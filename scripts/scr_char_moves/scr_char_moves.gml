@@ -3,26 +3,20 @@
 
 function add_move(_move = light_attack, _input = "A", _ground = true, _air = true) {
 	if _ground {
-		if (ground_movelist[0][0] == noone) {
-			ground_movelist[0][0] = _move;
-			ground_movelist[0][1] = _input;
+		var n = get_movelist_index(ground_movelist,_move);
+		if n == -1 {
+			n = array_length(ground_movelist);
+			array_push(ground_movelist,[_move]);
 		}
-		else {
-			var n = array_length(ground_movelist);
-			ground_movelist[n][0] = _move;
-			ground_movelist[n][1] = _input;
-		}
+		array_push(ground_movelist[n],_input);
 	}
 	if _air {
-		if (air_movelist[0][0] == noone) {
-			air_movelist[0][0] = _move;
-			air_movelist[0][1] = _input;
+		var n = get_movelist_index(air_movelist,_move);
+		if n == -1 {
+			n = array_length(air_movelist);
+			array_push(air_movelist,[_move]);
 		}
-		else {
-			var n = array_length(air_movelist);
-			air_movelist[n][0] = _move;
-			air_movelist[n][1] = _input;
-		}
+		array_push(air_movelist[n],_input);
 	}
 }
 
@@ -60,7 +54,7 @@ function check_moves() {
 		if (ds_list_find_index(cancelable_moves,_move) != -1)
 		or (ds_list_empty(cancelable_moves)) {
 			if (check_input(_moveinput)) {
-				var _priority = (string_length(_moveinput) * 100) - i;
+				var _priority = (-i) + (string_length(_moveinput[0]) * 1000);
 				ds_priority_add(_available_moves,_move,_priority);
 			}
 		}
@@ -120,68 +114,96 @@ function reset_cancels() {
 }
 
 function check_input(_input) {
-	var valid = true;
-	var _input_dir = string_digits(input_buffer);
-	var _input_btn = string_letters(input_buffer);
-	var cmd_dir = string_digits(_input);
-	var cmd_btn = string_letters(_input);
-	if cmd_dir != "" {
-		if (!string_ends_with(_input_dir,cmd_dir)) and (!string_ends_with(_input_dir,cmd_dir + "5")) {
-			valid = false;
+	var _combinations = [_input];
+	if is_array(_input) {
+		_combinations = _input;
+	}
+	for(var i = 0; i < array_length(_combinations); i++) {
+		var _string = _combinations[i];
+		var _valid = true;
+		var _input_dir = string_digits(input_buffer);
+		var _input_btn = string_letters(input_buffer);
+		var cmd_dir = string_digits(_string);
+		var cmd_btn = string_letters(_string);
+		if cmd_dir != "" {
+			if (!string_ends_with(_input_dir,cmd_dir)) {
+				if (string_length(cmd_dir) >= 3) {
+					if (!string_ends_with(_input_dir,cmd_dir + "5")) {
+						_valid = false;
+					}
+				}
+				else if (string_length(cmd_dir) == 2) {
+					if (!string_starts_with(cmd_dir,"5")) {
+						if (!string_ends_with(_input_dir,string_insert("5",cmd_dir,2))) {
+							_valid = false;
+						}
+					}
+				}
+				else {
+					_valid = false;
+				}
+			}
+			switch(cmd_dir) {
+				case "2":
+				if (!string_ends_with(_input_dir,"1")) 
+				and (!string_ends_with(_input_dir,"2")) 
+				and (!string_ends_with(_input_dir,"3")) {
+					_valid = false;
+				}
+				break;
+				case "4":
+				if (!string_ends_with(_input_dir,"1")) 
+				and (!string_ends_with(_input_dir,"4")) 
+				and (!string_ends_with(_input_dir,"7")) { 
+					_valid = false;
+				}
+				break;
+				case "6":
+				if (!string_ends_with(_input_dir,"3")) 
+				and (!string_ends_with(_input_dir,"6")) 
+				and (!string_ends_with(_input_dir,"9")) { 
+					_valid = false;
+				}
+				break;
+				case "8":
+				if (!string_ends_with(_input_dir,"7")) 
+				and (!string_ends_with(_input_dir,"8")) 
+				and (!string_ends_with(_input_dir,"9")) { 
+					_valid = false;
+				}
+				break;
+			}
 		}
-		switch(cmd_dir) {
-			case "2":
-			if (!string_ends_with(_input_dir,"1")) 
-			and (!string_ends_with(_input_dir,"2")) 
-			and (!string_ends_with(_input_dir,"3")) {
-				valid = false;
+		if !string_ends_with(_input_btn,cmd_btn) {
+			_valid = false;
+		}
+		if (string_length(cmd_btn) == 1) {
+			if input_buffer_timer > max(1, input_buffer_duration - (input_delay * game_speed * (game_get_speed(gamespeed_fps) / 60))) {
+				_valid = false;
 			}
-			break;
-			case "4":
-			if (!string_ends_with(_input_dir,"1")) 
-			and (!string_ends_with(_input_dir,"4")) 
-			and (!string_ends_with(_input_dir,"7")) { 
-				valid = false;
-			}
-			break;
-			case "6":
-			if (!string_ends_with(_input_dir,"3")) 
-			and (!string_ends_with(_input_dir,"6")) 
-			and (!string_ends_with(_input_dir,"9")) { 
-				valid = false;
-			}
-			break;
-			case "8":
-			if (!string_ends_with(_input_dir,"7")) 
-			and (!string_ends_with(_input_dir,"8")) 
-			and (!string_ends_with(_input_dir,"9")) { 
-				valid = false;
-			}
-			break;
+		}
+		
+		if _valid {
+			return true;
 		}
 	}
-	if !string_ends_with(_input_btn,cmd_btn) {
-		valid = false;
-	}
-	if (string_length(cmd_btn) == 1) {
-		if input_buffer_timer > max(1, input_buffer_duration - (input_delay * game_speed * (game_get_speed(gamespeed_fps) / 60))) {
-			valid = false;
-		}
-	}
-	return valid;
+	return false;
 }
 
 function get_move_input(_move) {
-	var _movelist = ground_movelist;
+	var _movelist = on_ground ? ground_movelist : air_movelist;
 	repeat(2) {
-		for(var i = 0; i < array_length(_movelist); i++) {
-			if _move == _movelist[i][0] {
-				return _movelist[i][1];
+		var _move_id = get_movelist_index(_movelist,_move);
+		if _move_id != -1 {
+			var _possible_inputs = [];
+			for(var i = 1; i < array_length(_movelist[_move_id]); i++) {
+				array_push(_possible_inputs,_movelist[_move_id][i]);
 			}
+			return _possible_inputs;
 		}
-		_movelist = air_movelist;
+		_movelist = on_ground ? air_movelist : ground_movelist;
 	}
-	return "ERROR";
+	return ["ERROR"];
 }
 
 function get_movelist_index(_movelist, _move) {

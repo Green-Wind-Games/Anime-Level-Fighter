@@ -425,7 +425,7 @@ function take_damage(_attacker,_amount,_kill) {
 	
 	dmg /= max(_defender.defense,0.1);
 	
-	dmg *= ((80/1000) / (2500 / base_max_hp));
+	//dmg *= ((80/1000) / (2500 / base_max_hp));
 	
 	dmg = max(round(dmg),1);
 	

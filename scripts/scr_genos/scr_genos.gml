@@ -48,6 +48,8 @@ function init_genos_baseform() {
 	add_basic_light_airattack_state(spr_genos_attack_punch,2,hiteffects.hit);
 	add_basic_medium_airattack_state(spr_genos_attack_kick,2,hiteffects.hit);
 	add_basic_heavy_airattack_state(spr_genos_attack_smash,2,hiteffects.hit);
+	
+	add_basic_heavy_air_launcher_state(spr_genos_attack_kick_up,2,hiteffects.hit);
 
 	fireblast = new charstate();
 	fireblast.start = function() {

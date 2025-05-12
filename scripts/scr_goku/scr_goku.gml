@@ -126,7 +126,7 @@ function init_goku_baseform() {
 	add_basic_light_attack2_state(spr_goku_attack_punch_gut,2,hiteffects.hit);
 	add_basic_light_attack3_state(spr_goku_attack_uppercut,1,hiteffects.hit);
 	
-	add_basic_medium_attack_state(spr_goku_attack_elbow_bash,1,hiteffects.hit);
+	add_basic_medium_attack_state(spr_goku_attack_elbow_bash,2,hiteffects.hit);
 	add_basic_heavy_attack_state(spr_goku_attack_kick_arc,1,hiteffects.hit);
 	
 	add_basic_light_lowattack_state(spr_goku_attack_punch_gut,2,hiteffects.hit);
@@ -148,9 +148,9 @@ function init_goku_baseform() {
 		basic_attack_stepforward(1);
 		basic_attack_stepforward(3);
 		basic_attack_stepforward(5);
-		basic_multihit_attack(1,50,attackstrength.light,hiteffects.hit);
-		basic_multihit_attack(3,50,attackstrength.light,hiteffects.hit);
-		basic_multihit_attack(5,50,attackstrength.light,hiteffects.hit);
+		basic_multihit_attack(1,80,attackstrength.light,hiteffects.hit);
+		basic_multihit_attack(3,80,attackstrength.light,hiteffects.hit);
+		basic_multihit_attack(5,80,attackstrength.light,hiteffects.hit);
 		anim_finish_idle();
 	}
 	
@@ -165,8 +165,8 @@ function init_goku_baseform() {
 		}
 		basic_attack_stepforward(3);
 		basic_attack_stepforward(5);
-		basic_multihit_attack(3,150,attackstrength.medium,hiteffects.hit);
-		basic_multihit_attack(7,150,attackstrength.medium,hiteffects.hit);
+		basic_multihit_attack(3,200,attackstrength.medium,hiteffects.hit);
+		basic_multihit_attack(7,200,attackstrength.medium,hiteffects.hit);
 		anim_finish_idle();
 	}
 	

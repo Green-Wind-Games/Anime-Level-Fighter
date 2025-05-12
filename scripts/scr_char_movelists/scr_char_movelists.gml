@@ -1,13 +1,13 @@
 function setup_basicmoves() {
-	add_ground_move(dash_state,"656");
-	add_ground_move(backdash_state,"454");
+	add_ground_move(dash_state,"66");
+	add_ground_move(backdash_state,"44");
+	add_air_move(airdash_state,"66");
+	add_air_move(air_backdash_state,"44");
 	
-	add_air_move(airdash_state,"656");
 	add_air_move(airdash_state,"956");
-	add_air_move(air_backdash_state,"454");
 	add_air_move(air_backdash_state,"754");
 	
-	add_move(teleport_state,"F");
+	//add_move(teleport_state,"F");
 	
 	add_ground_move(light_attack,"A");
 	add_ground_move(light_attack2,"A");
@@ -20,10 +20,10 @@ function setup_basicmoves() {
 	add_ground_move(medium_attack2,"B");
 	add_ground_move(medium_attack3,"B");
 	
-	add_ground_move(light_attack3,"A");
-	
 	add_ground_move(heavy_attack,"C");
 	add_ground_move(heavy_lowattack,"2C");
+	
+	add_ground_move(light_attack3,"A");
 	
 	add_ground_move(medium_attack4,"B");
 	
