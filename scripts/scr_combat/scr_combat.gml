@@ -224,14 +224,14 @@ function connect_attack(_hitbox,_hurtbox) {
 	var _defender = _hurtbox.owner.id;
 	var _true_attacker = get_true_owner(_attacker);
 	
-	hitstun = get_attack_hitstun(_hitbox.attack_strength);
-	blockstun = get_attack_blockstun(_hitbox.attack_strength);
-	hitstop = get_attack_hitstop(_hitbox.attack_strength);
+	hitstun = _hitbox.hitstun;
+	blockstun = _hitbox.blockstun;
+	hitstop = _hitbox.hitstop;
 	
 	hitstun = max(hitstun - (combo_hits_taken / 4), 10);
 	
 	if _hitbox.attack_type == attacktype.multihit {
-		hitstop *= 0.5;
+		hitstop *= 0.75;
 	}
 	
 	var _is_strong_attack = true;
@@ -243,13 +243,7 @@ function connect_attack(_hitbox,_hurtbox) {
 		hitstun = max(hitstun,60);
 	}
 	
-	if is_char(_attacker) {
-		with(_attacker) {
-			var _recovery = (anim_frames - frame) * frame_duration;
-			hitstun = _recovery;
-		}
-	}
-	else {
+	if !is_char(_attacker) {
 		hitstop *= 0.75;
 	}
 	
@@ -319,17 +313,17 @@ function connect_attack(_hitbox,_hurtbox) {
 	with(_attacker) {
 		if is_char(id) or is_helper(id) {
 			can_cancel = true;
-			if is_char(id) {
-				ds_list_add(combo_moves, _hitbox.my_state);
-			}
 		}
 	}
 	with(_true_attacker) {
 		attack_hits++;
+		if attack_hits == 1 {
+			ds_list_add(combo_moves, _hitbox.my_state);
+		}
 	}
 	
-	var mp_gain = map_value(dmg*2,0,max_hp,0,max_mp);
-	var xp_gain = map_value(dmg/2,0,max_hp,0,base_max_xp) * max_level;
+	var mp_gain = dmg * 2;
+	var xp_gain = dmg / 2;
 	
 	var attack_mp_gain = mp_gain * 1.0;
 	var attack_xp_gain = xp_gain * 1.0;

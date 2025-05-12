@@ -30,6 +30,9 @@ function create_hitbox(_xoffset,_yoffset,_width,_height,_damage,_xknockback,_ykn
 		attack_type = _attacktype;
 		attack_strength = _strength;
 		hit_effect = _hiteffect;
+		hitstun = get_attack_hitstun(_strength);
+		blockstun = get_attack_blockstun(_strength);
+		hitstop = get_attack_hitstop(_strength);
 		my_state = owner.active_state;
 		duration = owner.frame_duration;
 	}
@@ -75,6 +78,20 @@ function hitbox_check_hit() {
 		if ds_list_find_index(a.hit_list,b2) != -1 continue;
 		if b2.grabbed continue;
 		if !place_meeting(x,y,a) continue;
+		
+		with(get_true_owner(a)) {
+			var _reps = 0;
+			for(var i = 0; i < ds_list_size(combo_moves); i++) {
+				if ds_list_find_value(combo_moves,i) == a.my_state {
+					_reps++;
+				}
+			}
+			if _reps >= 2 {
+				if attack_hits < 1 {
+					continue;
+				}
+			}
+		}
 		
 		if is_char(b2) {
 			if check_substitution(b2,2) {

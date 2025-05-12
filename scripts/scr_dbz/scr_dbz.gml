@@ -192,7 +192,7 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 		}
 		loop_anim_middle_timer(kamehameha_fire_frame1,kamehameha_fire_frame2,100);
 		if value_in_range(frame,kamehameha_fire_frame1,kamehameha_fire_frame2) {
-			fire_beam(spr_kamehameha,1,rotation,50);
+			fire_beam(spr_kamehameha,1,rotation,100);
 			shake_screen(5);
 		}
 		anim_finish_idle();

@@ -82,7 +82,7 @@ if ((timestop_active) and (timestop_activator != id)) exit;
 if hitstop <= 0 then hitstop = 0; else exit;
 
 tp += game_speed * 1;
-combo_timer -= game_speed;
+combo_timer -= game_speed * (!superfreeze_active) * (!timestop_active);
 if combo_timer <= 0 {
 	reset_combo();
 }
