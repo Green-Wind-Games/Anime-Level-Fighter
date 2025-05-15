@@ -57,13 +57,20 @@ function play_sound(_snd,_volume = 1,_pitch = 1) {
 		
 		array_shuffle(_sounds);
 		
+		var _random_pitch = false;
+		if object_is_ancestor(object_index,obj_char)
+		or object_is_ancestor(object_index,obj_shot)
+		or object_is_ancestor(object_index,obj_hitbox_parent) {
+			_random_pitch = 0.05;
+		}
+		
 		sound = audio_play_sound(
 			_sounds[0],
 			1,
 			false,
 			_volume*master_volume*sound_volume,
 			0,
-			_pitch * (1 + random_range(0.04,-0.04))
+			_pitch + random_range(_random_pitch,-_random_pitch)
 		);
 		return sound;
 	}

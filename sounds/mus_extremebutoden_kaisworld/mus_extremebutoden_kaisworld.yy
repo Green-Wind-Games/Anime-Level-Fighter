@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":242.748,
+  "duration":242.71347,
   "name":"mus_extremebutoden_kaisworld",
   "parent":{
     "name":"Music",

@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":124.238365,
+  "duration":124.216965,
   "name":"mus_naruto_strongandstrike",
   "parent":{
     "name":"Music",

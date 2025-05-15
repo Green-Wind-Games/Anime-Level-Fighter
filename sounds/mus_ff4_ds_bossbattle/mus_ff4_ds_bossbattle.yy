@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":138.55347,
+  "duration":138.50703,
   "name":"mus_ff4_ds_bossbattle",
   "parent":{
     "name":"Music",

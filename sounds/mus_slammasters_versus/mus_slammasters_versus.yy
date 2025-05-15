@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":6.29551,
+  "duration":6.2704535,
   "name":"mus_slammasters_versus",
   "parent":{
     "name":"Music",

@@ -1,16 +1,29 @@
+var _drop_timer = 60 * 2;
+
+for(var i = 0; i < array_length(player_input); i++) {
+	with(player_input[i]) {
+		if confirm or up_pressed or down_pressed {
+			with(other) {
+				assigned_input = i;
+				input_drop_timer = _drop_timer;
+				//hover_marker = "[P" + string(i+1) + "]> ";
+			}
+		}
+	}
+}
+
 if assigned_input != -1 {
 	var _hover = hover;
 	
 	if player_input[assigned_input].up_pressed {
 		hover--;
-		input_drop_timer = 0;
 	}
 	if player_input[assigned_input].down_pressed {
 		hover++;
-		input_drop_timer = 0;
 	}
 
 	if hover != _hover {
+		input_drop_timer = _drop_timer;
 		play_sound(snd_ui_menu_scroll,1,1);
 	}
 	
@@ -30,21 +43,8 @@ if assigned_input != -1 {
 		instance_destroy();
 	}
 
-	if input_drop_timer++ > (5 * 60) {
+	if input_drop_timer-- <= 0 {
 		assigned_input = -1;
-		hover_marker = "[P??]> ";
-	}
-}
-else {
-	for(var i = 0; i < array_length(player_input); i++) {
-		with(player_input[i]) {
-			if confirm or up_pressed or down_pressed {
-				with(other) {
-					assigned_input = i;
-					input_drop_timer = 0;
-					hover_marker = "[P" + string(i+1) + "]> ";
-				}
-			}
-		}
+		//hover_marker = "[P?]> ";
 	}
 }

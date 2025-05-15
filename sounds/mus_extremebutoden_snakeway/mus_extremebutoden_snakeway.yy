@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":216.072,
+  "duration":216.03748,
   "name":"mus_extremebutoden_snakeway",
   "parent":{
     "name":"Music",

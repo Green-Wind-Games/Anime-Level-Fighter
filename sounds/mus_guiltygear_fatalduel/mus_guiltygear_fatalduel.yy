@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":158.8,
+  "duration":158.38501,
   "name":"mus_guiltygear_fatalduel",
   "parent":{
     "name":"Music",

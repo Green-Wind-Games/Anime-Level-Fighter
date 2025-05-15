@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":319.58203,
+  "duration":172.201,
   "name":"mus_dbfz_goku",
   "parent":{
     "name":"Music",

@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":364.0947,
+  "duration":190.89699,
   "name":"mus_dbfz_space",
   "parent":{
     "name":"Music",

@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":254.27592,
+  "duration":253.5,
   "name":"mus_opm_genos",
   "parent":{
     "name":"Music",

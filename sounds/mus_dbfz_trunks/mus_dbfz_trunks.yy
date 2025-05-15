@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":162.336,
+  "duration":162.31299,
   "name":"mus_dbfz_trunks",
   "parent":{
     "name":"Music",

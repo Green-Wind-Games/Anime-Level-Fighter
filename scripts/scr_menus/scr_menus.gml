@@ -5,7 +5,7 @@ function open_menu(_x,_y,_options,_description = -1) {
 		options = _options;
 		description = _description;
 		options_count = array_length(options);
-		hover_marker = "[P??]> ";
+		hover_marker = "> ";
 		
 		margin = 8;
 		draw_set_font(fnt_menu);

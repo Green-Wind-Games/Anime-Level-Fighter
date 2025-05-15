@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":212.088,
+  "duration":212.06497,
   "name":"mus_naruto_clashofninja_qualifiers",
   "parent":{
     "name":"Music",

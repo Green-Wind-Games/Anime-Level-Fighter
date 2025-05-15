@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":3,
   "conversionMode":0,
-  "duration":149.02856,
+  "duration":149.0,
   "name":"mus_dbfz_trunks_remix",
   "parent":{
     "name":"Music",
