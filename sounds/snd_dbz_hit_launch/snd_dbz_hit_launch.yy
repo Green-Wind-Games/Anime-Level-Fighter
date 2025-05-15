@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":2.138413,
+  "duration":2.1384127,
   "name":"snd_dbz_hit_launch",
   "parent":{
     "name":"Sounds",

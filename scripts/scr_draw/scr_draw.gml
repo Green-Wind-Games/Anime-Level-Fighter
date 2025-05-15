@@ -463,23 +463,23 @@ function draw_playerhud() {
 		xp_border_y1 = hud_y + xp_border_yoffset;
 		xp_border_y2 = xp_border_y1 + xp_border_height;
 			
-		hp_bar_x1 = hp_border_x1 + hp_bar_xoffset;
-		hp_bar_x2 = hp_bar_x1 + hp_bar_width;
+		hp_bar_x1 = hp_border_x1 + hp_bar_xoffset + 1;
+		hp_bar_x2 = hp_bar_x1 + hp_bar_width - 1;
 		hp_bar_y1 = hp_border_y1 + hp_bar_yoffset;
 		hp_bar_y2 = hp_bar_y1 + hp_bar_height;
 				
-		mp_bar_x1 = mp_border_x1 + mp_bar_xoffset;
-		mp_bar_x2 = mp_bar_x1 + mp_bar_width;
+		mp_bar_x1 = mp_border_x1 + mp_bar_xoffset + 1;
+		mp_bar_x2 = mp_bar_x1 + mp_bar_width - 1;
 		mp_bar_y1 = mp_border_y1 + mp_bar_yoffset;
 		mp_bar_y2 = mp_bar_y1 + mp_bar_height;
 				
-		tp_bar_x1 = tp_border_x1 + tp_bar_xoffset;
-		tp_bar_x2 = tp_bar_x1 + tp_bar_width;
+		tp_bar_x1 = tp_border_x1 + tp_bar_xoffset + 1;
+		tp_bar_x2 = tp_bar_x1 + tp_bar_width - 1;
 		tp_bar_y1 = tp_border_y1 + tp_bar_yoffset;
 		tp_bar_y2 = tp_bar_y1 + tp_bar_height;
 				
-		xp_bar_x1 = xp_border_x1 + xp_bar_xoffset;
-		xp_bar_x2 = xp_bar_x1 + xp_bar_width;
+		xp_bar_x1 = xp_border_x1 + xp_bar_xoffset + 1;
+		xp_bar_x2 = xp_bar_x1 + xp_bar_width - 1;
 		xp_bar_y1 = xp_border_y1 + xp_bar_yoffset;
 		xp_bar_y2 = xp_bar_y1 + xp_bar_height;
 				
@@ -580,25 +580,25 @@ function draw_playerhud() {
 			for(var ii = 1; ii < hp_segments; ii++) {
 				var hp_segment_x = map_value(ii,0,hp_segments,hp_bar_x1,hp_bar_x2);
 				draw_set_color(c_black);
-				draw_set_alpha(_alpha);
+				draw_set_alpha(_alpha/2);
 				draw_rectangle(hp_segment_x-1,hp_bar_y1,hp_segment_x,hp_bar_y2-1,false);
 			}
 			for(var ii = 1; ii < mp_segments; ii++) {
 				var mp_segment_x = map_value(ii,0,mp_segments,mp_bar_x1,mp_bar_x2);
 				draw_set_color(c_black);
-				draw_set_alpha(_alpha);
+				draw_set_alpha(_alpha/2);
 				draw_rectangle(mp_segment_x-1,mp_bar_y1,mp_segment_x,mp_bar_y2-2,false);
 			}
 			for(var ii = 1; ii < tp_segments; ii++) {
 				var tp_segment_x = map_value(ii,0,tp_segments,tp_bar_x1,tp_bar_x2);
 				draw_set_color(c_white);
-				draw_set_alpha(_alpha);
+				draw_set_alpha(_alpha/2);
 				draw_rectangle(tp_segment_x-1,tp_bar_y1,tp_segment_x,tp_bar_y2-1,false);
 			}
 			for(var ii = 1; ii < xp_segments; ii++) {
 				var xp_segment_x = map_value(ii,0,xp_segments,xp_bar_x1,xp_bar_x2);
 				draw_set_color(c_black);
-				draw_set_alpha(_alpha);
+				draw_set_alpha(_alpha/2);
 				draw_rectangle(xp_segment_x-1,xp_bar_y1,xp_segment_x,xp_bar_y2-1,false);
 			}
 			draw_set_font(fnt_hud);

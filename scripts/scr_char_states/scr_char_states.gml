@@ -156,8 +156,9 @@ function init_charstates() {
 		yspeed = 0;
 		play_sound(snd_dbz_dash);
 		play_sound(snd_dbz_dash_loop);
-		if sprite_get_yoffset(walk_sprite) <= sprite_get_height(walk_sprite) {
+		if universe == universes.narutoshippuden {
 			change_sprite(walk_sprite,true);
+			anim_speed = 2;
 		}
 	}
 	dash_state.run = function() {

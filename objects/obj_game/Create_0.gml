@@ -128,7 +128,9 @@ player_color[i++] = make_color_rgb(255,0,255);
 player_color[i++] = make_color_rgb(255,128,0);
 player_color[i++] = make_color_rgb(128,64,32);
 
-base_max_hp = 10000;
+max_level = 5;
+
+base_max_hp = 10000 * 5;
 
 base_mp_stock_size = 1000;
 base_max_mp_stocks = 10;
@@ -137,7 +139,6 @@ base_tp_stock_size = 8 * 60;
 base_max_tp_stocks = 4;
 
 base_max_xp = 10000;
-max_level = 5;
 level_scaling = 0.5;
 
 base_movespeed = 5;

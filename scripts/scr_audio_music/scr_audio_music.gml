@@ -49,7 +49,7 @@ function set_music_loop(_music,_start,_end) {
 function set_music_loop_length(_music,_start,_length) {
 	set_music_loop(_music, _start, _start+_length);
 }
-
+/*
 set_music_loop(mus_umvc3_charselect,40.607,86.645);
 
 set_music_loop(mus_dbfz_space,5.144,181.960);

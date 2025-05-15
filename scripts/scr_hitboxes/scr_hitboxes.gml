@@ -78,6 +78,7 @@ function hitbox_check_hit() {
 		if ds_list_find_index(a.hit_list,b2) != -1 continue;
 		if b2.grabbed continue;
 		if !place_meeting(x,y,a) continue;
+		var _break = false;
 		
 		with(get_true_owner(a)) {
 			var _reps = 0;
@@ -88,9 +89,12 @@ function hitbox_check_hit() {
 			}
 			if _reps >= 2 {
 				if attack_hits < 1 {
-					continue;
+					_break = true;
 				}
 			}
+		}
+		if _break {
+			continue;
 		}
 		
 		if is_char(b2) {
