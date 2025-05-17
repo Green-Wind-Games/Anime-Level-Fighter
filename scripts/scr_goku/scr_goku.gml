@@ -374,15 +374,20 @@ function init_goku_baseform() {
 					x = clamp(x, left_wall, right_wall);
 					if y >= ground_height {
 						duration = 0;
-						for(var i = 0; i < ds_list_size(hitbox.hit_list); i++) {
-							with(ds_list_find_value(hitbox.hit_list,i)) {
-								get_hit(other,8000,1,-12,attacktype.hard_knockdown,attackstrength.ultimate,hiteffects.none);
-								x = other.x;
-								y = ground_height - 1;
-								shake_screen(20,1);
-							}
-						}
+						create_hitbox(
+							-width_half,
+							-height_half,
+							width,
+							height,
+							8000,
+							1,
+							-12,
+							attacktype.hard_knockdown,
+							attackstrength.ultimate,
+							hiteffects.light
+						);
 						create_particles(x,y,explosion_large_particle);
+						shake_screen(20,1);
 					}
 				}
 			}
