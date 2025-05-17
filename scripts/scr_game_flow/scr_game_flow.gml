@@ -37,7 +37,7 @@ function update_fight() {
 			if (!superfreeze_active) and (!timestop_active) {
 				with(obj_char) {
 					if combo_timer > 0 {
-						hitstop = 100;
+						hitstop = 50;
 					}
 				}
 				round_state = roundstates.knockout;
@@ -55,7 +55,7 @@ function update_fight() {
 			else {
 				if active_state != idle_state { ready = false; }
 			}
-			if state_timer < 100 { ready = false; }
+			//if state_timer < 100 { ready = false; }
 		}
 		if ready {
 			round_state = roundstates.victory;
@@ -81,9 +81,9 @@ function update_fight() {
 				and (active_state != defeat_state) {
 					ready = false;
 				}
-				if !anim_finished { ready = false; }
+				//if !anim_finished { ready = false; }
 				if sound_is_playing(voice) { ready = false; }
-				if state_timer < 100 { ready = false; }
+				//if sprite_timer < (anim_duration * 2) { ready = false; }
 			}
 		}
 		if ready {

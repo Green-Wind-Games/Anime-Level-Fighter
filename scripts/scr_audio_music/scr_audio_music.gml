@@ -11,13 +11,6 @@ function update_music() {
 	else {
 		music_timer = 0;
 	}
-	if (keyboard_check_pressed(vk_end)) {
-		play_music(mus_dbfz_space);
-		audio_sound_set_track_position(
-			music,
-			audio_sound_get_loop_end(music) - 5
-		);
-	}
 }
 
 function play_music(_music,_volume = 1,_pitch = 1,_loop = true) {
