@@ -43,19 +43,39 @@ function setup_basicmoves() {
 function init_goku_baseform_movelist() {
 	setup_basicmoves();
 	
-	add_move(kiblast,"D");
-	
 	add_ground_move(kiai_push,"236A");
 	add_ground_move(kiai_push,"236B");
 	add_ground_move(kiai_push,"236C");
 	
+	add_move(kiblast,"D");
+	
 	add_move(kamehameha,"236D");
-	add_move(super_kamehameha,"214D");
 	
-	add_ground_move(activate_kaioken,"252C");
+	add_move(super_kamehameha,"236AB");
+	add_ground_move(activate_kaioken,"214AB");
 	
-	add_move(super_spirit_bomb,"258C");
+	add_move(super_spirit_bomb,"236CD");
 	
 	signature_move = super_kamehameha;
 	finisher_move = super_spirit_bomb;
+}
+
+function init_goku_ssj_movelist() {
+	setup_basicmoves();
+	
+	add_ground_move(ki_blast_cannon,"236A");
+	add_ground_move(ki_blast_cannon,"236B");
+	add_ground_move(ki_blast_cannon,"236C");
+	
+	add_move(kiblast,"D");
+	
+	add_move(kamehameha,"236D");
+	
+	add_move(super_kamehameha,"236AB");
+	add_ground_move(activate_ssj2,"214AB");
+	
+	add_move(angry_kamehameha,"236CD");
+	
+	signature_move = super_kamehameha;
+	finisher_move = angry_kamehameha;
 }

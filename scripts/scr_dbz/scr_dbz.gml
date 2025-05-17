@@ -60,7 +60,7 @@ function add_kiblast_state(_sprite1,_sprite2,_kiblastsprite,_fireframe,_maxrepea
 			add_cancel(kiblast);
 			can_cancel = (kiblast_count < max_kiblasts) and (check_mp(1/max_kiblasts));
 		}
-		if state_timer >= 50 {
+		if state_timer >= 30 {
 			change_state(idle_state);
 		}
 	}
@@ -190,10 +190,10 @@ function add_superkamehameha_state(_groundsprite,_airsprite,_chargeframe1,_charg
 			play_sound(snd_dbz_beam_fire);
 			play_voiceline(voice_superkamehameha_fire);
 		}
-		loop_anim_middle_timer(kamehameha_fire_frame1,kamehameha_fire_frame2,100);
+		loop_anim_middle_timer(kamehameha_fire_frame1,kamehameha_fire_frame2,60);
 		if value_in_range(frame,kamehameha_fire_frame1,kamehameha_fire_frame2) {
 			fire_beam(spr_kamehameha,1,rotation,100);
-			shake_screen(5);
+			shake_screen(5,1);
 		}
 		anim_finish_idle();
 	}

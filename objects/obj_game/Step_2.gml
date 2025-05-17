@@ -17,7 +17,7 @@ if keyboard_check_pressed(vk_f4) {
 	toggle_fullscreen();
 }
 
-//debug_step();
+debug_step();
 
 with(all) {
 	visible = false;

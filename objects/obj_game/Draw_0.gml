@@ -30,7 +30,7 @@ draw_set_valign(fa_top);
 draw_set_color(c_white);
 
 //with(obj_char) {
-//	draw_text(x,y,string(attack_hits));
+//	draw_text(x,y,string(target_distance));
 //}
 
 //with(obj_specialeffect) {

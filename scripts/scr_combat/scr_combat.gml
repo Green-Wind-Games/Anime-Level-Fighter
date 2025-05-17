@@ -272,7 +272,7 @@ function connect_attack(_hitbox,_hurtbox) {
 			get_hit_by_attack(_hitbox);
 		}
 		else {
-			dmg /= 1.5;
+			dmg *= 0.75;
 		}
 		dmg = take_damage(_true_attacker,dmg,_stun);
 	}
@@ -284,6 +284,18 @@ function connect_attack(_hitbox,_hurtbox) {
 	if is_char(_attacker) or is_helper(_attacker) {
 		with(_attacker) {
 			hitstop = _defender.hitstop;
+		}
+	}
+	
+	with(_attacker) {
+		if is_char(id) or is_helper(id) {
+			can_cancel = true;
+		}
+	}
+	with(_true_attacker) {
+		attack_hits++;
+		if attack_hits == 1 {
+			ds_list_add(combo_moves, _hitbox.my_state);
 		}
 	}
 	
@@ -307,18 +319,21 @@ function connect_attack(_hitbox,_hurtbox) {
 			
 			combo_hits_counter = combo_hits;
 			combo_damage_counter = combo_damage;
-		}
-	}
-	
-	with(_attacker) {
-		if is_char(id) or is_helper(id) {
-			can_cancel = true;
-		}
-	}
-	with(_true_attacker) {
-		attack_hits++;
-		if attack_hits == 1 {
-			ds_list_add(combo_moves, _hitbox.my_state);
+			
+			if attack_hits == 1 {
+				var _scaling = 0.99;
+				if combo_hits == 1 {
+					_scaling = map_value(state_timer,0,10,0.90,1);
+					_scaling = clamp(_scaling,0.5,1);
+					if state_timer >= 30 {
+						_scaling = 1.5;
+					}
+				}
+				with(_defender) {
+					combo_damage_scaling *= _scaling;
+					combo_damage_scaling = max(combo_damage_scaling,0.1);
+				}
+			}
 		}
 	}
 	
@@ -386,11 +401,11 @@ function take_damage(_attacker,_amount,_kill) {
 		dmg *= attack_power;
 		dmg *= 1 + ((level - 1) * level_scaling);
 		
-		if (!special_active)
-		and (!super_active)
-		and (!ultimate_active) {
-			dmg /= attack_hits < 2 ? 1 : 3;
-		}
+		//if (!special_active)
+		//and (!super_active)
+		//and (!ultimate_active) {
+		//	dmg /= attack_hits < 2 ? 1 : 3;
+		//}
 	}
 	
 	if is_char(_defender){
@@ -432,15 +447,16 @@ function take_damage(_attacker,_amount,_kill) {
 
 function get_damage_scaling(_defender) {
 	with(_defender) {
-		var scaling = map_value(
-			combo_hits_taken,
-			0,
-			50,
-			1,
-			0
-		);
-		scaling = clamp(scaling,0.1,1);
-		return scaling;
+		//var _scaling = map_value(
+		//	combo_hits_taken,
+		//	0,
+		//	50,
+		//	1,
+		//	0
+		//);
+		var _scaling = combo_damage_scaling;
+		_scaling = clamp(_scaling,0.1,1);
+		return _scaling;
 	}
 }
 
@@ -467,6 +483,7 @@ function reset_combo() {
 	combo_damage = 0;
 	combo_hits_taken = 0;
 	combo_damage_taken = 0;
+	combo_damage_scaling = 1;
 	
 	ds_list_clear(combo_moves);
 }

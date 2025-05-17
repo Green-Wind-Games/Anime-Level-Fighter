@@ -268,9 +268,10 @@ function init_genos_baseform() {
 		if superfreeze_active {
 			loop_anim_middle(4,4);
 		}
-		loop_anim_middle_timer(5,6,120);
+		loop_anim_middle_timer(5,6,60);
 		if value_in_range(frame,5,6) {
-			fire_beam(spr_incinerate,1+(level / 3),0,50);
+			fire_beam(spr_incinerate,1+(level / 3),0,100);
+			shake_screen(5,1);
 		}
 		if check_frame(3) {
 			play_voiceline(vc_genos_incinerate);

@@ -1,14 +1,12 @@
 function basic_attack_stepforward(_hitframe) {
 	if check_frame(max(_hitframe-2,1)) {
-		if target_distance <= 40 {
-			xspeed = max(5,target_distance_x / 5) * facing;
-			if is_airborne {
-				yspeed = min(-3,target_distance_y / 5);
-			}
+		if on_ground {
+			xspeed = 5 * facing;
 		}
 		else {
-			if on_ground {
+			if target_distance <= 30 {
 				xspeed = 5 * facing;
+				yspeed = -3.5;
 			}
 		}
 	}
@@ -427,6 +425,7 @@ function add_basic_light_airattack_state(_sprite, _hitframe, _hiteffect) {
 		basic_attack_stepforward(light_airattack_sprite_hit_frame);
 		basic_attack(light_airattack_sprite_hit_frame,200,attackstrength.light,light_airattack_hit_effect);
 		anim_finish_idle();
+		land();
 	}
 }
 
@@ -455,6 +454,7 @@ function add_basic_medium_airattack_state(_sprite, _hitframe, _hiteffect) {
 		basic_attack_stepforward(medium_airattack_sprite_hit_frame);
 		basic_attack(medium_airattack_sprite_hit_frame,300,attackstrength.medium,medium_airattack_hit_effect);
 		anim_finish_idle();
+		land();
 	}
 }
 
@@ -490,6 +490,7 @@ function add_basic_heavy_airattack_state(_sprite, _hitframe, _hiteffect) {
 		basic_attack_stepforward(heavy_airattack_sprite_hit_frame);
 		basic_smashattack(heavy_airattack_sprite_hit_frame,500,heavy_airattack_hit_effect);
 		anim_finish_idle();
+		land();
 	}
 }
 
@@ -513,17 +514,15 @@ function add_basic_heavy_air_launcher_state(_sprite, _hitframe, _hiteffect) {
 		change_sprite(heavy_air_launcher_sprite,false);
 		play_sound(heavy_air_launcher_whiff_sound);
 		play_voiceline(voice_heavyattack,50,false);
-		xspeed = 3 * facing;
-		yspeed = -5;
 	}
 	heavy_air_launcher.run = function() {
+		basic_attack_stepforward(heavy_air_launcher_sprite_hit_frame);
 		var _strong = ds_list_find_index(combo_moves, homing_dash_state) == -1;
 		if _strong {
 			basic_launcherattack(heavy_air_launcher_sprite_hit_frame,500,heavy_air_launcher_hit_effect);
 			basic_attack_chase(heavy_air_launcher_sprite_hit_frame);
 		}
 		else {
-			basic_attack_stepforward(heavy_air_launcher_sprite_hit_frame);
 			basic_attack(heavy_air_launcher_sprite_hit_frame,400,attackstrength.heavy,heavy_air_launcher_hit_effect);
 		}
 		if check_frame(heavy_air_launcher_sprite_hit_frame)
@@ -536,5 +535,6 @@ function add_basic_heavy_air_launcher_state(_sprite, _hitframe, _hiteffect) {
 			}
 		}
 		anim_finish_idle();
+		land();
 	}
 }

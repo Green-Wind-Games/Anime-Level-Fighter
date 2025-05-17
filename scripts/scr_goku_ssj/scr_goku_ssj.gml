@@ -34,8 +34,8 @@ function init_goku_ssj() {
 	add_kamehameha_state(
 		spr_goku_ssj_special_kamehameha,
 		spr_goku_ssj_special_kamehameha_air,
+		3,
 		4,
-		5,
 		6,
 		8,
 		vc_goku_kamehameha
@@ -44,8 +44,8 @@ function init_goku_ssj() {
 	add_superkamehameha_state(
 		spr_goku_ssj_special_kamehameha,
 		spr_goku_ssj_special_kamehameha_air,
+		3,
 		4,
-		5,
 		6,
 		8,
 		vc_goku_kamehame,
@@ -120,6 +120,7 @@ function init_goku_ssj() {
 	add_basic_heavy_lowattack_state(spr_goku_ssj_attack_backflip_kick,2,hiteffects.hit);
 	
 	add_basic_heavy_airattack_state(spr_goku_ssj_attack_smash,2,hiteffects.hit);
+	add_basic_heavy_air_launcher_state(spr_goku_ssj_attack_kick_lift,2,hiteffects.hit);
 	
 	light_airattack = new charstate();
 	light_airattack.start = function() {
@@ -137,6 +138,7 @@ function init_goku_ssj() {
 		basic_multihit_attack(3,50,attackstrength.light,hiteffects.hit);
 		basic_multihit_attack(5,50,attackstrength.light,hiteffects.hit);
 		anim_finish_idle();
+		land();
 	}
 	
 	medium_airattack = new charstate();
@@ -152,6 +154,8 @@ function init_goku_ssj() {
 		basic_attack_stepforward(7);
 		basic_multihit_attack(3,50,attackstrength.medium,hiteffects.hit);
 		basic_multihit_attack(7,50,attackstrength.medium,hiteffects.hit);
+		anim_finish_idle();
+		land();
 	}
 
 	dragon_fist = new charstate();
@@ -239,14 +243,14 @@ function init_goku_ssj() {
 		if superfreeze_active {
 			loop_anim_middle(0,0);
 		}
+		loop_anim_middle_timer(2,3,120);
+		if value_in_range(frame,2,3) {
+			fire_beam(spr_kamehameha_gold,2,0,50);
+			shake_screen(10,2);
+		}
 		if check_frame(2) {
 			play_voiceline(vc_goku_kamehame_ha);
 			play_sound(snd_dbz_beam_fire);
-			shake_screen(120,1);
-		}
-		loop_anim_middle_timer(3,3,120);
-		if value_in_range(frame,3,3) {
-			fire_beam(spr_kamehameha_gold,2,0,50);
 		}
 		anim_finish_idle();
 	}
@@ -282,23 +286,6 @@ function init_goku_ssj() {
 			change_state(idle_state);
 		}
 	}
-
-	setup_basicmoves();
-	
-	add_move(kiblast,"D");
-	
-	add_move(kamehameha,"236D");
-	add_move(super_kamehameha,"214D");
-	add_move(angry_kamehameha,"41236D");
-	
-	add_ground_move(ki_blast_cannon,"236A");
-	add_ground_move(ki_blast_cannon,"236B");
-	add_ground_move(ki_blast_cannon,"236C");
-	
-	add_ground_move(activate_ssj2,"2D");
-	
-	signature_move = super_kamehameha;
-	finisher_move = angry_kamehameha;
 	
 	victory_state.run = function() {
 		ssj2_timer = 0;
