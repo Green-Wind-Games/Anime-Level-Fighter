@@ -9,10 +9,10 @@ function init_naruto_baseform_clone() {
 	hp = max_hp;
 
 	helper_attack_script = function() {
-		if (target_distance < 20) {
+		if (target_distance < 30) {
 			change_state(choose(punch,punch2,slash,slash2));
 		}
-		else if (target_distance > 150) {
+		else if (target_distance > 100) {
 			if chance(30) {
 				change_state(shuriken_throw);
 			}
@@ -31,7 +31,7 @@ function init_naruto_baseform_clone() {
 		play_voiceline(voice_attack,50,false);
 	}
 	punch.run = function() {
-		basic_light_attack(2,hiteffects.hit);
+		basic_attack(2,100,attackstrength.light,hiteffects.hit);
 		if anim_finished {
 			if can_cancel and choose(true,false) {
 				change_state(punch2);
@@ -48,7 +48,7 @@ function init_naruto_baseform_clone() {
 		play_voiceline(voice_attack,50,false);
 	}
 	punch2.run = function() {
-		basic_medium_attack(2,hiteffects.hit);
+		basic_attack(2,200,attackstrength.medium,hiteffects.hit);
 		if anim_finished {
 			change_state(idle_state);
 		}
@@ -61,7 +61,7 @@ function init_naruto_baseform_clone() {
 		play_voiceline(voice_attack,50,false);
 	}
 	slash.run = function() {
-		basic_light_attack(2,hiteffects.slash);
+		basic_attack(2,150,attackstrength.light,hiteffects.slash);
 		if check_frame(2) {
 			char_specialeffect(spr_slash,width_half,-height_half,0.5,-0.5,-45);
 		}
@@ -81,10 +81,10 @@ function init_naruto_baseform_clone() {
 		play_voiceline(voice_heavyattack,50,false);
 	}
 	slash2.run = function() {
+		basic_attack(3,250,attackstrength.medium,hiteffects.slash);
 		if check_frame(3) {
 			xspeed = 3 * facing;
 			yspeed = -5;
-			basic_medium_lowattack(3,hiteffects.slash);
 			
 			char_specialeffect(spr_slash2,width*0.9,-height*0.75,0.5,-0.5,-45);
 		}

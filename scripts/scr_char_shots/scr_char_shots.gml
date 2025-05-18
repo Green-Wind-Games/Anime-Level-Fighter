@@ -106,8 +106,8 @@ function fire_beam(_sprite,_scale,_angle,_damage) {
 				else if is_char(_hit) or is_helper(_hit) {
 					with(_hit) {
 						hitstop = 1;
-						x = clamp(x+other.xspeed,left_wall,right_wall);
-						y = min(y+other.yspeed,ground_height);
+						//x = clamp(x+other.xspeed,left_wall,right_wall);
+						//y = min(y+other.yspeed,ground_height);
 					}
 				}
 			}

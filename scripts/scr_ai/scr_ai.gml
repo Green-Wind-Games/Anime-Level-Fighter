@@ -86,7 +86,7 @@ function ai_default_movement() {
 }
 
 function ai_default_attacks() {
-	if target_distance < 20 {
+	if target_distance < 30 {
 		ai_input_move(heavy_attack,20);
 		ai_input_move(heavy_lowattack,20);
 		
@@ -96,7 +96,7 @@ function ai_default_attacks() {
 		ai_input_move(medium_attack,20);
 		ai_input_move(medium_lowattack,20);
 	}
-	if (combo_hits > 0) and (target_distance < 10) {
+	if (combo_hits > 0) and (target_distance < 30) {
 		switch(active_state) {
 			case light_attack:
 			case light_attack2:

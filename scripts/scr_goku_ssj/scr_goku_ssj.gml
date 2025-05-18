@@ -301,6 +301,8 @@ function init_goku_ssj() {
 		}
 		loop_anim_middle(3,4);
 	}
+	
+	init_goku_ssj_movelist();
 
 	draw_script = function() {
 		if sprite == spr_goku_ssj_special_kamehameha

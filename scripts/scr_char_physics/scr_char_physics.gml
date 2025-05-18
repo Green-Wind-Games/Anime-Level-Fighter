@@ -98,6 +98,31 @@ function update_charphysics() {
 	update_physics(0);
 }
 
+function get_char_walk_speed(_char) {
+	var _speed = 5;
+	with(_char) {
+		_speed = move_speed;
+		_speed += ((level - 1) * 1.25);
+		_speed *= move_speed_mod;
+		_speed *= move_speed_buff;
+	}
+	return _speed;
+}
+
+function get_char_dash_speed(_char) {
+	return get_char_walk_speed(_char) * 2;
+}
+
+function get_char_jump_speed(_char) {
+	var _speed = 8;
+	with(_char) {
+		_speed = jump_speed;
+		_speed *= lerp(move_speed_mod,1,0.5);
+		_speed *= lerp(move_speed_buff,1,0.5)
+	}
+	return _speed;
+}
+
 function jump_towards_x(_x, _time) {
 	var _distance_x = _x - x;
 	

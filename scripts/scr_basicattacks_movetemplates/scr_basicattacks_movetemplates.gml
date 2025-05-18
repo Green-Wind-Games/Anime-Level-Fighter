@@ -304,7 +304,7 @@ function add_basic_heavy_attack_state(_sprite, _hitframe, _hiteffect) {
 	}
 	heavy_attack.run = function() {
 		if check_frame(1) {
-			xspeed = 10 * facing;
+			xspeed = 15 * facing;
 		}
 		basic_wallsplat(heavy_attack_sprite_hit_frame,500,heavy_attack_hit_effect);
 		basic_attack_chase(heavy_attack_sprite_hit_frame);

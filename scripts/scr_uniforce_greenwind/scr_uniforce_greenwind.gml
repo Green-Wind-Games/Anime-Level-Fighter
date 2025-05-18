@@ -229,7 +229,7 @@ function add_super_greenwind_blade(_sprite,_raiseframe,_lowerframe,_fireframe,_h
 				ystretch = 0;
 				play_sound(snd_dbz_beam_fire,0.5,1.5);
 				hit_script = function() {
-					play_sound(snd_launch,1,1.25);
+					//play_sound(snd_,1,1.25);
 					var _blades = 10;
 					for(var i = 0; i < _blades; i++) {
 						var _dir = map_value(i,0,_blades-1,0,360);

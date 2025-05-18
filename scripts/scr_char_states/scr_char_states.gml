@@ -38,10 +38,9 @@ function init_charstates() {
 			}
 			else {
 				if sign(input.right-input.left) != 0 {
-					xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
+					xspeed = get_char_walk_speed(id) * sign(input.right - input.left);
 					change_sprite(walk_sprite,true);
 					xscale = abs(xscale) * sign(input.right-input.left) * facing;
-					
 				}
 				else {
 					change_sprite(idle_sprite,true);
@@ -87,7 +86,7 @@ function init_charstates() {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -jump_speed;
-			xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
+			xspeed = get_char_walk_speed(id) * sign(input.right - input.left);
 			play_sound(snd_dbz_jump);
 		}
 	}
@@ -103,7 +102,7 @@ function init_charstates() {
 			change_state(air_state);
 			squash_stretch(0.75,1.25);
 			yspeed = -jump_speed * 1.5;
-			xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
+			xspeed = get_char_walk_speed(id) * sign(input.right - input.left);
 			play_sound(snd_dbz_jump,1,0.8);
 		}
 	}
@@ -128,7 +127,7 @@ function init_charstates() {
 		
 		if input.up_pressed {
 			if air_actions < max_air_actions {
-				xspeed = move_speed * move_speed_mod * move_speed_buff * sign(input.right - input.left);
+				xspeed = get_char_walk_speed(id) * sign(input.right - input.left);
 				yspeed = -jump_speed * 0.75;
 				air_actions += 1;
 				squash_stretch(0.8,1.2);
@@ -148,11 +147,23 @@ function init_charstates() {
 		}
 	}
 	
+	jump_land_state = new charstate();
+	jump_land_state.start = function() {
+		change_sprite(uncrouch_sprite,false);
+		xspeed = 0;
+		yspeed = 0;
+	}
+	jump_land_state.run = function() {
+		if state_timer > 5 {
+			change_state(idle_state);
+		}
+	}
+	
 	dash_state = new charstate();
 	dash_state.start = function() {
 		change_sprite(dash_sprite,true);
 		yoffset = -height_half;
-		xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
+		xspeed = get_char_dash_speed(id) * facing;
 		yspeed = 0;
 		play_sound(snd_dbz_dash);
 		play_sound(snd_dbz_dash_loop);
@@ -173,7 +184,7 @@ function init_charstates() {
 		}
 		
 		if state_timer <= dash_duration {
-			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
+			xspeed = get_char_dash_speed(id) * facing;
 			yspeed = 0;
 			if sprite == dash_sprite {
 				loop_sound(snd_dbz_dash_loop);
@@ -233,7 +244,7 @@ function init_charstates() {
 		if air_actions < max_air_actions {
 			change_sprite(dash_sprite,true);
 			yoffset = -height_half;
-			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
+			xspeed = get_char_dash_speed(id) * facing;
 			yspeed = 0;
 			air_actions += 1;
 			play_sound(snd_dbz_dash);
@@ -243,7 +254,7 @@ function init_charstates() {
 		}
 	}
 	airdash_state.run = function() {
-		xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * facing;
+		xspeed = get_char_dash_speed(id) * facing;
 		yspeed = 0;
 		if state_timer >= 10 {
 			xspeed = base_movespeed / 2 * facing;
@@ -257,7 +268,7 @@ function init_charstates() {
 			change_sprite(dash_sprite,true);
 			yoffset = -height_half;
 			xscale = -1;
-			xspeed = move_speed * move_speed_mod * move_speed_buff * 2 * -facing;
+			xspeed = get_char_dash_speed(id) * -facing;
 			yspeed = 0;
 			air_actions += 1;
 			play_sound(snd_dbz_dash);
@@ -267,7 +278,7 @@ function init_charstates() {
 		}
 	}
 	air_backdash_state.run = function() {
-		xspeed = -move_speed * move_speed_mod * move_speed_buff * 2 * facing;
+		xspeed = get_char_dash_speed(id) * -facing;
 		yspeed = 0;
 		if state_timer >= 10 {
 			xspeed = base_movespeed / 2 * -facing;
@@ -957,7 +968,7 @@ function land() {
 	if on_ground and (yspeed > 0) {
 		var stretch = 1.2;
 		var squash = 0.8;
-		change_state(idle_state);
+		change_state(jump_land_state);
 		squash_stretch(stretch,squash);
 		return true;
 	}

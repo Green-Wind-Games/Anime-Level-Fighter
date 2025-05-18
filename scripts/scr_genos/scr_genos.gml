@@ -1,6 +1,5 @@
 function init_genos_baseform() {
 	init_charsprites("genos");
-	
 	init_charaudio("genos");
 
 	name = "genos";
@@ -283,20 +282,8 @@ function init_genos_baseform() {
 		}
 		anim_finish_idle();
 	}
-
-	setup_basicmoves();
 	
-	add_move(fireblast,"D");
-	
-	add_ground_move(machinegun_blows,"236A");
-	add_move(dropkick,"236B");
-	add_move(dropkick,"236C");
-	
-	add_move(incinerate,"236D");
-	add_move(super_incinerate,"214D");
-	
-	signature_move = super_incinerate;
-	finisher_move = super_incinerate;
+	init_genos_baseform_movelist();
 	
 	victory_state.run = function() {
 		if sound_is_playing(voice) {

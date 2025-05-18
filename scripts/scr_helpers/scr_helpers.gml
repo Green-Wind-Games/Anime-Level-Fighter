@@ -65,8 +65,8 @@ function init_helperstates() {
 			change_state(air_state);
 			squash_stretch(0.8,1.2);
 			yspeed = -5;
-			xspeed = move_speed * move_speed_mod * move_speed_buff * facing;
-			play_sound(snd_jump);
+			xspeed = get_char_walk_speed(id) * facing;
+			play_sound(snd_dbz_jump);
 		}
 	}
 	
@@ -82,7 +82,7 @@ function init_helperstates() {
 			squash_stretch(0.8,1.2);
 			yspeed = -5;
 			xspeed = -move_speed * move_speed_mod * move_speed_buff * facing;
-			play_sound(snd_jump);
+			play_sound(snd_dbz_jump);
 		}
 	}
 
@@ -101,6 +101,18 @@ function init_helperstates() {
 			change_sprite(air_down_sprite,true);
 		}
 		land();
+	}
+	
+	jump_land_state = new charstate();
+	jump_land_state.start = function() {
+		change_sprite(uncrouch_sprite,false);
+		xspeed = 0;
+		yspeed = 0;
+	}
+	jump_land_state.run = function() {
+		if state_timer > 5 {
+			change_state(idle_state);
+		}
 	}
 
 	tech_state.start = function() {
