@@ -9,9 +9,10 @@ function draw_chars() {
 			var _y = y + yoffset;
 			_x += hitstop_shake();
 			_y += hitstop_shake() * is_airborne;
-		
-			if flash {
-				gpu_set_fog(true,flash_color,0,0);
+			
+			if hue != 0 {
+				shader_set(sha_hue_shift); //Change this to whatever name you gave your shader.
+				shader_set_uniform_f(u_hue, (-hue/255)*(pi*2));
 			}
 			
 			if sprite_exists(sprite) {
@@ -27,19 +28,37 @@ function draw_chars() {
 					alpha
 				);
 			}
-
-			gpu_set_fog(false,c_white,0,0);
+			
+			if id != superfreeze_activator {
+				draw_script();
+			}
+			
+			shader_reset();
+			
+			if flash_alpha > 0 {
+				shader_set(sha_flash);
+				if sprite_exists(sprite) {
+					draw_sprite_ext(
+						sprite,
+						frame,
+						_x,
+						_y,
+						xscale*xstretch*facing,
+						yscale*ystretch,
+						rotation*facing*sign(xscale)*sign(xstretch),
+						flash_color,
+						flash_alpha
+					);
+				}
+			}
+			
+			shader_reset();
 			
 			draw_aura();
 		}
 		ds_priority_delete_max(draw_order);
 	}
 	ds_priority_destroy(draw_order);
-	with(obj_char) {
-		if id == superfreeze_activator continue;
-			
-		draw_script();
-	}
 	
 	draw_playerindicators();
 }
@@ -71,7 +90,7 @@ function draw_char_shadows() {
 			xscale*xstretch*facing,
 			yscale*ystretch*_shadow_scale,
 			0,
-			flash > 0 ? flash_color : c_black,
+			c_black,
 			alpha * _shadow_alpha
 		);
 	}
@@ -121,15 +140,15 @@ function draw_playerindicators() {
 			}
 		}
 		with(player[i]) {
-			draw_my_playerindicator(i);
+			//draw_my_playerindicator(i);
 		}
 	}
 }
 
 function draw_my_playerindicator(_playerid = 0) {
+	draw_set_font(fnt_playerindicator);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_bottom);
-	draw_set_font(fnt_playerindicator);
 	
 	var _scale = 1/camera_zoom;
 	var _border = string_height("[]") * _scale;
@@ -212,25 +231,47 @@ function draw_superfreeze() {
 			var _x = x + (xoffset*facing);
 			var _y = y + yoffset;
 		
-			if flash {
-				gpu_set_fog(true,flash_color,0,0);
+			if hue != 0 {
+				shader_set(sha_hue_shift); //Change this to whatever name you gave your shader.
+				shader_set_uniform_f(u_hue, (-hue/255)*(pi*2));
 			}
-
-			draw_sprite_ext(
-				sprite,
-				frame,
-				_x,
-				_y,
-				xscale*xstretch*facing,
-				yscale*ystretch,
-				rotation*facing*sign(xscale)*sign(xstretch),
-				color,
-				alpha
-			);
-
-			gpu_set_fog(false,c_white,0,0);
+			
+			if sprite_exists(sprite) {
+				draw_sprite_ext(
+					sprite,
+					frame,
+					_x,
+					_y,
+					xscale*xstretch*facing,
+					yscale*ystretch,
+					rotation*facing*sign(xscale)*sign(xstretch),
+					color,
+					alpha
+				);
+			}
 			
 			draw_script();
+			
+			shader_reset();
+			
+			if flash_alpha > 0 {
+				shader_set(sha_flash);
+				if sprite_exists(sprite) {
+					draw_sprite_ext(
+						sprite,
+						frame,
+						_x,
+						_y,
+						xscale*xstretch*facing,
+						yscale*ystretch,
+						rotation*facing*sign(xscale)*sign(xstretch),
+						flash_color,
+						flash_alpha
+					);
+				}
+			}
+			
+			shader_reset();
 			
 			draw_aura();
 		}
@@ -320,9 +361,15 @@ function draw_playerhud() {
 	var _h = gui_height;
 	var _w2 = _w / 2;
 	var _h2 = _h / 2;
+	
 	var _spacing = 8;
+	
 	var icon_size = average_char_icon_height;
-	var icon_scale = 0.5;
+	var icon_scale = 1;
+	var icon_w = (icon_size * icon_scale);
+	var icon_h = icon_w;
+	var icon_w2 = icon_w / 2;
+	var icon_h2 = icon_h / 2;
 	
 	var active_players = 0;
 	for (var i = 0; i < max_players; i++) {
@@ -370,21 +417,21 @@ function draw_playerhud() {
 	
 	var hp_border_xoffset = _spacing;
 	var hp_border_yoffset = _spacing;
-	var mp_border_xoffset = hp_border_xoffset;
-	var mp_border_yoffset = hp_border_yoffset + hp_border_height;
-	var tp_border_xoffset = hp_border_xoffset + (hp_border_width / 5);
-	var tp_border_yoffset = mp_border_yoffset + mp_border_height;
-	var xp_border_xoffset = tp_border_xoffset + tp_border_width + 1;
-	var xp_border_yoffset = tp_border_yoffset;
+	var mp_border_xoffset = _spacing;
+	var mp_border_yoffset = _h - _spacing - mp_border_height;
+	var tp_border_xoffset = hp_border_xoffset + (hp_border_width / 2) - tp_border_width;
+	var tp_border_yoffset = hp_border_yoffset + hp_border_height;
+	var xp_border_xoffset = hp_border_xoffset + (hp_border_width / 2);
+	var xp_border_yoffset = hp_border_yoffset + hp_border_height;
 	
-	var hp_bar_xoffset = 2;
-	var hp_bar_yoffset = 2;
-	var mp_bar_xoffset = 2;
-	var mp_bar_yoffset = 2;
+	var hp_bar_xoffset = 3;
+	var hp_bar_yoffset = 3;
+	var mp_bar_xoffset = 3;
+	var mp_bar_yoffset = 3;
 	var tp_bar_xoffset = 2;
 	var tp_bar_yoffset = 2;
-	var xp_bar_xoffset = 2;
-	var xp_bar_yoffset = 2;
+	var xp_bar_xoffset = 3;
+	var xp_bar_yoffset = 3;
 	
 	var hp_bar_width = (hp_border_width - (hp_bar_xoffset * 2));
 	var mp_bar_width = (mp_border_width - (mp_bar_xoffset * 2));
@@ -463,115 +510,111 @@ function draw_playerhud() {
 		xp_border_y1 = hud_y + xp_border_yoffset;
 		xp_border_y2 = xp_border_y1 + xp_border_height;
 			
-		hp_bar_x1 = hp_border_x1 + hp_bar_xoffset + 1;
-		hp_bar_x2 = hp_bar_x1 + hp_bar_width - 1;
+		hp_bar_x1 = hp_border_x1 + hp_bar_xoffset;
+		hp_bar_x2 = hp_bar_x1 + hp_bar_width;
 		hp_bar_y1 = hp_border_y1 + hp_bar_yoffset;
 		hp_bar_y2 = hp_bar_y1 + hp_bar_height;
 				
-		mp_bar_x1 = mp_border_x1 + mp_bar_xoffset + 1;
-		mp_bar_x2 = mp_bar_x1 + mp_bar_width - 1;
+		mp_bar_x1 = mp_border_x1 + mp_bar_xoffset;
+		mp_bar_x2 = mp_bar_x1 + mp_bar_width;
 		mp_bar_y1 = mp_border_y1 + mp_bar_yoffset;
 		mp_bar_y2 = mp_bar_y1 + mp_bar_height;
 				
-		tp_bar_x1 = tp_border_x1 + tp_bar_xoffset + 1;
-		tp_bar_x2 = tp_bar_x1 + tp_bar_width - 1;
+		tp_bar_x1 = tp_border_x1 + tp_bar_xoffset;
+		tp_bar_x2 = tp_bar_x1 + tp_bar_width;
 		tp_bar_y1 = tp_border_y1 + tp_bar_yoffset;
 		tp_bar_y2 = tp_bar_y1 + tp_bar_height;
 				
-		xp_bar_x1 = xp_border_x1 + xp_bar_xoffset + 1;
-		xp_bar_x2 = xp_bar_x1 + xp_bar_width - 1;
+		xp_bar_x1 = xp_border_x1 + xp_bar_xoffset;
+		xp_bar_x2 = xp_bar_x1 + xp_bar_width;
 		xp_bar_y1 = xp_border_y1 + xp_bar_yoffset;
 		xp_bar_y2 = xp_bar_y1 + xp_bar_height;
 				
 		var _alpha = 1;
 
 		with(player[i]) {
-			if (!_right) {
-				if (hp_percent_visible > 0) {
-					var _hp_w = map_value(hp_percent_visible, 0, 100, 0, hp_bar_width);
-					draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x1,hp_bar_y1,_hp_w,hp_bar_height);
+			if (hp_percent_visible > 0) {
+				var _hp_w = map_value(hp_percent_visible, 0, 100, 0, hp_bar_width);
+				var _hp_h = hp_bar_y2 - hp_bar_y1;
+				draw_sprite_stretched(
+					spr_bar_hp_bar,
+					0,
+					_right ? hp_bar_x2 - _hp_w : hp_bar_x1,
+					hp_bar_y1,
+					_hp_w,
+					_hp_h
+				);
 					
-					if (dmg_percent_visible > 0) {
-						var _dmg_w = map_value(dmg_percent_visible, 0, 100, 0, hp_bar_width);
-						draw_sprite_stretched(spr_bar_hp_bar_damage,0,hp_bar_x1+_hp_w,hp_bar_y1,_dmg_w,hp_bar_height);
-					}
+				if (dmg_percent_visible > 0) {
+					var _dmg_w = map_value(dmg_percent_visible, 0, 100, 0, hp_bar_width);
+					draw_sprite_stretched(
+						spr_bar_hp_bar_damage,
+						0,
+						
+						_right ? hp_bar_x2 - _hp_w - _dmg_w : hp_bar_x1 + _hp_w + _dmg_w,
+						hp_bar_y1,
+						_dmg_w,
+						_hp_h
+					);
 				}
+			}
 
-				if (mp_percent_visible > 0) {
-					var _mp_w = map_value(mp_percent_visible, 0, 100, 0, mp_bar_width);
-					draw_sprite_stretched(spr_bar_mp_bar,0,mp_bar_x1,mp_bar_y1,_mp_w,mp_bar_height);
-				}
-				
-				if (tp_percent_visible > 0) {
-					var _tp_w = map_value(tp_percent_visible, 0, 100, 0, tp_bar_width);
-					draw_sprite_stretched(spr_bar_tp_bar,0,tp_bar_x1,tp_bar_y1,_tp_w,tp_bar_height);
-				}
-				
-				if (xp_percent_visible > 0) {
-					var _xp_w = map_value(xp_percent_visible, 0, 100, 0, xp_bar_width);
-					draw_sprite_stretched(spr_bar_xp_bar,0,xp_bar_x1,xp_bar_y1,_xp_w,xp_bar_height);
-				}
-				
-				draw_sprite_ext(spr_bar_hp_border,0,hp_border_x1,hp_border_y1,hp_xscale,hp_yscale,0,c_white,_alpha);
-				draw_sprite_ext(spr_bar_mp_border,0,mp_border_x1,mp_border_y1,mp_xscale,mp_yscale,0,c_white,_alpha);
-				draw_sprite_ext(spr_bar_tp_border,0,tp_border_x1,tp_border_y1,tp_xscale,tp_yscale,0,c_white,_alpha);
-				draw_sprite_ext(spr_bar_xp_border,0,xp_border_x1,xp_border_y1,xp_xscale,xp_yscale,0,c_white,_alpha);
-				
-				draw_sprite_ext(
-					spr_bar_mp_stocks,
+			if (mp_percent_visible > 0) {
+				var _mp_w = map_value(mp_percent_visible, 0, 100, 0, mp_bar_width);
+				var _mp_h = mp_bar_y2 - mp_bar_y1;
+				draw_sprite_stretched(
+					spr_bar_mp_bar,
 					0,
-					mp_border_x1 + mp_stock_xoffset,
-					mp_border_y1,
-					mp_stock_scale,
-					mp_stock_scale,
-					0,
-					c_white,
-					_alpha
+					_right ? mp_bar_x2 - _mp_w : mp_bar_x1,
+					mp_bar_y1,
+					_mp_w,
+					_mp_h
 				);
 			}
-			else {
-				if (hp_percent_visible > 0) {
-					var _hp_w = map_value(hp_percent_visible, 0, 100, 0, hp_bar_width);
-					draw_sprite_stretched(spr_bar_hp_bar,0,hp_bar_x2 - _hp_w,hp_bar_y1,_hp_w,hp_bar_height);
-					
-					if (dmg_percent_visible > 0) {
-						var _dmg_w = map_value(dmg_percent_visible, 0, 100, 0, hp_bar_width);
-						draw_sprite_stretched(spr_bar_hp_bar_damage,0,hp_bar_x2-_hp_w-_dmg_w,hp_bar_y1,_dmg_w,hp_bar_height);
-					}
-				}
-
-				if (mp_percent_visible > 0) {
-					var _mp_w = map_value(mp_percent_visible, 0, 100, 0, mp_bar_width);
-					draw_sprite_stretched(spr_bar_mp_bar,0,mp_bar_x2-_mp_w,mp_bar_y1,_mp_w,mp_bar_height);
-				}
 				
-				if (tp_percent_visible > 0) {
-					var _tp_w = map_value(tp_percent_visible, 0, 100, 0, tp_bar_width);
-					draw_sprite_stretched(spr_bar_tp_bar,0,tp_bar_x2-_tp_w,tp_bar_y1,_tp_w,tp_bar_height);
-				}
-				
-				if (xp_percent_visible > 0) {
-					var _xp_w = map_value(xp_percent_visible, 0, 100, 0, xp_bar_width);
-					draw_sprite_stretched(spr_bar_xp_bar,0,xp_bar_x2-_xp_w,xp_bar_y1,_xp_w,xp_bar_height);
-				}
-				
-				draw_sprite_ext(spr_bar_hp_border,0,hp_border_x2, hp_border_y1,-hp_xscale,hp_yscale,0,c_white,_alpha);
-				draw_sprite_ext(spr_bar_mp_border,0,mp_border_x2, mp_border_y1,-mp_xscale,mp_yscale,0,c_white,_alpha);
-				draw_sprite_ext(spr_bar_tp_border,0,tp_border_x2, tp_border_y1,-tp_xscale,tp_yscale,0,c_white,_alpha);
-				draw_sprite_ext(spr_bar_xp_border,0,xp_border_x2, xp_border_y1,-xp_xscale,xp_yscale,0,c_white,_alpha);
-				
-				draw_sprite_ext(
-					spr_bar_mp_stocks,
+			if (tp_percent_visible > 0) {
+				var _tp_w = map_value(tp_percent_visible, 0, 100, 0, tp_bar_width);
+				var _tp_h = tp_bar_y2 - tp_bar_y1;
+				draw_sprite_stretched(
+					spr_bar_tp_bar,
 					0,
-					mp_border_x2 - mp_stock_xoffset,
-					mp_border_y1,
-					-mp_stock_scale,
-					mp_stock_scale,
-					0,
-					c_white,
-					_alpha
+					_right ? tp_bar_x2 - _tp_w : tp_bar_x1,
+					tp_bar_y1,
+					_tp_w,
+					_tp_h
 				);
 			}
+				
+			if (xp_percent_visible > 0) {
+				var _xp_w = map_value(xp_percent_visible, 0, 100, 0, xp_bar_width);
+				var _xp_h = xp_bar_y2 - xp_bar_y1;
+				draw_sprite_stretched(
+					spr_bar_xp_bar,
+					0,
+					_right ? xp_bar_x2 - _xp_w : xp_bar_x1,
+					xp_bar_y1,
+					_xp_w,
+					_xp_h
+				);
+			}
+				
+			draw_sprite_ext(spr_bar_hp_border,0,hp_border_x1,hp_border_y1,hp_xscale,hp_yscale,0,c_white,_alpha);
+			draw_sprite_ext(spr_bar_mp_border,0,mp_border_x1,mp_border_y1,mp_xscale,mp_yscale,0,c_white,_alpha);
+			draw_sprite_ext(spr_bar_tp_border,0,tp_border_x1,tp_border_y1,tp_xscale,tp_yscale,0,c_white,_alpha);
+			draw_sprite_ext(spr_bar_xp_border,0,xp_border_x1,xp_border_y1,xp_xscale,xp_yscale,0,c_white,_alpha);
+				
+			draw_sprite_ext(
+				spr_bar_mp_stocks,
+				0,
+				_right ? mp_border_x2 + mp_stock_xoffset : mp_border_x1 + mp_stock_xoffset,
+				mp_border_y1,
+				mp_stock_scale,
+				mp_stock_scale,
+				0,
+				c_white,
+				_alpha
+			);
+			
 			
 			var hp_segments = max_level;
 			var mp_segments = max_mp_stocks;
@@ -581,50 +624,73 @@ function draw_playerhud() {
 				var hp_segment_x = map_value(ii,0,hp_segments,hp_bar_x1,hp_bar_x2);
 				draw_set_color(c_black);
 				draw_set_alpha(_alpha/2);
-				draw_rectangle(hp_segment_x-1,hp_bar_y1,hp_segment_x,hp_bar_y2-1,false);
+				draw_rectangle(hp_segment_x-1,hp_bar_y1,hp_segment_x,hp_bar_y2,false);
 			}
 			for(var ii = 1; ii < mp_segments; ii++) {
 				var mp_segment_x = map_value(ii,0,mp_segments,mp_bar_x1,mp_bar_x2);
 				draw_set_color(c_black);
 				draw_set_alpha(_alpha/2);
-				draw_rectangle(mp_segment_x-1,mp_bar_y1,mp_segment_x,mp_bar_y2-2,false);
+				draw_rectangle(mp_segment_x-1,mp_bar_y1,mp_segment_x,mp_bar_y2,false);
 			}
 			for(var ii = 1; ii < tp_segments; ii++) {
 				var tp_segment_x = map_value(ii,0,tp_segments,tp_bar_x1,tp_bar_x2);
 				draw_set_color(c_white);
 				draw_set_alpha(_alpha/2);
-				draw_rectangle(tp_segment_x-1,tp_bar_y1,tp_segment_x,tp_bar_y2-1,false);
+				draw_rectangle(tp_segment_x-1,tp_bar_y1,tp_segment_x,tp_bar_y2,false);
 			}
 			for(var ii = 1; ii < xp_segments; ii++) {
 				var xp_segment_x = map_value(ii,0,xp_segments,xp_bar_x1,xp_bar_x2);
 				draw_set_color(c_black);
 				draw_set_alpha(_alpha/2);
-				draw_rectangle(xp_segment_x-1,xp_bar_y1,xp_segment_x,xp_bar_y2-1,false);
+				draw_rectangle(xp_segment_x-1,xp_bar_y1,xp_segment_x,xp_bar_y2,false);
 			}
+			
+			var icon_x = _right ? hp_border_x2 - icon_w2: hp_border_x1 + icon_w2;
+			var icon_y = xp_border_y2 + icon_h;
+			
+			draw_sprite_ext(
+				icon,
+				0,
+				icon_x,
+				icon_y,
+				_right ? -icon_scale : icon_scale,
+				icon_scale,
+				0,
+				c_white,
+				1
+			);
+			
 			draw_set_font(fnt_hud);
 			draw_set_halign(fa_left);
 			draw_set_valign(fa_top);
-			var playertext = "P" + string(i+1) + ": " + display_name;
+			var playertext = display_name; //"P" + string(i+1) + ": " + display_name;
 			if form_name != "base" {
-				playertext += " " + form_display_name;
+				playertext += " (" + form_display_name + ")";
 			}
 			//playertext += "\n";
-			playertext += " (Level " + string(level) + ")"; 
+			//playertext += " (Level " + string(level) + ")"; 
 			var playertext_scale = (hp_bar_height - 2) / string_height(playertext);
 			var playertext_width = string_width(playertext) * playertext_scale;
 			var playertext_height = string_height(playertext) * playertext_scale;
-			var playertext_x1 = hp_bar_x1 + 1;
-			var playertext_y1 = hp_bar_y1 + 1;
+			var playertext_x1 = icon_x + icon_w;
+			var playertext_y1 = (icon_y - icon_h2) - (playertext_height / 2);
 			var playertext_x2 = playertext_x1 + playertext_width;
 			var playertext_y2 = playertext_y1 + playertext_height;
 			
 			if _right {
-				playertext_x2 = hp_bar_x2 - 1;
+				playertext_x2 = icon_x - icon_w;
 				playertext_x1 = playertext_x2 - playertext_width;
 			}
 			
 			draw_set_alpha(_alpha);
-			draw_text_outlined(playertext_x1,playertext_y1,playertext,c_black,player_color[i],playertext_scale);
+			draw_text_outlined(
+				playertext_x1,
+				playertext_y1,
+				playertext,
+				c_black,
+				player_color[i],
+				playertext_scale
+			);
 			
 			draw_set_halign(fa_center);
 			draw_set_valign(fa_middle);
@@ -638,8 +704,8 @@ function draw_playerhud() {
 				mp_text_x,
 				mp_text_y,
 				mp_text,
-				make_color_rgb(0,64,0),
-				make_color_rgb(255,255,64),
+				make_color_rgb(0,128,0),
+				make_color_rgb(255,255,128),
 				(mp_stock_height / 2) / string_height(mp_text)
 			)
 			

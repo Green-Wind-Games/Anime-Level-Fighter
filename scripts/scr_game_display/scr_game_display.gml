@@ -13,8 +13,8 @@ screen_aspectratio = screen_width / screen_height;
 var _test = false;
 var _factor = 0.75;
 
-game_width = 800;
-game_height = 600;
+game_width = 640;
+game_height = 360;
 
 if os_type == os_android or _test {
 	game_width = floor(game_width * _factor);
@@ -26,7 +26,7 @@ if os_type == os_android or _test {
 //game_width = round(game_height * (16 / 9));
 //game_height = round(game_width / (16 / 9));
 //game_width = round(game_height * screen_aspectratio);
-game_height = round(game_width / screen_aspectratio);
+//game_height = round(game_width / screen_aspectratio);
 
 game_aspectratio = game_width / game_height;
 
@@ -44,7 +44,7 @@ fullscreen_scale = min(screen_width / game_width, screen_height / game_height);
 fullscreen_width = floor(game_width * fullscreen_scale);
 fullscreen_height = floor(game_height * fullscreen_scale);
 
-var gui_scale = max(1,round(game_height / 240));
+var gui_scale = max(1,game_height / 240);
 
 gui_width = round(game_width / gui_scale);
 gui_height = round(game_height / gui_scale);
@@ -216,12 +216,10 @@ function shake_screen(_duration, _intensity = 1) {
 
 window_enable_borderless_fullscreen(true);
 display_set_gui_size(gui_width,gui_height);
-resize_window(window_max_scale);
 if os_type == os_windows {
-	disable_fullscreen();
+	resize_window(window_max_scale);
 }
 else {
-	enable_fullscreen();
 	if os_type == os_android {
 		var _flags = 1024|4096;
 		display_set_ui_visibility(_flags);

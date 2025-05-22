@@ -27,7 +27,7 @@ function add_kiblast_state(_sprite1,_sprite2,_kiblastsprite,_fireframe,_maxrepea
 				width_half,
 				-height_half,
 				20,
-				sine_wave(kiblast_count,max_kiblasts/2,1,0),
+				sine_between(kiblast_count,ceil(max_kiblasts/2),-2+is_airborne,1-on_ground),
 				kiblast_shot_sprite,
 				32 / sprite_get_height(kiblast_shot_sprite),
 				100,
@@ -57,10 +57,13 @@ function add_kiblast_state(_sprite1,_sprite2,_kiblastsprite,_fireframe,_maxrepea
 			kiblast_count += 1;
 		}
 		if frame > kiblast_fire_frame {
-			add_cancel(kiblast);
-			can_cancel = (kiblast_count < max_kiblasts) and (check_mp(1/max_kiblasts));
+			if check_input(get_move_input(kiblast)) {
+				if (kiblast_count < max_kiblasts) {
+					kiblast.start();
+				}
+			}
 		}
-		if state_timer >= 30 {
+		if sprite_timer > 30 {
 			change_state(idle_state);
 		}
 	}

@@ -23,32 +23,23 @@ right_pressed = false;
 forward_pressed = false;
 back_pressed = false;
 
-button1 = false;
-button2 = false;
-button3 = false;
-button4 = false;
-button5 = false;
-button6 = false;
+for(var i = 0; i <= 8; i++) {
+	button[i] = false;
+	button_held[i] = false;
+}
 
-button1_held = false;
-button2_held = false;
-button3_held = false;
-button4_held = false;
-button5_held = false;
-button6_held = false;
+menu_confirm = false;
+menu_cancel = false;
 
-confirm = false;
-cancel = false;
-
-char_teamswitch = false;
-char_random = false;
+charselect_teamswitch = false;
+charselect_random = false;
 
 light_attack = false;
 medium_attack = false;
 heavy_attack = false;
 unique_attack = false;
-supercharge = false;
-use_teleport = false;
 
-charge = false;
-dodge = false;
+supercharge = false;
+use_tech = false;
+
+supercharge_held = false;

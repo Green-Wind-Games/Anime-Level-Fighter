@@ -115,7 +115,10 @@ function guard_attack(_hitbox) {
 	yspeed = 0;
 }
 
-function react_to_attack_type(_attacktype) {
+function react_to_attack_type(_hitbox, _attacktype) {
+	var _attacker = _hitbox.owner;
+	var _true_attacker = get_true_owner(_hitbox.owner);
+	
 	switch(_attacktype) {
 		default:
 		change_state(hit_state);
@@ -126,7 +129,37 @@ function react_to_attack_type(_attacktype) {
 			change_state(hit_state);
 		}
 		else {
-			change_state(hard_knockdown_state);
+			var _kd = true;
+			if ds_list_size(_true_attacker.combo_moves) > 1 {
+				_kd = false;
+				with(_true_attacker) {
+					var _input = "";
+					for(var i = 0; i < ds_list_size(combo_moves); i++) {
+						var _move = ds_list_find_value(combo_moves,i);
+						var _thisinput = get_move_input(_move)[0];
+					
+						if (_thisinput != "none")
+						and (_move != homing_dash_state) {
+							if _input == "" {
+								_input = _thisinput;
+							}
+							else {
+								if _input != _thisinput {
+									print("kd");
+									_kd = true;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+			if _kd {
+				change_state(hard_knockdown_state);
+			}
+			else {
+				change_state(hit_state);
+			}
 		}
 		break;
 		
@@ -211,7 +244,7 @@ function get_hit_by_attack(_hitbox) {
 		yspeed = -abs(xspeed);
 	}
 	
-	react_to_attack_type(_hitbox.attack_type);
+	react_to_attack_type(_hitbox, _hitbox.attack_type);
 	
 	var _is_strong_attack = (abs(xspeed) >= 10) or (abs(yspeed) >= 10);
 	play_hurt_sound(_is_strong_attack);

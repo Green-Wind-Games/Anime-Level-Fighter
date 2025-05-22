@@ -32,14 +32,14 @@ function update_charselect() {
 function charselect_joinin() {
 	for(var i = 0; i < array_length(player_input); i++) {
 		if (!player_input[i].assigned)
-		and player_input[i].confirm {
+		and player_input[i].menu_confirm {
 			for(var ii = 0; ii < max_players; ii++) {
 				if player_slot[ii] != noone continue;
 				player_slot[ii] = i;
 				player_char[ii] = ii;
 				player_ready[ii] = false;
 				player_input[i].assigned = true;
-				player_input[i].confirm = false;
+				player_input[i].menu_confirm = false;
 				play_sound(snd_ui_menu_select,1,1);
 				break;
 			}
@@ -50,10 +50,10 @@ function charselect_joinin() {
 function charselect_dropout() {
 	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
-			if player_input[player_slot[i]].cancel
+			if player_input[player_slot[i]].menu_cancel
 			and (!player_ready[i]) {
 				player_input[player_slot[i]].assigned = false;
-				player_input[player_slot[i]].cancel = false;
+				player_input[player_slot[i]].menu_cancel = false;
 				player_slot[i] = noone;
 				player_char[i] = i;
 				player_ready[i] = false;
@@ -91,13 +91,13 @@ function charselect_changechars() {
 						player_char[i] -= max_characters;
 					}
 				}
-				if player_input[player_slot[i]].char_random mod 6 == 1 {
+				if player_input[player_slot[i]].charselect_random mod 6 == 1 {
 					while((player_char[i] == _previous_char) or (!object_exists(get_char_object(player_char[i])))) {
 						player_char[i] = irandom(max_characters-1);
 					}
 				}
 				if player_char[i] != _previous_char {
-					if player_input[player_slot[i]].char_random {
+					if player_input[player_slot[i]].charselect_random {
 						play_sound(snd_ui_menu_scroll,0.5,1.25);
 					}
 					else {
@@ -119,18 +119,18 @@ function charselect_readyup() {
 	for(var i = 0; i < max_players; i++) {
 		if player_slot[i] != noone {
 			if (!player_ready[i]) {
-				if player_input[player_slot[i]].confirm {
+				if player_input[player_slot[i]].menu_confirm {
 					if object_exists(get_char_object(player_char[i])) {
 						player_ready[i] = true;
-						player_input[i].confirm = false;
+						player_input[i].menu_confirm = false;
 						play_sound(snd_ui_menu_select,1,1);
 					}
 				}
 			}
 			else if player_ready[i] {
-				if player_input[player_slot[i]].cancel {
+				if player_input[player_slot[i]].menu_cancel {
 					player_ready[i] = false;
-					player_input[i].cancel = false;
+					player_input[i].menu_cancel = false;
 				}
 			}
 		}
@@ -155,7 +155,7 @@ function charselect_startgame() {
 	if ready_timer <= 0 {
 		for(var i = 0; i < max_players; i++) {
 			if player_slot[i] != noone {
-				if player_input[player_slot[i]].confirm {
+				if player_input[player_slot[i]].menu_confirm {
 					change_gamestate(gamestates.versus_vs);
 				}
 			}
@@ -184,31 +184,33 @@ function draw_charselect() {
 	var _w4_t2 = _w3 / max(1,_team2_members);
 	
 	var _x = 0;
-	var _y = _h * 0.69;
+	var _y = _h * 0.65;
 	
 	var _drawn_players = 0;
 	var _drawn_t1_players = 0;
 	var _drawn_t2_players = 0;
+	
 	for(var i = 0; i < max_players; i++) {
-		if player_slot[i] != noone {
-			var _x = _w2;
-			var _xscale = 1;
-			if _drawn_players < _team1_members {
-				_x = _w4_t1 * (_drawn_t1_players + 1);
-			}
-			else {
-				_x = _w2 + (_w4_t2 * (_drawn_t2_players + 1));
-				_xscale = -1;
-			}
+		draw_set_font(fnt_charselect);
+		draw_set_halign(fa_center);
+		draw_set_valign(fa_top);
 			
+		var _x = _w2;
+		var _xscale = 1;
+		if (_drawn_players < _team1_members) or (i == 0) {
+			_x = _w4_t1 * (_drawn_t1_players + 1);
+		}
+		else {
+			_x = _w2 + (_w4_t2 * (_drawn_t2_players + 1));
+			_xscale = -1;
+		}
+		
+		if player_slot[i] != noone {
 			var _sprite = get_char_sprite(player_char[i]);
 			if sprite_exists(_sprite) {
 				draw_sprite_ext(_sprite,0,_x,_y,_xscale,1,0,c_white,1);
 			}
 			
-			draw_set_font(fnt_menu);
-			draw_set_halign(fa_center);
-			draw_set_valign(fa_top);
 			var _text = "Player " + string(i+1);
 			with(player_input[player_slot[i]]) {
 				_text += "\n(";
@@ -225,16 +227,21 @@ function draw_charselect() {
 			if player_ready[i] {
 				_text += "\n" + "OK!";
 			}
-			draw_text_outlined(_x,_y,_text,c_black,player_color[i],0.75);
-			
-			if _drawn_players <= _drawn_t1_players {
-				_drawn_t1_players++;
-			}
-			else {
-				_drawn_t2_players++;
-			}
-			_drawn_players++;
+			draw_text_outlined(_x,_y,_text,c_black,player_color[i],1);
 		}
+		else {
+			if active_players < max_players {
+				draw_text_outlined(_x,_y,"Press any button!",c_black,player_color[i]);
+			}
+		}
+		
+		if _drawn_players <= _drawn_t1_players {
+			_drawn_t1_players++;
+		}
+		else {
+			_drawn_t2_players++;
+		}
+		_drawn_players++;
 	}
 	if ready_timer <= 0 {
 		draw_set_font(fnt_menu);

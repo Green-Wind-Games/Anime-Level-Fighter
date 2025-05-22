@@ -3,7 +3,7 @@
   "%Name":"fnt_assists",
   "AntiAlias":0,
   "applyKerning":0,
-  "ascender":11,
+  "ascender":12,
   "ascenderOffset":0,
   "bold":true,
   "canGenerateBitmap":true,
@@ -278,10 +278,7 @@
   "sdfSpread":8,
   "size":10.0,
   "styleName":"Regular",
-  "textureGroupId":{
-    "name":"Default",
-    "path":"texturegroups/Default",
-  },
+  "textureGroupId":null,
   "TTFName":"",
   "usesSDF":false,
 }

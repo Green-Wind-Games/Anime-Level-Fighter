@@ -63,7 +63,7 @@ function update_input_buffer_buttons() {
 	if input.heavy_attack { _command += "C"; }
 	if input.unique_attack { _command += "D"; }
 	if input.supercharge { _command += "E"; }
-	if input.use_teleport { _command += "F"; }
+	if input.use_tech { _command += "F"; }
 	
 	if _command != "" {
 		input_buffer_timer = input_buffer_duration;

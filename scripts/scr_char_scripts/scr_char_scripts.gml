@@ -37,7 +37,7 @@ function check_charge() {
 	if !is_char(id) return false;
 	if (previous_state == charge_state) and (state_timer < 30) return false;
 	if (!ai_enabled) {
-		if (input.charge) return true;
+		if (input.supercharge_held) return true;
 	}
 	else {
 		if mp >= max_mp {

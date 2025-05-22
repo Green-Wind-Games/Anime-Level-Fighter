@@ -2,7 +2,7 @@ var _drop_timer = 60 * 2;
 
 for(var i = 0; i < array_length(player_input); i++) {
 	with(player_input[i]) {
-		if confirm or up_pressed or down_pressed {
+		if menu_confirm or up_pressed or down_pressed {
 			with(other) {
 				assigned_input = i;
 				input_drop_timer = _drop_timer;
@@ -34,7 +34,7 @@ if assigned_input != -1 {
 		hover = options_count-1;
 	}
 
-	if player_input[assigned_input].confirm {
+	if player_input[assigned_input].menu_confirm {
 		for(var i = 1; i < array_length(options[hover]); i++) {
 			var _func = options[hover][i];
 			if (_func != -1) then _func();

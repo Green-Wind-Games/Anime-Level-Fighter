@@ -50,7 +50,7 @@ function init_sprite(_sprite = sprite_index) {
 	
 	alpha = 1;
 	
-	flash = 0;
+	flash_alpha = 0;
 	flash_color = c_white;
 	
 	var _scale = 0.9;
@@ -157,8 +157,8 @@ function update_sprite_animation() {
 	anim_progress = map_value(anim_timer,0,anim_duration-1,0,1);
 }
 
-function flash_sprite(_duration = 6,_color = c_white) {
-	flash = _duration;
+function flash_sprite(_color = c_white) {
+	flash_alpha = 1;
 	flash_color = _color;
 }
 
@@ -168,7 +168,7 @@ function squash_stretch(_x,_y) {
 }
 
 function update_sprite_flash() {
-	flash -= game_speed;
+	flash_alpha = approach(flash_alpha, 0, 0.05 * game_speed);
 }
 
 function update_sprite_squash_stretch() {

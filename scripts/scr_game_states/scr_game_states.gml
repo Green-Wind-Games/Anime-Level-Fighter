@@ -80,7 +80,7 @@ function update_gamestate() {
 		if value_in_range(game_state_timer,_min_time,_max_time) {
 			for(var i = 0; i < max_players; i++) {
 				if player_slot[i] != noone {
-					if player_input[player_slot[i]].confirm {
+					if player_input[player_slot[i]].menu_confirm {
 						game_state_timer = _max_time + 1;
 					}
 				}
@@ -109,7 +109,7 @@ function update_gamestate() {
 		if (game_state_timer > (3 * 60)) and (next_game_state == -1) {
 			for(var i = 0; i < max_players; i++) {
 				if player_slot[i] != noone {
-					if player_input[player_slot[i]].confirm {
+					if player_input[player_slot[i]].menu_confirm {
 						change_gamestate(gamestates.versus_select);
 					}
 				}

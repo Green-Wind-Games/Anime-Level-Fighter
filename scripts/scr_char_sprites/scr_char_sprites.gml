@@ -79,6 +79,12 @@ function init_charsprites(_name) {
 		_head_size,
 		_head_size
 	);
+	
+	hue = 0;
+	if instance_number(object_index) > 1 {
+		hue = irandom(255) + 1;
+	}
+	u_hue = shader_get_uniform(sha_hue_shift, "hue"); //Change this to whatever name you gave your shader.
 }
 
 function update_charsprite() {

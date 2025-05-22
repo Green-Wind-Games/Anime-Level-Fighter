@@ -203,7 +203,7 @@ function get_move_input(_move) {
 		}
 		_movelist = on_ground ? air_movelist : ground_movelist;
 	}
-	return ["ERROR"];
+	return ["none"];
 }
 
 function get_movelist_index(_movelist, _move) {

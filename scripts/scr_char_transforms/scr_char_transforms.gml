@@ -55,6 +55,7 @@ function transform(_form) {
 	var _team = team;
 	var _target = target;
 	var _input = input;
+	var _hue = hue;
 	
 	array_delete(ground_movelist,0,array_length(ground_movelist));
 	array_delete(air_movelist,0,array_length(air_movelist));
@@ -92,6 +93,8 @@ function transform(_form) {
 	team = _team;
 	target = _target;
 	input = _input;
+	
+	hue = _hue;
 	
 	face_target();
 }

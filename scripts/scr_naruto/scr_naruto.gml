@@ -114,9 +114,22 @@ function init_naruto_baseform() {
 		play_voiceline(voice_attack,50,false);
 	}
 	divekick.run = function() {
-		basic_attack(frame,100,attackstrength.light,hiteffects.hit);
-		xspeed = 15 * facing;
-		yspeed = 15;
+		if check_frame(frame) {
+			create_hitbox(
+				0,
+				-height_half,
+				width_half * 1.5,
+				height_half * 1.5,
+				100,
+				3,
+				1,
+				attacktype.multihit,
+				attackstrength.medium,
+				hiteffects.hit
+			);
+		}
+		xspeed = 8 * facing;
+		yspeed = 16;
 		if on_ground {
 			change_state(crouch_state);
 		}
