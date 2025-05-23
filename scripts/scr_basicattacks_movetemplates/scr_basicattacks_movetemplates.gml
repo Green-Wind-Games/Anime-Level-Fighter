@@ -5,9 +5,9 @@ lightattack_startup = 5;
 mediumattack_startup = 8;
 heavyattack_startup = 12;
 
-lightattack_recovery = 20;
-mediumattack_recovery = 25;
-heavyattack_recovery = 30;
+lightattack_recovery = 10;
+mediumattack_recovery = 15;
+heavyattack_recovery = 20;
 
 function basic_attack_stepforward(_hitframe) {
 	if check_frame(max(_hitframe-2,1)) {
@@ -177,13 +177,13 @@ function basic_multihit_attack(_hitframe,_damage,_strength,_hiteffect) {
 
 function basic_attack_frame_speed(_startup_frame,_recovery_frame,_startup_duration,_recovery_duration) {
 	if frame <= _startup_frame {
-		anim_speed = (max(1,_startup_frame) * frame_duration) / _startup_duration;
+		anim_speed = ((_startup_frame + 1) * frame_duration) / _startup_duration;
 	}
-	else if frame >= _recovery_frame {
-		anim_speed = (max(1,anim_frames - _recovery_frame) * frame_duration) / _recovery_duration;
+	else if frame < _recovery_frame {
+		anim_speed = 1;
 	}
 	else {
-		anim_speed = 1;
+		anim_speed = ((anim_frames - _recovery_frame) * frame_duration) / _recovery_duration;
 	}
 }
 
@@ -510,13 +510,19 @@ function add_basic_heavy_air_launcher_state(_sprite, _hitframe, _hiteffect) {
 		change_sprite(heavy_air_launcher.sprite,false);
 		play_sound(heavy_air_launcher.whiff_sound);
 		play_voiceline(voice_heavyattack,50,false);
+		attack_hit_script = function(_attacker,_defender) {
+			if _attacker == id {
+				xspeed = 5 * facing;
+				yspeed = -5;
+			}
+		}
 	}
 	heavy_air_launcher.run = function() {
 		basic_attack_frame_speed(
 			heavy_air_launcher.hit_frame-1,
 			heavy_air_launcher.hit_frame+1,
-			heavyattack_startup,
-			heavyattack_recovery
+			mediumattack_startup,
+			lightattack_recovery
 		);
 		basic_attack_stepforward(heavy_air_launcher.hit_frame);
 		var _strong = ds_list_find_index(combo_moves, homing_dash_state) == -1;

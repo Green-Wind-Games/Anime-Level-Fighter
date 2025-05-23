@@ -429,6 +429,7 @@ function connect_attack(_hitbox,_hurtbox) {
 		else if _defender.is_guarding {
 			attack_block_script(_attacker,_defender);
 		}
+		print(state_timer);
 	}
 	with(_defender) {
 		defense_connect_script(_attacker,_defender);

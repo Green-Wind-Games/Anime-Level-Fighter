@@ -126,7 +126,7 @@ function init_goku_baseform() {
 	add_basic_light_attack_state(spr_goku_attack_punch_gut,2,attackstrength.medium,hiteffects.hit);
 	add_basic_light_attack_state(spr_goku_attack_elbow_bash,2,attackstrength.heavy,hiteffects.hit);
 	add_basic_light_attack_state(spr_goku_attack_punch,2,attackstrength.light,hiteffects.hit);
-	add_basic_light_attack_launcher_state(spr_goku_attack_uppercut,1,hiteffects.hit);
+	add_basic_light_attack_launcher_state(spr_goku_attack_uppercut,2,hiteffects.hit);
 	
 	add_basic_medium_attack_state(spr_goku_attack_elbow_bash,2,hiteffects.hit);
 	add_basic_medium_sweep_state(spr_goku_attack_spin_kick,3,hiteffects.hit);
@@ -164,10 +164,15 @@ function init_goku_baseform() {
 	medium_airattack = new charstate();
 	medium_airattack.start = function() {
 		change_sprite(spr_goku_attack_spin_kick_double,false);
-		anim_speed = (frame_duration * 3) / medium_startup;
 		play_voiceline(voice_attack,50,false);
 	}
 	medium_airattack.run = function() {
+		basic_attack_frame_speed(
+			2,
+			8,
+			mediumattack_startup,
+			mediumattack_recovery
+		);
 		if check_frame(2) or check_frame(6) {
 			play_sound(snd_punch_whiff_medium);
 		}
@@ -181,7 +186,6 @@ function init_goku_baseform() {
 	//light_airattack2 = new charstate();
 	//light_airattack2.start = function() {
 	//	change_sprite(spr_goku_attack_spin_kick,false);
-	//	anim_speed = (frame_duration * 3) / medium_startup;
 	//	play_voiceline(voice_attack,50,false);
 	//}
 	//light_airattack2.run = function() {
