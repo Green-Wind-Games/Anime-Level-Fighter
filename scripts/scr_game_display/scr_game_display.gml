@@ -11,7 +11,7 @@ screen_height = display_get_height();
 screen_aspectratio = screen_width / screen_height;
 
 var _test = false;
-var _factor = 0.75;
+var _factor = 1;
 
 game_width = 800;
 game_height = 450;
@@ -49,10 +49,10 @@ var gui_scale = max(1,game_height / 240);
 gui_width = round(game_width / gui_scale);
 gui_height = round(game_height / gui_scale);
 
-//if os_type == os_android or _test {
-//	gui_width = floor(gui_width * _factor);
-//	gui_height = floor(gui_height * _factor);
-//}
+if os_type == os_android or _test {
+	gui_width = floor(gui_width * _factor);
+	gui_height = floor(gui_height * _factor);
+}
 
 hud_height = gui_height / 3;
 
