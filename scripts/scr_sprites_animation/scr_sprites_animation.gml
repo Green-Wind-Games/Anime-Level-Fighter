@@ -1,8 +1,7 @@
 function check_frame(_frame) {
 	if (frame != _frame) return false;
 	
-	if frame_timer < 0 return false;
-	if frame_timer >= anim_speed return false;
+	if frame_timer != 0 return false;
 	
 	return true;
 }

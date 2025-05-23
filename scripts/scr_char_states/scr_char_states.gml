@@ -944,10 +944,20 @@ function init_charstates() {
 	heavy_airattack = new charstate();
 	heavy_air_launcher = new charstate();
 	
-	init_states(idle_state);
+	add_ground_move(dash_state,"66");
+	add_ground_move(backdash_state,"44");
+	add_air_move(airdash_state,"66");
+	add_air_move(air_backdash_state,"44");
+	
+	add_air_move(airdash_state,"956");
+	add_air_move(air_backdash_state,"754");
+	
+	//add_move(teleport_state,"F");
 	
 	signature_move = noone;
 	finisher_move = noone;
+	
+	init_states(idle_state);
 }
 
 function update_charstate() {

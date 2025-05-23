@@ -36,7 +36,7 @@ function check_moves() {
 	var _jump_cancel = false;
 	
 	if input.up {
-		if (air_actions < max_air_actions) or on_ground {
+		if on_ground {
 			_movelist = air_movelist;
 			_jump_cancel = true;
 		}

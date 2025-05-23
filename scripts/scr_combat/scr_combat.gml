@@ -247,7 +247,36 @@ function get_hit_by_attack(_hitbox) {
 	react_to_attack_type(_hitbox, _hitbox.attack_type);
 	
 	var _is_strong_attack = (abs(xspeed) >= 10) or (abs(yspeed) >= 10);
-	play_hurt_sound(_is_strong_attack);
+	if _is_strong_attack {
+		var _recenter_dir = _attacker.rotation;
+		
+		var _recenter_dist = width_half;
+		_recenter_dist += max(
+			_attacker.width_half,
+			_hitbox.width/2
+		);
+		
+		var _recenter_x = _attacker.x;
+		var _recenter_y = _attacker.y + (height_half - _attacker.height_half);
+		
+		_recenter_x += lengthdir_x(_recenter_dist,_recenter_dir) * _attacker.facing;
+		_recenter_y += lengthdir_y(_recenter_dist,_recenter_dir);
+		
+		var _lerp = 0.5;
+		_recenter_x = lerp(x,_recenter_x,_lerp);
+		_recenter_y = lerp(y,_recenter_y,_lerp);
+		
+		_recenter_x = clamp(_recenter_x,left_wall,right_wall);
+		_recenter_y = min(_recenter_y,ground_height);
+		
+		x = _recenter_x;
+		y = _recenter_y;
+		
+		play_hurt_sound(true);
+	}
+	else {
+		play_hurt_sound(false);
+	}
 	
 	facing = -_attacker.facing;
 }
@@ -263,8 +292,9 @@ function connect_attack(_hitbox,_hurtbox) {
 	
 	hitstun = max(hitstun - (combo_hits_taken / 4), 10);
 	
-	if _hitbox.attack_type == attacktype.multihit {
-		hitstop *= 0.75;
+	if (_hitbox.attack_type == attacktype.multihit)
+	or !is_char(_attacker) {
+		hitstop *= 0.5;
 	}
 	
 	var _is_strong_attack = true;
@@ -274,10 +304,6 @@ function connect_attack(_hitbox,_hurtbox) {
 		
 	if _is_strong_attack {
 		hitstun = max(hitstun,60);
-	}
-	
-	if !is_char(_attacker) {
-		hitstop *= 0.75;
 	}
 	
 	hitstun = round(hitstun);

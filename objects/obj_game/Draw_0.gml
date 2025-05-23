@@ -30,7 +30,8 @@ draw_set_valign(fa_top);
 draw_set_color(c_white);
 
 //with(obj_char) {
-//	draw_text(x,y,string(target_distance));
+//	draw_text(x,y,string(frame_timer));
+//	draw_text(x,y+16,string(frame_duration));
 //}
 
 //with(obj_specialeffect) {

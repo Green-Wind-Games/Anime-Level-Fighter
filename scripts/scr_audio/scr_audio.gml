@@ -118,3 +118,30 @@ function play_voiceline(_snd,_chance = 100,_interrupt = true) {
 	}
 	return -1;
 }
+
+function get_whiff_sound(_strength, _hiteffect) {
+	var _strengthname = "light";
+	var _effectname = "punch";
+	
+	if _strength < attackstrength.medium {
+		_strengthname = "light";
+	}
+	else if _strength < attackstrength.heavy {
+		_strengthname = "medium";
+	}
+	else if _strength < attackstrength.super {
+		_strengthname = "heavy";
+	}
+	else if _strength < attackstrength.ultimate {
+		_strengthname = "super";
+	}
+	else {
+		_strengthname = "ultimate";
+	}
+	
+	if _hiteffect == hiteffects.slash {
+		_effectname = "slash";
+	}
+	
+	return asset_get_index("snd_"+ _effectname + "_whiff_" + _strengthname);
+}

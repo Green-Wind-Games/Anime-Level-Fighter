@@ -65,8 +65,8 @@ function draw_chars() {
 
 function hitstop_shake() {
 	var _shake = hitstop;
+	_shake /= get_attack_hitstop(attackstrength.light) / 2;
 	_shake = random(_shake);
-	_shake = clamp(_shake,0,3);
 	_shake *= hitstop mod 2 == 0 ? -1 : 1;
 	return _shake;
 }
