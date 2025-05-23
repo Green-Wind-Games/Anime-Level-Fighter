@@ -77,6 +77,11 @@ function hitbox_check_hit() {
 		if a2.team == b2.team continue;
 		if ds_list_find_index(a.hit_list,b2) != -1 continue;
 		if b2.grabbed continue;
+		if (b2.active_state == b2.liedown_state) {
+			if (a.attack_type != attacktype.otg) {
+				continue;
+			}
+		}
 		if !place_meeting(x,y,a) continue;
 		var _break = false;
 		

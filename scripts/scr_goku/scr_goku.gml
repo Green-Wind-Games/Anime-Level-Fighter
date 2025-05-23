@@ -11,8 +11,6 @@ function init_goku_baseform() {
 
 	max_air_actions = 3;
 
-	spirit_bomb_shot = noone;
-
 	next_form = obj_goku_ssj;
 	transform_aura = spr_aura_dbz_yellow;
 	
@@ -44,6 +42,8 @@ function init_goku_baseform() {
 		vc_goku_kamehame,
 		vc_goku_kamehame_ha
 	);
+
+	spirit_bomb_shot = noone;
 	
 	kaioken_active = false;
 	kaioken_timer = 0;
@@ -159,6 +159,7 @@ function init_goku_baseform() {
 		basic_multihit_attack(4,80,attackstrength.light,hiteffects.hit);
 		basic_multihit_attack(6,80,attackstrength.light,hiteffects.hit);
 		anim_finish_idle();
+		land();
 	}
 	
 	medium_airattack = new charstate();
@@ -181,6 +182,7 @@ function init_goku_baseform() {
 		basic_multihit_attack(3,200,attackstrength.medium,hiteffects.hit);
 		basic_multihit_attack(7,200,attackstrength.medium,hiteffects.hit);
 		anim_finish_idle();
+		land();
 	}
 	
 	//light_airattack2 = new charstate();

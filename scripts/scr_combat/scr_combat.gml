@@ -6,6 +6,7 @@ enum attacktype {
 	
 	unblockable,
 	antiair,
+	otg,
 	
 	hit_grab,
 	grab,
@@ -365,7 +366,7 @@ function connect_attack(_hitbox,_hurtbox) {
 		combo_timer = hitstun;
 		if active_state == hard_knockdown_state
 		or active_state == wall_bounce_state {
-			combo_timer += 30;
+			combo_timer += 60;
 		}
 			
 		combo_hits = 0;

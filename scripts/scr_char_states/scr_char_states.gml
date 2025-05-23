@@ -488,16 +488,8 @@ function init_charstates() {
 	liedown_state = new charstate();
 	liedown_state.start = function() {
 		change_sprite(liedown_sprite,false);
-		dodging_attacks = true;
-		dodging_projectiles = true;
 		can_cancel = false;
 		yspeed = 0;
-		with(hurtbox) {
-			xoffset *= 2;
-			yoffset /= 2;
-			image_xscale *= 2;
-			image_yscale /= 2;
-		}
 	}
 	liedown_state.run = function() {
 		if (state_timer >= 30) and (!dead) {
@@ -509,16 +501,6 @@ function init_charstates() {
 		else {
 			change_sprite(liedown_sprite,true);
 		}
-	}
-	liedown_state.stop = function() {
-		with(hurtbox) {
-			xoffset /= 2;
-			yoffset *= 2;
-			image_xscale /= 2;
-			image_yscale *= 2;
-		}
-		dodging_attacks = false;
-		dodging_projectiles = false;
 	}
 	
 	tech_state = new charstate();

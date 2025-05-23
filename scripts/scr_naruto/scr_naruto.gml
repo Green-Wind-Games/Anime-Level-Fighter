@@ -51,58 +51,33 @@ function init_naruto_baseform() {
 	}
 	
 	add_basic_light_attack_state(spr_naruto_attack_punch,2,hiteffects.hit);
-	add_basic_light_attack2_state(spr_naruto_attack_dash_punch,2,hiteffects.hit);
-	add_basic_light_attack3_state(spr_naruto_attack_uppercut,3,hiteffects.hit);
+	add_basic_light_attack_state(spr_naruto_attack_dash_punch,2,hiteffects.hit);
+	add_basic_light_attack_state(spr_naruto_attack_punch,2,hiteffects.hit);
+	add_basic_light_attack_state(spr_naruto_attack_punch_hook,2,hiteffects.hit);
+	add_basic_light_attack_launcher_state(spr_naruto_attack_uppercut,3,hiteffects.hit);
 	
 	add_basic_medium_attack_state(spr_naruto_attack_punch_hook,2,hiteffects.hit);
-	
-	add_basic_light_lowattack_state(spr_naruto_attack_punch_hook,2,hiteffects.hit);
 	add_basic_medium_sweep_state(spr_naruto_attack_spinkick,3,hiteffects.hit);
+	
+	add_basic_heavy_attack_state(spr_naruto_attack_slash,2,hiteffects.slash);
+	add_basic_heavy_launcher_state(spr_naruto_attack_slash_up,3,hiteffects.slash);
+	
+	heavy_attack.unique_script = function() {
+		if check_frame(2) {
+			char_specialeffect(spr_slash,width_half,-height_half,0.5,-0.5,-45);
+		}
+	}
+	heavy_launcher.unique_script = function() {
+		if check_frame(3) {
+			char_specialeffect(spr_slash2,width_half,-height*0.75,0.5,-0.5,-45);
+		}
+	}
 	
 	add_basic_light_airattack_state(spr_naruto_attack_back_kick_air,1,hiteffects.hit);
 	add_basic_medium_airattack_state(spr_naruto_attack_spinkick,3,hiteffects.hit);
 	add_basic_heavy_airattack_state(spr_naruto_attack_smash_kick,3,hiteffects.hit);
 	
 	add_basic_heavy_air_launcher_state(spr_naruto_attack_spinkick_up,4,hiteffects.hit);
-	
-	heavy_attack = new charstate();
-	heavy_attack.start = function() {
-		change_sprite(spr_naruto_attack_dash_slash,false);
-		xspeed = 20 * facing;
-		play_sound(snd_dbz_dash);
-		play_sound(snd_slash_whiff_medium);
-		play_voiceline(voice_heavyattack,50,false);
-	}
-	heavy_attack.run = function() {
-		if check_frame(1) {
-			xspeed = 10 * facing;
-		}
-		basic_wallsplat(2,500,hiteffects.slash);
-		basic_attack_chase(2);
-		if check_frame(2) {
-			char_specialeffect(spr_slash,width_half,-height_half,0.5,-0.5,-45);
-		}
-		anim_finish_idle();
-	}
-	
-	heavy_launcher = new charstate();
-	heavy_launcher.start = function() {
-		change_sprite(spr_naruto_attack_slash_up,false);
-		play_sound(snd_slash_whiff_heavy);
-		play_voiceline(voice_heavyattack,50,false);
-	}
-	heavy_launcher.run = function() {
-		if check_frame(1) {
-			xspeed = 1.5 * facing;
-			yspeed = -3;
-		}
-		basic_launcherattack(3,500,hiteffects.slash);
-		basic_attack_chase(3);
-		if check_frame(3) {
-			char_specialeffect(spr_slash2,width_half,-height*0.75,0.5,-0.5,-45);
-		}
-		land();
-	}
 	
 	divekick = new charstate();
 	divekick.start = function() {
@@ -345,10 +320,10 @@ function init_naruto_baseform() {
 				loop_anim_middle(8,9);
 			}
 			if value_in_range(frame,8,9)  {
-				xspeed = 10 * facing;
+				xspeed = 15 * facing;
 				yspeed = 15;
 			}
-			if value_in_range(y,_target_y,target_y) and (target_distance <= 10) {
+			if value_in_range(y,_target_y,target_y) and (target_distance_x <= 10) {
 				xspeed = 0;
 				yspeed = 0;
 				x = target_x;
@@ -357,7 +332,7 @@ function init_naruto_baseform() {
 		}
 		
 		if (attack_hits > 0) {
-			loop_anim_middle_timer(10,11,60);
+			loop_anim_middle_timer(10,11,60+(frame_duration*10));
 		}
 		if value_in_range(frame,10,11) {
 			if check_frame(frame) {
@@ -371,7 +346,7 @@ function init_naruto_baseform() {
 					100,
 					0,
 					0,
-					attacktype.normal,
+					attacktype.otg,
 					attackstrength.light,
 					hiteffects.hit
 				);
@@ -393,9 +368,9 @@ function init_naruto_baseform() {
 				spr_rasengan,
 				1.5,
 				1600,
-				0,
-				10,
-				attacktype.hard_knockdown,
+				5,
+				-5,
+				attacktype.normal,
 				attackstrength.heavy,
 				hiteffects.hit
 			);

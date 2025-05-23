@@ -64,7 +64,7 @@
     },
     "name":"spr_genos_walk",
     "playback":1,
-    "playbackSpeed":20.0,
+    "playbackSpeed":15.0,
     "playbackSpeedType":0,
     "resourceType":"GMSequence",
     "resourceVersion":"2.0",

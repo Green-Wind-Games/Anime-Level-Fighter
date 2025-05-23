@@ -108,15 +108,16 @@ function init_goku_ssj() {
 	//	}
 	//}
 
-	add_basic_light_attack_state(spr_goku_ssj_attack_punch,2,hiteffects.hit);
-	add_basic_light_attack2_state(spr_goku_ssj_attack_kick_side2,2,hiteffects.hit);
-	add_basic_light_attack3_state(spr_goku_ssj_attack_kick_lift,2,hiteffects.hit);
+	add_basic_light_attack_state(spr_goku_ssj_attack_punch,2,attackstrength.light,hiteffects.hit);
+	add_basic_light_attack_state(spr_goku_ssj_attack_kick,2,attackstrength.medium,hiteffects.hit);
+	add_basic_light_attack_state(spr_goku_ssj_attack_elbow_bash,2,attackstrength.heavy,hiteffects.hit);
+	add_basic_light_attack_state(spr_goku_ssj_attack_punch,2,attackstrength.light,hiteffects.hit);
+	add_basic_light_attack_launcher_state(spr_goku_ssj_attack_knee,2,hiteffects.hit);
 	
 	add_basic_medium_attack_state(spr_goku_ssj_attack_elbow_bash,2,hiteffects.hit);
-	add_basic_heavy_attack_state(spr_goku_ssj_attack_kick_side,2,hiteffects.hit);
-	
-	add_basic_light_lowattack_state(spr_goku_ssj_attack_kick_air,2,hiteffects.hit);
 	add_basic_medium_sweep_state(spr_goku_ssj_attack_spin_kick,3,hiteffects.hit);
+	
+	add_basic_heavy_attack_state(spr_goku_ssj_attack_kick_side,2,hiteffects.hit);
 	add_basic_heavy_launcher_state(spr_goku_ssj_attack_backflip_kick,2,hiteffects.hit);
 	
 	add_basic_heavy_airattack_state(spr_goku_ssj_attack_smash,2,hiteffects.hit);
@@ -128,15 +129,21 @@ function init_goku_ssj() {
 		play_voiceline(voice_attack,50,false);
 	}
 	light_airattack.run = function() {
-		if check_frame(0) or check_frame(2) or check_frame(4) {
+		basic_attack_frame_speed(
+			1,
+			6,
+			lightattack_startup,
+			lightattack_recovery
+		);
+		if check_frame(1) or check_frame(3) or check_frame(5) {
 			play_sound(snd_punch_whiff_light);
 		}
-		basic_attack_stepforward(1);
-		basic_attack_stepforward(3);
-		basic_attack_stepforward(5);
-		basic_multihit_attack(1,50,attackstrength.light,hiteffects.hit);
-		basic_multihit_attack(3,50,attackstrength.light,hiteffects.hit);
-		basic_multihit_attack(5,50,attackstrength.light,hiteffects.hit);
+		basic_attack_stepforward(2);
+		basic_attack_stepforward(4);
+		basic_attack_stepforward(6);
+		basic_multihit_attack(2,80,attackstrength.light,hiteffects.hit);
+		basic_multihit_attack(4,80,attackstrength.light,hiteffects.hit);
+		basic_multihit_attack(6,80,attackstrength.light,hiteffects.hit);
 		anim_finish_idle();
 		land();
 	}
@@ -147,13 +154,19 @@ function init_goku_ssj() {
 		play_voiceline(voice_attack,50,false);
 	}
 	medium_airattack.run = function() {
+		basic_attack_frame_speed(
+			2,
+			8,
+			mediumattack_startup,
+			mediumattack_recovery
+		);
 		if check_frame(2) or check_frame(6) {
 			play_sound(snd_punch_whiff_medium);
 		}
 		basic_attack_stepforward(3);
-		basic_attack_stepforward(7);
-		basic_multihit_attack(3,50,attackstrength.medium,hiteffects.hit);
-		basic_multihit_attack(7,50,attackstrength.medium,hiteffects.hit);
+		basic_attack_stepforward(5);
+		basic_multihit_attack(3,200,attackstrength.medium,hiteffects.hit);
+		basic_multihit_attack(7,200,attackstrength.medium,hiteffects.hit);
 		anim_finish_idle();
 		land();
 	}
