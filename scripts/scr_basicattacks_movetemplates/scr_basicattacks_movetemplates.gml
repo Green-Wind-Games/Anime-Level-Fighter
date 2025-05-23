@@ -177,10 +177,10 @@ function basic_multihit_attack(_hitframe,_damage,_strength,_hiteffect) {
 
 function basic_attack_frame_speed(_startup_frame,_recovery_frame,_startup_duration,_recovery_duration) {
 	if frame <= _startup_frame {
-		anim_speed = (_startup_frame * frame_duration) / _startup_duration;
+		anim_speed = (max(1,_startup_frame) * frame_duration) / _startup_duration;
 	}
 	else if frame >= _recovery_frame {
-		anim_speed = ((anim_frames - _recovery_frame) * frame_duration) / _recovery_duration;
+		anim_speed = (max(1,anim_frames - _recovery_frame) * frame_duration) / _recovery_duration;
 	}
 	else {
 		anim_speed = 1;
