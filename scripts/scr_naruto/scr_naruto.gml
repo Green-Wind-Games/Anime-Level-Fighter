@@ -57,7 +57,7 @@ function init_naruto_baseform() {
 	add_basic_medium_attack_state(spr_naruto_attack_punch_hook,2,hiteffects.hit);
 	
 	add_basic_light_lowattack_state(spr_naruto_attack_punch_hook,2,hiteffects.hit);
-	add_basic_medium_lowattack_state(spr_naruto_attack_spinkick,3,hiteffects.hit);
+	add_basic_medium_sweep_state(spr_naruto_attack_spinkick,3,hiteffects.hit);
 	
 	add_basic_light_airattack_state(spr_naruto_attack_back_kick_air,1,hiteffects.hit);
 	add_basic_medium_airattack_state(spr_naruto_attack_spinkick,3,hiteffects.hit);
@@ -85,13 +85,13 @@ function init_naruto_baseform() {
 		anim_finish_idle();
 	}
 	
-	heavy_lowattack = new charstate();
-	heavy_lowattack.start = function() {
+	heavy_launcher = new charstate();
+	heavy_launcher.start = function() {
 		change_sprite(spr_naruto_attack_slash_up,false);
 		play_sound(snd_slash_whiff_heavy);
 		play_voiceline(voice_heavyattack,50,false);
 	}
-	heavy_lowattack.run = function() {
+	heavy_launcher.run = function() {
 		if check_frame(1) {
 			xspeed = 1.5 * facing;
 			yspeed = -3;

@@ -1,14 +1,14 @@
 function setup_basicmoves() {
 	//add_ground_move(light_attack,"A");
 	
-	add_ground_move(medium_lowattack,"2B");
+	add_ground_move(medium_sweep,"2B");
 	
 	add_ground_move(medium_attack,"B");
 	add_ground_move(medium_attack2,"B");
 	add_ground_move(medium_attack3,"B");
 	
 	add_ground_move(heavy_attack,"C");
-	add_ground_move(heavy_lowattack,"2C");
+	add_ground_move(heavy_launcher,"2C");
 	
 	add_ground_move(medium_attack4,"B");
 	

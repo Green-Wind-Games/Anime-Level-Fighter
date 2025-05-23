@@ -10,7 +10,7 @@ enum input_types {
 }
 
 globalvar input_buffer_duration, input_delay;
-input_buffer_duration = 8;
+input_buffer_duration = 10;
 input_delay = 3;
 
 function update_input_buffer() {

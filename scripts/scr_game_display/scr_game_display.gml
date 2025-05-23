@@ -13,8 +13,8 @@ screen_aspectratio = screen_width / screen_height;
 var _test = false;
 var _factor = 0.75;
 
-game_width = 640;
-game_height = 360;
+game_width = 800;
+game_height = 450;
 
 if os_type == os_android or _test {
 	game_width = floor(game_width * _factor);
@@ -26,7 +26,7 @@ if os_type == os_android or _test {
 //game_width = round(game_height * (16 / 9));
 //game_height = round(game_width / (16 / 9));
 //game_width = round(game_height * screen_aspectratio);
-//game_height = round(game_width / screen_aspectratio);
+game_height = round(game_width / screen_aspectratio);
 
 game_aspectratio = game_width / game_height;
 

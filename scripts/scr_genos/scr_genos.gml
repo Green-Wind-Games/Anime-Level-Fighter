@@ -41,8 +41,8 @@ function init_genos_baseform() {
 	add_basic_heavy_attack_state(spr_genos_attack_kick,2,hiteffects.hit);
 	
 	add_basic_light_lowattack_state(spr_genos_attack_punch,2,hiteffects.hit);
-	add_basic_medium_lowattack_state(spr_genos_attack_kick_up,2,hiteffects.hit);
-	add_basic_heavy_lowattack_state(spr_genos_attack_uppercut,2,hiteffects.hit);
+	add_basic_medium_sweep_state(spr_genos_attack_kick_up,2,hiteffects.hit);
+	add_basic_heavy_launcher_state(spr_genos_attack_uppercut,2,hiteffects.hit);
 	
 	add_basic_light_airattack_state(spr_genos_attack_punch,2,hiteffects.hit);
 	add_basic_medium_airattack_state(spr_genos_attack_kick,2,hiteffects.hit);
@@ -183,7 +183,7 @@ function init_genos_baseform() {
 		if state_timer > (120 * (level / 3)) {
 			if combo_timer > 0 {
 				if on_ground {
-					change_state(heavy_lowattack);
+					change_state(heavy_launcher);
 				}
 				else {
 					change_state(heavy_airattack);

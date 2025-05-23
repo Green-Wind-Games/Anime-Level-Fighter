@@ -866,10 +866,10 @@ function init_charstates() {
 	
 	medium_attack2 = new charstate();
 	medium_attack2.start = function() {
-		medium_lowattack.start();
+		medium_sweep.start();
 	}
 	medium_attack2.run = function() {
-		medium_lowattack.run();
+		medium_sweep.run();
 	}
 	
 	medium_attack3 = new charstate();
@@ -895,8 +895,8 @@ function init_charstates() {
 	heavy_attack = new charstate();
 	
 	light_lowattack = new charstate();
-	medium_lowattack = new charstate();
-	heavy_lowattack = new charstate();
+	medium_sweep = new charstate();
+	heavy_launcher = new charstate();
 	
 	light_airattack = new charstate();
 	

@@ -116,8 +116,8 @@ function init_goku_ssj() {
 	add_basic_heavy_attack_state(spr_goku_ssj_attack_kick_side,2,hiteffects.hit);
 	
 	add_basic_light_lowattack_state(spr_goku_ssj_attack_kick_air,2,hiteffects.hit);
-	add_basic_medium_lowattack_state(spr_goku_ssj_attack_spin_kick,3,hiteffects.hit);
-	add_basic_heavy_lowattack_state(spr_goku_ssj_attack_backflip_kick,2,hiteffects.hit);
+	add_basic_medium_sweep_state(spr_goku_ssj_attack_spin_kick,3,hiteffects.hit);
+	add_basic_heavy_launcher_state(spr_goku_ssj_attack_backflip_kick,2,hiteffects.hit);
 	
 	add_basic_heavy_airattack_state(spr_goku_ssj_attack_smash,2,hiteffects.hit);
 	add_basic_heavy_air_launcher_state(spr_goku_ssj_attack_kick_lift,2,hiteffects.hit);

@@ -262,7 +262,7 @@ function get_hit_by_attack(_hitbox) {
 		_recenter_x += lengthdir_x(_recenter_dist,_recenter_dir) * _attacker.facing;
 		_recenter_y += lengthdir_y(_recenter_dist,_recenter_dir);
 		
-		var _lerp = 0.5;
+		var _lerp = 1;
 		_recenter_x = lerp(x,_recenter_x,_lerp);
 		_recenter_y = lerp(y,_recenter_y,_lerp);
 		
