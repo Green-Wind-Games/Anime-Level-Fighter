@@ -249,19 +249,25 @@ function get_hit_by_attack(_hitbox) {
 	
 	var _is_strong_attack = (abs(xspeed) >= 10) or (abs(yspeed) >= 10);
 	if _is_strong_attack {
-		var _recenter_dir = _attacker.rotation;
+		var _recenter_dir = point_direction(0,0,xspeed,yspeed);
 		
 		var _recenter_dist = width_half;
-		_recenter_dist += max(
-			_attacker.width_half,
-			_hitbox.width/2
-		);
+		_recenter_dist += _attacker.width_half * is_char(_attacker);
 		
 		var _recenter_x = _attacker.x;
-		var _recenter_y = _attacker.y + (height_half - _attacker.height_half);
+		var _recenter_y = _attacker.y;
 		
-		_recenter_x += lengthdir_x(_recenter_dist,_recenter_dir) * _attacker.facing;
-		_recenter_y += lengthdir_y(_recenter_dist,_recenter_dir);
+		if is_shot(_attacker) {
+			_recenter_y += height_half;
+		}
+		else if is_beam(_attacker) {
+			_recenter_x = x;
+			_recenter_y = y;
+		}
+		else {
+			_recenter_x += _recenter_dist * clamp(xspeed/5,-1,1);
+			_recenter_y += lengthdir_y(_recenter_dist,_recenter_dir);
+		}
 		
 		var _lerp = 1;
 		_recenter_x = lerp(x,_recenter_x,_lerp);

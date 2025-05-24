@@ -279,7 +279,7 @@ function init_naruto_baseform() {
 		}
 	}
 	mini_rasengan.run = function() {
-		rasengan_script(5,6,11,12,0,0.25,100,1000,attacktype.hard_knockdown);
+		rasengan_script(5,6,11,12,0,0.5,100,1000,attacktype.hard_knockdown);
 		
 		if check_frame(4) {
 			play_sound(snd_naruto_rasengan_charge);
@@ -338,7 +338,7 @@ function init_naruto_baseform() {
 			if check_frame(frame) {
 				var _ball = create_shot(
 					0,
-					height,
+					sprite_get_height(spr_rasengan) / 2,
 					0,
 					0,
 					spr_rasengan,
@@ -362,7 +362,7 @@ function init_naruto_baseform() {
 			}
 			var _ball = create_shot(
 				0,
-				height,
+				sprite_get_height(spr_rasengan) / 2,
 				0,
 				0,
 				spr_rasengan,
@@ -624,9 +624,9 @@ function init_naruto_baseform() {
 					2,
 					100,
 					1,
-					-15,
+					-9,
 					attacktype.hard_knockdown,
-					attackstrength.medium,
+					attackstrength.ultimate,
 					hiteffects.none
 				);
 				with(_explosion) {
@@ -661,7 +661,7 @@ function init_naruto_baseform() {
 							if alpha == 1 {
 								play_sound(snd_naruto_rasenshuriken_ult_end);
 							}
-							alpha = map_value(duration,0,30,0,1);
+							alpha = map_value(duration,30,0,1,0);
 						}
 					}
 					hit_script = function(_hit) {
@@ -830,8 +830,8 @@ function init_naruto_baseform() {
 			}
 			if value_in_range(frame,11,12) {
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(50*facing),y-30,0.5,0.5,0,c_white,1);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(45*facing),y-35,0.5,0.5,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(64*facing),y-48,0.5,0.5,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(48*facing),y-32,0.5,0.5,0,c_white,1);
 			}
 			if frame >= 13 {
 				gpu_set_blendmode(bm_add);
@@ -894,7 +894,7 @@ function init_naruto_baseform() {
 				draw_sprite_ext(spr_naruto_clone_giantrasengan,(frame mod 2) + 7,x-(width_half*facing),y,facing,1,0,c_white,1);
 				
 				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(100*facing),y-35,1,1,0,c_white,1);
+				draw_sprite_ext(spr_rasengan,rasengan_frame,x+(100*facing),y-50,1,1,0,c_white,1);
 			}
 			if frame >= 13 {
 				gpu_set_blendmode(bm_add);

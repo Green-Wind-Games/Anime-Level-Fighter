@@ -67,8 +67,8 @@ function debug_step() {
 		game_set_speed(600, gamespeed_fps);
 	}
 
-	if keyboard_check_pressed(vk_f5)
-	or (game_get_speed(gamespeed_fps) > 60) {
+	if keyboard_check_pressed(vk_f5) {
+	//or (game_get_speed(gamespeed_fps) > 60) {
 		for(var i = 0; i < max_players; i++) {
 			with(player[i]) {
 				input = player_input[i+10];

@@ -47,7 +47,7 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 	if value_in_range(frame,_hitframe1,_hitframe2) {
 		if check_frame(frame) {
 			var _ball = create_shot(
-				width_half + (sprite_get_width(spr_rasengan) * _scale / 10),
+				(sprite_get_width(spr_rasengan) * _scale / 4),
 				-height_half,
 				0,
 				0,
@@ -63,6 +63,7 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 			with(_ball) {
 				duration = 3;
 				alpha = 0;
+				hit_limit = -1;
 			}
 		}
 	}
@@ -72,7 +73,7 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 			y -= 1;
 		}
 		var _ball = create_shot(
-			width_half + (sprite_get_width(spr_rasengan) * _scale / 4),
+			(sprite_get_width(spr_rasengan) * _scale / 4),
 			-height_half,
 			0,
 			0,
@@ -86,8 +87,9 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 			hiteffects.hit
 		);
 		with(_ball) {
-			duration = 3;
+			duration = 20;
 			alpha = 0;
+			hit_limit = -1;
 		}
 		play_sound(snd_explosion_small,1,1);
 	}
