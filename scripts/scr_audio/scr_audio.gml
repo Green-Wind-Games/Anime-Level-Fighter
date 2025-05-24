@@ -4,7 +4,7 @@ sound_volume = 1;
 music_volume = 1;
 voice_volume = 1;
 
-audio_set_master_gain(0,0.25);
+audio_set_master_gain(0,0.10);
 
 //globalvar bitcrusher_effect, lowpass_effect;
 //var i = 0;

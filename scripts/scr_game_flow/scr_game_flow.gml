@@ -31,15 +31,17 @@ function update_fight() {
 		with(obj_char) {
 			if !dead {
 				alldead -= is_char(id);
+				if game_state == gamestates.training {
+					if combo_timer <= -60 {
+						hp = max_hp;
+						mp = max_mp;
+					}
+				}
 			}
 		}
 		if alldead {
 			if (!superfreeze_active) and (!timestop_active) {
-				with(obj_char) {
-					if combo_timer > 0 {
-						hitstop = 50;
-					}
-				}
+				timestop(60);
 				round_state = roundstates.knockout;
 			}
 		}
@@ -58,6 +60,9 @@ function update_fight() {
 			//if state_timer < 100 { ready = false; }
 		}
 		if ready {
+			if game_state == gamestates.training {
+				change_gamestate(gamestates.training);
+			}
 			round_state = roundstates.victory;
 		}
 		break;
@@ -115,7 +120,7 @@ function update_fight() {
 	}
 	battle_x = mean(_x1,_x2);
 	battle_y = mean(_y1,_y2);
-	var battle_size = game_width;
+	var battle_size = 640;
 	left_wall = clamp(battle_x - (battle_size / 2),0,room_width-game_width) + border;
 	right_wall = clamp(battle_x + (battle_size / 2),game_width,room_width) - border;
 	

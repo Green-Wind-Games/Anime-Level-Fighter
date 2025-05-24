@@ -99,30 +99,46 @@ for(var i = 0; i < array_length(button); i++) {
 	if b[i] button_held[i] += game_speed; else button_held[i] = 0;
 }
 
-menu_confirm = button[1];
-menu_cancel = button[2];
+pause = button[0];
 
-charselect_random = button_held[5];
-charselect_teamswitch = button[6];
+if round_state == roundstates.fight {
+	switch(type) {
+		default:
+		light_attack = button[1];
+		medium_attack = button[2];
+		heavy_attack = button[3];
+		unique_attack = button[4];
+		break;
 	
-switch(type) {
-	default:
-	light_attack = button[1];
-	medium_attack = button[2];
-	heavy_attack = button[3];
-	unique_attack = button[4];
-	break;
+		case input_types.joystick:
+		light_attack = button[3];
+		medium_attack = button[4];
+		heavy_attack = button[2];
+		unique_attack = button[1];
+		break;
+	}
+	supercharge = button[5];
+	use_tech = button[6];
+	supercharge_held = button_held[5] - 10;
+	dodge = button_held[6];
 	
-	case input_types.joystick:
-	light_attack = button[3];
-	medium_attack = button[4];
-	heavy_attack = button[2];
-	unique_attack = button[1];
-	break;
+	menu_confirm = false;
+	menu_cancel = false;
+	charselect_random = false;
+	charselect_teamswitch = false;
 }
+else {
+	menu_confirm = button[1];
+	menu_cancel = button[2];
+	charselect_random = button_held[5];
+	charselect_teamswitch = button[6];
 
-supercharge = button[5];
-use_tech = button[6];
-	
-supercharge_held = button_held[5] - 10;
-dodge = button_held[6];
+	light_attack = false;
+	medium_attack = false;
+	heavy_attack = false;
+	unique_attack = false;
+	supercharge = false;
+	use_tech = false;
+	supercharge_held = false;
+	dodge = false;
+}

@@ -32,3 +32,11 @@ function open_menu(_x,_y,_options,_description = -1) {
 function goto_versus_select() {
 	change_gamestate(gamestates.versus_select);
 }
+
+function goto_training_select() {
+	change_gamestate(gamestates.training_select);
+}
+
+function goto_training() {
+	change_gamestate(gamestates.training);
+}

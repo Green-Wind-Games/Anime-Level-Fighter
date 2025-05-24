@@ -34,8 +34,9 @@ enum vs_screen_substates {
 
 globalvar	game_state, previous_game_state, next_game_state, game_state_timer, game_state_duration,
 			game_substate, previous_game_substate, next_game_substate, game_substate_timer, game_substate_duration,
-			round_state, round_timer, round_state_timer, round_timer_max, round_timer_visible_max, round_ready_countdown_duration, round_ready_fight_duration, round_is_infinite,
-			stage,
+			round_state, round_timer_infinite,
+			round_timer, round_state_timer, round_timer_max, round_timer_visible_max, 
+			round_ready_countdown_duration, round_ready_fight_duration, 
 			
 			max_players, player, player_char, player_input,
 			player_slot, player_ready, ready_timer,
@@ -43,7 +44,7 @@ globalvar	game_state, previous_game_state, next_game_state, game_state_timer, ga
 			
 			game_speed,
 			
-			ygravity, ground_height, battle_x, battle_y, left_wall, right_wall,
+			ygravity,
 			
 			base_max_hp,
 			base_max_mp_stocks, base_mp_stock_size,
@@ -82,9 +83,9 @@ round_state_timer = 0;
 round_timer_max = 500 * 60;
 round_timer = round_timer_max;
 round_timer_visible_max = 999;
+round_timer_infinite = true;
 round_ready_countdown_duration = 100;
 round_ready_fight_duration = 50;
-round_is_infinite = false;
 
 game_speed = 1;
 
@@ -170,34 +171,11 @@ screen_overlay_timer = 0;
 screen_overlay_alpha = 1;
 
 ygravity = 0.35;
-left_wall = 0;
-right_wall = room_width;
-ground_height = room_height;
-battle_x = room_width / 2;
-battle_y = ground_height;
-ground_sprite = noone;
 
 voice = noone;
 voice_volume_mine = 1;
 voice_pitch_mine = 1;
 
 depth = -9999;
-
-for(var i = 0; i <= room_last; i++) {
-	var _stage_size = game_width * 1.25;
-	var _stage_width = round(_stage_size);
-	var _stage_height = round(_stage_size / (16/9));
-	var _menu_size = game_width;
-	var _menu_width = round(_menu_size);
-	var _menu_height = round(_menu_size);
-	if i >= rm_training {
-		room_set_width(i,_stage_width);
-		room_set_height(i,_stage_height);
-	}
-	else if i != rm_start {
-		room_set_width(i,_menu_width);
-		room_set_height(i,_menu_height);
-	}
-}
 
 texture_prefetch("Default");

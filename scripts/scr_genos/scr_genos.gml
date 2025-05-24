@@ -34,18 +34,17 @@ function init_genos_baseform() {
 	//}
 	
 	add_basic_light_attack_state(spr_genos_attack_punch,2,hiteffects.hit);
-	add_basic_light_attack2_state(spr_genos_attack_kick,2,hiteffects.hit);
-	add_basic_light_attack3_state(spr_genos_attack_uppercut,2,hiteffects.hit);
+	add_basic_light_attack_state(spr_genos_attack_kick,2,hiteffects.hit);
+	add_basic_light_attack_launcher_state(spr_genos_attack_uppercut,2,hiteffects.hit);
 	
 	add_basic_medium_attack_state(spr_genos_attack_uppercut,2,hiteffects.hit);
-	add_basic_heavy_attack_state(spr_genos_attack_kick,2,hiteffects.hit);
-	
-	add_basic_light_lowattack_state(spr_genos_attack_punch,2,hiteffects.hit);
 	add_basic_medium_sweep_state(spr_genos_attack_kick_up,2,hiteffects.hit);
+	
+	add_basic_heavy_attack_state(spr_genos_attack_kick,2,hiteffects.hit);
 	add_basic_heavy_launcher_state(spr_genos_attack_uppercut,2,hiteffects.hit);
 	
 	add_basic_light_airattack_state(spr_genos_attack_punch,2,hiteffects.hit);
-	add_basic_medium_airattack_state(spr_genos_attack_kick,2,hiteffects.hit);
+	add_basic_medium_airattack_state(spr_genos_attack_kick_up,2,hiteffects.hit);
 	add_basic_heavy_airattack_state(spr_genos_attack_smash,2,hiteffects.hit);
 	
 	add_basic_heavy_air_launcher_state(spr_genos_attack_kick_up,2,hiteffects.hit);

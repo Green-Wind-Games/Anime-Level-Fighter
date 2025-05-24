@@ -244,7 +244,7 @@ function init_goku_baseform() {
 					if is_char(_hit) or is_helper(_hit) {
 						var _dir = point_direction(x,y,_hit.x,_hit.y-_hit.height_half);
 						var _speed = 10;
-						_hit.xspeed = lengthdir_x(_speed,_dir);
+						_hit.xspeed = _speed * facing;
 						_hit.yspeed = _hit.is_airborne ? lengthdir_y(_speed,_dir) : (-_speed / 2);
 					}
 				}

@@ -59,7 +59,7 @@ function update_gamestate() {
 					//["Story Mode",-1],
 					//["Arcade Mode",-1],
 					["Versus Mode",goto_versus_select],
-					//["Training Mode",-1],
+					["Training Mode",goto_training_select],
 					//["Settings",-1],
 					["Quit Game",game_end]
 				],
@@ -92,12 +92,9 @@ function update_gamestate() {
 		case gamestates.arcade_battle:
 		case gamestates.versus_battle:
 		case gamestates.training:
-		if keyboard_check_pressed(ord("P")) {
-			if round_state == roundstates.fight {
-				round_state = roundstates.pause;
-			}
-			else if round_state == roundstates.pause {
-				round_state = roundstates.fight;
+		for(var i = 0; i < max_players; i++) {
+			if player_input[player_slot[i]].pause {
+				toggle_pause();
 			}
 		}
 		if round_state != roundstates.pause {

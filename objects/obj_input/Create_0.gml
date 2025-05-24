@@ -28,6 +28,8 @@ for(var i = 0; i <= 8; i++) {
 	button_held[i] = false;
 }
 
+pause = false;
+
 menu_confirm = false;
 menu_cancel = false;
 

@@ -269,15 +269,12 @@ function get_hit_by_attack(_hitbox) {
 			_recenter_y += lengthdir_y(_recenter_dist,_recenter_dir);
 		}
 		
-		var _lerp = 1;
-		_recenter_x = lerp(x,_recenter_x,_lerp);
-		_recenter_y = lerp(y,_recenter_y,_lerp);
-		
 		_recenter_x = clamp(_recenter_x,left_wall,right_wall);
 		_recenter_y = min(_recenter_y,ground_height);
 		
-		x = _recenter_x;
-		y = _recenter_y;
+		var _near = 20;
+		x = approach(x,_recenter_x,_near);
+		y = approach(y,_recenter_y,_near);
 		
 		play_hurt_sound(true);
 	}

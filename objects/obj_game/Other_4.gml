@@ -77,7 +77,7 @@ switch(room) {
 					//_x += _w2;
 					_x += _w4_t2 * (spawned_team2_players + 1);
 				}
-				var _y = ground_height - 1000;
+				var _y = ground_height - (1000 * (game_state == gamestates.versus_battle));
 				with(instance_create(_x,_y,get_char_object(player_char[i]))) {
 					player[i] = id;
 					input = player_input[player_slot[i]];
@@ -91,7 +91,7 @@ switch(room) {
 						facing = -1;
 						spawned_team2_players++;
 					}
-					change_state(enter_state);
+					change_state(game_state == gamestates.versus_battle ? enter_state : idle_state);
 				}
 				spawned_players++;
 			}

@@ -310,8 +310,9 @@ function init_naruto_baseform() {
 		}
 	}
 	rasengan_dive.run = function() {
-		var _target_y = target_y - target.height - 10;
-		if (frame <= 11) {
+		var _target_y = target_y - target.height - 50;
+		if (frame < 10)
+		or ((frame == 10) and (attack_hits <= 0)){
 			if frame < 8 {
 				xspeed = 0;
 				yspeed = 0;
@@ -323,18 +324,25 @@ function init_naruto_baseform() {
 				xspeed = 15 * facing;
 				yspeed = 15;
 			}
-			if value_in_range(y,_target_y,target_y) and (target_distance_x <= 10) {
-				xspeed = 0;
-				yspeed = 0;
+			if (target_distance_x <= abs(xspeed)) {
+				x = target_x;
+				if value_in_range(y,_target_y,target_y) {
+					y = _target_y;
+				}
+			}
+		}
+		loop_anim_middle_timer(
+			10,
+			11,
+			min(attack_hits * 10, 60) + (frame_duration*10)
+		);
+		if value_in_range(frame,10,11) {
+			xspeed = 0;
+			yspeed = 0;
+			if (attack_hits > 0) {
 				x = target_x;
 				y = _target_y;
 			}
-		}
-		
-		if (attack_hits > 0) {
-			loop_anim_middle_timer(10,11,60+(frame_duration*10));
-		}
-		if value_in_range(frame,10,11) {
 			if check_frame(frame) {
 				var _ball = create_shot(
 					0,
@@ -357,19 +365,18 @@ function init_naruto_baseform() {
 			}
 		}
 		if check_frame(12) {
-			with(target) {
-				y -= 1;
-			}
+			xspeed = -5 * facing;
+			yspeed = -10;
 			var _ball = create_shot(
 				0,
 				sprite_get_height(spr_rasengan) / 2,
 				0,
 				0,
 				spr_rasengan,
-				1.5,
+				1,
 				1600,
-				5,
-				-5,
+				9,
+				-1,
 				attacktype.normal,
 				attackstrength.heavy,
 				hiteffects.hit
@@ -380,10 +387,6 @@ function init_naruto_baseform() {
 			}
 			play_sound(snd_explosion_small,1,1);
 		}
-		if check_frame(12) {
-			xspeed = -5 * facing;
-			yspeed = -10;
-		}
 		if check_frame(4) or check_frame(12) {
 			create_particles(
 				x-(width_half*facing),
@@ -392,7 +395,7 @@ function init_naruto_baseform() {
 			);
 		}
 		if check_frame(5) {
-			play_sound(snd_naruto_rasengan_charge,1,1.5);
+			play_sound(snd_naruto_rasengan_charge,1,1);
 		}
 		if anim_finished {
 			land();
