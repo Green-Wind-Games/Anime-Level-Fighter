@@ -88,10 +88,12 @@ function update_view() {
 	}
 	
 	var _x1 = room_width;
-	var _y1 = 0;
+	var _y1 = room_height;
 	var _x2 = 0;
 	var _y2 = 0;
-	var desired_zoom = 1;
+	var _base_zoom = (game_width / battle_width) * 1.5;
+	var _max_zoom = _base_zoom * 1.25;
+	var desired_zoom = _base_zoom;
 	if instance_exists(camera_target) {
 		with(camera_target) {
 			_x1 = min(_x1,x-width_half);
@@ -102,7 +104,6 @@ function update_view() {
 	}
 	else {
 		if instance_exists(obj_char) {
-			_y1 = ground_height - 100;
 			with(obj_char) {
 				if !is_char(id) continue;
 				if dead {
@@ -127,16 +128,18 @@ function update_view() {
 				_y2 = max(_y2,y);
 			}
 			if room < rm_training {
-				desired_zoom = 1;
+				desired_zoom = game_width / battle_width;
 			}
 			else if superfreeze_active {
-				desired_zoom = game_width / 160;
+				desired_zoom = _max_zoom;
 			}
 			else {
 				var playerdist = abs(_x1 - _x2);
 				var max_dist = (right_wall-left_wall) + 25;
 				desired_zoom = game_width / (min(playerdist+50,max_dist));
-				desired_zoom = min(desired_zoom,game_width / 320);
+				desired_zoom = min(desired_zoom,_base_zoom);
+				
+				_y1 = min(_y1,ground_height-100);
 			}
 		}
 	}
