@@ -91,6 +91,6 @@ function rasengan_script(_chargeframe1, _chargeframe2, _hitframe1, _hitframe2, _
 			alpha = 0;
 			hit_limit = -1;
 		}
-		play_sound(snd_explosion_small,1,1);
+		play_sound(snd_explosion_light,1,1);
 	}
 }

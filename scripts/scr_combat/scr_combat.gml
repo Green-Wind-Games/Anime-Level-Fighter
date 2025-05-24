@@ -217,7 +217,7 @@ function play_hurt_sound(_is_strong_attack) {
 			}
 			else {
 				play_voiceline(
-					(dmg_percent < 10) ? voice_hurt : voice_hurt_heavy,
+					(dmg_percent < 20) ? voice_hurt : voice_hurt_heavy,
 					_voice_chance,
 					false
 				);

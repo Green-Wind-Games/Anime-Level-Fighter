@@ -114,10 +114,14 @@ function update_gamestate() {
 		}
 		break;
 	}
-
+	
+	var _change_state = false;
+	
 	game_state_timer += game_speed;
 	if next_game_state != -1 {
 		if game_state_timer >= game_state_duration {
+			_change_state = true;
+			
 			game_state = next_game_state;
 		
 			game_state_timer = 0;
@@ -142,7 +146,12 @@ function update_gamestate() {
 	}
 
 	if _gamestate != game_state {
+		_change_state = true;
+	}
+	
+	if _change_state {
 		previous_game_state = _gamestate;
+		
 		game_state_timer = 0;
 		game_state_duration = -1;
 	
@@ -193,9 +202,10 @@ function update_gamestate() {
 			case gamestates.versus_results:
 			texture_prefetch("SpecialEffects");
 			with(obj_char) {
-				persistent = input.persistent;
+				persistent = false;
 				hp = max_hp;
 				dead = false;
+				change_state(idle_state);
 			}
 			room_goto(rm_versus_results);
 			break;

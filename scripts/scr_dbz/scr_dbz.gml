@@ -39,7 +39,7 @@ function add_kiblast_state(_sprite1,_sprite2,_kiblastsprite,_fireframe,_maxrepea
 			)) {
 				blend = true;
 				hit_script = function() {
-					create_particles(x,y,explosion_small_particle);
+					create_particles(x,y,explosion_light_particle);
 				}
 				active_script = function() {
 					if y >= ground_height {

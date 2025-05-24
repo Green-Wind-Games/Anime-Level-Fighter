@@ -155,7 +155,7 @@ function init_charstates() {
 	}
 	jump_land_state.run = function() {
 		if state_timer > 5 {
-			change_state(idle_state);
+			change_state(input.down ? crouch_state : idle_state);
 		}
 	}
 	
@@ -241,6 +241,10 @@ function init_charstates() {
 	
 	airdash_state = new charstate();
 	airdash_state.start = function() {
+		if on_ground {
+			change_state(dash_state);
+			exit;
+		}
 		if air_actions < max_air_actions {
 			change_sprite(dash_sprite,true);
 			yoffset = -height_half;
@@ -264,6 +268,10 @@ function init_charstates() {
 	
 	air_backdash_state = new charstate();
 	air_backdash_state.start = function() {
+		if on_ground {
+			change_state(backdash_state);
+			exit;
+		}
 		if air_actions < max_air_actions {
 			change_sprite(dash_sprite,true);
 			yoffset = -height_half;

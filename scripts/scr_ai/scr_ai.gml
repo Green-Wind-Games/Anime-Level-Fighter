@@ -87,31 +87,42 @@ function ai_default_movement() {
 
 function ai_default_attacks() {
 	if target_distance < 30 {
-		ai_input_move(heavy_attack,20);
-		ai_input_move(heavy_launcher,20);
+		ai_input_move(light_attack,100);
 		
-		ai_input_move(light_lowattack,20);
-		ai_input_move(light_attack,20);
+		ai_input_move(heavy_attack,50);
+		ai_input_move(heavy_launcher,50);
 		
-		ai_input_move(medium_attack,20);
-		ai_input_move(medium_sweep,20);
+		ai_input_move(medium_attack,50);
+		ai_input_move(medium_sweep,50);
 	}
 	if (combo_hits > 0) and (target_distance < 30) {
-		switch(active_state) {
-			case light_attack:
-			case light_attack2:
-			case light_attack3:
-			case air_state:
-			case light_airattack:
-			case light_airattack2:
-			ai_input_move(light_attack,100);
-			break;
-			
-			case medium_attack:
-			case medium_attack2:
-			case medium_attack3:
-			ai_input_move(medium_attack,100);
-			break;
+		for(var i = 0; i < array_length(light_attack); i++) {
+			if active_state == light_attack[i] {
+				ai_input_move(light_attack[i],100);
+			}
+		}
+		if active_state == light_airattack
+		or active_state == light_airattack2
+		or active_state == medium_attack2 
+		or active_state == medium_attack3 { 
+			ai_input_move(active_state,100);
+		}
+		if active_state == medium_attack {
+			if previous_state == medium_sweep {
+				ai_input_move(medium_airattack,100);
+			}
+		}
+		if active_state == medium_airattack
+		or active_state == light_airattack_repeat {
+			ai_input_move(light_airattack_repeat,100);
+		}
+		if active_state == light_airattack_repeat2 {
+			ai_input_move(heavy_air_launcher,100);
+		}
+		if active_state == air_state {
+			if previous_state == homing_dash_state {
+				ai_input_move(medium_airattack,100);
+			}
 		}
 	}
 }
@@ -166,7 +177,12 @@ function ai_input_command(_command,_chance = 100) {
 
 function ai_input_move(_move,_chance = 100) {
 	if chance(_chance) {
-		ai_input_command(get_move_input(_move),100);
+		ai_input_command(get_move_input(_move)[0],100);
+		if on_ground {
+			if get_movelist_index(air_movelist,_move) != -1 {
+				input.up = true;
+			}
+		}
 	}
 }
 

@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_explosion_large",
+  "%Name":"snd_explosion_heavy",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":2.722948,
-  "name":"snd_explosion_large",
+  "duration":2.7229478,
+  "name":"snd_explosion_heavy",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_explosion_large.wav",
+  "soundFile":"snd_explosion_heavy.wav",
   "type":0,
   "volume":1.0,
 }

@@ -30,7 +30,7 @@ for(var i = 0; i < max_players; i++) {
 var team1_members = ceil(active_players/2);
 var team2_members = floor(active_players/2);
 	
-var _w = game_width / 2;
+var _w = battle_width;
 var _w2 = _w / 2;
 var _w3 = _w2 / 2;
 
@@ -55,60 +55,7 @@ switch(room) {
 	break;
 	
 	case stage:
-	if round_state != roundstates.fight {
-		//randomize();
-		
-		screen_fade_type = fade_types.bottom;
-		round_state = roundstates.intro;
-		round_timer = round_timer_max;
-		round_state_timer = 0;
-		
-		var spawned_players = 0;
-		var spawned_team1_players = 0;
-		var spawned_team2_players = 0;
-		for(var i = 0; i < max_players; i++) {
-			if player_slot[i] != noone {
-				var _x = battle_x;
-				if spawned_players < team1_members {
-					_x -= _w2;
-					_x += _w4_t1 * (spawned_team1_players + 1);
-				}
-				else {
-					//_x += _w2;
-					_x += _w4_t2 * (spawned_team2_players + 1);
-				}
-				var _y = ground_height - (1000 * (game_state == gamestates.versus_battle));
-				with(instance_create(_x,_y,get_char_object(player_char[i]))) {
-					player[i] = id;
-					input = player_input[player_slot[i]];
-					if spawned_players < team1_members {
-						team = 1;
-						facing = 1;
-						spawned_team1_players++
-					}
-					else {
-						team = 2;
-						facing = -1;
-						spawned_team2_players++;
-					}
-					change_state(game_state == gamestates.versus_battle ? enter_state : idle_state);
-				}
-				spawned_players++;
-			}
-		}
-	
-		stop_music();
-		play_music(
-			choose(
-				mus_dbfz_westcity,
-				mus_ff4_ds_bossbattle,
-				mus_guiltygear_fatalduel,
-				mus_yakuza_zero_tusk,
-			)
-		);
-		//var picked_player = instance_find(obj_char,irandom(instance_number(obj_char)-1));
-		//play_chartheme(picked_player);
-	}
+	setup_battle();
 	
 	switch(room) {
 		default:
@@ -163,3 +110,5 @@ switch(room) {
 	}
 	break;
 }
+
+//instance_create(0,0,obj_test_flamethrower);

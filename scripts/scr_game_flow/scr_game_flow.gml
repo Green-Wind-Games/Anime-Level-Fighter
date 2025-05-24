@@ -120,9 +120,8 @@ function update_fight() {
 	}
 	battle_x = mean(_x1,_x2);
 	battle_y = mean(_y1,_y2);
-	var battle_size = 640;
-	left_wall = clamp(battle_x - (battle_size / 2),0,room_width-game_width) + border;
-	right_wall = clamp(battle_x + (battle_size / 2),game_width,room_width) - border;
+	left_wall = clamp(battle_x - (battle_width / 2),0,room_width-battle_width) + border;
+	right_wall = clamp(battle_x + (battle_width / 2),battle_width,room_width) - border;
 	
 	if superfreeze_timer > 0 {
 		superfreeze_active = true;

@@ -71,7 +71,7 @@ function debug_step() {
 	//or (game_get_speed(gamespeed_fps) > 60) {
 		for(var i = 0; i < max_players; i++) {
 			with(player[i]) {
-				input = player_input[i+10];
+				input = player_input[i+11];
 			}
 		}
 	}

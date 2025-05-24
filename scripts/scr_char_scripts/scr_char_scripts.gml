@@ -59,7 +59,7 @@ function check_substitution(_defender,_cost = 1) {
 		//if combo_timer > 10 return false;
 		
 		if !ai_enabled {
-			if input.dodge return true;
+			if input.use_tech return true;
 		}
 		else {
 			if !target_exists() return false;

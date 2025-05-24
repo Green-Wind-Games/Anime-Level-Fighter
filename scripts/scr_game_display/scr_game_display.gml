@@ -88,7 +88,7 @@ function update_view() {
 	}
 	
 	var _x1 = room_width;
-	var _y1 = ground_height - (game_height / 4);
+	var _y1 = 0;
 	var _x2 = 0;
 	var _y2 = 0;
 	var desired_zoom = 1;
@@ -102,6 +102,7 @@ function update_view() {
 	}
 	else {
 		if instance_exists(obj_char) {
+			_y1 = ground_height - 100;
 			with(obj_char) {
 				if !is_char(id) continue;
 				if dead {
@@ -119,27 +120,27 @@ function update_view() {
 						continue;
 					}
 				}
-			
+				
 				_x1 = min(_x1,x-width_half);
 				_y1 = min(_y1,y-height);
 				_x2 = max(_x2,x+width_half);
 				_y2 = max(_y2,y);
 			}
-			if room != stage {
+			if room < rm_training {
 				desired_zoom = 1;
 			}
 			else if superfreeze_active {
-				desired_zoom = 2;
+				desired_zoom = game_width / 160;
 			}
 			else {
 				var playerdist = abs(_x1 - _x2);
 				var max_dist = (right_wall-left_wall) + 25;
-				desired_zoom = game_width / (min(playerdist+64,max_dist));
-				desired_zoom = min(desired_zoom,2);
+				desired_zoom = game_width / (min(playerdist+50,max_dist));
+				desired_zoom = min(desired_zoom,game_width / 320);
 			}
 		}
 	}
-	camera_zoom = approach(camera_zoom,desired_zoom,1/10);
+	camera_zoom = lerp(camera_zoom,desired_zoom,1/2);
 	
 	var _w = round(game_width / camera_zoom);
 	var _h = round(game_height / camera_zoom);

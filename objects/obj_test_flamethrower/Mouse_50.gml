@@ -1,0 +1,1 @@
+shoot_flame_particles(x,y,mouse_x,mouse_y,10);

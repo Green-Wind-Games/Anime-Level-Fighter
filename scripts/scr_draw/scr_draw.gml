@@ -914,10 +914,10 @@ function draw_pause() {
 	draw_rectangle(0,0,gui_width,gui_height,false);
 	draw_set_alpha(1);
 	draw_set_color(c_white);
-	draw_set_font(fnt_hud);
-	draw_set_halign(fa_center);
-	draw_set_valign(fa_middle);
-	draw_text(gui_width/2,gui_height/2,"Pause!");
+	//draw_set_font(fnt_hud);
+	//draw_set_halign(fa_center);
+	//draw_set_valign(fa_middle);
+	//draw_text(gui_width/2,gui_height/2,"Pause!");
 }
 
 function draw_countdown() {

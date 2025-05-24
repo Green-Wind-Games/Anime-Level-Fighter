@@ -36,7 +36,3 @@ function goto_versus_select() {
 function goto_training_select() {
 	change_gamestate(gamestates.training_select);
 }
-
-function goto_training() {
-	change_gamestate(gamestates.training);
-}

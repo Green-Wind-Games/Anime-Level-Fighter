@@ -32,14 +32,6 @@ part_type_orientation(wall_bang_right_particle,90,90,0,0,false);
 part_type_blend(wall_bang_right_particle,true);
 part_type_alpha3(wall_bang_right_particle,1,1,0);
 
-air_shockwave_particle = part_type_create();
-part_type_sprite(air_shockwave_particle,spr_shockwave,true,true,false);
-part_type_life(air_shockwave_particle,50,50);
-part_type_size(air_shockwave_particle,0.1,0.1,1/5,0);
-part_type_orientation(air_shockwave_particle,0,360,0,0,true);
-part_type_blend(air_shockwave_particle,true);
-part_type_alpha3(air_shockwave_particle,1,1,0);
-
 super_activate_particle = part_type_create();
 part_type_sprite(super_activate_particle,spr_activate_super,true,true,false);
 part_type_life(super_activate_particle,30,30);
@@ -71,23 +63,33 @@ function create_particles(_x,_y,_particle,_number = 1) {
 		play_sound(snd_parry);
 		break;
 		
-		case explosion_small_particle:
-		play_sound(snd_explosion_small);
+		case explosion_light_particle:
+		play_sound(snd_explosion_light);
+		shake_screen(10,1);
 		break;
 		
 		case explosion_medium_particle:
 		play_sound(snd_explosion_medium);
-		shake_screen(20,1);
+		shake_screen(20,2);
 		break;
 		
-		case explosion_large_particle:
-		play_sound(snd_explosion_large);
-		shake_screen(50,1);
+		case explosion_heavy_particle:
+		play_sound(snd_explosion_heavy);
+		shake_screen(30,3);
 		break;
 		
-		case air_shockwave_particle:
+		case shockwave_light_particle:
+		play_sound(snd_dbz_shockwave,1,1.25);
+		break;
+		
+		case shockwave_medium_particle:
 		play_sound(snd_dbz_shockwave);
-		shake_screen(20,1);
+		shake_screen(10,1);
+		break;
+		
+		case shockwave_heavy_particle:
+		play_sound(snd_dbz_shockwave,1,0.75);
+		shake_screen(20,2);
 		break;
 		
 		case floor_bang_particle:

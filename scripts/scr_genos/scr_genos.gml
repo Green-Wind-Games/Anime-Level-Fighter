@@ -75,7 +75,7 @@ function init_genos_baseform() {
 				)) {
 					blend = true;
 					hit_script = function() {
-						create_particles(x,y,explosion_small_particle);
+						create_particles(x,y,explosion_light_particle);
 					}
 					active_script = function() {
 						if y >= ground_height {
@@ -139,7 +139,7 @@ function init_genos_baseform() {
 			)) {
 				duration = anim_duration;
 				hit_limit = -1;
-				play_sound(snd_explosion_large);
+				play_sound(snd_explosion_heavy);
 			};
 			land();
 		}

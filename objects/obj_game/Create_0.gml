@@ -98,7 +98,7 @@ for(var i = 0; i < max_players; i++) {
 	player_ready[i] = false;
 }
 
-for(var i = 0; i < 10 + max_players; i++) {
+for(var i = 0; i <= 10 + max_players; i++) {
 	with(instance_create(0,0,obj_input)) {
 		player_input[i] = id;
 		persistent = true;
@@ -131,7 +131,7 @@ player_color[i++] = make_color_rgb(128,64,32);
 
 max_level = 5;
 
-base_max_hp = 10000 * 5;
+base_max_hp = 40000;
 
 base_mp_stock_size = 1000;
 base_max_mp_stocks = 10;

@@ -97,14 +97,14 @@ function init_naruto_baseform() {
 				height_half * 1.5,
 				100,
 				3,
-				1,
+				0.1,
 				attacktype.multihit,
 				attackstrength.medium,
 				hiteffects.hit
 			);
 		}
-		xspeed = 8 * facing;
-		yspeed = 16;
+		xspeed = 10 * facing;
+		yspeed = 15;
 		if on_ground {
 			change_state(crouch_state);
 		}
@@ -377,7 +377,7 @@ function init_naruto_baseform() {
 				1600,
 				9,
 				-1,
-				attacktype.normal,
+				attacktype.hard_knockdown,
 				attackstrength.heavy,
 				hiteffects.hit
 			);
@@ -385,7 +385,7 @@ function init_naruto_baseform() {
 				duration = 3;
 				alpha = 0;
 			}
-			play_sound(snd_explosion_small,1,1);
+			play_sound(snd_explosion_light,1,1);
 		}
 		if check_frame(4) or check_frame(12) {
 			create_particles(

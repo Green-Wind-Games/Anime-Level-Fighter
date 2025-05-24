@@ -252,7 +252,7 @@ function init_goku_baseform() {
 			create_particles(
 				x+(width_half*facing),
 				y-height_half,
-				air_shockwave_particle
+				shockwave_medium_particle
 			);
 		}
 		if state_timer > 60 {
@@ -418,7 +418,7 @@ function init_goku_baseform() {
 							attackstrength.ultimate,
 							hiteffects.light
 						);
-						create_particles(x,y,explosion_large_particle);
+						create_particles(x,y,explosion_heavy_particle);
 						shake_screen(20,1);
 					}
 				}
