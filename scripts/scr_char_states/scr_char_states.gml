@@ -815,6 +815,8 @@ function init_charstates() {
 	enter_state = new charstate();
 	enter_state.start = function() {
 		change_sprite(air_down_sprite,true);
+		y = -500;
+		on_ground = false;
 	}
 	enter_state.run = function() {
 		if sprite == air_down_sprite {

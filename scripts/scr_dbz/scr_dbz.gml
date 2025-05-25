@@ -15,7 +15,31 @@ function add_kiblast_state(_sprite1,_sprite2,_kiblastsprite,_fireframe,_maxrepea
 				sprite == kiblast_sprite2 ? kiblast_sprite : kiblast_sprite2,
 				false
 			);
-			kiblast_count++;
+			if is_airborne {
+				var _aim = 2;
+				if input.type == input_types.ai {
+					if target_y > (y - (height * 2)) {
+						_aim = 3;
+					}
+					else if target_distance_x < target_distance_y {
+						_aim = 1;
+					}
+				}
+				else {
+					if input.forward {
+						_aim = 3;
+					}
+					else if input.down {
+						_aim = 1;
+					}
+				}
+				rotation = point_direction(
+					0,
+					0,
+					_aim,
+					_aim < 3 ? 1 : 0
+				);
+			}
 		}
 		else {
 			change_state(idle_state);

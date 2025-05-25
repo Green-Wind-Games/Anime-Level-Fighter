@@ -137,7 +137,6 @@ function init_goku_baseform() {
 	add_basic_heavy_airattack_state(spr_goku_attack_smash,2,hiteffects.hit);
 	add_basic_heavy_air_launcher_state(spr_goku_attack_uppercut,2,hiteffects.hit);
 	
-	light_airattack = new charstate();
 	light_airattack.start = function() {
 		change_sprite(spr_goku_attack_triple_kick_air,false);
 		play_voiceline(voice_attack,50,false);
@@ -162,7 +161,6 @@ function init_goku_baseform() {
 		land();
 	}
 	
-	medium_airattack = new charstate();
 	medium_airattack.start = function() {
 		change_sprite(spr_goku_attack_spin_kick_double,false);
 		play_voiceline(voice_attack,50,false);

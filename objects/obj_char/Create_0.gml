@@ -112,6 +112,9 @@ ygravity_mod = 1;
 attack_power = 1;
 defense = 1;
 
+form_tree = array_create(0);
+form_id = 0;
+form_count = 0;
 next_form = noone;
 transform_aura = spr_aura_dbz_white;
 	

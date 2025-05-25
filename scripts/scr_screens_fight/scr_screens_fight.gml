@@ -38,7 +38,7 @@ function setup_battle() {
 					//_x += _w2;
 					_x += _w4_t2 * (spawned_team2_players + 1);
 				}
-				var _y = ground_height - (1000 * (game_state == gamestates.versus_battle));
+				var _y = ground_height;
 				with(instance_create(_x,_y,get_char_object(player_char[i]))) {
 					player[i] = id;
 					input = player_input[player_slot[i]];
@@ -103,5 +103,5 @@ function unpause_game() {
 
 function reset_fight() {
 	change_gamestate(game_state);
-	timestop(screen_fade_duration*2);
+	//timestop(screen_fade_duration*2);
 }

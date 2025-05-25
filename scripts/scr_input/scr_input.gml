@@ -16,8 +16,10 @@ input_delay = 3;
 function update_input_buffer() {
 	var _buffer = input_buffer;
 	
-	update_input_buffer_direction();
-	update_input_buffer_buttons();
+	if input.type != input_types.ai {
+		update_input_buffer_direction();
+		update_input_buffer_buttons();
+	}
 	
 	if input_buffer != _buffer {
 		input_buffer_timer = input_buffer_duration;

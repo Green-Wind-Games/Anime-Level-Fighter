@@ -52,6 +52,7 @@ function update_ai() {
 		
 		ai_timer = ai_think_interval;
 	}
+	ai_combo();
 }
 
 function ai_default_movement() {
@@ -77,7 +78,7 @@ function ai_default_movement() {
 			input.up = true;
 		}
 	}
-	if (target_distance_x < 100) {
+	if (target_distance_x < 50) {
 		ai_input_move(backdash_state,10);
 	}
 	if (target_distance_x > 50) {
@@ -86,44 +87,14 @@ function ai_default_movement() {
 }
 
 function ai_default_attacks() {
-	if target_distance < 30 {
-		ai_input_move(light_attack,100);
+	if (target_distance < 30) and (!combo_hits) {
+		ai_input_move(light_attack[0],100);
 		
-		ai_input_move(heavy_attack,50);
-		ai_input_move(heavy_launcher,50);
+		//ai_input_move(heavy_attack,50);
+		//ai_input_move(heavy_launcher,50);
 		
-		ai_input_move(medium_attack,50);
+		//ai_input_move(medium_attack,50);
 		ai_input_move(medium_sweep,50);
-	}
-	if (combo_hits > 0) and (target_distance < 30) {
-		for(var i = 0; i < array_length(light_attack); i++) {
-			if active_state == light_attack[i] {
-				ai_input_move(light_attack[i],100);
-			}
-		}
-		if active_state == light_airattack
-		or active_state == light_airattack2
-		or active_state == medium_attack2 
-		or active_state == medium_attack3 { 
-			ai_input_move(active_state,100);
-		}
-		if active_state == medium_attack {
-			if previous_state == medium_sweep {
-				ai_input_move(medium_airattack,100);
-			}
-		}
-		if active_state == medium_airattack
-		or active_state == light_airattack_repeat {
-			ai_input_move(light_airattack_repeat,100);
-		}
-		if active_state == light_airattack_repeat2 {
-			ai_input_move(heavy_air_launcher,100);
-		}
-		if active_state == air_state {
-			if previous_state == homing_dash_state {
-				ai_input_move(medium_airattack,100);
-			}
-		}
 	}
 }
 
@@ -141,61 +112,18 @@ function ai_perform_random_moves() {
 	ds_list_destroy(_inputs);
 }
 
-function ai_combo() {
-	if (combo_hits > 0) {
-		var _movelist = on_ground ? ground_movelist : air_movelist;
-		var _move = noone;
-		if !ds_list_empty(cancelable_moves) {
-			_move = ds_list_find_value(cancelable_moves,irandom(ds_list_size(cancelable_moves)-1));
-		}
-		else {
-			var _ahead = 1;
-			var _moveid = 0;
-			for(var i = 0; i < array_length(_movelist)-1; i++) {
-				if (active_state == _movelist[i][0]) {
-					_moveid = i+1;
-					break;
-				}
-			}
-			var _move = _movelist[_moveid][0];
-		}
-		ai_input_move(_move,100);
-		//for(var i = 0; i < array_length(autocombo)-1; i++) {
-		//	if (active_state == autocombo[i]) {
-		//		ai_input_move(autocombo[0],100);
-		//	}
-		//}
-	}
-}
-
 function ai_input_command(_command,_chance = 100) {
 	if chance(_chance) {
-		input_buffer += _command;
-		input_buffer_timer = ai_think_interval;
+		input_buffer = _command;
+		input_buffer_timer = input_buffer_duration - input_delay;
 	}
 }
 
 function ai_input_move(_move,_chance = 100) {
 	if chance(_chance) {
 		ai_input_command(get_move_input(_move)[0],100);
-		if on_ground {
-			if get_movelist_index(air_movelist,_move) != -1 {
-				input.up = true;
-			}
-		}
-	}
-}
-
-function ai_autocombo() {
-	if (target_distance < width) {
-		ai_input_move(autocombo[0],30);
-	}
-	for(var i = 0; i < array_length(autocombo)-2; i++) {
-		if ((active_state == autocombo[i])
-		or (previous_state == autocombo[i]))
-		and (combo_hits > 0) {
-			ai_input_move(autocombo[0],100);
-			break;
+		if get_movelist_index(air_movelist,_move) != -1 {
+			input.up = true;
 		}
 	}
 }
